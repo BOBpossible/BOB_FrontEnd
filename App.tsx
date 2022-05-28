@@ -1,9 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import Splash from './src/screens/Splash';
-import Main from './src/screens/Main';
+import MainNavigator from './src/nav/MainNavigator';
 import Login from './src/screens/Login';
+import {NavigationContainer} from '@react-navigation/native';
 export default function App() {
+  const Stack = createStackNavigator();
+
   const [loading, setLoading] = useState(true);
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
@@ -19,7 +23,17 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.SafeAreaView}>
-      {loading ? <Splash /> : isLogin ? <Main /> : <Login />}
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          {loading ? (
+            <Stack.Screen name="Splash" component={Splash} />
+          ) : isLogin ? (
+            <Stack.Screen name="MainNavigator" component={MainNavigator} />
+          ) : (
+            <Stack.Screen name="Login" component={Login} />
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 }
