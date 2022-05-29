@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from './src/screens/Splash';
 import MainNavigator from './src/nav/MainNavigator';
-import Login from './src/screens/customer/CustomerLogin';
 import {NavigationContainer} from '@react-navigation/native';
 import AuthNavigator from './src/nav/AuthNavigator';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -26,7 +26,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.SafeAreaView}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Navigator screenOptions={{headerShown: false, gestureEnabled: false}}>
           {loading ? (
             <Stack.Screen name="Splash" component={Splash} />
           ) : isLogin ? (

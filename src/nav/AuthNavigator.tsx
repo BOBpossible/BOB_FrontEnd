@@ -12,7 +12,10 @@ const Stack = createStackNavigator();
 
 export default function AuthNavigator() {
   return (
-    <Stack.Navigator initialRouteName="LoginOption" screenOptions={{headerShown: false}}>
+    <Stack.Navigator
+      initialRouteName="LoginOption"
+      screenOptions={{headerShown: false, gestureEnabled: false}}
+    >
       <Stack.Screen name="LoginOption" component={LoginOption} />
       <Stack.Screen name="CustomerLogin" component={CustomerLogin} />
       <Stack.Screen name="OwnerLogin" component={OwnerLogin} />
