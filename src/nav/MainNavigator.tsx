@@ -37,7 +37,7 @@ const Tab = createBottomTabNavigator();
 
 export default function MainNavigator() {
   return (
-    <Tab.Navigator screenOptions={screenOptions}>
+    <Tab.Navigator screenOptions={screenOptions} initialRouteName="Main">
       <Tab.Screen name="Main" component={Main} />
       <Tab.Screen name="Mission" component={Mission} />
       <Tab.Screen name="Map" component={Map} />

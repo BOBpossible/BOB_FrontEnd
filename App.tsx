@@ -3,8 +3,10 @@ import {SafeAreaView, StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from './src/screens/Splash';
 import MainNavigator from './src/nav/MainNavigator';
-import Login from './src/screens/customer/Login';
+import Login from './src/screens/customer/CustomerLogin';
 import {NavigationContainer} from '@react-navigation/native';
+import AuthNavigator from './src/nav/AuthNavigator';
+
 export default function App() {
   const Stack = createStackNavigator();
 
@@ -14,7 +16,7 @@ export default function App() {
   useEffect(() => {
     const id = setTimeout(() => {
       setLoading(false);
-      setIsLogin(true);
+      setIsLogin(false);
     }, 3000);
     return () => clearTimeout(id);
   }, []);
@@ -30,7 +32,7 @@ export default function App() {
           ) : isLogin ? (
             <Stack.Screen name="MainNavigator" component={MainNavigator} />
           ) : (
-            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="AuthNavigation" component={AuthNavigator} />
           )}
         </Stack.Navigator>
       </NavigationContainer>
