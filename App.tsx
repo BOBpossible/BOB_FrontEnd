@@ -1,9 +1,9 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from './src/screens/Splash';
 import MainNavigator from './src/nav/MainNavigator';
-import Login from './src/screens/Login';
+import Login from './src/screens/customer/Login';
 import {NavigationContainer} from '@react-navigation/native';
 export default function App() {
   const Stack = createStackNavigator();
