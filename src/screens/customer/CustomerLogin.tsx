@@ -12,7 +12,7 @@ const CustomerLogin = () => {
       <Text>{title}</Text>
       <TouchableOpacity onPress={goMain}>
         <View style={{height: 100, width: 130, borderWidth: 1}}>
-          <Text>손님으로 로그인</Text>
+          <Text>로그인 했다 치고 홈화면으로 넘어가기</Text>
         </View>
       </TouchableOpacity>
     </View>
