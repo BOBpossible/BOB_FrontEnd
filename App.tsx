@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from './src/screens/Splash';
 import MainNavigator from './src/nav/MainNavigator';
 import Login from './src/screens/customer/CustomerLogin';
 import {NavigationContainer} from '@react-navigation/native';
 import AuthNavigator from './src/nav/AuthNavigator';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -21,10 +22,8 @@ export default function App() {
     return () => clearTimeout(id);
   }, []);
 
-  console.log(loading);
-
   return (
-    <SafeAreaView style={styles.SafeAreaView}>
+    <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           {loading ? (
@@ -36,7 +35,7 @@ export default function App() {
           )}
         </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
