@@ -3,7 +3,7 @@ import {View, StyleSheet, Text} from 'react-native';
 import {Colors} from 'react-native-paper';
 
 const Splash = () => {
-  const title = 'Splash';
+  const title = 'Mission BOB';
   return (
     <View style={[styles.flex]}>
       <Text style={{fontSize: 30}}>{title}</Text>
@@ -12,7 +12,7 @@ const Splash = () => {
 };
 
 const styles = StyleSheet.create({
-  flex: {flex: 1, backgroundColor: Colors.purple300},
+  flex: {flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'},
 });
 
 export default Splash;

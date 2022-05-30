@@ -7,10 +7,10 @@ import CustomerLogin from '../screens/customer/CustomerLogin';
 import OwnerLogin from '../screens/owner/OwnerLogin';
 import CustomerRegister from '../screens/owner/OwnerRegister';
 import OwnerRegister from '../screens/owner/OwnerRegister';
-import MainNavigator from '../nav/MainNavigator';
+import {MainNavigator} from '../nav/MainNavigator';
 const Stack = createStackNavigator();
 
-export default function AuthNavigator() {
+export const AuthNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="LoginOption"
@@ -24,4 +24,4 @@ export default function AuthNavigator() {
       <Stack.Screen name="MainNavigator" component={MainNavigator} />
     </Stack.Navigator>
   );
-}
+};

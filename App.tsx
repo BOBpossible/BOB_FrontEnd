@@ -2,10 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, SafeAreaView} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from './src/screens/Splash';
-import MainNavigator from './src/nav/MainNavigator';
 import {NavigationContainer} from '@react-navigation/native';
-import AuthNavigator from './src/nav/AuthNavigator';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {MainNavigator} from './src/nav';
+import {AuthNavigator} from './src/nav';
 
 export default function App() {
   const Stack = createStackNavigator();

@@ -35,7 +35,7 @@ const screenOptions = ({route}: {route: RouteProp<ParamListBase, string>}) => {
 
 const Tab = createBottomTabNavigator();
 
-export default function MainNavigator() {
+export const MainNavigator = () => {
   return (
     <Tab.Navigator screenOptions={screenOptions} initialRouteName="Main">
       <Tab.Screen name="Main" component={Main} />
@@ -44,4 +44,4 @@ export default function MainNavigator() {
       <Tab.Screen name="MyPage" component={MyPage} />
     </Tab.Navigator>
   );
-}
+};
