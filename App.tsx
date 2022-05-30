@@ -21,10 +21,8 @@ export default function App() {
     return () => clearTimeout(id);
   }, []);
 
-  console.log(loading);
-
   return (
-    <SafeAreaView style={styles.SafeAreaView}>
+    <SafeAreaView style={[styles.SafeAreaView]}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false, gestureEnabled: false}}>
           {loading ? (
