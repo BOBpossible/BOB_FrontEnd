@@ -23,7 +23,7 @@ export default function App() {
   }, []);
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaView style={[styles.SafeAreaView]}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           {loading ? (
@@ -35,7 +35,7 @@ export default function App() {
           )}
         </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaProvider>
+    </SafeAreaView>
   );
 }
 

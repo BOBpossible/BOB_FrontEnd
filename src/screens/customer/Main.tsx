@@ -54,10 +54,11 @@ const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
 
   return (
-    <SafeAreaView style={[styles.mainView]}>
+    <View style={[styles.mainView]}>
       <AnimatedHeader animatedValue={offset} />
-      <FlatList
-        contentContainerStyle={{margin: 10, paddingTop: 220}}
+      <Animated.FlatList
+        contentContainerStyle={{margin: 10, paddingTop: 250}}
+        scrollEventThrottle={10}
         data={dummyMission}
         renderItem={({item}) => (
           <HomeMission
@@ -68,12 +69,15 @@ const Main = () => {
             point={item.point}
           />
         )}
-        ListHeaderComponent={<Text>My Mission</Text>}
+        ListHeaderComponent={
+          <Text style={{marginBottom: 10, fontSize: 18, fontWeight: '600'}}>My Mission</Text>
+        }
         onScroll={Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
           useNativeDriver: false,
         })}
+        ItemSeparatorComponent={() => <View style={{margin: 10}} />}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
