@@ -11,7 +11,7 @@ export type HomeMissionProps = {
   point: number;
 };
 
-const HomeMission: FC<HomeMissionProps> = ({name, category, day, minCost, point}) => {
+export const HomeMission: FC<HomeMissionProps> = ({name, category, day, minCost, point}) => {
   return (
     <View style={[styles.missionBox]}>
       <Text style={[styles.dDay]}>D-{day}</Text>
@@ -46,5 +46,3 @@ const styles = StyleSheet.create({
   dDay: {position: 'absolute', top: 20, right: 30, fontWeight: '600', color: '#615EFF'},
   nameBox: {flexDirection: 'column', justifyContent: 'center', alignItems: 'center'},
 });
-
-export default HomeMission;
