@@ -5,9 +5,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import LoginOption from '../screens/LoginOption';
 import CustomerLogin from '../screens/customer/CustomerLogin';
 import OwnerLogin from '../screens/owner/OwnerLogin';
-import CustomerRegister from '../screens/owner/OwnerRegister';
-import OwnerRegister from '../screens/owner/OwnerRegister';
-import {MainNavigator} from '../nav/MainNavigator';
+import {MainNavigator} from './MainNavigator';
+import {RegisterNavigator} from './RegisterNavigatior';
 const Stack = createStackNavigator();
 
 export const AuthNavigator = () => {
@@ -19,8 +18,7 @@ export const AuthNavigator = () => {
       <Stack.Screen name="LoginOption" component={LoginOption} />
       <Stack.Screen name="CustomerLogin" component={CustomerLogin} />
       <Stack.Screen name="OwnerLogin" component={OwnerLogin} />
-      <Stack.Screen name="CustomerRegister" component={CustomerRegister} />
-      <Stack.Screen name="OwnerRegister" component={OwnerRegister} />
+      <Stack.Screen name="RegisterNavigator" component={RegisterNavigator} />
       <Stack.Screen name="MainNavigator" component={MainNavigator} />
     </Stack.Navigator>
   );
