@@ -13,14 +13,14 @@ const Login = () => {
     <View style={[styles.flex]}>
       <Text>{title}</Text>
       <TouchableOpacity onPress={goMain}>
-        <View style={{height: 100, width: 130, borderWidth: 1}}>
-          <Text>로그인 했다치고 등록된 아이디라 홈 화면으로 넘어가기</Text>
+        <View style={{height: 30, width: 30, borderWidth: 1}}>
+          <Text>홈</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={goRegister}>
-        <View style={{height: 100, width: 130, borderWidth: 1}}>
-          <Text>로그인 했는데 가입 안되어있어서 가입화면 가기</Text>
+        <View style={{height: 30, width: 30, borderWidth: 1}}>
+          <Text>가입</Text>
         </View>
       </TouchableOpacity>
     </View>
