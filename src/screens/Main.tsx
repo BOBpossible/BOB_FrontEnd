@@ -2,8 +2,8 @@ import React, {useRef} from 'react';
 import {View, StyleSheet, Text, Animated} from 'react-native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {Colors} from 'react-native-paper';
-import {HomeMission} from '../../components';
-import {AnimatedHeader} from '../../components';
+import {HomeMission} from '../components';
+import {AnimatedHeader} from '../components';
 
 const dummyMission = [
   {

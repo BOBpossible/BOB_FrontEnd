@@ -3,10 +3,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Colors} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 Icon.loadFont();
-import Main from '../screens/customer/Main';
-import Mission from '../screens/customer/Mission';
-import Map from '../screens/customer/Map';
-import MyPage from '../screens/customer/MyPage';
+import Main from '../screens/Main';
+import Mission from '../screens/Mission';
+import Map from '../screens/Map';
+import MyPage from '../screens/MyPage';
 
 import type {RouteProp, ParamListBase} from '@react-navigation/native';
 type TabBarIconProps = {focused: boolean; color: string; size: number};
