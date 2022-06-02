@@ -3,15 +3,12 @@ import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Colors} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 
-const CustomerLogin = () => {
+const Login = () => {
   const navigation = useNavigation();
-  const title = 'CustomerLogin';
+  const title = 'Login';
 
   const goMain = useCallback(() => navigation.navigate('MainNavigator'), []);
-  const goRegister = useCallback(
-    () => navigation.navigate('RegisterNavigator', {screenName: 'CustomerRegisterConsent'}),
-    [],
-  );
+  const goRegister = useCallback(() => navigation.navigate('Register'), []);
   return (
     <View style={[styles.flex]}>
       <Text>{title}</Text>
@@ -34,4 +31,4 @@ const styles = StyleSheet.create({
   flex: {flex: 1},
 });
 
-export default CustomerLogin;
+export default Login;

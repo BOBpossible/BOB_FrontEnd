@@ -1,12 +1,24 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {Colors} from 'react-native-paper';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const CustomerRegister = () => {
-  const title = 'CustomerRegister';
+const Register = ({navigation}) => {
+  const title = 'Register';
+
+  const goNext = () => {
+    navigation.navigate('RegisterCategory');
+  };
+
   return (
     <View style={[styles.flex]}>
-      <Text>{title}</Text>
+      <View style={[styles.flex, {height: '100%'}]}>
+        <Text>{title}</Text>
+      </View>
+      <TouchableOpacity onPress={goNext}>
+        <View style={{width: '100%', height: 90, backgroundColor: '#615EFF'}}>
+          <Text>다음</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -15,4 +27,4 @@ const styles = StyleSheet.create({
   flex: {flex: 1},
 });
 
-export default CustomerRegister;
+export default Register;

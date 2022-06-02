@@ -3,6 +3,7 @@ ideclare namespace ReactNavigation {
         CustomerLogin: undefined
         OwnerLogin: undefined
         MainNavigator: undefined
-        RegisterNavigator: {screenName: string}
+        Register: undefined
+
     }
 }

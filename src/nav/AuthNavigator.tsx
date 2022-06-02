@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import Login from '../screens/Login';
 import {MainNavigator} from './MainNavigator';
-import {RegisterNavigator} from './RegisterNavigatior';
+import Register from '../screens/Register';
+import RegisterForm from '../screens/RegisterForm';
+import RegisterCategory from '../screens/RegisterCategory';
 const Stack = createStackNavigator();
 
 export const AuthNavigator = () => {
@@ -14,7 +15,9 @@ export const AuthNavigator = () => {
       screenOptions={{headerShown: false, gestureEnabled: false}}
     >
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="RegisterNavigator" component={RegisterNavigator} />
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="RegisterForm" component={RegisterForm} />
+      <Stack.Screen name="RegisterCategory" component={RegisterCategory} />
       <Stack.Screen name="MainNavigator" component={MainNavigator} />
     </Stack.Navigator>
   );
