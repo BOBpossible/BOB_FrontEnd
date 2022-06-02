@@ -1,8 +1,9 @@
 //Create Interface type for Registration Form
-enum gender {
+export enum gender {
   'male' = 0,
   'female',
   'null',
+  'notSelected',
 }
 
 export type RegisterInterface = {
@@ -13,7 +14,7 @@ export type RegisterInterface = {
   marketingContract: boolean;
   name: string;
   gender: gender;
-  birthDate: Date;
+  birthDate: Date | null;
   address: string;
   category: number[];
 };
