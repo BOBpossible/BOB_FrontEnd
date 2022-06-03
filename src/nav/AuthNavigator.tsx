@@ -6,7 +6,17 @@ import {MainNavigator} from './MainNavigator';
 import Register from '../screens/Register';
 import RegisterForm from '../screens/RegisterForm';
 import RegisterCategory from '../screens/RegisterCategory';
-const Stack = createStackNavigator();
+import {RegisterInterface} from '../data';
+
+export type AuthStackParamList = {
+  Login: undefined;
+  Register: undefined;
+  RegisterForm: {registerData: RegisterInterface};
+  RegisterCategory: {registerData: RegisterInterface};
+  MainNavigator: undefined;
+};
+
+const Stack = createStackNavigator<AuthStackParamList>();
 
 export const AuthNavigator = () => {
   return (

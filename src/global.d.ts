@@ -1,9 +1,8 @@
-ideclare namespace ReactNavigation {
-    interface RootParamList {
-        CustomerLogin: undefined
-        OwnerLogin: undefined
-        MainNavigator: undefined
-        Register: undefined
-
-    }
+declare namespace ReactNavigation {
+  interface RootParamList {
+    CustomerLogin: undefined;
+    OwnerLogin: undefined;
+    MainNavigator: undefined;
+    Register: undefined;
+  }
 }
