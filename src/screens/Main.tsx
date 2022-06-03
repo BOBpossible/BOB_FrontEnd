@@ -1,5 +1,7 @@
 import React, {useRef} from 'react';
 import {View, StyleSheet, Text, Animated} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {HomeMission} from '../components';
 import {AnimatedHeader} from '../components';
 
@@ -50,12 +52,16 @@ const dummyMission = [
 
 const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
-
+  const insets = useSafeAreaInsets();
+  const styles = StyleSheet.create({
+    mainView: {flex: 1},
+  });
+  console.log(insets);
   return (
-    <View style={[styles.mainView]}>
-      <AnimatedHeader animatedValue={offset} />
+    <SafeAreaView edges={['top']}>
+      <AnimatedHeader animatedValue={offset} paddingTop={insets.top} />
       <Animated.FlatList
-        contentContainerStyle={{margin: 10, paddingTop: 250}}
+        contentContainerStyle={{paddingTop: 250, paddingBottom: 10}}
         scrollEventThrottle={10}
         data={dummyMission}
         renderItem={({item}) => (
@@ -77,12 +83,8 @@ const Main = () => {
         }}
         ItemSeparatorComponent={() => <View style={{margin: 10}} />}
       />
-    </View>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  mainView: {flex: 1},
-});
 
 export default Main;

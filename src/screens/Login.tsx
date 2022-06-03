@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
-import {Colors} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -9,7 +9,7 @@ const Login = () => {
   const goMain = useCallback(() => navigation.navigate('MainNavigator'), []);
   const goRegister = useCallback(() => navigation.navigate('Register'), []);
   return (
-    <View style={[styles.flex]}>
+    <SafeAreaView style={styles.flex}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <TouchableOpacity onPress={goMain}>
           <View style={{height: 30, width: 30, borderWidth: 1}}>
@@ -38,7 +38,7 @@ const Login = () => {
           <Image style={[styles.iconButton]} source={require('../assets/images/appleIcon.png')} />
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

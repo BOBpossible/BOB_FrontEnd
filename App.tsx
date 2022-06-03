@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, SafeAreaView} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from './src/screens/Splash';
 import {NavigationContainer} from '@react-navigation/native';
 import {MainNavigator} from './src/nav';
 import {AuthNavigator} from './src/nav';
+import 'react-native-gesture-handler';
+import {enableScreens} from 'react-native-screens';
 
+enableScreens();
 export default function App() {
   const Stack = createStackNavigator();
 
@@ -21,7 +25,7 @@ export default function App() {
   }, []);
 
   return (
-    <SafeAreaView style={[styles.SafeAreaView]}>
+    <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false, gestureEnabled: false}}>
           {loading ? (
@@ -33,7 +37,7 @@ export default function App() {
           )}
         </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

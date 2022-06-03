@@ -12,7 +12,7 @@ export const AuthNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="Login"
-      screenOptions={{headerShown: false, gestureEnabled: false}}
+      screenOptions={{headerShown: false, gestureEnabled: true}}
     >
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
