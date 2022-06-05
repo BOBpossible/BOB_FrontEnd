@@ -6,10 +6,11 @@ import {createRegister} from '../data/createRegister';
 import {RegisterInterface} from '../data/RegisterInterface';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
+import {create} from 'react-test-renderer';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Register'>;
 
-const Register = ({navigation}: Props) => {
+const Register = ({navigation, route}: Props) => {
   const title = 'Register';
   const [registerData, setRegisterData] = useState<RegisterInterface>(createRegister);
 

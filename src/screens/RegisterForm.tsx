@@ -2,14 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RegisterNextButton} from '../components';
-import {createRegister, RegisterInterface} from '../data';
+import {RegisterInterface} from '../data';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
 const RegisterForm = ({navigation, route}: Props) => {
-  const [registerData, setRegisterData] = useState<RegisterInterface>(createRegister);
+  const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
   useEffect(() => {
     setRegisterData(route.params.registerData);
   }, []);
@@ -17,6 +17,9 @@ const RegisterForm = ({navigation, route}: Props) => {
   const title = 'RegisterForm';
   const goNext = () => {
     navigation.navigate('RegisterCategory', {registerData});
+  };
+  const goBack = () => {
+    navigation.goBack({registerData});
   };
   return (
     <SafeAreaView style={[styles.flex]}>

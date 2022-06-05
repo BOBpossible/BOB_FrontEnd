@@ -10,7 +10,7 @@ import {RegisterInterface} from '../data';
 
 export type AuthStackParamList = {
   Login: undefined;
-  Register: undefined;
+  Register: {registerData: RegisterInterface};
   RegisterForm: {registerData: RegisterInterface};
   RegisterCategory: {registerData: RegisterInterface};
   MainNavigator: undefined;
