@@ -5,6 +5,7 @@ import {RegisterNextButton} from '../components';
 import {RegisterInterface} from '../data';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
+import {RegisterHeader} from '../components';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
@@ -19,10 +20,11 @@ const RegisterForm = ({navigation, route}: Props) => {
     navigation.navigate('RegisterCategory', {registerData});
   };
   const goBack = () => {
-    navigation.goBack({registerData});
+    navigation.navigate('Register', {registerData});
   };
   return (
     <SafeAreaView style={[styles.flex]}>
+      <RegisterHeader goBack={goBack} pageNum={1} />
       <View style={[styles.flex]}>
         <Text>{title}</Text>
       </View>
@@ -33,6 +35,12 @@ const RegisterForm = ({navigation, route}: Props) => {
 
 const styles = StyleSheet.create({
   flex: {flex: 1},
+  backButton: {
+    zIndex: 1,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default RegisterForm;
