@@ -19,6 +19,12 @@ const Register = ({navigation, route}: Props) => {
   const [checkLocation, setCheckLocation] = useState(false);
   const [checkMarketing, setCheckMarketing] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  console.log(route);
+  useEffect(() => {
+    if (route.params !== undefined) {
+      setRegisterData(route.params.registerData);
+    }
+  }, []);
 
   useEffect(() => {
     if (checkPrivacy && checkService && check14) {
@@ -39,12 +45,7 @@ const Register = ({navigation, route}: Props) => {
   const goBack = () => {
     navigation.goBack();
   };
-  useEffect(() => {
-    //If param registerData exists
-    // if (route.params.registerData === undefined) {
-    //   setRegisterData(route.params.registerData);
-    // }
-  }, []);
+
   return (
     <SafeAreaView style={[styles.flex]}>
       <RegisterHeader goBack={goBack} pageNum={0} />
