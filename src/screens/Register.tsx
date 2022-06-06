@@ -26,6 +26,7 @@ const Register = ({navigation, route}: Props) => {
     //   setRegisterData(route.params.registerData);
     // }
   }, []);
+
   return (
     <SafeAreaView style={[styles.flex]}>
       <RegisterHeader goBack={goBack} pageNum={0} />
