@@ -28,7 +28,7 @@ const RegisterForm = ({navigation, route}: Props) => {
       <View style={[styles.flex]}>
         <Text>{title}</Text>
       </View>
-      <RegisterNextButton goNext={goNext} />
+      <RegisterNextButton goNext={goNext} buttonState={1} />
     </SafeAreaView>
   );
 };

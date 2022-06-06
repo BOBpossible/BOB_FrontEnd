@@ -13,9 +13,7 @@ const RegisterCategory = () => {
       <View style={{height: 40, justifyContent: 'center', alignItems: 'center'}}>
         <Text>2/2</Text>
       </View>
-      <View style={[styles.flex]}>
-        <Text>{title}</Text>
-      </View>
+      <View style={[styles.flex]}></View>
     </SafeAreaView>
   );
 };
