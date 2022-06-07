@@ -1,9 +1,10 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {RegisterHeader, RegisterNextButton} from '../components';
+import {RegisterHeader, RegisterNextButton, CategoryItem} from '../components';
 import {RegisterInterface} from '../data';
 import {AuthStackParamList} from '../nav';
 
@@ -11,7 +12,7 @@ type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
 const RegisterCategory = ({navigation, route}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
-  const title = 'RegisterCategory';
+  const [category, setCategory] = useState<number[]>([]);
   const goNext = () => {
     navigation.reset({routes: [{name: 'MainNavigator'}]});
   };
@@ -27,10 +28,28 @@ const RegisterCategory = ({navigation, route}: Props) => {
             <Text style={[styles.categoryHeadText]}>선호하는 음식 종류를 선택해주세요!</Text>
             <Text style={[styles.categorySubHeadText]}>중복선택 가능해요!</Text>
           </View>
-          <View></View>
-          <View></View>
-          <View></View>
-          <View></View>
+          <View style={[styles.categoryBox]}>
+            <View style={[styles.categoryRow]}>
+              <TouchableOpacity onPress={() => setCategory([...category, 0])}>
+                <View>
+                  <Text>한식</Text>
+                </View>
+              </TouchableOpacity>
+              <CategoryItem
+                onPress={() => setCategory([...category, 1])}
+                title="일식"
+                isSelected={category.includes(1)}
+              />
+              <TouchableOpacity>
+                <View>
+                  <Text>중식</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={[styles.categoryRow]}></View>
+            <View style={[styles.categoryRow]}></View>
+            <View style={[styles.categoryRow]}></View>
+          </View>
         </View>
       </View>
       <RegisterNextButton goNext={goNext} buttonState={2} />
