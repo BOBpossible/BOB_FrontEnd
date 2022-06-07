@@ -22,10 +22,11 @@ export const CategoryItem: FC<CategoryItemProps> = ({onPress, title, isSelected}
 const styles = StyleSheet.create({
   categoryItems: {
     width: 105,
-    heigth: 56,
+    height: 56,
     borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 10,
   },
   selected: {borderColor: '#6C69FF', backgroundColor: '#F6F6FE'},
   selectedText: {color: '#6C69FF'},

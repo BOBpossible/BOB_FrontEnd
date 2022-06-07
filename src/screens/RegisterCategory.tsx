@@ -12,13 +12,30 @@ type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
 const RegisterCategory = ({navigation, route}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
-  const [category, setCategory] = useState<number[]>([]);
+  const [category, setCategory] = useState({
+    0: false,
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+    6: false,
+    7: false,
+    8: false,
+    9: false,
+    10: false,
+    11: false,
+  });
   const goNext = () => {
     navigation.reset({routes: [{name: 'MainNavigator'}]});
   };
   const goBack = () => {
     navigation.navigate('RegisterForm', {registerData});
   };
+  const getCategoryArray = () => {
+    return Object.keys(category).filter((key) => category[key as unknown as keyof typeof category]);
+  };
+
   return (
     <SafeAreaView style={[styles.flex]}>
       <RegisterHeader goBack={goBack} pageNum={2} />
@@ -30,25 +47,109 @@ const RegisterCategory = ({navigation, route}: Props) => {
           </View>
           <View style={[styles.categoryBox]}>
             <View style={[styles.categoryRow]}>
-              <TouchableOpacity onPress={() => setCategory([...category, 0])}>
-                <View>
-                  <Text>한식</Text>
-                </View>
-              </TouchableOpacity>
               <CategoryItem
-                onPress={() => setCategory([...category, 1])}
-                title="일식"
-                isSelected={category.includes(1)}
+                onPress={() => {
+                  setCategory({...category, 0: !category[0]});
+                  setRegisterData({...registerData, category: category});
+                }}
+                title="한식"
+                isSelected={category[0]}
               />
-              <TouchableOpacity>
-                <View>
-                  <Text>중식</Text>
-                </View>
-              </TouchableOpacity>
+              <CategoryItem
+                onPress={() => {
+                  setCategory({...category, 1: !category[1]});
+                  setRegisterData({...registerData, category: category});
+                }}
+                title="일식"
+                isSelected={category[1]}
+              />
+              <CategoryItem
+                onPress={() => {
+                  setCategory({...category, 2: !category[2]});
+                  setRegisterData({...registerData, category: category});
+                }}
+                title="중식"
+                isSelected={category[2]}
+              />
             </View>
-            <View style={[styles.categoryRow]}></View>
-            <View style={[styles.categoryRow]}></View>
-            <View style={[styles.categoryRow]}></View>
+            <View style={[styles.categoryRow]}>
+              <CategoryItem
+                onPress={() => {
+                  setCategory({...category, 3: !category[3]});
+                  setRegisterData({...registerData, category: category});
+                }}
+                title="양식"
+                isSelected={category[3]}
+              />
+              <CategoryItem
+                onPress={() => {
+                  setCategory({...category, 4: !category[4]});
+                  setRegisterData({...registerData, category: category});
+                }}
+                title="치킨"
+                isSelected={category[4]}
+              />
+              <CategoryItem
+                onPress={() => {
+                  setCategory({...category, 5: !category[5]});
+                  setRegisterData({...registerData, category: category});
+                }}
+                title="분식"
+                isSelected={category[5]}
+              />
+            </View>
+            <View style={[styles.categoryRow]}>
+              <CategoryItem
+                onPress={() => {
+                  setCategory({...category, 6: !category[6]});
+                  setRegisterData({...registerData, category: category});
+                }}
+                title="고기/구이"
+                isSelected={category[6]}
+              />
+              <CategoryItem
+                onPress={() => {
+                  setCategory({...category, 7: !category[7]});
+                  setRegisterData({...registerData, category: category});
+                }}
+                title="도시락"
+                isSelected={category[7]}
+              />
+              <CategoryItem
+                onPress={() => {
+                  setCategory({...category, 8: !category[8]});
+                  setRegisterData({...registerData, category: category});
+                }}
+                title="야식"
+                isSelected={category[8]}
+              />
+            </View>
+            <View style={[styles.categoryRow]}>
+              <CategoryItem
+                onPress={() => {
+                  setCategory({...category, 9: !category[9]});
+                  setRegisterData({...registerData, category: category});
+                }}
+                title="패스트 푸드"
+                isSelected={category[9]}
+              />
+              <CategoryItem
+                onPress={() => {
+                  setCategory({...category, 10: !category[10]});
+                  setRegisterData({...registerData, category: category});
+                }}
+                title="디저트"
+                isSelected={category[10]}
+              />
+              <CategoryItem
+                onPress={() => {
+                  setCategory({...category, 11: !category[11]});
+                  setRegisterData({...registerData, category: category});
+                }}
+                title="아시안푸드"
+                isSelected={category[11]}
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -71,6 +172,7 @@ const styles = StyleSheet.create({
   },
   categoryHead: {
     width: 205,
+    marginBottom: 56,
   },
   categoryHeadText: {
     fontSize: 24,
@@ -83,6 +185,11 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     marginTop: 8,
     color: '#616161',
+  },
+  categoryRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16,
   },
 });
 
