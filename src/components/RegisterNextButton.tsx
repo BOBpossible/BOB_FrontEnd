@@ -40,7 +40,7 @@ export const RegisterNextButton: FC<RegisterNextButtonProps> = ({
 };
 
 const styles = StyleSheet.create({
-  buttonWrap: {justifyContent: 'center', alignItems: 'center', margin: 20},
+  buttonWrap: {justifyContent: 'center', alignItems: 'center', marginLeft: 20, marginRight: 20},
   buttonStyle: {
     width: '100%',
     height: 60,

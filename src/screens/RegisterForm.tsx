@@ -20,7 +20,6 @@ const RegisterForm = ({navigation, route}: Props) => {
     setRegisterData(route.params.registerData);
   }, []);
 
-  const title = 'RegisterForm';
   const goNext = () => {
     navigation.navigate('RegisterCategory', {registerData});
   };

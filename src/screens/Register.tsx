@@ -19,7 +19,6 @@ const Register = ({navigation, route}: Props) => {
   const [checkLocation, setCheckLocation] = useState(false);
   const [checkMarketing, setCheckMarketing] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  console.log(route);
 
   //initialize registerData if navigated back from registerForm
   useEffect(() => {

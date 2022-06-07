@@ -19,12 +19,12 @@ export const RegisterHeader: FC<RegisterHeaderProps> = ({goBack, pageNum}) => {
       {pageNum === 0 && <View />}
       {pageNum === 1 && (
         <View>
-          <Text>1/2</Text>
+          <Text style={[styles.progressText]}>1/2</Text>
         </View>
       )}
       {pageNum === 2 && (
         <View>
-          <Text>2/2</Text>
+          <Text style={[styles.progressText]}>2/2</Text>
         </View>
       )}
       <View style={[styles.backButton, styles.disable]}>
@@ -42,4 +42,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   disable: {opacity: 0},
+  progressText: {
+    color: '#949494',
+    fontSize: 16,
+  },
 });
