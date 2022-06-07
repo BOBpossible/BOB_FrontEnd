@@ -71,6 +71,7 @@ const Main = () => {
             day={item.day}
             minCost={item.minCost}
             point={item.point}
+            status="start"
           />
         )}
         ListHeaderComponent={
