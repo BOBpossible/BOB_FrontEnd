@@ -20,12 +20,15 @@ const Register = ({navigation, route}: Props) => {
   const [checkMarketing, setCheckMarketing] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   console.log(route);
+
+  //initialize registerData if navigated back from registerForm
   useEffect(() => {
     if (route.params !== undefined) {
       setRegisterData(route.params.registerData);
     }
   }, []);
 
+  //Check disable Button and Check ALL status
   useEffect(() => {
     if (checkPrivacy && checkService && check14) {
       setButtonDisabled(false);

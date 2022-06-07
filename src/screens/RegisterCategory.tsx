@@ -1,19 +1,30 @@
-import React from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {RegisterHeader, RegisterNextButton} from '../components';
+import {RegisterInterface} from '../data';
+import {AuthStackParamList} from '../nav';
 
-const RegisterCategory = () => {
+type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
+
+const RegisterCategory = ({navigation, route}: Props) => {
+  const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
   const title = 'RegisterCategory';
+  const goNext = () => {
+    navigation.reset({routes: [{name: 'MainNavigator'}]});
+  };
+  const goBack = () => {
+    navigation.navigate('RegisterForm', {registerData});
+  };
   return (
-    <SafeAreaView>
-      <View style={[styles.backButton]}>
-        <Icon name="arrow-left" size={24} color="black" />
+    <SafeAreaView style={[styles.flex]}>
+      <RegisterHeader goBack={goBack} pageNum={2} />
+      <View style={[styles.flex]}>
+        <Text>{title}</Text>
       </View>
-      <View style={{height: 40, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>2/2</Text>
-      </View>
-      <View style={[styles.flex]}></View>
+      <RegisterNextButton goNext={goNext} buttonState={2} />
     </SafeAreaView>
   );
 };
