@@ -59,3 +59,7 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+
+# 인증 키 등
+.env

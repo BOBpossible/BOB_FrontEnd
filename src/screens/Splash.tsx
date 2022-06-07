@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {Colors} from 'react-native-paper';
-
 const Splash = () => {
   const title = '미션밥파서블';
   return (
