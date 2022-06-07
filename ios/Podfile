@@ -18,6 +18,11 @@ target 'BOB_FrontEnd' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+  
+
+  pod 'react-native-nmap', :path => '../node_modules/react-native-nmap'
+
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
 
   target 'BOB_FrontEndTests' do
     inherit! :complete
