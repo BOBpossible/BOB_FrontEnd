@@ -6,13 +6,23 @@ import {MainNavigator} from './MainNavigator';
 import Register from '../screens/Register';
 import RegisterForm from '../screens/RegisterForm';
 import RegisterCategory from '../screens/RegisterCategory';
-const Stack = createStackNavigator();
+import {RegisterInterface} from '../data';
+
+export type AuthStackParamList = {
+  Login: undefined;
+  Register: {registerData: RegisterInterface};
+  RegisterForm: {registerData: RegisterInterface};
+  RegisterCategory: {registerData: RegisterInterface};
+  MainNavigator: undefined;
+};
+
+const Stack = createStackNavigator<AuthStackParamList>();
 
 export const AuthNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="Login"
-      screenOptions={{headerShown: false, gestureEnabled: false}}
+      screenOptions={{headerShown: false, gestureEnabled: true}}
     >
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />

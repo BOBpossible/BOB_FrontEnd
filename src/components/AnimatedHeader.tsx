@@ -8,13 +8,14 @@ import {CircleBar} from './CircleBar';
 const HEADER_HEIGHT = 250;
 type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
+  paddingTop: number;
 };
 
-export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue}) => {
+export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop}) => {
   const heightAnimStyle = useStyle({
     height: animatedValue.interpolate({
       inputRange: [0, HEADER_HEIGHT],
-      outputRange: [HEADER_HEIGHT, 120],
+      outputRange: [HEADER_HEIGHT, 120 + paddingTop],
       extrapolate: 'clamp',
     }),
   });
@@ -46,6 +47,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue}) => {
 
   const styles = StyleSheet.create({
     headerWrap: {
+      paddingTop,
       position: 'absolute',
       top: 0,
       left: 0,
