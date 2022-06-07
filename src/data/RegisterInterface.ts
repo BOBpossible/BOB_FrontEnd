@@ -16,5 +16,5 @@ export type RegisterInterface = {
   gender: gender;
   birthDate: Date | null;
   address: string;
-  category: {};
+  category: number[];
 };

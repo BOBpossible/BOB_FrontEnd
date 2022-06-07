@@ -1255,13 +1255,6 @@
     "sudo-prompt" "^9.0.0"
     "wcwidth" "^1.0.1"
 
-"@react-native-community/datetimepicker@^6.1.3", "@react-native-community/datetimepicker@>=3.0.0":
-  "integrity" "sha512-3e20BPQy8QiQeIGJL4zoJaRsGWB31hl9i7oTZECWxnK6nVUeqGt/G+JRJlJinmqL6z4WePHC6RSUMgpC64OOwg=="
-  "resolved" "https://registry.npmjs.org/@react-native-community/datetimepicker/-/datetimepicker-6.1.3.tgz"
-  "version" "6.1.3"
-  dependencies:
-    "invariant" "^2.2.4"
-
 "@react-native-community/eslint-config@^2.0.0":
   "integrity" "sha512-vHaMMfvMp9BWCQQ0lNIXibOJTcXIbYUQ8dSUsMOsrXgVkeVQJj88OwrKS00rQyqwMaC4/a6HuDiFzYUkGKOpVg=="
   "resolved" "https://registry.npmjs.org/@react-native-community/eslint-config/-/eslint-config-2.0.0.tgz"
@@ -3603,11 +3596,6 @@
   "integrity" "sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE="
   "resolved" "https://registry.npmjs.org/growly/-/growly-1.3.0.tgz"
   "version" "1.3.0"
-
-"hamt_plus@1.0.2":
-  "integrity" "sha512-t2JXKaehnMb9paaYA7J0BX8QQAY8lwfQ9Gjf4pg/mk4krt+cmwmU652HOoWonf+7+EQV97ARPMhhVgU1ra2GhA=="
-  "resolved" "https://registry.npmjs.org/hamt_plus/-/hamt_plus-1.0.2.tgz"
-  "version" "1.0.2"
 
 "has-bigints@^1.0.1", "has-bigints@^1.0.2":
   "integrity" "sha512-tSvCKtBr9lkF0Ex0aQiP9N+OpV4zi2r/Nee5VkRDbaqv35RLYMzbwQfFSZZH0kR+Rd6302UJZ2p/bJCEoR3VoQ=="
@@ -6035,12 +6023,6 @@
   "integrity" "sha512-+XMJOqn4zZ6PWO0UH478yj0b9PjYGHQcLUd0W5gJQ3DqGeJEb3vvWVDMbkzcuHsh59hkhGPsE9Q6pZkXxKsYtQ=="
   "resolved" "https://registry.npmjs.org/react-native-nmap/-/react-native-nmap-0.0.66.tgz"
   "version" "0.0.66"
-"react-native-modal-datetime-picker@^13.1.2":
-  "integrity" "sha512-PZDkuY7HayRX1KE2X2dm29CvCLzwj/vn6B6QdPbjZea/GEKvHBMOLGdhFCcA9+gD64Y41+VqfytUh2fdvUvQ1g=="
-  "resolved" "https://registry.npmjs.org/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-13.1.2.tgz"
-  "version" "13.1.2"
-  dependencies:
-    "prop-types" "^15.7.2"
 
 "react-native-paper@^4.12.1":
   "integrity" "sha512-xvAkwtRatsDcB/eSBUwoThBAT5Yy32SgKwrfHRUXi/9s5lR2SEuPZwmsZyAaq+bsxtAH1CaIT4CDeVLSaArzyg=="
@@ -6085,8 +6067,7 @@
     "prop-types" "^15.7.2"
     "yargs" "^16.1.1"
 
-
-"react-native@*", "react-native@>=0.42.0", "react-native@>=0.48.4", "react-native@>=0.57", "react-native@>=0.65.0", "react-native@0.68.2":
+"react-native@0.68.2":
   "integrity" "sha512-qNMz+mdIirCEmlrhapAtAG+SWVx6MAiSfCbFNhfHqiqu1xw1OKXdzIrjaBEPihRC2pcORCoCHduHGQe/Pz9Yuw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.68.2.tgz"
   "version" "0.68.2"
@@ -6147,8 +6128,7 @@
     "react-shallow-renderer" "^16.13.1"
     "scheduler" "^0.20.2"
 
-
-"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0", "react@^17.0.0", "react@>=16.0", "react@>=16.13.1", "react@>=16.3.0", "react@17.0.2":
+"react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
@@ -6211,13 +6191,6 @@
     "esprima" "~4.0.0"
     "source-map" "~0.6.1"
     "tslib" "^2.0.1"
-
-"recoil@^0.7.3":
-  "integrity" "sha512-WaPppk3Hz5/V9nOVmu1X/o3cJyf/rLXw/YsEENvMzEDk+LKqMiGfFgZ3Gg51TKWccpCZCyrSBXn2O4L1E2WDPQ=="
-  "resolved" "https://registry.npmjs.org/recoil/-/recoil-0.7.3.tgz"
-  "version" "0.7.3"
-  dependencies:
-    "hamt_plus" "1.0.2"
 
 "regenerate-unicode-properties@^10.0.1":
   "integrity" "sha512-vn5DU6yg6h8hP/2OkQo3K7uVILvY4iu0oI4t3HFa81UPkhGJwkRwM10JEc3upjdhHjs/k8GJY1sRBhk5sr69Bw=="

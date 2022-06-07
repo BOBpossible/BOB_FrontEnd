@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, TextInput} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RegisterNextButton} from '../components';
 import {gender, RegisterInterface} from '../data';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
 import {RegisterHeader} from '../components';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
@@ -16,7 +15,6 @@ const RegisterForm = ({navigation, route}: Props) => {
   const [gender, setGender] = useState<gender>(3);
   const [birthDate, setBirthDate] = useState<Date>(new Date());
   const [address, setAddress] = useState('');
-  const [dateModal, setDateModal] = useState(false);
 
   useEffect(() => {
     setRegisterData(route.params.registerData);
@@ -27,16 +25,6 @@ const RegisterForm = ({navigation, route}: Props) => {
   };
   const goBack = () => {
     navigation.navigate('Register', {registerData});
-  };
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setDateModal(false);
-    setBirthDate(currentDate);
-  };
-  const handleConfirm = (date: Date) => {
-    console.warn('A date has been picked: ', date);
-    setBirthDate(date);
-    setDateModal(false);
   };
   return (
     <SafeAreaView style={[styles.flex]}>
@@ -67,18 +55,11 @@ const RegisterForm = ({navigation, route}: Props) => {
         </View>
         <View style={[styles.birthDate]}>
           <Text style={[styles.formHeadText]}>생년월일</Text>
-          <TouchableOpacity onPress={() => setDateModal(true)}>
-            <View style={[styles.nameInput]}>
-              <Text>생년월일 입력</Text>
-            </View>
-          </TouchableOpacity>
-
-          <DateTimePickerModal
-            testID="dateTimePicker"
-            isVisible={dateModal}
-            mode="date"
-            onConfirm={handleConfirm}
-            onCancel={() => setDateModal(false)}
+          <TextInput
+            style={[styles.nameInput]}
+            onChangeText={setName}
+            value={name}
+            placeholder="이름을 입력"
           />
         </View>
         <View style={[styles.address]}>
