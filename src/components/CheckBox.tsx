@@ -9,17 +9,15 @@ type CheckBoxProps = {
   isChecked: boolean;
   isCheckAll?: boolean;
 };
-let scale = 1;
 
 export const CheckBox: FC<CheckBoxProps> = ({onPress, title, isChecked, isCheckAll}) => {
-  isCheckAll ? (scale = 1.2) : (scale = 1);
   return (
     <View style={styles.container}>
       <Pressable onPress={onPress}>
         <View style={isChecked ? styles.markedCircle : styles.unmarkedCircle}>
           <Icon
             name="check"
-            size={18 * scale}
+            size={14}
             color="#FFFFFF"
             style={isChecked ? styles.markedCheck : styles.unmarkedCheck}
           />
@@ -39,17 +37,21 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   title: {
-    fontSize: 16 * scale,
+    fontSize: 16,
     color: '#000',
     marginLeft: 16,
   },
   markedCircle: {
+    width: 18,
+    height: 18,
     backgroundColor: '#6C69FF',
     borderRadius: 18,
-    borderColor: '#DFDFDF',
-    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   unmarkedCircle: {
+    width: 18,
+    height: 18,
     backgroundColor: 'transparent',
     borderRadius: 18,
     borderColor: '#DFDFDF',
