@@ -28,10 +28,14 @@ const Login = ({}) => {
       </View>
 
       <View style={[styles.loginTitle]}>
-        <Text style={{fontSize: 50}}>로고</Text>
-        <Text style={{fontSize: 20}}>미션밥파서블</Text>
+        <Text style={[styles.loginHeadText1]}>Mission!</Text>
+        <Text style={[styles.loginHeadText2]}>BoBpossible</Text>
+        <Text style={[styles.loginSubHeadText]}> 밥미션을 수행하고, 포인트를 적립하라!</Text>
       </View>
       <View style={[styles.logoWrap]}>
+        <View style={[styles.logoImage]}></View>
+      </View>
+      <View style={[styles.loginButtonWrap]}>
         <TouchableOpacity onPress={goKakao}>
           <Image style={[styles.iconButton]} source={require('../assets/images/kakaoIcon.png')} />
         </TouchableOpacity>
@@ -53,12 +57,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 23, //디버깅용 메뉴 사라지면 53
   },
+  loginHeadText1: {
+    fontFamily: 'Pretendard-SemiBold',
+    fontSize: 44,
+    fontWeight: 'bold',
+  },
+  loginHeadText2: {
+    fontFamily: 'Pretendard-SemiBold',
+    fontSize: 44,
+    fontWeight: 'bold',
+    color: '#6C69FF',
+  },
+  loginSubHeadText: {
+    fontFamily: 'Pretendard-Light',
+    color: '#616161',
+    fontSize: 17,
+    marginTop: 10,
+  },
   logoWrap: {
-    marginBottom: 92,
-    marginLeft: 64,
-    marginRight: 64,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logoImage: {
+    width: 280,
+    height: 200,
+    backgroundColor: '#D9D9D9',
+  },
+  loginButtonWrap: {
+    marginBottom: 30,
+    alignItems: 'center',
   },
   iconButton: {
     width: 50,
