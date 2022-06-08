@@ -4,6 +4,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '11.0'
 install! 'cocoapods', :deterministic_uuids => false
 
+
 target 'BOB_FrontEnd' do
   config = use_native_modules!
 
@@ -20,9 +21,7 @@ target 'BOB_FrontEnd' do
   )
   
 
-  pod 'react-native-nmap', :path => '../node_modules/react-native-nmap'
 
-  pod 'react-native-config', :path => '../node_modules/react-native-config'
 
   target 'BOB_FrontEndTests' do
     inherit! :complete
