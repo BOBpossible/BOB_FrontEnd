@@ -129,16 +129,4 @@ const styles = StyleSheet.create({
   missionButtonView: {
     borderWidth: 2,
   },
-  missionStartView: {
-    backgroundColor: 'red',
-  },
-  missionRequestView: {
-    backgroundColor: 'orange',
-  },
-  missionOnRequestView: {
-    backgroundColor: 'yellow',
-  },
-  missionSuccessView: {
-    backgroundColor: 'green',
-  },
 });
