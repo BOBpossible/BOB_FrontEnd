@@ -4,7 +4,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {HomeMission} from '../components';
 import {AnimatedHeader} from '../components';
-
+import {useRecoilState} from 'recoil';
+import {userToken} from '../state';
 const dummyMission = [
   {
     name: '반이학생마라탕',
@@ -51,6 +52,8 @@ const dummyMission = [
 ];
 
 const Main = () => {
+  const [token, setToken] = useRecoilState(userToken);
+  console.log(token);
   const offset = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
   const styles = StyleSheet.create({

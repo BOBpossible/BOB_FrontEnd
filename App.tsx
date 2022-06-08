@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {RecoilRoot} from 'recoil';
 import {StyleSheet, SafeAreaView, Text} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -25,19 +26,21 @@ export default function App() {
   }, []);
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false, gestureEnabled: false}}>
-          {loading ? (
-            <Stack.Screen name="Splash" component={Splash} />
-          ) : isLogin ? (
-            <Stack.Screen name="MainNavigator" component={MainNavigator} />
-          ) : (
-            <Stack.Screen name="AuthNavigation" component={AuthNavigator} />
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <RecoilRoot>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{headerShown: false, gestureEnabled: false}}>
+            {loading ? (
+              <Stack.Screen name="Splash" component={Splash} />
+            ) : isLogin ? (
+              <Stack.Screen name="MainNavigator" component={MainNavigator} />
+            ) : (
+              <Stack.Screen name="AuthNavigation" component={AuthNavigator} />
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </RecoilRoot>
   );
 }
 

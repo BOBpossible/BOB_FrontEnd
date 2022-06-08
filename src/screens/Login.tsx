@@ -3,11 +3,15 @@ import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const Login = () => {
+const baseURL = 'https://bobpossible.shop';
+
+const Login = ({}) => {
   const navigation = useNavigation();
 
   const goMain = useCallback(() => navigation.navigate('MainNavigator'), []);
   const goRegister = useCallback(() => navigation.navigate('Register'), []);
+  const goKakao = useCallback(() => navigation.navigate('KakaoLogin'), []);
+
   return (
     <SafeAreaView style={styles.flex}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -23,12 +27,12 @@ const Login = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={[styles.loginMain]}>
+      <View style={[styles.loginTitle]}>
         <Text style={{fontSize: 50}}>로고</Text>
         <Text style={{fontSize: 20}}>미션밥파서블</Text>
       </View>
       <View style={[styles.logoWrap]}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={goKakao}>
           <Image style={[styles.iconButton]} source={require('../assets/images/kakaoIcon.png')} />
         </TouchableOpacity>
         <TouchableOpacity>
@@ -44,11 +48,10 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   flex: {flex: 1},
-  loginMain: {
+  loginTitle: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
-    height: '100%',
+    marginTop: 23, //디버깅용 메뉴 사라지면 53
   },
   logoWrap: {
     marginBottom: 92,
