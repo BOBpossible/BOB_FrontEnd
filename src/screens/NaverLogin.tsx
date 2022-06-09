@@ -1,5 +1,5 @@
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useRef} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {WebView} from 'react-native-webview';
 import {useRecoilState} from 'recoil';
@@ -8,12 +8,13 @@ import {userToken} from '../state';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Register'>;
 
-const KakaoLogin = ({navigation, route}: Props) => {
+const NaverLogin = ({navigation, route}: Props) => {
+  const webviewRef = useRef();
   const [token, setToken] = useRecoilState(userToken);
   const INJECTED_JAVASCRIPT =
     '(function() {if(window.document.getElementsByTagName("pre").length>0){window.ReactNativeWebView.postMessage((window.document.getElementsByTagName("pre")[0].innerHTML));}})();';
   const handleLogin = async (event: any) => {
-    // console.log(JSON.parse(event.nativeEvent.data));
+    console.log(JSON.parse(event.nativeEvent.data));
     const result = JSON.parse(event.nativeEvent.data);
     const success = result.isSuccess;
     if (success) {
@@ -36,20 +37,14 @@ const KakaoLogin = ({navigation, route}: Props) => {
         originWhitelist={['*']}
         scalesPageToFit={false}
         style={{marginTop: 30}}
-        source={{uri: 'https://bobpossible.shop/oauth2/authorization/kakao'}}
+        source={{uri: 'https://bobpossible.shop/oauth2/authorization/naver'}}
         injectedJavaScript={INJECTED_JAVASCRIPT}
         javaScriptEnabled={true}
         onMessage={handleLogin}
         incognito={true}
-        onNavigationStateChange={(e) => {
-          if (e.url.includes('bobpossible.shop/auth/success')) {
-            e.stopLoading();
-            return false;
-          }
-        }}
       />
     </SafeAreaView>
   );
 };
 
-export default KakaoLogin;
+export default NaverLogin;

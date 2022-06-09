@@ -11,7 +11,7 @@ const Login = ({}) => {
   const goMain = useCallback(() => navigation.navigate('MainNavigator'), []);
   const goRegister = useCallback(() => navigation.navigate('Register'), []);
   const goKakao = useCallback(() => navigation.navigate('KakaoLogin'), []);
-
+  const goNaver = useCallback(() => navigation.navigate('NaverLogin'), []);
   return (
     <SafeAreaView style={styles.flex}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -39,7 +39,7 @@ const Login = ({}) => {
         <TouchableOpacity onPress={goKakao}>
           <Image style={[styles.iconButton]} source={require('../assets/images/kakaoIcon.png')} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={goNaver}>
           <Image style={[styles.iconButton]} source={require('../assets/images/naverIcon.png')} />
         </TouchableOpacity>
         <TouchableOpacity>
@@ -58,18 +58,18 @@ const styles = StyleSheet.create({
     marginTop: 23, //디버깅용 메뉴 사라지면 53
   },
   loginHeadText1: {
-    fontFamily: 'Pretendard-SemiBold',
+    fontFamily: 'PretendardSemiBold',
     fontSize: 44,
     fontWeight: 'bold',
   },
   loginHeadText2: {
-    fontFamily: 'Pretendard-SemiBold',
+    fontFamily: 'PretendardSemiBold',
     fontSize: 44,
     fontWeight: 'bold',
     color: '#6C69FF',
   },
   loginSubHeadText: {
-    fontFamily: 'Pretendard-Light',
+    fontFamily: 'PretendardLight',
     color: '#616161',
     fontSize: 17,
     marginTop: 10,

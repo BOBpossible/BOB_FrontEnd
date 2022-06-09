@@ -28,9 +28,16 @@
 	<string>wa2ln3tnzy</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<!-- <key>NSAllowsArbitraryLoads</key>
+		<true/> -->
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>bobpossible.shop</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
@@ -40,12 +47,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
 	<key>UIAppFonts</key>
-	<array>
-		<string>PretendardLight.woff</string>
-		<string>PretendardMedium.woff</string>
-		<string>PretendardRegular.woff</string>
-		<string>PretendardSemiBold.woff</string>
-	</array>
+	<array/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
