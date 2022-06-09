@@ -2,19 +2,20 @@ import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RegisterNextButton} from '../components';
-import {gender, RegisterInterface} from '../data';
+import {RegisterInterface} from '../data';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
 import {RegisterHeader} from '../components';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import moment from 'moment';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
 const RegisterForm = ({navigation, route}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
   const [name, setName] = useState('');
-  const [gender, setGender] = useState<gender>(3);
-  const [birthDate, setBirthDate] = useState<Date>(new Date());
+  const [gender, setGender] = useState(3);
+  const [birthDate, setBirthDate] = useState<Date | null>(null);
   const [address, setAddress] = useState('');
   const [dateModal, setDateModal] = useState(false);
 
@@ -28,13 +29,8 @@ const RegisterForm = ({navigation, route}: Props) => {
   const goBack = () => {
     navigation.navigate('Register', {registerData});
   };
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setDateModal(false);
-    setBirthDate(currentDate);
-  };
+
   const handleConfirm = (date: Date) => {
-    console.warn('A date has been picked: ', date);
     setBirthDate(date);
     setDateModal(false);
   };
@@ -54,22 +50,51 @@ const RegisterForm = ({navigation, route}: Props) => {
         <View style={[styles.gender]}>
           <Text style={[styles.formHeadText]}>성별</Text>
           <View style={[styles.genderWrap]}>
-            <View style={[styles.genderUnchecked]}>
-              <Text>남자</Text>
-            </View>
-            <View style={[styles.genderChecked]}>
-              <Text>여자</Text>
-            </View>
-            <View style={[styles.genderUnchecked]}>
-              <Text>선택 안함</Text>
-            </View>
+            <TouchableOpacity onPress={() => setGender(0)}>
+              <View
+                style={[
+                  styles.genderBox,
+                  gender === 0 ? styles.genderChecked : styles.genderUnchecked,
+                ]}
+              >
+                <Text style={[gender === 0 ? styles.genderChecked : styles.genderUnchecked]}>
+                  남자
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setGender(1)}>
+              <View
+                style={[
+                  styles.genderBox,
+                  gender === 1 ? styles.genderChecked : styles.genderUnchecked,
+                ]}
+              >
+                <Text style={[gender === 1 ? styles.genderChecked : styles.genderUnchecked]}>
+                  여자
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setGender(2)}>
+              <View
+                style={[
+                  styles.genderBox,
+                  gender === 2 ? styles.genderChecked : styles.genderUnchecked,
+                ]}
+              >
+                <Text style={[gender === 2 ? styles.genderChecked : styles.genderUnchecked]}>
+                  선택 안함
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={[styles.birthDate]}>
           <Text style={[styles.formHeadText]}>생년월일</Text>
           <TouchableOpacity onPress={() => setDateModal(true)}>
             <View style={[styles.nameInput]}>
-              <Text>생년월일 입력</Text>
+              <Text style={[styles.placeholder]}>
+                {birthDate === null ? '생년월일 입력' : moment(birthDate).format('YYYY/MM/DD')}
+              </Text>
             </View>
           </TouchableOpacity>
           <DateTimePickerModal
@@ -130,23 +155,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   genderChecked: {
-    width: 105,
-    height: 56,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
     borderColor: '#6C69FF',
-    borderRadius: 10,
     backgroundColor: '#F6F6FE',
+    color: '#6C69FF',
   },
   genderUnchecked: {
+    borderColor: '#DFDFDF',
+  },
+  genderBox: {
     justifyContent: 'center',
     alignItems: 'center',
     width: 105,
     height: 56,
     borderWidth: 1,
-    borderColor: '#DFDFDF',
     borderRadius: 10,
+  },
+  placeholder: {
+    fontSize: 14,
+    lineHeight: 24,
+    color: '#949494',
   },
 });
 

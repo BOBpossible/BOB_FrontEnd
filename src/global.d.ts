@@ -5,5 +5,6 @@ declare namespace ReactNavigation {
     MainNavigator: undefined;
     Register: undefined;
     KakaoLogin: undefined;
+    NaverLogin: undefined;
   }
 }

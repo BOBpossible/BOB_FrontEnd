@@ -1,9 +1,29 @@
 import React, {useCallback} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Image, Platform} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import appleAuth, {
+  AppleButton,
+  AppleAuthRequestOperation,
+  AppleAuthRequestScope,
+  AppleAuthCredentialState,
+} from '@invertase/react-native-apple-authentication';
 
-const baseURL = 'https://bobpossible.shop';
+const onAppleButtonPress = async () => {
+  // performs login request
+  const appleAuthRequestResponse = await appleAuth.performRequest({
+    requestedOperation: AppleAuthRequestOperation.LOGIN,
+    requestedScopes: [AppleAuthRequestScope.EMAIL, AppleAuthRequestScope.FULL_NAME],
+  });
+
+  // get current authentication state for user
+  const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+
+  // use credentialState response to ensure the user is authenticated
+  if (credentialState === AppleAuthCredentialState.AUTHORIZED) {
+    // user is authenticated
+  }
+};
 
 const Login = ({}) => {
   const navigation = useNavigation();
@@ -37,14 +57,19 @@ const Login = ({}) => {
       </View>
       <View style={[styles.loginButtonWrap]}>
         <TouchableOpacity onPress={goKakao}>
-          <Image style={[styles.iconButton]} source={require('../assets/images/kakaoIcon.png')} />
+          <Image style={[styles.iconButton]} source={require('../assets/images/kakaoButton.png')} />
         </TouchableOpacity>
         <TouchableOpacity onPress={goNaver}>
-          <Image style={[styles.iconButton]} source={require('../assets/images/naverIcon.png')} />
+          <Image style={[styles.iconButton]} source={require('../assets/images/naverButton.png')} />
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Image style={[styles.iconButton]} source={require('../assets/images/appleIcon.png')} />
-        </TouchableOpacity>
+        {Platform.OS === 'ios' && (
+          <AppleButton
+            buttonStyle={AppleButton.Style.BLACK}
+            buttonType={AppleButton.Type.SIGN_IN}
+            style={{width: 300, height: 45}}
+            onPress={onAppleButtonPress}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -89,9 +114,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 50,
+    width: 300,
+    height: 44,
+    borderRadius: 10,
   },
 });
 
