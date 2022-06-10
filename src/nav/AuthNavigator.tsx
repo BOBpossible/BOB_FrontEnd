@@ -7,13 +7,17 @@ import Register from '../screens/Register';
 import RegisterForm from '../screens/RegisterForm';
 import RegisterCategory from '../screens/RegisterCategory';
 import {RegisterInterface} from '../data';
+import KakaoLogin from '../screens/KakaoLogin';
+import NaverLogin from '../screens/NaverLogin';
 
 export type AuthStackParamList = {
   Login: undefined;
-  Register: {registerData: RegisterInterface};
+  KakaoLogin: undefined;
+  Register: undefined;
   RegisterForm: {registerData: RegisterInterface};
   RegisterCategory: {registerData: RegisterInterface};
   MainNavigator: undefined;
+  NaverLogin: undefined;
 };
 
 const Stack = createStackNavigator<AuthStackParamList>();
@@ -25,6 +29,8 @@ export const AuthNavigator = () => {
       screenOptions={{headerShown: false, gestureEnabled: true}}
     >
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="KakaoLogin" component={KakaoLogin} />
+      <Stack.Screen name="NaverLogin" component={NaverLogin} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="RegisterForm" component={RegisterForm} />
       <Stack.Screen name="RegisterCategory" component={RegisterCategory} />

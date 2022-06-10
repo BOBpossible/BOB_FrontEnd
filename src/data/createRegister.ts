@@ -1,4 +1,4 @@
-import {RegisterInterface, gender} from './RegisterInterface';
+import {RegisterInterface} from './RegisterInterface';
 
 export const createRegister = (): RegisterInterface => {
   return {
@@ -8,7 +8,7 @@ export const createRegister = (): RegisterInterface => {
     locationContract: false,
     marketingContract: false,
     name: '',
-    gender: gender.notSelected,
+    gender: 3,
     birthDate: null,
     address: '',
     category: [],

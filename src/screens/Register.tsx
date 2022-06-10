@@ -10,7 +10,7 @@ import {RegisterHeader, CheckBox} from '../components';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Register'>;
 
-const Register = ({navigation, route}: Props) => {
+const Register = ({navigation}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(createRegister);
   const [checkAll, setCheckAll] = useState(false);
   const [check14, setCheck14] = useState(false);
@@ -19,13 +19,6 @@ const Register = ({navigation, route}: Props) => {
   const [checkLocation, setCheckLocation] = useState(false);
   const [checkMarketing, setCheckMarketing] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
-
-  //initialize registerData if navigated back from registerForm
-  useEffect(() => {
-    if (route.params !== undefined) {
-      setRegisterData(route.params.registerData);
-    }
-  }, []);
 
   //Check disable Button and Check ALL status
   useEffect(() => {
