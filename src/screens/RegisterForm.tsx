@@ -16,7 +16,8 @@ const RegisterForm = ({navigation, route}: Props) => {
   const [name, setName] = useState('');
   const [gender, setGender] = useState(3);
   const [birthDate, setBirthDate] = useState<Date | null>(null);
-  const [address, setAddress] = useState('');
+  const [addressStreet, setAddressStreet] = useState('');
+  const [addressDetail, setAddressDetail] = useState('');
   const [dateModal, setDateModal] = useState(false);
 
   useEffect(() => {

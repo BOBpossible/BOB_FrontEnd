@@ -2,9 +2,7 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {WebView} from 'react-native-webview';
-import {useRecoilState} from 'recoil';
 import {AuthStackParamList} from '../nav';
-import {userToken} from '../state';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Register'>;
 

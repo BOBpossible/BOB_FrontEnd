@@ -11,6 +11,8 @@ type Props = NativeStackScreenProps<AuthStackParamList, 'Register'>;
 const NaverLogin = ({navigation, route}: Props) => {
   const webviewRef = useRef();
   const [token, setToken] = useRecoilState(userToken);
+  let userAgent =
+    'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1';
   const INJECTED_JAVASCRIPT =
     '(function() {if(window.document.getElementsByTagName("pre").length>0){window.ReactNativeWebView.postMessage((window.document.getElementsByTagName("pre")[0].innerHTML));}})();';
   const handleLogin = async (event: any) => {
@@ -34,6 +36,7 @@ const NaverLogin = ({navigation, route}: Props) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <WebView
+        userAgent={userAgent}
         originWhitelist={['*']}
         scalesPageToFit={false}
         style={{marginTop: 30}}

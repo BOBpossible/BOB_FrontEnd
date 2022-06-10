@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image, Platform} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -8,6 +8,9 @@ import appleAuth, {
   AppleAuthRequestScope,
   AppleAuthCredentialState,
 } from '@invertase/react-native-apple-authentication';
+import SocialWebviewModal from '../modal/SocialWebviewModal';
+import {useRecoilState} from 'recoil';
+import {userToken} from '../state';
 
 const onAppleButtonPress = async () => {
   // performs login request
@@ -27,11 +30,17 @@ const onAppleButtonPress = async () => {
 
 const Login = ({}) => {
   const navigation = useNavigation();
+  const [token, setToken] = useRecoilState(userToken);
+  const [loginModal, setLoginModal] = useState(false);
+  const [source, setSource] = useState('');
+  console.log(source);
+  const signUpWithSNS = async (social: string) => {
+    setSource(`https://bobpossible.shop/oauth2/authorization/${social}`);
+    setLoginModal(true);
+  };
 
   const goMain = useCallback(() => navigation.navigate('MainNavigator'), []);
   const goRegister = useCallback(() => navigation.navigate('Register'), []);
-  const goKakao = useCallback(() => navigation.navigate('KakaoLogin'), []);
-  const goNaver = useCallback(() => navigation.navigate('NaverLogin'), []);
   return (
     <SafeAreaView style={styles.flex}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -55,21 +64,32 @@ const Login = ({}) => {
       <View style={[styles.logoWrap]}>
         <View style={[styles.logoImage]}></View>
       </View>
+      <SocialWebviewModal
+        visible={loginModal}
+        source={source}
+        closeSocialModal={() => setLoginModal(false)}
+      />
       <View style={[styles.loginButtonWrap]}>
-        <TouchableOpacity onPress={goKakao}>
-          <Image style={[styles.iconButton]} source={require('../assets/images/kakaoButton.png')} />
+        <TouchableOpacity onPress={() => signUpWithSNS('kakao')}>
+          <Image style={[styles.iconButton]} source={require('../assets/images/KakaoButton.png')} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={goNaver}>
-          <Image style={[styles.iconButton]} source={require('../assets/images/naverButton.png')} />
+        <TouchableOpacity onPress={() => signUpWithSNS('naver')}>
+          <Image style={[styles.iconButton]} source={require('../assets/images/NaverButton.png')} />
         </TouchableOpacity>
         {Platform.OS === 'ios' && (
           <AppleButton
             buttonStyle={AppleButton.Style.BLACK}
             buttonType={AppleButton.Type.SIGN_IN}
-            style={{width: 300, height: 45}}
+            style={[styles.iconButton]}
             onPress={onAppleButtonPress}
           />
         )}
+        <TouchableOpacity onPress={() => signUpWithSNS('google')}>
+          <Image
+            style={[styles.iconButton]}
+            source={require('../assets/images/GoogleButton.png')}
+          />
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -114,9 +134,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconButton: {
-    width: 300,
+    width: 340,
     height: 44,
     borderRadius: 10,
+    marginBottom: 8,
   },
 });
 
