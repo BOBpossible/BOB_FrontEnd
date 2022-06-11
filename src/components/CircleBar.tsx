@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {Colors} from 'react-native-paper';
 
 export type CircleBarProps = {
   radius: number;
@@ -26,12 +25,18 @@ export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
       borderColor: '#615EFF',
       position: 'absolute',
     },
+    progressText: {
+      fontSize: 27,
+    },
   });
   return (
     <View style={[styles.flex]}>
       <View style={styles.bigCircle}>
         <View style={[styles.progressLayer]} />
-        <Text>{progress}</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={[styles.progressText]}>{progress}</Text>
+          <Text style={{fontSize: 20}}>/10</Text>
+        </View>
       </View>
     </View>
   );

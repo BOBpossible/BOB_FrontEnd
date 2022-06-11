@@ -1,5 +1,5 @@
 export * from './AnimatedHeader';
-export * from './HomeMission';
+export * from './MissionCard';
 export * from './CircleBar';
 export * from './RegisterNextButton';
 export * from './RegisterHeader';

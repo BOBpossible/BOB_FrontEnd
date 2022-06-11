@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {HomeMission} from '../components';
+import {MissionCard} from '../components';
 
 const Mission = () => {
   return (
@@ -9,7 +9,7 @@ const Mission = () => {
       <View style={[styles.header]}>
         <Text style={[styles.headerText]}>MISSION</Text>
       </View>
-      <HomeMission
+      <MissionCard
         name={'가게이름'}
         category={'카테고리'}
         day={7}
