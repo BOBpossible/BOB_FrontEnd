@@ -3,6 +3,10 @@ import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {MissionCard} from '../components';
 const Mission = () => {
+  function missionRequest() {console.log('missionRequest');}
+  function missionOnRequest() {console.log('missionOnRequest');}
+  function missionSuccess() {console.log('missionSuccess');}
+  function missionReview() {console.log('missionReview');}
   return (
     <SafeAreaView style={[styles.flex, styles.headerWrap]}>
       <View style={[styles.header]}>
@@ -15,6 +19,7 @@ const Mission = () => {
         minCost={10}
         point={10}
         status="request"
+        handleOnPress={missionRequest}
       />
     </SafeAreaView>
   );

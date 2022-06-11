@@ -57,6 +57,9 @@ const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
   console.log('inset?', insets);
+  function missionStart() {
+    console.log('missionStart');
+  }
 
   return (
     <SafeAreaView edges={['top']}>
@@ -73,6 +76,7 @@ const Main = () => {
             minCost={item.minCost}
             point={item.point}
             status="start"
+            handleOnPress={missionStart}
           />
         )}
         ListHeaderComponent={
