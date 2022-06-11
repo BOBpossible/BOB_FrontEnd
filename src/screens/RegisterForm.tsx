@@ -8,6 +8,7 @@ import {AuthStackParamList} from '../nav';
 import {RegisterHeader} from '../components';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
+import AddressSearchModal from '../modal/AddressSearchModal';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
@@ -16,6 +17,7 @@ const RegisterForm = ({navigation, route}: Props) => {
   const [name, setName] = useState('');
   const [gender, setGender] = useState(3);
   const [birthDate, setBirthDate] = useState<Date | null>(null);
+  const [addressModal, setAddressModal] = useState(false);
   const [addressStreet, setAddressStreet] = useState('');
   const [addressDetail, setAddressDetail] = useState('');
   const [dateModal, setDateModal] = useState(false);
@@ -107,13 +109,18 @@ const RegisterForm = ({navigation, route}: Props) => {
           />
         </View>
         <View style={[styles.address]}>
-          <Text style={[styles.formHeadText]}>주소</Text>
-          <TextInput
-            style={[styles.nameInput]}
-            onChangeText={setName}
-            value={name}
-            placeholder="이름을 입력"
+          <AddressSearchModal
+            visible={addressModal}
+            closeAddressModal={() => setAddressModal(false)}
           />
+          <Text style={[styles.formHeadText]}>주소</Text>
+          <TouchableOpacity onPress={() => setAddressModal(true)}>
+            <View style={[styles.nameInput]}>
+              <Text style={[styles.placeholder]}>
+                {addressStreet === '' ? '주소 찾기' : addressStreet}
+              </Text>
+            </View>
+          </TouchableOpacity>
           <TextInput
             style={[styles.nameInput]}
             onChangeText={setName}

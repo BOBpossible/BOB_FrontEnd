@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@actbase/react-daum-postcode": "^1.0.4",
     "@invertase/react-native-apple-authentication": "^2.2.1",
     "@react-native-async-storage/async-storage": "^1.17.6",
     "@react-native-community/datetimepicker": "^6.1.3",
