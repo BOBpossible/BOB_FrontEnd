@@ -75,8 +75,10 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
       fontSize: 20,
       fontWeight: '600',
     },
-    headerRow1: {
-      margin: 6, ///
+    header: {
+      marginTop: 6,
+      marginLeft: 16,
+      marginRight: 16,
     },
     circleWrap: {
       position: 'absolute',
@@ -116,7 +118,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
 
   return (
     <Animated.View style={[styles.headerWrap, heightAnimStyle]}>
-      <View style={[styles.headerRow1]}>
+      <View style={[styles.header]}>
         <TouchableOpacity style={[styles.flexRow]}>
           <Text style={[styles.locationText]}>삼성동</Text>
           <Icon name="menu-down" size={18} color="black" />

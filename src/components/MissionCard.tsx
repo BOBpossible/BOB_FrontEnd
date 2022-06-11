@@ -42,20 +42,17 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, day, minCost,
         <View style={[styles.missionTwoButton]}>
           <TouchableOpacity style={status==='success' ? [styles.missionButtonLeft, {backgroundColor: '#E8E8E8'}] : [styles.missionButtonLeft, {backgroundColor: '#DFDFDF'}]}>
             <View >
-              <Text style={status==='success' ? {color: '#949494'} : {color: '#111111'}}>취소</Text>
+              <Text style={status==='success' ? {fontSize: 16, color: '#949494'} : {fontSize: 16, color: '#111111'}}>취소</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={status==='request' ? [styles.missionButtonRight, {backgroundColor: 'black'}] : status==='onrequest' ? [styles.missionButtonLeft, {backgroundColor: '#2A2A2A'}] : [styles.missionButtonLeft, {backgroundColor: '#6C69FF'}]}>
+          <TouchableOpacity style={status==='request' ? [styles.missionButtonRight, {backgroundColor: 'black'}] : status==='onrequest' ? [styles.missionButtonRight, {backgroundColor: '#2A2A2A', opacity: 0.3}] : [styles.missionButtonRight, {backgroundColor: '#6C69FF'}]}>
             <View>
-              <Text style={{color:'white'}}>{status === 'request' ? '성공요청' : status === 'onrequest' ? '성공요청 중...' : '성공!'}</Text>
+              <Text style={{color:'white', fontSize: 16}}>{status === 'request' ? '성공요청' : status === 'onrequest' ? '성공요청 중..' : '성공'}</Text>
             </View>
           </TouchableOpacity>
         </View>
         }
       </View>
-       {/* <View style={status==='start' ? [styles.missionButtonView, styles.missionStartView] :
-      //     status === 'request' ? [styles.missionButtonView, styles.missionRequestView] :
-      //     status === 'onrequest' ? [styles.missionButtonView, styles.missionOnRequestView] : [styles.missionButtonView, styles.missionSuccessView]}> */}
     </View>
   );
 };

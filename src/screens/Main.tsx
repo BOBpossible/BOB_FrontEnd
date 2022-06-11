@@ -53,10 +53,8 @@ const dummyMission = [
 const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
-  const styles = StyleSheet.create({
-    mainView: {flex: 1},
-  });
   console.log('inset?', insets);
+
   return (
     <SafeAreaView edges={['top']}>
       <AnimatedHeader animatedValue={offset} paddingTop={insets.top} />

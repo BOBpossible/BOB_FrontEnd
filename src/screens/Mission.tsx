@@ -2,12 +2,11 @@ import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {MissionCard} from '../components';
-
 const Mission = () => {
   return (
     <SafeAreaView style={[styles.flex, styles.headerWrap]}>
       <View style={[styles.header]}>
-        <Text style={[styles.headerText]}>MISSION</Text>
+        <Text style={[styles.headerText]}>미션</Text>
       </View>
       <MissionCard
         name={'가게이름'}
@@ -23,27 +22,16 @@ const Mission = () => {
 
 const styles = StyleSheet.create({
   flex: {flex: 1},
-  header: {backgroundColor: '#615EFF'},
-  headerText: {fontSize: 20},
+  header: {
+    marginLeft: 16,
+    marginRight: 16,
+    height: 41,
+  },
   headerWrap: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 10,
-    backgroundColor: 'white',
     width: '100%',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.35,
-    shadowRadius: 3.84,
-    elevation: 5,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
   },
+  headerText: {fontSize: 17, color: 'black'},
 });
 
 export default Mission;
