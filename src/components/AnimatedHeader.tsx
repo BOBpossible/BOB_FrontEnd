@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useStyle} from '../hooks';
 import {CircleBar} from './CircleBar';
 
-const HEADER_HEIGHT = 250;
+const HEADER_HEIGHT = 209;
 type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
   paddingTop: number;
@@ -15,7 +15,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   const heightAnimStyle = useStyle({
     height: animatedValue.interpolate({
       inputRange: [0, HEADER_HEIGHT],
-      outputRange: [HEADER_HEIGHT, 120 + paddingTop],
+      outputRange: [HEADER_HEIGHT, 99 + paddingTop],
       extrapolate: 'clamp',
     }),
   });
@@ -39,7 +39,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
 
   const barAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
-      inputRange: [130, 160],
+      inputRange: [130, 160], //이거 수정 ? ??처음 130 160
       outputRange: [0, 1],
       extrapolate: 'clamp',
     }),
@@ -53,7 +53,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
       left: 0,
       right: 0,
       zIndex: 10,
-      backgroundColor: 'white',
+      backgroundColor: 'white', ////
       width: '100%',
       shadowColor: '#000',
       shadowOffset: {
@@ -63,35 +63,42 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
       shadowOpacity: 0.35,
       shadowRadius: 3.84,
       elevation: 5,
-      borderBottomLeftRadius: 20,
-      borderBottomRightRadius: 20,
+      borderBottomLeftRadius: 10,
+      borderBottomRightRadius: 10,
     },
     flexRow: {
       flexDirection: 'row',
       alignItems: 'center',
+      height: 29, ///
     },
     locationText: {
       fontSize: 20,
       fontWeight: '600',
     },
-    headerRow1: {
-      margin: 15,
+    header: {
+      marginTop: 6,
+      marginLeft: 16,
+      marginRight: 16,
     },
     circleWrap: {
       position: 'absolute',
-      bottom: 20,
+      bottom: 1,
+      // top: 60,
       alignSelf: 'center',
     },
     barWrap: {
-      marginTop: 20,
-      marginLeft: 15,
+      marginTop: 14, ///
+      marginLeft: 16,
+    },
+    barStyle: {
+      borderRadius: 5,
     },
   });
 
   const expandHeader = () => {
     return (
       <Animated.View style={[styles.circleWrap, circleAnimStyle]}>
-        <CircleBar radius={75} progress={7} />
+        <CircleBar radius={57} progress={7} />
         <Text style={{marginTop: 5}}>미션 10개 달성시 1000P</Text>
       </Animated.View>
     );
@@ -100,7 +107,10 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   const shrinkHeader = () => {
     return (
       <Animated.View style={[barAnimStyle, styles.barWrap]}>
-        <View style={{width: '80%', borderWidth: 5, borderColor: '#615EFF'}} />
+        <View style={{flexDirection: 'row'}}>
+          <View style={{width: '80%', borderWidth: 5, borderColor: '#615EFF'}} />
+          <Text> 7/10</Text>
+        </View>
         <Text style={{marginTop: 5}}>미션 10개 달성시 1000P</Text>
       </Animated.View>
     );
@@ -108,7 +118,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
 
   return (
     <Animated.View style={[styles.headerWrap, heightAnimStyle]}>
-      <View style={[styles.flexRow, styles.headerRow1]}>
+      <View style={[styles.header]}>
         <TouchableOpacity style={[styles.flexRow]}>
           <Text style={[styles.locationText]}>삼성동</Text>
           <Icon name="menu-down" size={18} color="black" />
