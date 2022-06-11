@@ -71,10 +71,10 @@ const Login = ({}) => {
       />
       <View style={[styles.loginButtonWrap]}>
         <TouchableOpacity onPress={() => signUpWithSNS('kakao')}>
-          <Image style={[styles.iconButton]} source={require('../assets/images/KakaoButton.png')} />
+          <Image style={[styles.iconButton]} source={require('../assets/images/kakaoButton.png')} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => signUpWithSNS('naver')}>
-          <Image style={[styles.iconButton]} source={require('../assets/images/NaverButton.png')} />
+          <Image style={[styles.iconButton]} source={require('../assets/images/naverButton.png')} />
         </TouchableOpacity>
         {Platform.OS === 'ios' && (
           <AppleButton
