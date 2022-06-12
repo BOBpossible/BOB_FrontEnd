@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Animated} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {MissionCard} from '../components';
-import {moveLeft} from '../components/MoveBall';
-import {moveRight} from '../components/MoveBall';
+import {moveLeft} from '../components/ProgressSwitch';
+import {moveRight} from '../components/ProgressSwitch';
 
 const Mission = () => {
   function missionRequest() {console.log('missionRequest');}
@@ -46,11 +46,11 @@ const Mission = () => {
             style={
               progressnow === 0
                 ? [
-                    styles.progressBall,
+                    styles.progressSwitch,
                     {width: 68, borderRadius: 21, transform: [{translateX: progressValue}]},
                   ]
                 : [
-                    styles.progressBall,
+                    styles.progressSwitch,
                     {width: 79, borderRadius: 21, transform: [{translateX: progressValue}]},
                   ]
             }
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     backgroundColor: 'white',
   },
-  progressBall: {
+  progressSwitch: {
     height: '80%',
     backgroundColor: 'black',
     position: 'absolute',
