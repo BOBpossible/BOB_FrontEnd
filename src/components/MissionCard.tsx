@@ -10,18 +10,19 @@ export type MissionCardProps = {
   minCost: number;
   point: number;
   status?: string; //"start","request","onrequest","success", "review"
-  handleOnPress: () => void;
+  // handleOnPress?: () => void;
 };
 export type MissionCardContentProps = {
-  handleOnPress: () => void;
+  handleOnPress?: () => void;
   text: string;
   textColor?: string;
   cancelBgColor?: string;
   cancelTextColor?: string;
   bgColor?: string;
 };
+
 //prettier-ignore
-export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, point, status,handleOnPress}) => {
+export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, point, status}) => {
   const MissionCardOneButton: FC<MissionCardContentProps> = ({handleOnPress, text }) =>{
     return (
       <>
@@ -54,6 +55,23 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
       </>
     );
   };
+  function handleStartPress() {
+    //미션도전 버튼 누를 시
+    console.log('미션 도전');
+  }
+  function handleRequestPress() {
+    //성공요청 버튼 누를 시
+    console.log('성공요청');
+    // 사장님께 전송 -> 사장님이 확인->
+  }
+  function handleSuccessPress() {
+    //성공 버튼 누를 시
+    console.log('성공');
+  }
+  function handleReviewPress() {
+    //리뷰 버튼 누를 시
+    console.log('리뷰 : 냠 냠 ');
+  }
 
   return (
     <View style={{marginLeft: 16, marginRight: 16}}>
@@ -73,19 +91,19 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
           </View>
         </View>
         {status === 'start' ?
-        <MissionCardOneButton handleOnPress={handleOnPress} text='미션 도전' />
+        <MissionCardOneButton handleOnPress={handleStartPress} text='미션 도전' />
         :
         status === 'request' ?
-        <MissionCardTwoButton handleOnPress={handleOnPress} text='성공 요청' bgColor='black' cancelBgColor='' cancelTextColor='#111111'/>
+        <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='black' cancelBgColor='' cancelTextColor='#111111'/>
         :
         status === 'onrequest' ?
-        <MissionCardTwoButton handleOnPress={handleOnPress} text='성공 요청중..' bgColor='#2A2A2A' cancelBgColor='' cancelTextColor='#111111'/>
+        <MissionCardTwoButton text='성공 요청중..' bgColor='#2A2A2A' cancelBgColor='' cancelTextColor='#111111'/>
         :
         status === 'success' ?
-        <MissionCardTwoButton handleOnPress={handleOnPress} text='성공' bgColor='#6C69FF' cancelBgColor='' cancelTextColor='#949494'/>
+        <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공' bgColor='#6C69FF' cancelBgColor='' cancelTextColor='#949494'/>
         :
         //  status ==='review'
-        <MissionCardOneButton handleOnPress={handleOnPress} text='리뷰 남기기' />
+        <MissionCardOneButton handleOnPress={handleReviewPress} text='리뷰 남기기' />
         }
       </View>
     </View>

@@ -1,20 +1,18 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {MissionCard} from '../components';
 import {MissionProcess} from '../components/MissionProcess';
 import {MissionProgressSwitch} from '../components/MissionProgressSwitch';
+import {MissionSuccessList} from '../components/MissionSuccessList';
 import {MissionUser} from '../components/MissionUser';
-
+//"start"
+//"request","onrequest" :'진행중' processCircle  // "success" : '도전 성공' processCircle
+//"review"
 const Mission = () => {
-  function missionRequest() {console.log('missionRequest');}
-  function missionOnRequest() {console.log('missionOnRequest');}
-  function missionSuccess() {console.log('missionSuccess');}
-  function missionReview() {console.log('missionReview');}
+  const [status, setStatus] = useState<string>('request'); //버튼문구 //"start","request","onrequest","success", "review"
+  const [progressnow, setProgressnow] = useState(0); //아래 스위치.  0:진행중  1:진행완료
 
-  const [progressnow, setProgressnow] = useState(0);
-
-  let status = 'success';
   return (
     <>
       <SafeAreaView style={[styles.flex]}>
@@ -25,7 +23,7 @@ const Mission = () => {
           <View style={{flex: 1}}>
             {progressnow === 0 ? (
               <>
-                <MissionProcess />
+                <MissionProcess status={status} />
                 <MissionUser username={'춘식이'} userid={123} status={status} />
                 <MissionCard
                   name={'가게이름'}
@@ -34,11 +32,10 @@ const Mission = () => {
                   minCost={10}
                   point={10}
                   status={status}
-                  handleOnPress={missionRequest}
                 />
               </>
             ) : (
-              <Text>진행완료화면</Text>
+              <MissionSuccessList />
             )}
           </View>
         </View>

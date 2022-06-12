@@ -33,11 +33,12 @@ export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgress
     },
     progressToggle: {
       flexDirection: 'row',
-      borderRadius: 12.5,
+      borderRadius: 17.5,
       width: 138,
       height: 34,
       alignItems: 'center',
       justifyContent: 'space-evenly',
+      backgroundColor: '#FFFFFF',
     },
     progressSwitch: {
       height: '80%',
