@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {MissionCard} from '../components';
+import {MissionProcess} from '../components/MissionProcess';
 import {MissionProgressSwitch} from '../components/MissionProgressSwitch';
 
 const Mission = () => {
@@ -22,6 +23,7 @@ const Mission = () => {
           <View style={{flex: 1}}>
             {progressnow === 0 ? (
               <>
+                <MissionProcess />
                 <MissionCard
                   name={'가게이름'}
                   category={'카테고리'}
@@ -53,7 +55,6 @@ const styles = StyleSheet.create({
   headerWrap: {
     position: 'absolute',
     width: '100%',
-    backgroundColor: 'pink',
   },
   headerText: {fontSize: 17, color: 'black'},
 });
