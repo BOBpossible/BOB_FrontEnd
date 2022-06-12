@@ -2,7 +2,6 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {RegisterHeader, RegisterNextButton} from '../components';
 import {CategoryItem} from '../components/CategoryItem';
 import {RegisterInterface} from '../data';
@@ -27,6 +26,7 @@ const RegisterCategory = ({navigation, route}: Props) => {
     11: false,
   });
   const goNext = () => {
+    //postregister
     navigation.reset({routes: [{name: 'MainNavigator'}]});
   };
   const goBack = () => {

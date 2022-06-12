@@ -3,19 +3,23 @@ import {Modal, StyleSheet, TouchableOpacity, View, SafeAreaView} from 'react-nat
 // import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Postcode from '@actbase/react-daum-postcode';
-import {useRecoilState} from 'recoil';
+import {useSetRecoilState} from 'recoil';
 import {address} from '../state';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
 type AddressSearchModalProps = {
   visible: boolean;
   closeAddressModal: () => void;
 };
 
 const AddressSearchModal: FC<AddressSearchModalProps> = ({visible, closeAddressModal}) => {
-  const [addressStreet, setAddressStreet] = useRecoilState(address);
+  const insets = useSafeAreaInsets();
+  console.log('inset?', insets);
+  const setAddressStreet = useSetRecoilState(address);
   return (
     <Modal animationType="slide" visible={visible}>
       <SafeAreaView style={{flex: 1}}>
-        <View style={[styles.modalHeader]}>
+        <View style={[styles.modalHeader, {top: insets.top}]}>
           <TouchableOpacity onPress={closeAddressModal}>
             <View style={[styles.backButton]}>
               <Icon name="arrow-left" size={24} color="black" />
@@ -27,7 +31,7 @@ const AddressSearchModal: FC<AddressSearchModalProps> = ({visible, closeAddressM
           style={styles.container}
           jsOptions={{animation: true, hideMapBtn: true}}
           onSelected={(data) => {
-            console.log(JSON.stringify(data));
+            setAddressStreet({address: data.address, bname: data.bname});
             closeAddressModal();
           }}
           onError={function (error: unknown): void {
@@ -43,12 +47,17 @@ export default AddressSearchModal;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 30,
   },
   backButton: {
     margin: 10,
   },
   modalHeader: {
-    height: 50,
+    position: 'absolute',
+    top: 44,
+    height: 40,
     width: '100%',
+    zIndex: 1,
+    backgroundColor: '#FFFFFF',
   },
 });

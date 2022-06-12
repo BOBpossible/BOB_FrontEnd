@@ -7,5 +7,8 @@ export const userToken = atom({
 
 export const address = atom({
   key: 'address',
-  default: '',
+  default: {
+    address: '',
+    bname: '',
+  },
 });
