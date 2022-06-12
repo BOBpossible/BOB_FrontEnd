@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Animated} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {MissionCard} from '../components';
-import {moveLeft} from '../components/ProgressSwitch';
-import {moveRight} from '../components/ProgressSwitch';
+import {ProgressSwitch} from '../components/ProgressSwitch';
 
 const Mission = () => {
   function missionRequest() {console.log('missionRequest');}
@@ -11,7 +10,6 @@ const Mission = () => {
   function missionSuccess() {console.log('missionSuccess');}
   function missionReview() {console.log('missionReview');}
 
-  const progressValue = useState(new Animated.Value(-10))[0];
   const [progressnow, setProgressnow] = useState(0);
 
   return (
@@ -40,55 +38,7 @@ const Mission = () => {
           </View>
         </View>
       </SafeAreaView>
-      <View style={[styles.progressRow]}>
-        <View style={[styles.progressToggle]}>
-          <Animated.View
-            style={
-              progressnow === 0
-                ? [
-                    styles.progressSwitch,
-                    {width: 68, borderRadius: 21, transform: [{translateX: progressValue}]},
-                  ]
-                : [
-                    styles.progressSwitch,
-                    {width: 79, borderRadius: 21, transform: [{translateX: progressValue}]},
-                  ]
-            }
-          />
-          <TouchableOpacity
-            onPress={() => {
-              setProgressnow(0);
-              moveRight(progressValue);
-            }}
-          >
-            <Text
-              style={
-                progressnow === 0
-                  ? [{fontSize: 14, color: 'white'}]
-                  : [{fontSize: 14, color: '#616161'}]
-              }
-            >
-              진행중
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setProgressnow(1);
-              moveLeft(progressValue);
-            }}
-          >
-            <Text
-              style={
-                progressnow === 0
-                  ? [{fontSize: 14, color: '#616161'}]
-                  : [{fontSize: 14, color: 'white'}]
-              }
-            >
-              진행완료
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <ProgressSwitch progressnow={progressnow} setProgressnow={setProgressnow} />
     </>
   );
 };
@@ -106,28 +56,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'pink',
   },
   headerText: {fontSize: 17, color: 'black'},
-  progressRow: {
-    width: '100%',
-    position: 'absolute',
-    bottom: 11,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  progressToggle: {
-    flexDirection: 'row',
-    borderRadius: 12.5,
-    width: 138,
-    height: 34,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    backgroundColor: 'white',
-  },
-  progressSwitch: {
-    height: '80%',
-    backgroundColor: 'black',
-    position: 'absolute',
-    bottom: 2,
-  },
 });
 
 export default Mission;
