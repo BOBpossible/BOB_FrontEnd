@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center', //
   },
-  dDay: {position: 'absolute', top: 20, right: 30, fontWeight: '600', color: '#615EFF'},
   nameBox: {flexDirection: 'column', justifyContent: 'center', alignItems: 'center'},
   missionMain: {
     flex: 1,
