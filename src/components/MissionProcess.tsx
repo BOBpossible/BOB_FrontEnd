@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 
 export const MissionProcess = () => {
-  const [nowSuccess, setNowSuccess] = useState(1); //0:진행중, 1:도전 성공
+  const [nowSuccess, setNowSuccess] = useState(0); //0:진행중, 1:도전 성공
   const styles = StyleSheet.create({
     processWrap: {
       alignItems: 'center',
       justifyContent: 'center',
+      marginTop: 19,
+      marginBottom: 14,
     },
     processTextRow: {
       flexDirection: 'row',
@@ -26,7 +28,7 @@ export const MissionProcess = () => {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: 18,
+      // marginBottom: 18,
     },
     activeCircleBack: {
       width: 22,

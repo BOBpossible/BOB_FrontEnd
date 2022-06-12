@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {MissionCard} from '../components';
 import {MissionProcess} from '../components/MissionProcess';
 import {MissionProgressSwitch} from '../components/MissionProgressSwitch';
+import {MissionUser} from '../components/MissionUser';
 
 const Mission = () => {
   function missionRequest() {console.log('missionRequest');}
@@ -13,6 +14,7 @@ const Mission = () => {
 
   const [progressnow, setProgressnow] = useState(0);
 
+  let status = 'success';
   return (
     <>
       <SafeAreaView style={[styles.flex]}>
@@ -24,13 +26,14 @@ const Mission = () => {
             {progressnow === 0 ? (
               <>
                 <MissionProcess />
+                <MissionUser username={'춘식이'} userid={123} status={status} />
                 <MissionCard
                   name={'가게이름'}
                   category={'카테고리'}
                   day={7}
                   minCost={10}
                   point={10}
-                  status="request"
+                  status={status}
                   handleOnPress={missionRequest}
                 />
               </>
@@ -48,15 +51,19 @@ const Mission = () => {
 const styles = StyleSheet.create({
   flex: {},
   header: {
-    marginLeft: 16,
-    marginRight: 16,
     height: 41,
+    backgroundColor: '#FFFFFF',
   },
   headerWrap: {
     position: 'absolute',
     width: '100%',
   },
-  headerText: {fontSize: 17, color: 'black'},
+  headerText: {
+    fontSize: 17,
+    color: 'black',
+    marginLeft: 16,
+    marginRight: 16,
+  },
 });
 
 export default Mission;
