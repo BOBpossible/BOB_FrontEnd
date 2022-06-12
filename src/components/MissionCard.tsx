@@ -9,10 +9,70 @@ export type MissionCardProps = {
   day?: number;
   minCost: number;
   point: number;
-  status?: string; //"start","request","onrequest","success"
+  status?: string; //"start","request","onrequest","success", "review"
+  // handleOnPress?: () => void;
 };
+export type MissionCardContentProps = {
+  handleOnPress?: () => void;
+  text: string;
+  textColor?: string;
+  cancelBgColor?: string;
+  cancelTextColor?: string;
+  bgColor?: string;
+};
+
 //prettier-ignore
-export const MissionCard: FC<MissionCardProps> = ({name, category, day, minCost, point, status}) => {
+export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, point, status}) => {
+  const MissionCardOneButton: FC<MissionCardContentProps> = ({handleOnPress, text }) =>{
+    return (
+      <>
+        <TouchableOpacity onPress={handleOnPress} style={[styles.missionOneButton]}>
+            <View>
+            <Text style={{color: 'white', fontSize: 16}}>{text}</Text>
+          </View>
+        </TouchableOpacity>
+      </>
+    );
+  };
+  const MissionCardTwoButton: FC<MissionCardContentProps> = ({handleOnPress, text, cancelBgColor, cancelTextColor, bgColor }) =>{
+    function cancleCard(){
+      console.log('canceled');
+    }
+    return (
+      <>
+        <View style={[styles.missionTwoButton]}>
+          <TouchableOpacity style={[styles.missionButtonLeft, {backgroundColor: `${cancelBgColor}`}]} onPress={cancleCard}>
+            <View >
+              <Text style={{fontSize: 16, color: `${cancelTextColor}`}}>취소</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.missionButtonRight, {backgroundColor: `${bgColor}`}]} onPress={handleOnPress}>
+            <View>
+              <Text style={{color:'white', fontSize: 16}}>{`${text}`}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </>
+    );
+  };
+  function handleStartPress() {
+    //미션도전 버튼 누를 시
+    console.log('미션 도전');
+  }
+  function handleRequestPress() {
+    //성공요청 버튼 누를 시
+    console.log('성공요청');
+    // 사장님께 전송 -> 사장님이 확인->
+  }
+  function handleSuccessPress() {
+    //성공 버튼 누를 시
+    console.log('성공');
+  }
+  function handleReviewPress() {
+    //리뷰 버튼 누를 시
+    console.log('리뷰 : 냠 냠 ');
+  }
+
   return (
     <View style={{marginLeft: 16, marginRight: 16}}>
       <View style={[styles.missionCard]}>
@@ -22,7 +82,7 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, day, minCost,
             <Text style={[styles.categoryText]}>{category}</Text>
           </View>
           <View style={[styles.seperateLine]} />
-          <View style={[styles.contentBox]}>
+          <View>
             <Text>
               <Text style={[styles.costText]}>{minCost}원 이상</Text>
               <Text>의 식사시 </Text>
@@ -31,26 +91,19 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, day, minCost,
           </View>
         </View>
         {status === 'start' ?
-        <View style={[styles.missionOneButton]}>
-          <TouchableOpacity>
-            <View>
-              <Text style={{color: 'white', fontSize: 16}}>미션 도전</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        <MissionCardOneButton handleOnPress={handleStartPress} text='미션 도전' />
         :
-        <View style={[styles.missionTwoButton]}>
-          <TouchableOpacity style={status==='success' ? [styles.missionButtonLeft, {backgroundColor: '#E8E8E8'}] : [styles.missionButtonLeft, {backgroundColor: '#DFDFDF'}]}>
-            <View >
-              <Text style={status==='success' ? {fontSize: 16, color: '#949494'} : {fontSize: 16, color: '#111111'}}>취소</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={status==='request' ? [styles.missionButtonRight, {backgroundColor: 'black'}] : status==='onrequest' ? [styles.missionButtonRight, {backgroundColor: '#2A2A2A', opacity: 0.3}] : [styles.missionButtonRight, {backgroundColor: '#6C69FF'}]}>
-            <View>
-              <Text style={{color:'white', fontSize: 16}}>{status === 'request' ? '성공요청' : status === 'onrequest' ? '성공요청 중..' : '성공'}</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        status === 'request' ?
+        <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='black' cancelBgColor='' cancelTextColor='#111111'/>
+        :
+        status === 'onrequest' ?
+        <MissionCardTwoButton text='성공 요청중..' bgColor='#2A2A2A' cancelBgColor='' cancelTextColor='#111111'/>
+        :
+        status === 'success' ?
+        <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공' bgColor='#6C69FF' cancelBgColor='' cancelTextColor='#949494'/>
+        :
+        //  status ==='review'
+        <MissionCardOneButton handleOnPress={handleReviewPress} text='리뷰 남기기' />
         }
       </View>
     </View>
@@ -66,7 +119,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center', //
   },
-  dDay: {position: 'absolute', top: 20, right: 30, fontWeight: '600', color: '#615EFF'},
   nameBox: {flexDirection: 'column', justifyContent: 'center', alignItems: 'center'},
   missionMain: {
     flex: 1,
@@ -74,8 +126,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // contentBox: {
-  // },
   seperateLine: {
     borderWidth: 0.5,
     width: 303,
