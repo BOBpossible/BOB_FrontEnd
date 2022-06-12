@@ -5,7 +5,7 @@ export const userToken = atom({
   default: '',
 });
 
-export const addressStreet = atom({
-  key: 'addressStreet',
+export const address = atom({
+  key: 'address',
   default: '',
 });

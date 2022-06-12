@@ -3,13 +3,15 @@ import {Modal, StyleSheet, TouchableOpacity, View, SafeAreaView} from 'react-nat
 // import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Postcode from '@actbase/react-daum-postcode';
-
+import {useRecoilState} from 'recoil';
+import {address} from '../state';
 type AddressSearchModalProps = {
   visible: boolean;
   closeAddressModal: () => void;
 };
 
 const AddressSearchModal: FC<AddressSearchModalProps> = ({visible, closeAddressModal}) => {
+  const [addressStreet, setAddressStreet] = useRecoilState(address);
   return (
     <Modal animationType="slide" visible={visible}>
       <SafeAreaView style={{flex: 1}}>
@@ -26,7 +28,7 @@ const AddressSearchModal: FC<AddressSearchModalProps> = ({visible, closeAddressM
           jsOptions={{animation: true, hideMapBtn: true}}
           onSelected={(data) => {
             console.log(JSON.stringify(data));
-            closeAddressModal;
+            closeAddressModal();
           }}
           onError={function (error: unknown): void {
             throw new Error('Function not implemented.');
