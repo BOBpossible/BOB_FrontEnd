@@ -20,7 +20,7 @@ function moveRight(progressValue: any) {
   }).start();
 }
 
-export const ProgressSwitch: FC<switchProps> = ({progressnow, setProgressnow}) => {
+export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgressnow}) => {
   const progressValue = useState(new Animated.Value(-10))[0]; //
 
   const styles = StyleSheet.create({

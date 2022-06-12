@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Animated} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {MissionCard} from '../components';
-import {ProgressSwitch} from '../components/ProgressSwitch';
+import {MissionProgressSwitch} from '../components/MissionProgressSwitch';
 
 const Mission = () => {
   function missionRequest() {console.log('missionRequest');}
@@ -38,7 +38,7 @@ const Mission = () => {
           </View>
         </View>
       </SafeAreaView>
-      <ProgressSwitch progressnow={progressnow} setProgressnow={setProgressnow} />
+      <MissionProgressSwitch progressnow={progressnow} setProgressnow={setProgressnow} />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Colors} from 'react-native-paper';
@@ -23,7 +23,7 @@ export type MissionCardContentProps = {
 //prettier-ignore
 export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, point, status,handleOnPress}) => {
   const MissionCardOneButton: FC<MissionCardContentProps> = ({handleOnPress, text }) =>{
-    return(
+    return (
       <>
         <TouchableOpacity onPress={handleOnPress} style={[styles.missionOneButton]}>
             <View>
@@ -37,7 +37,7 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
     function cancleCard(){
       console.log('canceled');
     }
-    return(
+    return (
       <>
         <View style={[styles.missionTwoButton]}>
           <TouchableOpacity style={[styles.missionButtonLeft, {backgroundColor: `${cancelBgColor}`}]} onPress={cancleCard}>
@@ -64,7 +64,7 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
             <Text style={[styles.categoryText]}>{category}</Text>
           </View>
           <View style={[styles.seperateLine]} />
-          <View style={[styles.contentBox]}>
+          <View>
             <Text>
               <Text style={[styles.costText]}>{minCost}원 이상</Text>
               <Text>의 식사시 </Text>
@@ -108,8 +108,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // contentBox: {
-  // },
   seperateLine: {
     borderWidth: 0.5,
     width: 303,
