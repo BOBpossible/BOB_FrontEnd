@@ -15,7 +15,7 @@ export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
       width: radius * 2,
       height: radius * 2,
       borderRadius: radius,
-      backgroundColor: '#F5F5F5',
+      backgroundColor: '#EDEDED',
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -25,8 +25,6 @@ export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
       height: radius * 2 - 12,
       borderRadius: radius,
       backgroundColor: '#FFFFFF',
-      // borderWidth: 6,
-      // borderColor: '#615EFF',
       position: 'absolute',
     },
     progressText: {
@@ -40,10 +38,24 @@ export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
       justifyContent: 'flex-start',
       zIndex: 3,
     },
+    progressCircleOne: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      width: radius,
+      height: radius * 2,
+      backgroundColor: '#615EFF',
+      borderRadius: radius,
+      borderTopRightRadius: radius,
+      borderBottomRightRadius: radius,
+      transform: [{rotate: '0deg'}],
+    },
   });
   return (
     <View style={[styles.flex]}>
       <View style={styles.bigCircle}>
+        <View style={styles.progressCircleOne} />
+        <View style={styles.progressCircleTwo} />
         <View style={[styles.progressLayer]} />
         <View style={[styles.progressTextBox]}>
           <Text style={[styles.progressText]}>{progress}</Text>

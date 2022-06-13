@@ -15,7 +15,7 @@ type AnimatedHeaderProps = {
 export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop}) => {
   const heightAnimStyle = useStyle({
     height: animatedValue.interpolate({
-      inputRange: [0, HEADER_HEIGHT],
+      inputRange: [0, HEADER_HEIGHT - 100],
       outputRange: [HEADER_HEIGHT + paddingTop, 110 + paddingTop],
       extrapolate: 'clamp',
     }),
@@ -23,15 +23,15 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
 
   const circleAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
-      inputRange: [100, 140],
+      inputRange: [70, 90],
       outputRange: [1, 0],
       extrapolate: 'clamp',
     }),
     transform: [
       {
         scale: animatedValue.interpolate({
-          inputRange: [50, 150],
-          outputRange: [1, 0.4],
+          inputRange: [50, 90],
+          outputRange: [1, 0.7],
           extrapolate: 'clamp',
         }),
       },
@@ -40,7 +40,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
 
   const barAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
-      inputRange: [130, 160], //이거 수정 ? ??처음 130 160
+      inputRange: [90, 100], //이거 수정 ? ??처음 130 160
       outputRange: [0, 1],
       extrapolate: 'clamp',
     }),
@@ -97,6 +97,17 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     barStyle: {
       borderRadius: 5,
     },
+    outerBar: {
+      width: 290,
+      borderWidth: 3,
+      borderRadius: 10,
+      borderColor: '#EDEDED',
+    },
+    innerBar: {
+      borderWidth: 3,
+      borderRadius: 10,
+      borderColor: '#615EFF',
+    },
     progressWrap: {
       flex: 1,
       alignItems: 'center',
@@ -124,7 +135,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
             width: WIDTH - 32, //alignItems: center 당할 뷰 라서 옆 마진 16+16 을 빼주면 알아서 마진: 16 을 한 효과가 나타날것
           }}
         >
-          <View style={{width: 290, borderWidth: 3, borderRadius: 10, borderColor: '#615EFF'}} />
+          <View style={[{}, styles.outerBar]}></View>
           <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
             <Text style={{fontSize: 22}}>7</Text>
             <Text style={{fontSize: 15}}>/</Text>

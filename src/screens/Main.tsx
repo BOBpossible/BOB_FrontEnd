@@ -64,7 +64,7 @@ const Main = () => {
     <SafeAreaView edges={['top']}>
       <AnimatedHeader animatedValue={offset} paddingTop={insets.top} />
       <Animated.FlatList
-        contentContainerStyle={{paddingTop: 239, paddingBottom: 10}}
+        contentContainerStyle={{paddingTop: 240, paddingBottom: 10}}
         scrollEventThrottle={10}
         data={dummyMission}
         renderItem={({item}) => (
@@ -89,9 +89,32 @@ const Main = () => {
           >
             <Text style={{fontSize: 18, fontWeight: '600'}}>새로운 밥미션</Text>
 
-            <View style={{backgroundColor: '#383838', width: 140, height: 32}}>
-              <Icon name="menu-left" size={30} style={{position: 'absolute'}} />
-              <Text style={{fontSize: 13}}>며칠 후 사라져요</Text>
+            <View
+              style={{
+                backgroundColor: '#383838',
+                height: 32,
+                borderRadius: 10,
+                marginLeft: 16,
+                paddingTop: 6,
+                paddingBottom: 6,
+                paddingRight: 16,
+                paddingLeft: 13,
+              }}
+            >
+              <Icon
+                name="menu-left"
+                size={32}
+                style={{position: 'absolute', color: '#383838', left: -18}}
+              />
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontSize: 13, lineHeight: 20, fontWeight: '600', color: '#AAAAF9'}}>
+                  7일후
+                </Text>
+                <Text style={{fontSize: 13, lineHeight: 20, fontWeight: '400', color: '#FFFFFF'}}>
+                  {' '}
+                  미션이 사라져요!
+                </Text>
+              </View>
             </View>
           </View>
         }
@@ -107,3 +130,5 @@ const Main = () => {
 };
 
 export default Main;
+
+const styles = StyleSheet.create({});
