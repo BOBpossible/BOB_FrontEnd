@@ -89,7 +89,7 @@ const Main = () => {
           >
             <Text style={{fontSize: 18, fontWeight: '600'}}>새로운 밥미션</Text>
 
-            <View style={{backgroundColor: '#383838', width: 140, height: }}>
+            <View style={{backgroundColor: '#383838', width: 140, height: 32}}>
               <Icon name="menu-left" size={30} style={{position: 'absolute'}} />
               <Text style={{fontSize: 13}}>며칠 후 사라져요</Text>
             </View>
