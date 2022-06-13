@@ -1,17 +1,20 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {RegisterHeader, RegisterNextButton} from '../components';
 import {CategoryItem} from '../components/CategoryItem';
 import {RegisterInterface} from '../data';
 import {AuthStackParamList} from '../nav';
+import {useRecoilValue} from 'recoil';
+import {userToken} from '../state';
+import axios from 'axios';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
 const RegisterCategory = ({navigation, route}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
+  const token = useRecoilValue(userToken);
   const [category, setCategory] = useState({
     0: false,
     1: false,
@@ -26,7 +29,13 @@ const RegisterCategory = ({navigation, route}: Props) => {
     10: false,
     11: false,
   });
+
+  useEffect(() => {
+    setRegisterData(route.params.registerData);
+  }, []);
+
   const goNext = () => {
+    postRegister();
     navigation.reset({routes: [{name: 'MainNavigator'}]});
   };
   const goBack = () => {
@@ -34,6 +43,17 @@ const RegisterCategory = ({navigation, route}: Props) => {
   };
   const getCategoryArray = () => {
     return Object.keys(category).filter((key) => category[key as unknown as keyof typeof category]);
+  };
+  const headers = {Authorization: `Bearer ${token}`};
+  const postRegister = async () => {
+    try {
+      const response = await axios.post('https://bobpossible.shop/api/v1/user', registerData, {
+        headers: headers,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

@@ -6,6 +6,7 @@ import {MissionCard} from '../components';
 import {AnimatedHeader} from '../components';
 import {useRecoilState} from 'recoil';
 import {userToken} from '../state';
+
 const dummyMission = [
   {
     name: '반이학생마라탕',
@@ -76,7 +77,7 @@ const Main = () => {
           />
         )}
         ListHeaderComponent={
-          <View style={{flexDirection:'row', marginLeft: 16, marginRight: 16}}>
+          <View style={{flexDirection: 'row', marginLeft: 16, marginRight: 16}}>
             <Text style={{marginBottom: 16, fontSize: 18, fontWeight: '600'}}>새로운 밥미션</Text>
             <Text style={{fontSize: 13}}>며칠 후 사라져요</Text>
           </View>
