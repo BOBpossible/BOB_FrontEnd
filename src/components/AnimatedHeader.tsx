@@ -1,10 +1,11 @@
 import React, {FC, useEffect, useRef} from 'react';
-import {View, Animated, Text, StyleSheet} from 'react-native';
+import {View, Animated, Text, StyleSheet, Dimensions} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useStyle} from '../hooks';
 import {CircleBar} from './CircleBar';
 
+const WIDTH = Dimensions.get('window').width;
 const HEADER_HEIGHT = 209;
 type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
@@ -15,7 +16,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   const heightAnimStyle = useStyle({
     height: animatedValue.interpolate({
       inputRange: [0, HEADER_HEIGHT],
-      outputRange: [HEADER_HEIGHT + paddingTop, 99 + paddingTop],
+      outputRange: [HEADER_HEIGHT + paddingTop, 110 + paddingTop],
       extrapolate: 'clamp',
     }),
   });
@@ -47,15 +48,15 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
 
   const styles = StyleSheet.create({
     headerWrap: {
-      paddingTop,
+      paddingTop: paddingTop,
       position: 'absolute',
       top: 0,
       left: 0,
       right: 0,
       zIndex: 10,
       flex: 1,
-      backgroundColor: 'white', ////
       width: '100%',
+      backgroundColor: 'white', ////
       shadowColor: '#000',
       shadowOffset: {
         width: 0,
@@ -70,13 +71,15 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     flexRow: {
       flexDirection: 'row',
       alignItems: 'center',
-      height: 29, ///
+      height: 30, ///
     },
     locationText: {
       fontSize: 20,
       fontWeight: '600',
     },
     header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       marginTop: 6,
       marginLeft: 16,
       marginRight: 16,
@@ -84,19 +87,20 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     circleWrap: {
       alignItems: 'center',
       position: 'absolute',
-      bottom: 5,
+      bottom: 10,
     },
     barWrap: {
       marginTop: 14, ///
       marginLeft: 16,
+      marginRight: 16,
     },
     barStyle: {
       borderRadius: 5,
     },
     progressWrap: {
       flex: 1,
-      height: '100%',
       alignItems: 'center',
+      width: '100%',
     },
   });
 
@@ -112,11 +116,22 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   const shrinkHeader = () => {
     return (
       <Animated.View style={[barAnimStyle, styles.barWrap]}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{width: '80%', borderWidth: 5, borderColor: '#615EFF'}} />
-          <Text> 7/10</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: WIDTH - 32, //alignItems: center 당할 뷰 라서 옆 마진 16+16 을 빼주면 알아서 마진: 16 을 한 효과가 나타날것
+          }}
+        >
+          <View style={{width: 290, borderWidth: 3, borderRadius: 10, borderColor: '#615EFF'}} />
+          <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+            <Text style={{fontSize: 22}}>7</Text>
+            <Text style={{fontSize: 15}}>/</Text>
+            <Text style={{fontSize: 15, lineHeight: 20}}>10</Text>
+          </View>
         </View>
-        <Text style={{marginTop: 5}}>미션 10개 달성시 1000P</Text>
+        <Text style={{marginBottom: 8}}>미션 10개 달성시 1,000P</Text>
       </Animated.View>
     );
   };
@@ -128,6 +143,9 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           <Text style={[styles.locationText]}>삼성동</Text>
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
+        <View>
+          <Text>JEELO</Text>
+        </View>
       </View>
       <View style={[styles.progressWrap]}>
         {shrinkHeader()}

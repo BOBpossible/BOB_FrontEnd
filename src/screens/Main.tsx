@@ -6,6 +6,7 @@ import {MissionCard} from '../components';
 import {AnimatedHeader} from '../components';
 import {useRecoilState} from 'recoil';
 import {userToken} from '../state';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const dummyMission = [
   {
@@ -77,9 +78,21 @@ const Main = () => {
           />
         )}
         ListHeaderComponent={
-          <View style={{flexDirection: 'row', marginLeft: 16, marginRight: 16}}>
-            <Text style={{marginBottom: 16, fontSize: 18, fontWeight: '600'}}>새로운 밥미션</Text>
-            <Text style={{fontSize: 13}}>며칠 후 사라져요</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginLeft: 16,
+              marginRight: 16,
+              marginBottom: 16,
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{fontSize: 18, fontWeight: '600'}}>새로운 밥미션</Text>
+
+            <View style={{backgroundColor: '#383838', width: 140, height: }}>
+              <Icon name="menu-left" size={30} style={{position: 'absolute'}} />
+              <Text style={{fontSize: 13}}>며칠 후 사라져요</Text>
+            </View>
           </View>
         }
         onScroll={(event) => {
