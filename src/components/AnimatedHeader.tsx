@@ -82,10 +82,9 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
       marginRight: 16,
     },
     circleWrap: {
+      alignItems: 'center',
       position: 'absolute',
       bottom: 5,
-      // top: 60,
-      // alignSelf: 'center',
     },
     barWrap: {
       marginTop: 14, ///
@@ -94,12 +93,17 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     barStyle: {
       borderRadius: 5,
     },
+    progressWrap: {
+      flex: 1,
+      height: '100%',
+      alignItems: 'center',
+    },
   });
 
   const expandHeader = () => {
     return (
       <Animated.View style={[styles.circleWrap, circleAnimStyle]}>
-        <CircleBar radius={57} progress={7} />
+        <CircleBar radius={60} progress={7} />
         <Text style={{marginTop: 5}}>미션 10개 달성시 1000P</Text>
       </Animated.View>
     );
@@ -125,8 +129,10 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
       </View>
-      {shrinkHeader()}
-      {expandHeader()}
+      <View style={[styles.progressWrap]}>
+        {shrinkHeader()}
+        {expandHeader()}
+      </View>
     </Animated.View>
   );
 };
