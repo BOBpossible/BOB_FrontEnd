@@ -23,7 +23,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
 
   const circleAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
-      inputRange: [50, 70],
+      inputRange: [30, 70],
       outputRange: [1, 0],
       extrapolate: 'clamp',
     }),
@@ -99,14 +99,17 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     },
     outerBar: {
       width: 290,
-      borderWidth: 3,
+      height: 8,
       borderRadius: 10,
-      borderColor: '#EDEDED',
+      backgroundColor: '#EDEDED',
     },
     innerBar: {
-      borderWidth: 3,
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      height: 8,
       borderRadius: 10,
-      borderColor: '#615EFF',
+      backgroundColor: '#615EFF',
     },
     progressWrap: {
       flex: 1,
@@ -147,7 +150,9 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
             width: WIDTH - 32, //alignItems: center 당할 뷰 라서 옆 마진 16+16 을 빼주면 알아서 마진: 16 을 한 효과가 나타날것
           }}
         >
-          <View style={[{}, styles.outerBar]}></View>
+          <View style={[styles.outerBar]}>
+            <View style={[styles.innerBar, {width: '70%'}]} />
+          </View>
           <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
             <Text style={{fontSize: 22}}>7</Text>
             <Text style={{fontSize: 15}}>/</Text>
