@@ -15,7 +15,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   const heightAnimStyle = useStyle({
     height: animatedValue.interpolate({
       inputRange: [0, HEADER_HEIGHT],
-      outputRange: [HEADER_HEIGHT, 99 + paddingTop],
+      outputRange: [HEADER_HEIGHT + paddingTop, 99 + paddingTop],
       extrapolate: 'clamp',
     }),
   });
@@ -53,6 +53,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
       left: 0,
       right: 0,
       zIndex: 10,
+      flex: 1,
       backgroundColor: 'white', ////
       width: '100%',
       shadowColor: '#000',
@@ -82,9 +83,9 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     },
     circleWrap: {
       position: 'absolute',
-      bottom: 1,
+      bottom: 5,
       // top: 60,
-      alignSelf: 'center',
+      // alignSelf: 'center',
     },
     barWrap: {
       marginTop: 14, ///
