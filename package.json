@@ -20,6 +20,7 @@
     "@react-navigation/native-stack": "^6.6.2",
     "@react-navigation/stack": "^6.2.1",
     "@types/react": "^18.0.10",
+    "axios": "^0.27.2",
     "moment": "^2.29.3",
     "moment-with-locales-es6": "^1.0.1",
     "react": "17.0.2",

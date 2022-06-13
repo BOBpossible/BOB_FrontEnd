@@ -1,25 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {RegisterNextButton} from '../components';
+import {RegisterNextButton, RegisterHeader} from '../components';
 import {RegisterInterface} from '../data';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
-import {RegisterHeader} from '../components';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import AddressSearchModal from '../modal/AddressSearchModal';
-import {useRecoilValue} from 'recoil';
+import {useRecoilState} from 'recoil';
 import {address} from '../state';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
 const RegisterForm = ({navigation, route}: Props) => {
-  const addressStreet = useRecoilValue(address);
+  const [userAddress, setUserAddress] = useRecoilState(address);
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
   const [name, setName] = useState('');
-  const [gender, setGender] = useState(3);
+  const [gender, setGender] = useState('NULL');
   const [birthDate, setBirthDate] = useState<Date | null>(null);
   const [addressModal, setAddressModal] = useState(false);
   const [addressDetail, setAddressDetail] = useState('');
@@ -28,6 +27,10 @@ const RegisterForm = ({navigation, route}: Props) => {
   useEffect(() => {
     setRegisterData(route.params.registerData);
   }, []);
+
+  useEffect(() => {
+    setRegisterData({...registerData, addressStreet: userAddress.address});
+  }, [userAddress]);
 
   const goNext = () => {
     navigation.navigate('RegisterCategory', {registerData});
@@ -38,6 +41,7 @@ const RegisterForm = ({navigation, route}: Props) => {
 
   const handleConfirm = (date: Date) => {
     setBirthDate(date);
+    setRegisterData({...registerData, birthDate: moment(date).format('YYYY-MM-DD')});
     setDateModal(false);
   };
   return (
@@ -48,7 +52,10 @@ const RegisterForm = ({navigation, route}: Props) => {
           <Text style={[styles.formHeadText]}>이름</Text>
           <TextInput
             style={[styles.nameInput]}
-            onChangeText={setName}
+            onChangeText={(text) => {
+              setName(text);
+              setRegisterData({...registerData, name: text});
+            }}
             value={name}
             placeholder="이름을 입력"
           />
@@ -56,38 +63,53 @@ const RegisterForm = ({navigation, route}: Props) => {
         <View style={[styles.gender]}>
           <Text style={[styles.formHeadText]}>성별</Text>
           <View style={[styles.spacebetweenWrap]}>
-            <TouchableOpacity onPress={() => setGender(0)}>
+            <TouchableOpacity
+              onPress={() => {
+                setGender('MALE');
+                setRegisterData({...registerData, gender: 'MALE'});
+              }}
+            >
               <View
                 style={[
                   styles.genderBox,
-                  gender === 0 ? styles.genderChecked : styles.genderUnchecked,
+                  gender === 'MALE' ? styles.genderChecked : styles.genderUnchecked,
                 ]}
               >
-                <Text style={[gender === 0 ? styles.genderChecked : styles.genderUnchecked]}>
+                <Text style={[gender === 'MALE' ? styles.genderChecked : styles.genderUnchecked]}>
                   남자
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setGender(1)}>
+            <TouchableOpacity
+              onPress={() => {
+                setGender('FEMALE');
+                setRegisterData({...registerData, gender: 'FEMALE'});
+              }}
+            >
               <View
                 style={[
                   styles.genderBox,
-                  gender === 1 ? styles.genderChecked : styles.genderUnchecked,
+                  gender === 'FEMALE' ? styles.genderChecked : styles.genderUnchecked,
                 ]}
               >
-                <Text style={[gender === 1 ? styles.genderChecked : styles.genderUnchecked]}>
+                <Text style={[gender === 'FEMALE' ? styles.genderChecked : styles.genderUnchecked]}>
                   여자
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setGender(2)}>
+            <TouchableOpacity
+              onPress={() => {
+                setGender('NULL');
+                setRegisterData({...registerData, gender: 'NULL'});
+              }}
+            >
               <View
                 style={[
                   styles.genderBox,
-                  gender === 2 ? styles.genderChecked : styles.genderUnchecked,
+                  gender === 'NULL' ? styles.genderChecked : styles.genderUnchecked,
                 ]}
               >
-                <Text style={[gender === 2 ? styles.genderChecked : styles.genderUnchecked]}>
+                <Text style={[gender === 'NULL' ? styles.genderChecked : styles.genderUnchecked]}>
                   선택 안함
                 </Text>
               </View>
@@ -99,7 +121,7 @@ const RegisterForm = ({navigation, route}: Props) => {
           <TouchableOpacity onPress={() => setDateModal(true)}>
             <View style={[styles.nameInput]}>
               <Text style={[birthDate === null && styles.placeholder]}>
-                {birthDate === null ? '생년월일 입력' : moment(birthDate).format('YYYY/MM/DD')}
+                {birthDate === null ? '생년월일 입력' : moment(birthDate).format('YYYY-MM-DD')}
               </Text>
             </View>
           </TouchableOpacity>
@@ -119,15 +141,18 @@ const RegisterForm = ({navigation, route}: Props) => {
           <Text style={[styles.formHeadText]}>주소</Text>
           <TouchableOpacity onPress={() => setAddressModal(true)}>
             <View style={[styles.nameInput, styles.spacebetweenWrap]}>
-              <Text style={[addressStreet.address === '' && styles.placeholder]}>
-                {addressStreet.address === '' ? '주소 찾기' : addressStreet.address}
+              <Text style={[userAddress.address === '' && styles.placeholder]}>
+                {userAddress.address === '' ? '주소 찾기' : userAddress.address}
               </Text>
               <Icon name="chevron-down" size={25} />
             </View>
           </TouchableOpacity>
           <TextInput
             style={[styles.nameInput]}
-            onChangeText={setAddressDetail}
+            onChangeText={(text) => {
+              setAddressDetail(text);
+              setRegisterData({...registerData, addressDetail: text});
+            }}
             value={addressDetail}
             placeholder="상세주소 입력"
           />

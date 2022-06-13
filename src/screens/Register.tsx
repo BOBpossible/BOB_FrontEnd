@@ -60,10 +60,10 @@ const Register = ({navigation}: Props) => {
               setRegisterData({
                 ...registerData,
                 overAge14: !checkAll,
-                serviceContract: !checkAll,
-                privacyContract: !checkAll,
-                locationContract: !checkAll,
-                marketingContract: !checkAll,
+                termsOfService: !checkAll,
+                privacyPolicy: !checkAll,
+                locationInfo: !checkAll,
+                marketing: !checkAll,
               });
             }}
             title="약관 전체 동의"
@@ -86,7 +86,7 @@ const Register = ({navigation}: Props) => {
           <CheckBox
             onPress={() => {
               setCheckService(!checkService);
-              setRegisterData({...registerData, serviceContract: !checkService});
+              setRegisterData({...registerData, termsOfService: !checkService});
             }}
             title="(필수)서비스 이용약관"
             isChecked={checkService}
@@ -96,7 +96,7 @@ const Register = ({navigation}: Props) => {
           <CheckBox
             onPress={() => {
               setCheckPrivacy(!checkPrivacy);
-              setRegisterData({...registerData, privacyContract: !checkPrivacy});
+              setRegisterData({...registerData, privacyPolicy: !checkPrivacy});
             }}
             title="(필수)개인 정보 처리 방침"
             isChecked={checkPrivacy}
@@ -106,7 +106,7 @@ const Register = ({navigation}: Props) => {
           <CheckBox
             onPress={() => {
               setCheckLocation(!checkLocation);
-              setRegisterData({...registerData, locationContract: !checkLocation});
+              setRegisterData({...registerData, locationInfo: !checkLocation});
             }}
             title="(선택) 위치정보 제공"
             isChecked={checkLocation}
@@ -116,7 +116,7 @@ const Register = ({navigation}: Props) => {
           <CheckBox
             onPress={() => {
               setCheckMarketing(!checkMarketing);
-              setRegisterData({...registerData, marketingContract: !checkMarketing});
+              setRegisterData({...registerData, marketing: !checkMarketing});
             }}
             title="(선택) 마케팅 수신 동의"
             isChecked={checkMarketing}

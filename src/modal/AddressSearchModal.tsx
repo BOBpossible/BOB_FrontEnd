@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {Modal, StyleSheet, TouchableOpacity, View, SafeAreaView} from 'react-native';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,10 +14,10 @@ type AddressSearchModalProps = {
 
 const AddressSearchModal: FC<AddressSearchModalProps> = ({visible, closeAddressModal}) => {
   const insets = useSafeAreaInsets();
-  console.log('inset?', insets);
   const setAddressStreet = useSetRecoilState(address);
+
   return (
-    <Modal animationType="slide" visible={visible}>
+    <Modal visible={visible} animationType="slide">
       <SafeAreaView style={{flex: 1}}>
         <View style={[styles.modalHeader, {top: insets.top}]}>
           <TouchableOpacity onPress={closeAddressModal}>
@@ -29,7 +29,7 @@ const AddressSearchModal: FC<AddressSearchModalProps> = ({visible, closeAddressM
 
         <Postcode
           style={styles.container}
-          jsOptions={{animation: true, hideMapBtn: true}}
+          jsOptions={{animation: false, hideMapBtn: true}}
           onSelected={(data) => {
             setAddressStreet({address: data.address, bname: data.bname});
             closeAddressModal();

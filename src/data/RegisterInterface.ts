@@ -2,13 +2,14 @@
 
 export type RegisterInterface = {
   overAge14: boolean;
-  serviceContract: boolean;
-  privacyContract: boolean;
-  locationContract: boolean;
-  marketingContract: boolean;
+  termsOfService: boolean;
+  privacyPolicy: boolean;
+  locationInfo: boolean;
+  marketing: boolean;
   name: string;
-  gender: number;
-  birthDate: Date | null;
-  address: string;
+  gender: string;
+  birthDate: string;
+  addressDetail: string;
+  addressStreet: string;
   category: {};
 };
