@@ -1,8 +1,9 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {View, Animated, Text, StyleSheet, Dimensions} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useStyle} from '../hooks';
+import AddressSearchModal from '../modal/AddressSearchModal';
 import {CircleBar} from './CircleBar';
 
 const WIDTH = Dimensions.get('window').width;
@@ -13,6 +14,7 @@ type AnimatedHeaderProps = {
 };
 
 export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop}) => {
+  const [addressModal, setAddressModal] = useState(false);
   const heightAnimStyle = useStyle({
     height: animatedValue.interpolate({
       inputRange: [0, HEADER_HEIGHT - 100],
@@ -167,7 +169,11 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   return (
     <Animated.View style={[styles.headerWrap, heightAnimStyle]}>
       <View style={[styles.header]}>
-        <TouchableOpacity style={[styles.flexRow]}>
+        <AddressSearchModal
+          visible={addressModal}
+          closeAddressModal={() => setAddressModal(false)}
+        />
+        <TouchableOpacity style={[styles.flexRow]} onPress={() => setAddressModal(true)}>
           <Text style={[styles.locationText]}>삼성동</Text>
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
