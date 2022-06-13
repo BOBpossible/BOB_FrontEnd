@@ -23,15 +23,15 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
 
   const circleAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
-      inputRange: [70, 90],
+      inputRange: [50, 70],
       outputRange: [1, 0],
       extrapolate: 'clamp',
     }),
     transform: [
       {
         scale: animatedValue.interpolate({
-          inputRange: [50, 90],
-          outputRange: [1, 0.7],
+          inputRange: [30, 70],
+          outputRange: [1, 0.8],
           extrapolate: 'clamp',
         }),
       },
@@ -40,7 +40,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
 
   const barAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
-      inputRange: [90, 100], //이거 수정 ? ??처음 130 160
+      inputRange: [65, 75], //이거 수정 ? ??처음 130 160
       outputRange: [0, 1],
       extrapolate: 'clamp',
     }),
@@ -113,13 +113,25 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
       alignItems: 'center',
       width: '100%',
     },
+    pointWrap: {
+      flexDirection: 'row',
+      borderRadius: 20,
+      borderWidth: 2,
+      borderColor: '#AAAAF9',
+      paddingTop: 3.5,
+      paddingBottom: 3.5,
+      paddingLeft: 8,
+      paddingRight: 8,
+      justifyContent: 'space-between',
+      marginRight: 8,
+    },
   });
 
   const expandHeader = () => {
     return (
       <Animated.View style={[styles.circleWrap, circleAnimStyle]}>
         <CircleBar radius={60} progress={7} />
-        <Text style={{marginTop: 5}}>미션 10개 달성시 1000P</Text>
+        <Text style={{marginTop: 8}}>미션 10개 달성시 1000P</Text>
       </Animated.View>
     );
   };
@@ -154,8 +166,16 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           <Text style={[styles.locationText]}>삼성동</Text>
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
-        <View>
-          <Text>JEELO</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <TouchableOpacity>
+            <View style={[styles.pointWrap]}>
+              <Text style={{color: '#6C69FF', fontWeight: 'bold', fontSize: 14}}>P </Text>
+              <Text>999,999</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Icon name="bell-outline" size={24} />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={[styles.progressWrap]}>

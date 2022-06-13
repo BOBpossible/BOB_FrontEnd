@@ -2,6 +2,8 @@ import React, {useEffect} from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import {transform} from '@babel/core';
 
 export type CircleBarProps = {
   radius: number;
@@ -53,16 +55,25 @@ export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
   });
   return (
     <View style={[styles.flex]}>
-      <View style={styles.bigCircle}>
-        <View style={styles.progressCircleOne} />
-        <View style={styles.progressCircleTwo} />
-        <View style={[styles.progressLayer]} />
-        <View style={[styles.progressTextBox]}>
-          <Text style={[styles.progressText]}>{progress}</Text>
-          <Text style={{fontSize: 25}}>/</Text>
-          <Text style={{fontSize: 20, lineHeight: 20}}>10</Text>
-        </View>
-      </View>
+      <AnimatedCircularProgress
+        style={{transform: [{scaleX: -1}]}}
+        size={120}
+        width={7}
+        fill={progress * 10}
+        tintColor="#615EFF"
+        duration={2000}
+        rotation={0}
+        backgroundColor="#EDEDED"
+        lineCap="round"
+      >
+        {() => (
+          <View style={[{transform: [{scaleX: -1}]}, styles.progressTextBox]}>
+            <Text style={[styles.progressText]}>{progress}</Text>
+            <Text style={{fontSize: 25}}>/</Text>
+            <Text style={{fontSize: 20, lineHeight: 20}}>10</Text>
+          </View>
+        )}
+      </AnimatedCircularProgress>
     </View>
   );
 };

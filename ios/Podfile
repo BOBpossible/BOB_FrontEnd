@@ -23,6 +23,8 @@ target 'BOB_FrontEnd' do
 
 
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'BOB_FrontEndTests' do
     inherit! :complete
     # Pods for testing
