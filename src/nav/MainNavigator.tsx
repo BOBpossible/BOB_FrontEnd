@@ -21,7 +21,7 @@ const icons: Record<string, string[]> = {
 const screenOptions = ({route}: {route: RouteProp<ParamListBase, string>}) => {
   return {
     headerShown: false,
-    tabBarShowLabel: false,
+    tabBarShowLabel: true,
     tabBarIcon: ({focused, color, size}: TabBarIconProps) => {
       const {name} = route;
       const focusedSize = focused ? size + 6 : size;
@@ -30,6 +30,8 @@ const screenOptions = ({route}: {route: RouteProp<ParamListBase, string>}) => {
       const iconName = focused ? icon : iconOutline;
       return <Icon name={iconName} size={focusedSize} color={focusedColor} />;
     },
+    tabBarActiveTintColor: 'black',
+    tabBarInactiveTintColor: 'gray',
   };
 };
 
@@ -38,10 +40,10 @@ const Tab = createBottomTabNavigator();
 export const MainNavigator = () => {
   return (
     <Tab.Navigator screenOptions={screenOptions} initialRouteName="Main">
-      <Tab.Screen name="Main" component={Main} />
-      <Tab.Screen name="Mission" component={Mission} />
-      <Tab.Screen name="Map" component={Map} />
-      <Tab.Screen name="MyPage" component={MyPage} />
+      <Tab.Screen name="Main" component={Main} options={{tabBarLabel: '홈'}} />
+      <Tab.Screen name="Mission" component={Mission} options={{tabBarLabel: '미션'}} />
+      <Tab.Screen name="Map" component={Map} options={{tabBarLabel: '검색'}} />
+      <Tab.Screen name="MyPage" component={MyPage} options={{tabBarLabel: '마이페이지'}} />
     </Tab.Navigator>
   );
 };

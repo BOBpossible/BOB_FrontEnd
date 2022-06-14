@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {View, Animated, Text, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useStyle} from '../hooks';
@@ -25,13 +25,16 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     }),
   });
 
-  const barProgressFill = (progress: number) => {
-    Animated.timing(barProgressValue, {
-      toValue: progress * 10,
-      duration: 2000,
-      useNativeDriver: false,
-    }).start();
-  };
+  const barProgressFill = useCallback(
+    (progress: number) => {
+      Animated.timing(barProgressValue, {
+        toValue: progress * 10,
+        duration: 2000,
+        useNativeDriver: false,
+      }).start();
+    },
+    [barProgressValue],
+  );
 
   const widthStyle = useStyle({
     width: barProgressValue.interpolate({
@@ -42,7 +45,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   });
   useEffect(() => {
     barProgressFill(7);
-  }, []);
+  }, [barProgressFill]);
 
   const circleAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
