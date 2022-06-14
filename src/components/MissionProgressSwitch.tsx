@@ -5,14 +5,14 @@ type switchProps = {
   progressnow: number;
   setProgressnow: any;
 };
-function moveLeft(progressValue: any) {
+function moveLeft(progressValue: Animated.Value) {
   Animated.timing(progressValue, {
     toValue: -15, //
     duration: 200, //
     useNativeDriver: false,
   }).start();
 }
-function moveRight(progressValue: any) {
+function moveRight(progressValue: Animated.Value) {
   Animated.timing(progressValue, {
     toValue: 41, //
     duration: 200, //

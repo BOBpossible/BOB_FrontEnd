@@ -1,6 +1,5 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {View, Animated, Text, StyleSheet, Dimensions} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {View, Animated, Text, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useStyle} from '../hooks';
 import AddressSearchModal from '../modal/AddressSearchModal';
@@ -16,10 +15,12 @@ type AnimatedHeaderProps = {
 export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop}) => {
   const [addressModal, setAddressModal] = useState(false);
   const barProgressValue = useRef(new Animated.Value(0)).current;
+
+  //헤더 길이 바꿔주는 애니메이션 Main.tsx의 스크롤 위치에 따라 변한다
   const heightAnimStyle = useStyle({
     height: animatedValue.interpolate({
-      inputRange: [0, HEADER_HEIGHT - 100],
-      outputRange: [HEADER_HEIGHT + paddingTop, 110 + paddingTop],
+      inputRange: [0, HEADER_HEIGHT - 100], //스크롤100 까지는 같은 속도로 스크롤 업
+      outputRange: [HEADER_HEIGHT + paddingTop, 110 + paddingTop], //아이폰을 위한 insets.top 추가
       extrapolate: 'clamp',
     }),
   });
@@ -32,10 +33,6 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     }).start();
   };
 
-  useEffect(() => {
-    barProgressFill(7);
-  }, []);
-
   const widthStyle = useStyle({
     width: barProgressValue.interpolate({
       inputRange: [0, 100],
@@ -43,6 +40,9 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
       extrapolate: 'clamp',
     }),
   });
+  useEffect(() => {
+    barProgressFill(7);
+  }, []);
 
   const circleAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
@@ -69,6 +69,14 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     }),
   });
 
+  const howtoAnimStyle = useStyle({
+    opacity: animatedValue.interpolate({
+      inputRange: [30, 40],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    }),
+  });
+
   const expandHeader = () => {
     return (
       <Animated.View style={[styles.circleWrap, circleAnimStyle]}>
@@ -81,24 +89,17 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   const shrinkHeader = () => {
     return (
       <Animated.View style={[barAnimStyle, styles.barWrap]}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: WIDTH - 32, //alignItems: center 당할 뷰 라서 옆 마진 16+16 을 빼주면 알아서 마진: 16 을 한 효과가 나타날것
-          }}
-        >
+        <View style={[styles.shrinkHeaderWrap]}>
           <View style={[styles.outerBar]}>
             <Animated.View style={[styles.innerBar, widthStyle]} />
           </View>
-          <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-            <Text style={{fontSize: 22}}>7</Text>
-            <Text style={{fontSize: 15}}>/</Text>
-            <Text style={{fontSize: 15, lineHeight: 20}}>10</Text>
+          <View style={[styles.shrinkHeaderTextWrap]}>
+            <Text style={[styles.shrinkHeaderTextOne]}>7</Text>
+            <Text style={[styles.shrinkHeaderTextTwo]}>/</Text>
+            <Text style={[styles.shrinkHeaderTextThree]}>10</Text>
           </View>
         </View>
-        <Text style={{marginBottom: 8}}>미션 10개 달성시 1,000P</Text>
+        <Text>미션 10개 달성시 1,000P</Text>
       </Animated.View>
     );
   };
@@ -114,11 +115,11 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           <Text style={[styles.locationText]}>삼성동</Text>
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={[styles.flexRow]}>
           <TouchableOpacity>
             <View style={[styles.pointWrap]}>
-              <Text style={{color: '#6C69FF', fontWeight: 'bold', fontSize: 14}}>P </Text>
-              <Text>999,999</Text>
+              <Text style={[styles.pointP]}>P </Text>
+              <Text style={[styles.pointText]}>999,999</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
@@ -130,6 +131,14 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
         {shrinkHeader()}
         {expandHeader()}
       </View>
+      <TouchableOpacity style={[{position: 'absolute', top: 60 + paddingTop, right: 20}]}>
+        <Animated.View style={[howtoAnimStyle, styles.flexRow]}>
+          <Text style={[styles.howtoText]}>사용방법</Text>
+          <View style={[styles.questionWrap]}>
+            <Text>?</Text>
+          </View>
+        </Animated.View>
+      </TouchableOpacity>
     </Animated.View>
   );
 };
@@ -180,6 +189,7 @@ const styles = StyleSheet.create({
     marginTop: 14, ///
     marginLeft: 16,
     marginRight: 16,
+    marginBottom: 8,
   },
   barStyle: {
     borderRadius: 5,
@@ -214,5 +224,45 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     justifyContent: 'space-between',
     marginRight: 8,
+  },
+  pointP: {
+    color: '#6C69FF',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  pointText: {fontSize: 14, fontWeight: '600', color: '#555555'},
+  shrinkHeaderWrap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: WIDTH - 32, //alignItems: center 당할 뷰 라서 옆 마진 16+16 을 빼주면 알아서 마진: 16 을 한 효과가 나타날것
+    marginBottom: 6,
+  },
+  shrinkHeaderTextWrap: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+  },
+  shrinkHeaderTextOne: {
+    fontSize: 22,
+  },
+  shrinkHeaderTextTwo: {
+    fontSize: 15,
+  },
+  shrinkHeaderTextThree: {
+    fontSize: 15,
+  },
+  howtoText: {
+    fontSize: 14,
+    fontWeight: '300',
+    color: '#7879F7',
+  },
+  questionWrap: {
+    width: 18,
+    height: 18,
+    borderRadius: 18,
+    backgroundColor: '#EEEEEE',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 8,
   },
 });
