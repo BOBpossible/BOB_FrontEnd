@@ -61,6 +61,7 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
           }
         }}
         originWhitelist={['*']}
+        incognito={true}
       />
     </SafeAreaView>
   );

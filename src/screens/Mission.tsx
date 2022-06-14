@@ -14,52 +14,54 @@ const Mission = () => {
   const [progressnow, setProgressnow] = useState(0); //아래 스위치.  0:진행중  1:진행완료
 
   return (
-    <>
-      <SafeAreaView style={[styles.flex]}>
-        <View style={[styles.headerWrap]}>
-          <View style={[styles.header]}>
-            <Text style={[styles.headerText]}>미션</Text>
-          </View>
-          <View style={{flex: 1}}>
-            {progressnow === 0 ? (
-              <>
-                <MissionProcess status={status} />
-                <MissionUser username={'춘식이'} userid={123} status={status} />
-                <MissionCard
-                  name={'가게이름'}
-                  category={'카테고리'}
-                  day={7}
-                  minCost={10}
-                  point={10}
-                  status={status}
-                />
-              </>
-            ) : (
-              <MissionSuccessList />
-            )}
-          </View>
+    <SafeAreaView style={[styles.flex]}>
+      <View style={[styles.headerWrap]}>
+        <View style={[styles.header]}>
+          <Text style={[styles.headerText]}>미션</Text>
         </View>
-      </SafeAreaView>
+      </View>
+      <View style={{backgroundColor: '#F6F6FA', height: '100%'}}>
+        {progressnow === 0 ? (
+          <View>
+            <MissionProcess status={status} />
+            <MissionUser username={'춘식이'} userid={123} status={status} />
+            <MissionCard
+              name={'가게이름'}
+              category={'카테고리'}
+              day={7}
+              minCost={10}
+              point={10}
+              status={status}
+            />
+          </View>
+        ) : (
+          <MissionSuccessList />
+        )}
+      </View>
+
       <MissionProgressSwitch progressnow={progressnow} setProgressnow={setProgressnow} />
-    </>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  flex: {},
+  flex: {flex: 1, backgroundColor: '#FFFFFF'},
   header: {
-    height: 41,
+    height: 40,
     backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
   },
   headerWrap: {
-    position: 'absolute',
     width: '100%',
+    borderBottomColor: '#DFDFDF',
+    borderBottomWidth: 1,
   },
   headerText: {
     fontSize: 17,
     color: 'black',
     marginLeft: 16,
     marginRight: 16,
+    fontWeight: '600',
   },
 });
 

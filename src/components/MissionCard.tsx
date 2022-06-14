@@ -39,20 +39,18 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
       console.log('canceled');
     }
     return (
-      <>
-        <View style={[styles.missionTwoButton]}>
-          <TouchableOpacity style={[styles.missionButtonLeft, {backgroundColor: `${cancelBgColor}`}]} onPress={cancleCard}>
-            <View >
-              <Text style={{fontSize: 16, color: `${cancelTextColor}`}}>취소</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.missionButtonRight, {backgroundColor: `${bgColor}`}]} onPress={handleOnPress}>
-            <View>
-              <Text style={{color:'white', fontSize: 16}}>{`${text}`}</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </>
+      <View style={[styles.missionTwoButton]}>
+        <TouchableOpacity style={[styles.missionButtonLeft, {backgroundColor: `${cancelBgColor}`}]} onPress={cancleCard}>
+          <View >
+            <Text style={{fontSize: 16, color: `${cancelTextColor}`}}>취소</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.missionButtonRight, {backgroundColor: `${bgColor}`}]} onPress={handleOnPress}>
+          <View>
+            <Text style={{color:'white', fontSize: 16}}>{`${text}`}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     );
   };
   function handleStartPress() {
@@ -74,7 +72,7 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
   }
 
   return (
-    <View style={{marginLeft: 16, marginRight: 16}}>
+    <View style={[styles.missionCardWrap]}>
       <View style={[styles.missionCard]}>
         <View style={[styles.missionMain]}>
           <View style={[styles.nameBox]}>
@@ -94,13 +92,13 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
         <MissionCardOneButton handleOnPress={handleStartPress} text='미션 도전' />
         :
         status === 'request' ?
-        <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='black' cancelBgColor='' cancelTextColor='#111111'/>
+        <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='black' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
         :
         status === 'onrequest' ?
-        <MissionCardTwoButton text='성공 요청중..' bgColor='#2A2A2A' cancelBgColor='' cancelTextColor='#111111'/>
+        <MissionCardTwoButton text='성공 요청중..' bgColor='#2A2A2A' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
         :
         status === 'success' ?
-        <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공' bgColor='#6C69FF' cancelBgColor='' cancelTextColor='#949494'/>
+        <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공' bgColor='#6C69FF' cancelBgColor='#E8E8E8' cancelTextColor='#949494'/>
         :
         //  status ==='review'
         <MissionCardOneButton handleOnPress={handleReviewPress} text='리뷰 남기기' />
@@ -111,10 +109,9 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
 };
 
 const styles = StyleSheet.create({
+  missionCardWrap: {marginLeft: 16, marginRight: 16},
   missionCard: {
-    flex: 1,
     height: 198,
-    width: '100%',
     backgroundColor: Colors.white,
     borderRadius: 12,
     alignItems: 'center', //

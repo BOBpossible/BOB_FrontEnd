@@ -18,9 +18,9 @@ export const MissionUser: FC<MissionUserProps> = ({userprofile, username, userid
     else if (status==='onrequest') {setMessage('사장님 확인중')}
     else if (status==='success') {setMessage('미션 성공')}
   }, [status]);
+
   return (
-    <View style={{marginLeft: 16, marginRight: 16}}>
-      <View style={[styles.userCard]}>
+    <View style={[styles.userCard]}>
         <View style={[styles.profileWrap]}>
           <Image
             style={[styles.profileImg]}
@@ -33,25 +33,22 @@ export const MissionUser: FC<MissionUserProps> = ({userprofile, username, userid
         </View>
         <View style={[styles.statusWrap]}>
             <View>
-                <Text>
-                <Text style={[styles.statusText, status==='success' && {color: '#6C69FF'}]}>{statusMessage}</Text>
-                </Text>
+                <Text style={[styles.statusText, status === 'success' && {color: '#6C69FF'}]}>{statusMessage}</Text>
             </View>
         </View>
       </View>
-    </View>
   );
 };
 
 const styles = StyleSheet.create({
   userCard: {
-    flex: 1,
     height: 86,
-    width: '100%',
     backgroundColor: Colors.white,
     borderRadius: 12,
     marginBottom: 12,
     flexDirection: 'row',
+    marginLeft: 16,
+    marginRight: 16,
   },
   profileWrap: {
     marginTop: 16,

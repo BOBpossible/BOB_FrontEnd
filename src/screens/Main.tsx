@@ -3,7 +3,7 @@ import {View, StyleSheet, Text, Animated} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {MissionCard} from '../components';
-import {AnimatedHeader} from '../components';
+import {AnimatedHeader, HomeMissionListHeader} from '../components';
 import {useRecoilState} from 'recoil';
 import {userToken} from '../state';
 
@@ -57,13 +57,13 @@ const Main = () => {
   console.log(token);
   const offset = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
-  console.log('inset?', insets);
 
   return (
     <SafeAreaView edges={['top']}>
       <AnimatedHeader animatedValue={offset} paddingTop={insets.top} />
       <Animated.FlatList
-        contentContainerStyle={{paddingTop: 239, paddingBottom: 10}}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[styles.missionListContainer]}
         scrollEventThrottle={10}
         data={dummyMission}
         renderItem={({item}) => (
@@ -76,21 +76,27 @@ const Main = () => {
             status="start"
           />
         )}
-        ListHeaderComponent={
-          <View style={{flexDirection: 'row', marginLeft: 16, marginRight: 16}}>
-            <Text style={{marginBottom: 16, fontSize: 18, fontWeight: '600'}}>새로운 밥미션</Text>
-            <Text style={{fontSize: 13}}>며칠 후 사라져요</Text>
-          </View>
-        }
+        ListHeaderComponent={<HomeMissionListHeader />}
         onScroll={(event) => {
           Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
             useNativeDriver: false,
           })(event);
         }}
-        ItemSeparatorComponent={() => <View style={{margin: 16}} />}
+        ItemSeparatorComponent={() => <View style={[styles.missionSeperate]} />}
       />
     </SafeAreaView>
   );
 };
 
 export default Main;
+
+const styles = StyleSheet.create({
+  missionListContainer: {
+    paddingTop: 240,
+    paddingBottom: 10,
+    backgroundColor: '#F6F6FA',
+  },
+  missionSeperate: {
+    margin: 16,
+  },
+});

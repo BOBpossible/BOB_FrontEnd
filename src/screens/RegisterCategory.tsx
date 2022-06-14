@@ -179,7 +179,7 @@ const RegisterCategory = ({navigation, route}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  flex: {flex: 1},
+  flex: {flex: 1, backgroundColor: '#FFFFFF'},
   backButton: {
     position: 'absolute',
     width: 24,

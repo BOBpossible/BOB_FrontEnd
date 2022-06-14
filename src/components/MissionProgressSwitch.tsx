@@ -5,48 +5,23 @@ type switchProps = {
   progressnow: number;
   setProgressnow: any;
 };
-function moveLeft(progressValue: any) {
+function moveLeft(progressValue: Animated.Value) {
   Animated.timing(progressValue, {
-    toValue: -10, //
+    toValue: -15, //
     duration: 200, //
     useNativeDriver: false,
   }).start();
 }
-function moveRight(progressValue: any) {
+function moveRight(progressValue: Animated.Value) {
   Animated.timing(progressValue, {
-    toValue: 40, //
+    toValue: 41, //
     duration: 200, //
     useNativeDriver: false,
   }).start();
 }
 
 export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgressnow}) => {
-  const progressValue = useState(new Animated.Value(-10))[0]; //
-
-  const styles = StyleSheet.create({
-    progressRow: {
-      width: '100%',
-      position: 'absolute',
-      bottom: 11,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    progressToggle: {
-      flexDirection: 'row',
-      borderRadius: 17.5,
-      width: 138,
-      height: 34,
-      alignItems: 'center',
-      justifyContent: 'space-evenly',
-      backgroundColor: '#FFFFFF',
-    },
-    progressSwitch: {
-      height: '80%',
-      backgroundColor: 'black',
-      position: 'absolute',
-      bottom: 2,
-    },
-  });
+  const progressValue = useState(new Animated.Value(-15))[0]; //
 
   return (
     <View style={[styles.progressRow]}>
@@ -56,11 +31,11 @@ export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgress
             progressnow === 0
               ? [
                   styles.progressSwitch,
-                  {width: 68, borderRadius: 21, transform: [{translateX: progressValue}]},
+                  {width: 66, borderRadius: 21, transform: [{translateX: progressValue}]},
                 ]
               : [
                   styles.progressSwitch,
-                  {width: 79, borderRadius: 21, transform: [{translateX: progressValue}]},
+                  {width: 77, borderRadius: 21, transform: [{translateX: progressValue}]},
                 ]
           }
         />
@@ -100,3 +75,37 @@ export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgress
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  progressRow: {
+    width: '100%',
+    position: 'absolute',
+    bottom: 11,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
+  },
+  progressToggle: {
+    flexDirection: 'row',
+    borderRadius: 17.5,
+    width: 138,
+    height: 34,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#FFFFFF',
+  },
+  progressSwitch: {
+    height: 30,
+    backgroundColor: 'black',
+    position: 'absolute',
+  },
+});

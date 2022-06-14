@@ -165,7 +165,7 @@ const RegisterForm = ({navigation, route}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  flex: {flex: 1},
+  flex: {flex: 1, backgroundColor: '#FFFFFF'},
   formWrap: {margin: 16, justifyContent: 'space-between'},
   backButton: {
     zIndex: 1,

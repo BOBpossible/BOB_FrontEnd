@@ -133,7 +133,7 @@ const Register = ({navigation}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  flex: {flex: 1},
+  flex: {flex: 1, backgroundColor: '#FFFFFF'},
   CheckBoxWrap: {margin: 16},
   seperateLine: {borderColor: '#E8E8E8', borderWidth: 1, marginTop: 16},
   RegisterHeadText: {fontSize: 24, fontWeight: '800'},

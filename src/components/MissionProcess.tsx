@@ -7,66 +7,6 @@ export type MissionProcessProps = {
 };
 
 export const MissionProcess: FC<MissionProcessProps> = ({status}) => {
-  const styles = StyleSheet.create({
-    processWrap: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 19,
-      marginBottom: 14,
-    },
-    processTextRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      marginBottom: 9,
-      width: 212,
-    },
-    processCenter: {
-      marginLeft: 54,
-      marginRight: 49,
-    },
-    activeProcess: {
-      color: '#111111',
-    },
-    processCircleRow: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    activeCircleBack: {
-      width: 22,
-      height: 22,
-      borderRadius: 11,
-      backgroundColor: '#AAAAF9',
-      opacity: 0.5,
-    },
-    doneCircle: {
-      width: 14,
-      height: 14,
-      borderRadius: 7,
-      backgroundColor: '#2A2A2A',
-    },
-    activeCircle: {
-      width: 14,
-      height: 14,
-      borderRadius: 7,
-      backgroundColor: '#6C69FF',
-      zIndex: -1,
-    },
-    inactiveCircle: {
-      width: 14,
-      height: 14,
-      borderRadius: 7,
-      backgroundColor: '#2A2A2A',
-    },
-    activeLine: {
-      borderWidth: 0.5,
-      width: 72,
-      borderColor: 'black',
-      zIndex: -1,
-    },
-  });
-
   const nowOnProgress = () => {
     //prettier-ignore
     return (
@@ -109,3 +49,63 @@ export const MissionProcess: FC<MissionProcessProps> = ({status}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  processWrap: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 19,
+    marginBottom: 14,
+  },
+  processTextRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 9,
+    width: 212,
+  },
+  processCenter: {
+    marginLeft: 54,
+    marginRight: 49,
+  },
+  activeProcess: {
+    color: '#111111',
+  },
+  processCircleRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  activeCircleBack: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: '#AAAAF9',
+    opacity: 0.5,
+  },
+  doneCircle: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: '#2A2A2A',
+  },
+  activeCircle: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: '#6C69FF',
+    zIndex: -1,
+  },
+  inactiveCircle: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: '#2A2A2A',
+  },
+  activeLine: {
+    borderWidth: 0.5,
+    width: 72,
+    borderColor: 'black',
+    zIndex: -1,
+  },
+});
