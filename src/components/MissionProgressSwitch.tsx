@@ -21,7 +21,7 @@ function moveRight(progressValue: any) {
 }
 
 export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgressnow}) => {
-  const progressValue = useState(new Animated.Value(-10))[0]; //
+  const progressValue = useState(new Animated.Value(-15))[0]; //
 
   return (
     <View style={[styles.progressRow]}>
