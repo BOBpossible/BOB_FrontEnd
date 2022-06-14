@@ -4,7 +4,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useStyle} from '../hooks';
 import AddressSearchModal from '../modal/AddressSearchModal';
-import {CircleBar} from './CircleBar';
+import {CircleBar} from './HomeCircleBar';
 
 const WIDTH = Dimensions.get('window').width;
 const HEADER_HEIGHT = 210;
@@ -15,10 +15,31 @@ type AnimatedHeaderProps = {
 
 export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop}) => {
   const [addressModal, setAddressModal] = useState(false);
+  const barProgressValue = useRef(new Animated.Value(0)).current;
   const heightAnimStyle = useStyle({
     height: animatedValue.interpolate({
       inputRange: [0, HEADER_HEIGHT - 100],
       outputRange: [HEADER_HEIGHT + paddingTop, 110 + paddingTop],
+      extrapolate: 'clamp',
+    }),
+  });
+
+  const barProgressFill = (progress: number) => {
+    Animated.timing(barProgressValue, {
+      toValue: progress * 10,
+      duration: 2000,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  useEffect(() => {
+    barProgressFill(7);
+  }, []);
+
+  const widthStyle = useStyle({
+    width: barProgressValue.interpolate({
+      inputRange: [0, 100],
+      outputRange: ['0%', '100%'],
       extrapolate: 'clamp',
     }),
   });
@@ -42,94 +63,10 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
 
   const barAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
-      inputRange: [65, 75], //이거 수정 ? ??처음 130 160
+      inputRange: [65, 75],
       outputRange: [0, 1],
       extrapolate: 'clamp',
     }),
-  });
-
-  const styles = StyleSheet.create({
-    headerWrap: {
-      paddingTop: paddingTop,
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: 10,
-      flex: 1,
-      width: '100%',
-      backgroundColor: 'white', ////
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.35,
-      shadowRadius: 3.84,
-      elevation: 5,
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
-    },
-    flexRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      height: 30, ///
-    },
-    locationText: {
-      fontSize: 20,
-      fontWeight: '600',
-    },
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginTop: 6,
-      marginLeft: 16,
-      marginRight: 16,
-    },
-    circleWrap: {
-      alignItems: 'center',
-      position: 'absolute',
-      bottom: 10,
-    },
-    barWrap: {
-      marginTop: 14, ///
-      marginLeft: 16,
-      marginRight: 16,
-    },
-    barStyle: {
-      borderRadius: 5,
-    },
-    outerBar: {
-      width: 290,
-      height: 8,
-      borderRadius: 10,
-      backgroundColor: '#EDEDED',
-    },
-    innerBar: {
-      position: 'absolute',
-      left: 0,
-      top: 0,
-      height: 8,
-      borderRadius: 10,
-      backgroundColor: '#615EFF',
-    },
-    progressWrap: {
-      flex: 1,
-      alignItems: 'center',
-      width: '100%',
-    },
-    pointWrap: {
-      flexDirection: 'row',
-      borderRadius: 20,
-      borderWidth: 2,
-      borderColor: '#AAAAF9',
-      paddingTop: 3.5,
-      paddingBottom: 3.5,
-      paddingLeft: 8,
-      paddingRight: 8,
-      justifyContent: 'space-between',
-      marginRight: 8,
-    },
   });
 
   const expandHeader = () => {
@@ -153,7 +90,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           }}
         >
           <View style={[styles.outerBar]}>
-            <View style={[styles.innerBar, {width: '70%'}]} />
+            <Animated.View style={[styles.innerBar, widthStyle]} />
           </View>
           <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
             <Text style={{fontSize: 22}}>7</Text>
@@ -167,7 +104,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   };
 
   return (
-    <Animated.View style={[styles.headerWrap, heightAnimStyle]}>
+    <Animated.View style={[styles.headerWrap, heightAnimStyle, {paddingTop}]}>
       <View style={[styles.header]}>
         <AddressSearchModal
           visible={addressModal}
@@ -197,4 +134,85 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   );
 };
 
-export default AnimatedHeader;
+const styles = StyleSheet.create({
+  headerWrap: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+    flex: 1,
+    width: '100%',
+    backgroundColor: 'white', ////
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 3.84,
+    elevation: 5,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  flexRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 30, ///
+  },
+  locationText: {
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 6,
+    marginLeft: 16,
+    marginRight: 16,
+  },
+  circleWrap: {
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+  },
+  barWrap: {
+    marginTop: 14, ///
+    marginLeft: 16,
+    marginRight: 16,
+  },
+  barStyle: {
+    borderRadius: 5,
+  },
+  outerBar: {
+    width: 290,
+    height: 8,
+    borderRadius: 10,
+    backgroundColor: '#EDEDED',
+  },
+  innerBar: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    height: 8,
+    borderRadius: 10,
+    backgroundColor: '#615EFF',
+  },
+  progressWrap: {
+    flex: 1,
+    alignItems: 'center',
+    width: '100%',
+  },
+  pointWrap: {
+    flexDirection: 'row',
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: '#AAAAF9',
+    paddingTop: 3.5,
+    paddingBottom: 3.5,
+    paddingLeft: 8,
+    paddingRight: 8,
+    justifyContent: 'space-between',
+    marginRight: 8,
+  },
+});
