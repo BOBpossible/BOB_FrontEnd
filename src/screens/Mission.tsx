@@ -47,8 +47,9 @@ const Mission = () => {
 const styles = StyleSheet.create({
   flex: {flex: 1, backgroundColor: '#FFFFFF'},
   header: {
-    height: 41,
+    height: 40,
     backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
   },
   headerWrap: {
     width: '100%',
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
     color: 'black',
     marginLeft: 16,
     marginRight: 16,
+    fontWeight: '600',
   },
 });
 
