@@ -53,6 +53,8 @@ const styles = StyleSheet.create({
   },
   headerWrap: {
     width: '100%',
+    borderBottomColor: '#DFDFDF',
+    borderBottomWidth: 1,
   },
   headerText: {
     fontSize: 17,

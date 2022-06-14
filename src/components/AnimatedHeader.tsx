@@ -7,7 +7,7 @@ import AddressSearchModal from '../modal/AddressSearchModal';
 import {CircleBar} from './CircleBar';
 
 const WIDTH = Dimensions.get('window').width;
-const HEADER_HEIGHT = 209;
+const HEADER_HEIGHT = 210;
 type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
   paddingTop: number;

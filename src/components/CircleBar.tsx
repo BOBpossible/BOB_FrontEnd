@@ -3,7 +3,6 @@ import type {FC} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import {transform} from '@babel/core';
 
 export type CircleBarProps = {
   radius: number;

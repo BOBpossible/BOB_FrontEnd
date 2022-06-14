@@ -7,14 +7,14 @@ type switchProps = {
 };
 function moveLeft(progressValue: any) {
   Animated.timing(progressValue, {
-    toValue: -10, //
+    toValue: -15, //
     duration: 200, //
     useNativeDriver: false,
   }).start();
 }
 function moveRight(progressValue: any) {
   Animated.timing(progressValue, {
-    toValue: 40, //
+    toValue: 41, //
     duration: 200, //
     useNativeDriver: false,
   }).start();
@@ -31,11 +31,11 @@ export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgress
             progressnow === 0
               ? [
                   styles.progressSwitch,
-                  {width: 68, borderRadius: 21, transform: [{translateX: progressValue}]},
+                  {width: 66, borderRadius: 21, transform: [{translateX: progressValue}]},
                 ]
               : [
                   styles.progressSwitch,
-                  {width: 79, borderRadius: 21, transform: [{translateX: progressValue}]},
+                  {width: 77, borderRadius: 21, transform: [{translateX: progressValue}]},
                 ]
           }
         />
@@ -83,6 +83,16 @@ const styles = StyleSheet.create({
     bottom: 11,
     alignItems: 'center',
     justifyContent: 'center',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
   },
   progressToggle: {
     flexDirection: 'row',
@@ -94,9 +104,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   progressSwitch: {
-    height: '80%',
+    height: 30,
     backgroundColor: 'black',
     position: 'absolute',
-    bottom: 2,
   },
 });
