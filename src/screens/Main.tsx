@@ -64,7 +64,8 @@ const Main = () => {
     <SafeAreaView edges={['top']}>
       <AnimatedHeader animatedValue={offset} paddingTop={insets.top} />
       <Animated.FlatList
-        contentContainerStyle={{paddingTop: 240, paddingBottom: 10}}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[styles.missionListContainer]}
         scrollEventThrottle={10}
         data={dummyMission}
         renderItem={({item}) => (
@@ -131,4 +132,10 @@ const Main = () => {
 
 export default Main;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  missionListContainer: {
+    paddingTop: 240,
+    paddingBottom: 10,
+    backgroundColor: '#F6F6FA',
+  },
+});

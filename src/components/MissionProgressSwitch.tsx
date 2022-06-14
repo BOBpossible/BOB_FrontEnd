@@ -23,31 +23,6 @@ function moveRight(progressValue: any) {
 export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgressnow}) => {
   const progressValue = useState(new Animated.Value(-10))[0]; //
 
-  const styles = StyleSheet.create({
-    progressRow: {
-      width: '100%',
-      position: 'absolute',
-      bottom: 11,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    progressToggle: {
-      flexDirection: 'row',
-      borderRadius: 17.5,
-      width: 138,
-      height: 34,
-      alignItems: 'center',
-      justifyContent: 'space-evenly',
-      backgroundColor: '#FFFFFF',
-    },
-    progressSwitch: {
-      height: '80%',
-      backgroundColor: 'black',
-      position: 'absolute',
-      bottom: 2,
-    },
-  });
-
   return (
     <View style={[styles.progressRow]}>
       <View style={[styles.progressToggle]}>
@@ -100,3 +75,28 @@ export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgress
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  progressRow: {
+    width: '100%',
+    position: 'absolute',
+    bottom: 11,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  progressToggle: {
+    flexDirection: 'row',
+    borderRadius: 17.5,
+    width: 138,
+    height: 34,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#FFFFFF',
+  },
+  progressSwitch: {
+    height: '80%',
+    backgroundColor: 'black',
+    position: 'absolute',
+    bottom: 2,
+  },
+});

@@ -96,7 +96,7 @@ const Login = ({}) => {
 };
 
 const styles = StyleSheet.create({
-  flex: {flex: 1},
+  flex: {flex: 1, backgroundColor: '#FFFFFF'},
   loginTitle: {
     justifyContent: 'center',
     alignItems: 'center',
