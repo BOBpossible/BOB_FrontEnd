@@ -54,7 +54,7 @@ const RegisterForm = ({navigation, route}: Props) => {
           <TextInput
             style={[
               styles.nameInput,
-              focusedName ? {borderColor: '#6C69FF'} : {borderColor: '#DFDFDF'},
+              focusedName ? {borderColor: '#6C69FF'} : {borderColor: '#DFDFDF', color: '#111111'},
             ]}
             onChangeText={(text) => {
               setName(text);
