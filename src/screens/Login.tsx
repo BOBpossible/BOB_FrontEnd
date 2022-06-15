@@ -41,13 +41,13 @@ const Login = ({}) => {
     GoogleSignin.configure({
       webClientId: '875664333601-gdsrl919s9db2bqcre9emulifoa8rrp6.apps.googleusercontent.com',
     });
-    console.log(auth().currentUser);
+    // console.log(auth().currentUser);
     //로그인 되어 있는지 확인
     auth().onAuthStateChanged((user) => {
       if (user) {
         console.log(`구글로그인 되어있음 - ${auth().currentUser?.displayName}`);
         setLoggedIn(true);
-        navigation.navigate('Register');
+        // navigation.navigate('Register'); //로그인 되어있따면 회웝가입으로 바로
       } else {
         console.log('구글로그인 되어있지않음');
         setLoggedIn(false);
