@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, Dimensions} from 'react-native';
+import {View, StyleSheet, Text, Dimensions, TouchableOpacity} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
-import {TouchableOpacity} from 'react-native';
 import BottomSheet, {BottomSheetFlatList, BottomSheetView} from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AddressSearchModal from '../modal/AddressSearchModal';
-import {MissionCard} from '../components';
+import RestaurantModal from '../modal/RestaurantModal';
 
 const dummyMission = [
   {
@@ -33,11 +32,24 @@ const dummyMission = [
 
 const Map = () => {
   const height = Dimensions.get('screen').height;
+  const insets = useSafeAreaInsets();
+  const listSnapPoint = height - insets.top - 150;
   const [addressModal, setAddressModal] = useState(false);
+  const [restaurantModal, setRestaurantModal] = useState(false);
+  const [restaurantID, setRestaurantID] = useState(0);
+
+  const openRestaurantModal = async (id: number) => {
+    await setRestaurantID(id);
+    setRestaurantModal(true);
+  };
   return (
     <SafeAreaView style={[styles.flex]}>
       <AddressSearchModal visible={addressModal} closeAddressModal={() => setAddressModal(false)} />
-
+      <RestaurantModal
+        visible={restaurantModal}
+        closeRestaurantModal={() => setRestaurantModal(false)}
+        restaurantID={0}
+      />
       <View style={[styles.headerWrap]}>
         <TouchableOpacity style={[styles.header]} onPress={() => setAddressModal(true)}>
           <Text style={[styles.headerText]}>삼성동</Text>
@@ -46,7 +58,7 @@ const Map = () => {
       </View>
       <View style={[styles.webviewWrap]}></View>
       <BottomSheet
-        snapPoints={[60, 650]}
+        snapPoints={[60, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
       >
         <BottomSheetView style={[styles.missionListTextWrap]}>
@@ -56,16 +68,11 @@ const Map = () => {
           showsVerticalScrollIndicator={false}
           data={dummyMission}
           renderItem={({item}) => (
-            <MissionCard
-              name={item.name}
-              category={item.category}
-              day={item.day}
-              minCost={item.minCost}
-              point={item.point}
-              status="start"
-            />
+            <TouchableOpacity onPress={() => openRestaurantModal(0)}>
+              <View style={{width: '100%', height: 300, backgroundColor: 'lightgrey'}}></View>
+            </TouchableOpacity>
           )}
-          ItemSeparatorComponent={() => <View style={[styles.missionSeperate]} />}
+          ItemSeparatorComponent={() => <View style={{margin: 16}} />}
         />
       </BottomSheet>
     </SafeAreaView>
