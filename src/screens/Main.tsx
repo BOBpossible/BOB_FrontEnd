@@ -29,27 +29,6 @@ const dummyMission = [
     minCost: 10000,
     point: 500,
   },
-  {
-    name: '반이학생마라탕',
-    category: '중식당',
-    day: 7,
-    minCost: 10000,
-    point: 500,
-  },
-  {
-    name: '반이학생마라탕',
-    category: '중식당',
-    day: 7,
-    minCost: 10000,
-    point: 500,
-  },
-  {
-    name: '반이학생마라탕',
-    category: '중식당',
-    day: 7,
-    minCost: 10000,
-    point: 500,
-  },
 ];
 
 const Main = () => {

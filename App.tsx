@@ -9,21 +9,33 @@ import {MainNavigator} from './src/nav';
 import {AuthNavigator} from './src/nav';
 import 'react-native-gesture-handler';
 import {enableScreens} from 'react-native-screens';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 enableScreens();
 export default function App() {
   const Stack = createStackNavigator();
-
   const [loading, setLoading] = useState(true);
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
   useEffect(() => {
+    getToken();
     const id = setTimeout(() => {
       setLoading(false);
-      setIsLogin(false);
-    }, 3000);
+    }, 2000);
     return () => clearTimeout(id);
   }, []);
+
+  const getToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userToken');
+      console.log(value);
+      if (value !== null) {
+        setIsLogin(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <RecoilRoot>
