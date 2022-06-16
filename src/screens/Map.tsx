@@ -54,7 +54,7 @@ const Map = () => {
       </View>
       <View style={[styles.webviewWrap]}></View>
       <BottomSheet
-        snapPoints={[60, listSnapPoint]}
+        snapPoints={[55, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
       >
         <BottomSheetView style={[styles.missionListTextWrap]}>
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
   },
   missionListTextWrap: {
     marginLeft: 16,
+    marginBottom: 16,
   },
   missionListText: {
     fontSize: 16,

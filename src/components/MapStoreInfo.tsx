@@ -26,7 +26,7 @@ export const MapStoreInfo: FC<MapStoreInfoProps> = ({
       </View>
       <View style={[styles.flexRow, styles.rowSeperate]}>
         <Text style={[styles.storeTime]}>{storeTime}</Text>
-        <View style={[styles.flexRow]}>
+        <View style={[styles.flexRow, styles.rateMargin]}>
           <Icon name="star" size={14} />
           <Text style={[styles.storeRate]}>{storeRate}</Text>
         </View>
@@ -53,9 +53,32 @@ const styles = StyleSheet.create({
   rowSeperate: {
     marginBottom: 11,
   },
-  storeName: {},
-  storeCategory: {},
-  storeTime: {},
-  storeRate: {},
-  storeAddress: {},
+  storeName: {
+    fontFamily: 'Pretendard-SemiBold',
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#000000',
+  },
+  storeCategory: {
+    marginLeft: 8,
+    fontFamily: 'Pretendard-Light',
+    fontSize: 14,
+    fontWeight: '300',
+    color: '#7D7D7D',
+  },
+  storeTime: {
+    fontFamily: 'Pretendard-Light',
+    fontSize: 14,
+    fontWeight: '300',
+    color: '#F33F3F',
+  },
+  storeRate: {
+    fontFamily: 'Pretendard-Light',
+    fontSize: 14,
+    fontWeight: '300',
+    color: '#000000',
+    marginLeft: 4,
+  },
+  storeAddress: {fontFamily: 'Pretendard-Light', fontSize: 14, fontWeight: '300', color: '#7D7D7D'},
+  rateMargin: {marginLeft: 8},
 });
