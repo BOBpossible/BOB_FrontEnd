@@ -1,20 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import type {FC} from 'react';
 import {Modal, StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
+import {MapStoreInfo} from '../components';
 
-type RestaurantModalProps = {
-  restaurantID: number;
+type StoreModalProps = {
+  storeId: number;
   visible: boolean;
-  closeRestaurantModal: () => void;
+  closeStoreModal: () => void;
 };
 
-const RestaurantModal: FC<RestaurantModalProps> = ({
-  restaurantID,
-  visible,
-  closeRestaurantModal,
-}) => {
+const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) => {
   const dot = () => {
     const dotStyle = {
       backgroundColor: '#ffffffb2',
@@ -42,11 +39,13 @@ const RestaurantModal: FC<RestaurantModalProps> = ({
     return <View style={activeDotStyle} />;
   };
 
+  useEffect(() => {}, []);
+
   return (
     <Modal visible={visible} animationType="slide">
       <SafeAreaView style={[styles.safeView]}>
         <View style={[styles.modalHeader]}>
-          <TouchableOpacity onPress={closeRestaurantModal}>
+          <TouchableOpacity onPress={closeStoreModal}>
             <View style={[styles.backButton]}>
               <Icon name="arrow-left" size={24} color="black" />
             </View>
@@ -76,17 +75,22 @@ const RestaurantModal: FC<RestaurantModalProps> = ({
             />
           </Swiper>
         </View>
-
-        <Text>HELOOEKFOFKOKGOKGOGKO RESTAURANT</Text>
+        <MapStoreInfo
+          storeName={'반이학생마라탕마라반'}
+          storeCategory={'중식당'}
+          storeTime={'영업종료'}
+          storeRate={4.4}
+          storeAddress={'서울시 성북구 안암동5가 102-60'}
+        />
       </SafeAreaView>
     </Modal>
   );
 };
 
-export default RestaurantModal;
+export default StoreModal;
 
 const styles = StyleSheet.create({
-  safeView: {flex: 1, backgroundColor: '#FFFFFF'},
+  safeView: {flex: 1, backgroundColor: '#F6F6FA'},
   modalHeader: {
     height: 40,
     flexDirection: 'row',
@@ -96,5 +100,10 @@ const styles = StyleSheet.create({
   backButton: {
     marginLeft: 16,
     marginRight: 16,
+  },
+  storeInfoWrap: {
+    height: 100,
+    marginBottom: 8,
+    backgroundColor: '#FFFFFF',
   },
 });

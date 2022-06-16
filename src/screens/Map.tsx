@@ -4,7 +4,7 @@ import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomSheet, {BottomSheetFlatList, BottomSheetView} from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AddressSearchModal from '../modal/AddressSearchModal';
-import RestaurantModal from '../modal/RestaurantModal';
+import StoreModal from '../modal/StoreModal';
 
 const dummyMission = [
   {
@@ -35,21 +35,17 @@ const Map = () => {
   const insets = useSafeAreaInsets();
   const listSnapPoint = height - insets.top - 150;
   const [addressModal, setAddressModal] = useState(false);
-  const [restaurantModal, setRestaurantModal] = useState(false);
-  const [restaurantID, setRestaurantID] = useState(0);
+  const [storeModal, setStoreModal] = useState(false);
+  const [storeId, setStoreId] = useState(0);
 
   const openRestaurantModal = async (id: number) => {
-    await setRestaurantID(id);
-    setRestaurantModal(true);
+    await setStoreId(id);
+    setStoreModal(true);
   };
   return (
     <SafeAreaView style={[styles.flex]}>
       <AddressSearchModal visible={addressModal} closeAddressModal={() => setAddressModal(false)} />
-      <RestaurantModal
-        visible={restaurantModal}
-        closeRestaurantModal={() => setRestaurantModal(false)}
-        restaurantID={0}
-      />
+      <StoreModal visible={storeModal} closeStoreModal={() => setStoreModal(false)} storeId={0} />
       <View style={[styles.headerWrap]}>
         <TouchableOpacity style={[styles.header]} onPress={() => setAddressModal(true)}>
           <Text style={[styles.headerText]}>삼성동</Text>

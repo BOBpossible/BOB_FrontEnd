@@ -5,3 +5,4 @@ export * from './RegisterNextButton';
 export * from './RegisterHeader';
 export * from './CheckBox';
 export * from './HomeMissionListHeader';
+export * from './MapStoreInfo';
