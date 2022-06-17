@@ -9,3 +9,4 @@ export * from './MapStoreInfo';
 export * from './MapReviewToggleButton';
 export * from './MapStoreReviewPhoto';
 export * from './MapStoreReviewList';
+export * from './MapStoreReview';

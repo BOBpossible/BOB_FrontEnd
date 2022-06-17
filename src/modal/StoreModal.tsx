@@ -95,7 +95,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
             isReview={isReview}
           />
         </View>
-        <View>{isReview ? <MapStoreReviewList /> : <MapStoreReviewPhoto />}</View>
+        {isReview ? <MapStoreReviewList /> : <MapStoreReviewPhoto />}
       </SafeAreaView>
     </Modal>
   );
@@ -129,5 +129,7 @@ const styles = StyleSheet.create({
   reviewToggleWrap: {
     backgroundColor: '#FFFFFF',
     height: 50,
+    borderBottomColor: '#EDEDED',
+    borderBottomWidth: 1,
   },
 });
