@@ -1,6 +1,7 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import ReviewModal from '../modal/ReviewModal';
 import {MapStoreReview} from './MapStoreReview';
 
 const dummyReviews = [
@@ -55,11 +56,20 @@ const dummyReviews = [
 ];
 
 export const MapStoreReviewList = () => {
+  const [reviewModal, setReviewModal] = useState(false);
+  const [storeId, setStoreId] = useState(0);
+
+  const openReviewModal = async (id: number) => {
+    await setStoreId(id);
+    setReviewModal(true);
+  };
+
   return (
     <View style={[styles.reviewListWrap]}>
       <FlatList
         data={dummyReviews}
         keyExtractor={(item, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
         renderItem={({item}) => {
           return (
             <MapStoreReview
@@ -72,6 +82,16 @@ export const MapStoreReviewList = () => {
           );
         }}
       />
+      <ReviewModal
+        visible={reviewModal}
+        closeReviewModal={() => setReviewModal(false)}
+        storeId={storeId}
+      />
+      <TouchableOpacity onPress={() => openReviewModal(0)}>
+        <View style={[styles.reviewButton]}>
+          <Text style={[styles.reviewButtonText]}>리뷰 남기기</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -80,5 +100,18 @@ const styles = StyleSheet.create({
   reviewListWrap: {
     backgroundColor: '#FFFFFF',
     flex: 1,
+  },
+  reviewButton: {
+    width: '80%',
+    height: 56,
+    backgroundColor: '#000000',
+    position: 'absolute',
+    bottom: 8,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  reviewButtonText: {
+    color: '#FFFFFF',
   },
 });
