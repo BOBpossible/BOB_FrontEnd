@@ -18,7 +18,7 @@ export const MapStoreReview: FC<MapStoreReviewProps> = ({images, name, date, rat
         {imagedata.map((item) => {
           return (
             <View style={[styles.reviewImageWrap]} key={item.id}>
-              <Image source={{uri: item.uri}} style={{width: 80, height: 80}} />
+              <Image source={{uri: item.uri}} style={[styles.imageSize]} />
             </View>
           );
         })}
@@ -75,5 +75,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard-Light',
     fontSize: 16,
     marginLeft: 4,
+  },
+  imageSize: {
+    height: 80,
+    width: 80,
   },
 });
