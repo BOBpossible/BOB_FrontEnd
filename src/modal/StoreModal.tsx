@@ -61,33 +61,38 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
             <Icon name="arrow-left" size={24} color="black" />
           </View>
         </View>
-        <View style={{height: 220}}>
-          <Swiper dot={dot()} activeDot={activeDot()} showsButtons={false}>
-            <Image
-              source={{uri: 'https://source.unsplash.com/1024x768/?nature'}}
-              style={{width: '100%', height: 220}}
+        {!isReview && (
+          <View>
+            <View style={{height: 220}}>
+              <Swiper dot={dot()} activeDot={activeDot()} showsButtons={false}>
+                <Image
+                  source={{uri: 'https://source.unsplash.com/1024x768/?nature'}}
+                  style={{width: '100%', height: 220}}
+                />
+                <Image
+                  source={{uri: 'https://source.unsplash.com/1024x768/?water'}}
+                  style={{width: '100%', height: 220}}
+                />
+                <Image
+                  source={{uri: 'https://source.unsplash.com/1024x768/?girl'}}
+                  style={{width: '100%', height: 220}}
+                />
+                <Image
+                  source={{uri: 'https://source.unsplash.com/1024x768/?tree'}}
+                  style={{width: '100%', height: 220}}
+                />
+              </Swiper>
+            </View>
+            <MapStoreInfo
+              storeName={'반이학생마라탕마라반'}
+              storeCategory={'중식당'}
+              storeTime={'영업종료'}
+              storeRate={4.4}
+              storeAddress={'서울시 성북구 안암동5가 102-60'}
             />
-            <Image
-              source={{uri: 'https://source.unsplash.com/1024x768/?water'}}
-              style={{width: '100%', height: 220}}
-            />
-            <Image
-              source={{uri: 'https://source.unsplash.com/1024x768/?girl'}}
-              style={{width: '100%', height: 220}}
-            />
-            <Image
-              source={{uri: 'https://source.unsplash.com/1024x768/?tree'}}
-              style={{width: '100%', height: 220}}
-            />
-          </Swiper>
-        </View>
-        <MapStoreInfo
-          storeName={'반이학생마라탕마라반'}
-          storeCategory={'중식당'}
-          storeTime={'영업종료'}
-          storeRate={4.4}
-          storeAddress={'서울시 성북구 안암동5가 102-60'}
-        />
+            <View style={{backgroundColor: '#F6F6FA', height: 8}} />
+          </View>
+        )}
         <View style={[styles.reviewToggleWrap]}>
           <MapReviewToggleButton
             toggleReview={() => setIsReview(true)}
@@ -104,7 +109,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
 export default StoreModal;
 
 const styles = StyleSheet.create({
-  safeView: {flex: 1, backgroundColor: '#F6F6FA'},
+  safeView: {flex: 1, backgroundColor: '#FFFFFF'},
   modalHeader: {
     height: 40,
     flexDirection: 'row',
