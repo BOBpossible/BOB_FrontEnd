@@ -9,9 +9,9 @@ const dummyReviews = [
     date: '2022-06-16',
     rate: 3,
     images: [
-      {uri: 'https://source.unsplash.com/1024x768/?tree'},
-      {uri: 'https://source.unsplash.com/1024x768/?girl'},
-      {uri: 'https://source.unsplash.com/1024x768/?boy'},
+      {uri: 'https://source.unsplash.com/1024x768/?tree', id: 0},
+      {uri: 'https://source.unsplash.com/1024x768/?girl', id: 1},
+      {uri: 'https://source.unsplash.com/1024x768/?boy', id: 2},
     ],
     review:
       '너무 맛있어요! 최고! 포인트도 낭낭하니 많아요~~~ 추천추천 미션밥파서블 덕분에 인생폈다',
@@ -20,7 +20,7 @@ const dummyReviews = [
     name: '이아영',
     date: '2022-06-14',
     rate: 3,
-    images: [{uri: 'https://source.unsplash.com/1024x768/?tree'}],
+    images: [{uri: 'https://source.unsplash.com/1024x768/?tree', id: 3}],
     review:
       '너무 맛있어요! 최고! 너무 맛있어요! 최고!너무 맛있어요! 최고!너무 맛있어요! 최고!너무 맛있어요! 최고!',
   },
@@ -29,8 +29,8 @@ const dummyReviews = [
     date: '2022-06-13',
     rate: 3,
     images: [
-      {uri: 'https://source.unsplash.com/1024x768/?girl'},
-      {uri: 'https://source.unsplash.com/1024x768/?boy'},
+      {uri: 'https://source.unsplash.com/1024x768/?girl', id: 4},
+      {uri: 'https://source.unsplash.com/1024x768/?boy', id: 5},
     ],
     review: '너무 맛있어요! 최고!',
   },
@@ -46,9 +46,9 @@ const dummyReviews = [
     date: '2022-06-10',
     rate: 3,
     images: [
-      {uri: 'https://source.unsplash.com/1024x768/?tree'},
-      {uri: 'https://source.unsplash.com/1024x768/?girl'},
-      {uri: 'https://source.unsplash.com/1024x768/?boy'},
+      {uri: 'https://source.unsplash.com/1024x768/?tree', id: 6},
+      {uri: 'https://source.unsplash.com/1024x768/?girl', id: 7},
+      {uri: 'https://source.unsplash.com/1024x768/?boy', id: 8},
     ],
     review: '너무 맛있어요! 최고!',
   },
@@ -59,6 +59,7 @@ export const MapStoreReviewList = () => {
     <View style={[styles.reviewListWrap]}>
       <FlatList
         data={dummyReviews}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => {
           return (
             <MapStoreReview

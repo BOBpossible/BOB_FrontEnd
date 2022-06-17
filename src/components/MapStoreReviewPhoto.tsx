@@ -23,9 +23,9 @@ export const MapStoreReviewPhoto = () => {
             <Image source={{uri: item.uri}} style={{height: IMAGESIZE - 2, width: IMAGESIZE - 2}} />
           </View>
         )}
+        keyExtractor={(item, index) => index.toString()}
         numColumns={3}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={[styles.reviewPhotoContainer]}
         scrollEventThrottle={10}
       />
     </View>

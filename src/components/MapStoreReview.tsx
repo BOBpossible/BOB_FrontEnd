@@ -4,7 +4,7 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type MapStoreReviewProps = {
-  images: {uri: string}[] | [];
+  images: {uri: string; id: number}[] | [];
   name: string;
   date: string;
   rate: number;
@@ -12,12 +12,12 @@ type MapStoreReviewProps = {
 };
 
 export const MapStoreReview: FC<MapStoreReviewProps> = ({images, name, date, rate, review}) => {
-  const renderedImage = (imagedata: {uri: string}[]) => {
+  const renderedImage = (imagedata: {uri: string; id: number}[]) => {
     return (
       <View style={[styles.reviewRow3]}>
         {imagedata.map((item) => {
           return (
-            <View style={[styles.reviewImageWrap]}>
+            <View style={[styles.reviewImageWrap]} key={item.id}>
               <Image source={{uri: item.uri}} style={{width: 80, height: 80}} />
             </View>
           );
