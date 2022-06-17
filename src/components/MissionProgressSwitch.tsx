@@ -45,15 +45,17 @@ export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgress
             moveLeft(progressValue);
           }}
         >
-          <Text
-            style={
-              progressnow === 0
-                ? [{fontSize: 14, color: 'white'}]
-                : [{fontSize: 14, color: '#616161'}]
-            }
-          >
-            진행중
-          </Text>
+          <View style={[styles.progressTextWrap]}>
+            <Text
+              style={
+                progressnow === 0
+                  ? [{fontSize: 14, color: 'white'}]
+                  : [{fontSize: 14, color: '#616161'}]
+              }
+            >
+              진행중
+            </Text>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -61,15 +63,17 @@ export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgress
             moveRight(progressValue);
           }}
         >
-          <Text
-            style={
-              progressnow === 0
-                ? [{fontSize: 14, color: '#616161'}]
-                : [{fontSize: 14, color: 'white'}]
-            }
-          >
-            진행완료
-          </Text>
+          <View style={[styles.progressTextWrap]}>
+            <Text
+              style={
+                progressnow === 0
+                  ? [{fontSize: 14, color: '#616161'}]
+                  : [{fontSize: 14, color: 'white'}]
+              }
+            >
+              진행완료
+            </Text>
+          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -107,5 +111,10 @@ const styles = StyleSheet.create({
     height: 30,
     backgroundColor: 'black',
     position: 'absolute',
+  },
+  progressTextWrap: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
