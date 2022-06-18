@@ -13,28 +13,29 @@ const imagedata = [
   {uri: 'https://source.unsplash.com/1024x768/?man'},
 ];
 
-export const MapStoreReviewPhoto = () => {
+const renderedImageList = (data: any) => {
   return (
-    <View style={[styles.reviewPhotoWrap]}>
-      <FlatList
-        data={imagedata}
-        renderItem={({item}) => (
+    <>
+      {data.map((item) => {
+        return (
           <View style={{borderColor: '#FFFFFF', borderWidth: 1}}>
             <Image source={{uri: item.uri}} style={{height: IMAGESIZE - 2, width: IMAGESIZE - 2}} />
           </View>
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        numColumns={3}
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={10}
-      />
-    </View>
+        );
+      })}
+    </>
   );
+};
+
+export const MapStoreReviewPhoto = () => {
+  return <View style={[styles.reviewPhotoWrap]}>{renderedImageList(imagedata)}</View>;
 };
 
 const styles = StyleSheet.create({
   reviewPhotoWrap: {
     flex: 1,
     backgroundColor: '#FFFFFF',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });

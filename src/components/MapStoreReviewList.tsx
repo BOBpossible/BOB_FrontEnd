@@ -56,21 +56,10 @@ const dummyReviews = [
 ];
 
 export const MapStoreReviewList = () => {
-  const [reviewModal, setReviewModal] = useState(false);
-  const [storeId, setStoreId] = useState(0);
-
-  const openReviewModal = async (id: number) => {
-    await setStoreId(id);
-    setReviewModal(true);
-  };
-
-  return (
-    <View style={[styles.reviewListWrap]}>
-      <FlatList
-        data={dummyReviews}
-        keyExtractor={(item, index) => index.toString()}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item}) => {
+  const renderedReviews = (data: any) => {
+    return (
+      <>
+        {data.map((item: any) => {
           return (
             <MapStoreReview
               name={item.name}
@@ -80,38 +69,16 @@ export const MapStoreReviewList = () => {
               images={item.images}
             />
           );
-        }}
-      />
-      <ReviewModal
-        visible={reviewModal}
-        closeReviewModal={() => setReviewModal(false)}
-        storeId={storeId}
-      />
-      <TouchableOpacity onPress={() => openReviewModal(0)}>
-        <View style={[styles.reviewButton]}>
-          <Text style={[styles.reviewButtonText]}>리뷰 남기기</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
+        })}
+      </>
+    );
+  };
+  return <View style={[styles.reviewListWrap]}>{renderedReviews(dummyReviews)}</View>;
 };
 
 const styles = StyleSheet.create({
   reviewListWrap: {
     backgroundColor: '#FFFFFF',
     flex: 1,
-  },
-  reviewButton: {
-    width: '80%',
-    height: 56,
-    backgroundColor: '#000000',
-    position: 'absolute',
-    bottom: 8,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  reviewButtonText: {
-    color: '#FFFFFF',
   },
 });

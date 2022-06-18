@@ -1,6 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import type {FC} from 'react';
-import {Modal, StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image} from 'react-native';
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  Animated,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
 import {
@@ -9,6 +18,9 @@ import {
   MapStoreReviewList,
   MapStoreReviewPhoto,
 } from '../components';
+import {ScrollView} from 'react-native-gesture-handler';
+import ReviewModal from './ReviewModal';
+import {useStyle} from '../hooks';
 
 type StoreModalProps = {
   storeId: number;
@@ -45,7 +57,20 @@ const activeDot = () => {
 
 const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) => {
   const [isReview, setIsReview] = useState(false);
+  const [reviewModal, setReviewModal] = useState(false);
+  const openReviewModal = async () => {
+    setReviewModal(true);
+  };
+  const offset1 = useRef(new Animated.Value(0)).current;
   useEffect(() => {}, []);
+
+  const headerTextStyle = useStyle({
+    opacity: offset1.interpolate({
+      inputRange: [250, 260],
+      outputRange: [0, 1],
+      extrapolate: 'clamp',
+    }),
+  });
 
   return (
     <Modal visible={visible} animationType="slide">
@@ -56,12 +81,24 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
               <Icon name="arrow-left" size={24} color="black" />
             </View>
           </TouchableOpacity>
-          <Text style={[styles.storeHeaderText]}>반이학생마라탕</Text>
+
+          <Animated.View style={[headerTextStyle]}>
+            <Text style={[styles.storeHeaderText]}>반이학생마라탕</Text>
+          </Animated.View>
+
           <View style={[styles.backButton, {opacity: 0}]}>
             <Icon name="arrow-left" size={24} color="black" />
           </View>
         </View>
-        {!isReview && (
+        <Animated.ScrollView
+          stickyHeaderIndices={[1]}
+          scrollEventThrottle={10}
+          onScroll={(event) => {
+            Animated.event([{nativeEvent: {contentOffset: {y: offset1}}}], {
+              useNativeDriver: false,
+            })(event);
+          }}
+        >
           <View>
             <View style={{height: 220}}>
               <Swiper dot={dot()} activeDot={activeDot()} showsButtons={false}>
@@ -92,15 +129,28 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
             />
             <View style={{backgroundColor: '#F6F6FA', height: 8}} />
           </View>
+
+          <View style={[styles.reviewToggleWrap]}>
+            <MapReviewToggleButton
+              toggleReview={() => setIsReview(true)}
+              togglePhoto={() => setIsReview(false)}
+              isReview={isReview}
+            />
+          </View>
+          {isReview ? <MapStoreReviewList /> : <MapStoreReviewPhoto />}
+        </Animated.ScrollView>
+        {isReview && (
+          <TouchableOpacity onPress={() => openReviewModal(0)}>
+            <View style={[styles.reviewButton]}>
+              <Text style={[styles.reviewButtonText]}>리뷰 남기기</Text>
+            </View>
+          </TouchableOpacity>
         )}
-        <View style={[styles.reviewToggleWrap]}>
-          <MapReviewToggleButton
-            toggleReview={() => setIsReview(true)}
-            togglePhoto={() => setIsReview(false)}
-            isReview={isReview}
-          />
-        </View>
-        {isReview ? <MapStoreReviewList /> : <MapStoreReviewPhoto />}
+        <ReviewModal
+          visible={reviewModal}
+          closeReviewModal={() => setReviewModal(false)}
+          storeId={storeId}
+        />
       </SafeAreaView>
     </Modal>
   );
@@ -136,5 +186,23 @@ const styles = StyleSheet.create({
     height: 50,
     borderBottomColor: '#EDEDED',
     borderBottomWidth: 1,
+  },
+  reviewButton: {
+    width: 178,
+    height: 41,
+    borderRadius: 41,
+    backgroundColor: '#000000',
+    position: 'absolute',
+    bottom: 8,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  reviewButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    lineHeight: 24,
+    fontFamily: 'Pretendard-Medium',
+    fontWeight: '300',
   },
 });
