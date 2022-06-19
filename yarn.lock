@@ -6277,6 +6277,11 @@
     "react-freeze" "^1.0.0"
     "warn-once" "^0.1.0"
 
+"react-native-star-rating-widget@^1.2.0":
+  "integrity" "sha512-SfaUFaElJtTmNMn/kqYl2h/QTiDGikvE0K4XzrfNjndTMUdM/30+jt+HpaZpUufAKsCGRo9rP/Q+x1m6guYIBg=="
+  "resolved" "https://registry.npmjs.org/react-native-star-rating-widget/-/react-native-star-rating-widget-1.2.0.tgz"
+  "version" "1.2.0"
+
 "react-native-svg@^12.3.0":
   "integrity" "sha512-ESG1g1j7/WLD7X3XRFTQHVv0r6DpbHNNcdusngAODIxG88wpTWUZkhcM3A2HJTb+BbXTFDamHv7FwtRKWQ/ALg=="
   "resolved" "https://registry.npmjs.org/react-native-svg/-/react-native-svg-12.3.0.tgz"
