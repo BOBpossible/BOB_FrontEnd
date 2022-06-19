@@ -143,6 +143,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
           <TouchableOpacity onPress={() => openReviewModal(0)}>
             <View style={[styles.reviewButton]}>
               <Text style={[styles.reviewButtonText]}>리뷰 남기기</Text>
+              <Icon name="pencil" size={18} color="#FFFFFF" />
             </View>
           </TouchableOpacity>
         )}
@@ -165,6 +166,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    borderBottomColor: '#EDEDED',
+    borderBottomWidth: 1,
   },
   backButton: {
     marginLeft: 16,
@@ -191,12 +194,13 @@ const styles = StyleSheet.create({
     width: 178,
     height: 41,
     borderRadius: 41,
-    backgroundColor: '#000000',
+    backgroundColor: '#2A2A2A',
     position: 'absolute',
-    bottom: 8,
+    bottom: 4,
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   reviewButtonText: {
     color: '#FFFFFF',
@@ -204,5 +208,6 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     fontFamily: 'Pretendard-Medium',
     fontWeight: '300',
+    marginRight: 4,
   },
 });

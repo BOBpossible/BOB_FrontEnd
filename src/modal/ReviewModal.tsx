@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import type {FC} from 'react';
 import {Modal, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {ReviewRate} from '../components/ReviewRate';
 
 type ReviewModalProps = {
   storeId: number;
@@ -10,17 +11,27 @@ type ReviewModalProps = {
 };
 
 const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId}) => {
+  const [rating, setRating] = useState(0);
+  const callbackRating = useCallback((rate: number) => {
+    setRating(rate);
+  }, []);
+  console.log(rating);
   return (
     <Modal visible={visible} animationType="fade">
       <SafeAreaView style={[styles.safeView]}>
         <View style={[styles.modalHeader]}>
-          <TouchableOpacity onPress={closeReviewModal}>
+          <TouchableOpacity
+            onPress={() => {
+              setRating(0);
+              closeReviewModal();
+            }}
+          >
             <View style={[styles.backButton]}>
-              <Icon name="arrow-left" size={24} color="black" />
+              <Icon name="close" size={24} color="black" />
             </View>
           </TouchableOpacity>
         </View>
-        <Text>리뷰!!</Text>
+        {<ReviewRate name={'마라탕'} setRating={callbackRating} storeId={storeId} />}
       </SafeAreaView>
     </Modal>
   );
