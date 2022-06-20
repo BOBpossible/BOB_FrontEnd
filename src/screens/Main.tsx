@@ -55,6 +55,7 @@ const Main = () => {
             status="start"
           />
         )}
+        keyExtractor={(item, index) => index.toString()}
         ListHeaderComponent={<HomeMissionListHeader />}
         onScroll={(event) => {
           Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
