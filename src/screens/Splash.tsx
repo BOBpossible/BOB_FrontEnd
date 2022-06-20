@@ -43,7 +43,7 @@ const Splash = () => {
 
       <View style={[styles.imageWrap]}>
         <Image source={require('../assets/images/bobpool.png')} style={[styles.logoImage]} />
-        <Animated.View style={[{position: 'absolute', bottom: progressValue}]}>
+        <Animated.View style={[styles.postionAbs, {bottom: progressValue}]}>
           <Image source={require('../assets/images/bobpoolFace.png')} style={[styles.logoFace]} />
         </Animated.View>
       </View>
@@ -67,6 +67,9 @@ const styles = StyleSheet.create({
   logoFace: {
     width: 24,
     height: 10,
+  },
+  postionAbs: {
+    position: 'absolute',
   },
   textWrap: {
     marginTop: 200,
