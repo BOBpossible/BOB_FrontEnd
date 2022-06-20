@@ -1,10 +1,8 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Image, SafeAreaView, Animated} from 'react-native';
-import {Colors} from 'react-native-paper';
 import {useRecoilState} from 'recoil';
 import {userToken} from '../state';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useStyle} from '../hooks';
 
 const moveUp = (progressValue: Animated.Value) => {
   Animated.timing(progressValue, {
