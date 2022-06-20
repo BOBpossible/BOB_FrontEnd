@@ -45,7 +45,11 @@ const Map = () => {
   return (
     <SafeAreaView style={[styles.flex]}>
       <AddressSearchModal visible={addressModal} closeAddressModal={() => setAddressModal(false)} />
-      <StoreModal visible={storeModal} closeStoreModal={() => setStoreModal(false)} storeId={0} />
+      <StoreModal
+        visible={storeModal}
+        closeStoreModal={() => setStoreModal(false)}
+        storeId={storeId}
+      />
       <View style={[styles.headerWrap]}>
         <TouchableOpacity style={[styles.header]} onPress={() => setAddressModal(true)}>
           <Text style={[styles.headerText]}>삼성동</Text>

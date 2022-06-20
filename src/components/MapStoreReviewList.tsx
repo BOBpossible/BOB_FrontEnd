@@ -1,6 +1,7 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import ReviewModal from '../modal/ReviewModal';
 import {MapStoreReview} from './MapStoreReview';
 
 const dummyReviews = [
@@ -55,12 +56,10 @@ const dummyReviews = [
 ];
 
 export const MapStoreReviewList = () => {
-  return (
-    <View style={[styles.reviewListWrap]}>
-      <FlatList
-        data={dummyReviews}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => {
+  const renderedReviews = (data: any) => {
+    return (
+      <>
+        {data.map((item: any) => {
           return (
             <MapStoreReview
               name={item.name}
@@ -70,10 +69,11 @@ export const MapStoreReviewList = () => {
               images={item.images}
             />
           );
-        }}
-      />
-    </View>
-  );
+        })}
+      </>
+    );
+  };
+  return <View style={[styles.reviewListWrap]}>{renderedReviews(dummyReviews)}</View>;
 };
 
 const styles = StyleSheet.create({
