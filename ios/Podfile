@@ -3,11 +3,16 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '11.0'
 install! 'cocoapods', :deterministic_uuids => false
+pod 'GoogleSignIn', '~> 6.1.0'
 
+pre_install do |installer|
+
+  def installer.verify_no_static_framework_transitive_dependencies; end
+
+end
 
 target 'BOB_FrontEnd' do
   config = use_native_modules!
-
   # Flags change depending on the env values.
   flags = get_default_flags()
 
@@ -39,4 +44,5 @@ target 'BOB_FrontEnd' do
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
+
 end
