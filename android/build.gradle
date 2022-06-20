@@ -29,6 +29,7 @@ buildscript {
         // in the individual module build.gradle files
 
         // implementation("com.naver.maps:map-sdk:3.15.0") //안해도되나 ?
+        classpath 'com.google.gms:google-services:4.3.10' //파이어베이스
 
     }
 }
