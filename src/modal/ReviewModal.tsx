@@ -25,6 +25,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
   const submitReview = () => {
     //post 리뷰
     //review content, image...
+    closeReviewModal();
   };
   return (
     <Modal visible={visible} animationType="fade">
@@ -55,7 +56,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
         ) : (
           <ReviewWrite
             name={'마라탕'}
-            submitReview={() => {}}
+            submitReview={submitReview}
             setRating={setRating}
             rating={rating}
             imageUri={imageUri}
