@@ -143,18 +143,18 @@ const styles = StyleSheet.create({
     marginTop: 23, //디버깅용 메뉴 사라지면 53
   },
   loginHeadText1: {
-    fontFamily: 'PretendardSemiBold',
+    fontFamily: 'Pretendard-SemiBold',
     fontSize: 44,
     fontWeight: 'bold',
   },
   loginHeadText2: {
-    fontFamily: 'PretendardSemiBold',
+    fontFamily: 'Pretendard-SemiBold',
     fontSize: 44,
     fontWeight: 'bold',
     color: '#6C69FF',
   },
   loginSubHeadText: {
-    fontFamily: 'PretendardLight',
+    fontFamily: 'Pretendard-Light',
     color: '#616161',
     fontSize: 17,
     marginTop: 10,

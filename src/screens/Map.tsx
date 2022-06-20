@@ -1,77 +1,120 @@
-import React, {useEffect} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Text, Dimensions, TouchableOpacity} from 'react-native';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import BottomSheet, {BottomSheetFlatList, BottomSheetView} from '@gorhom/bottom-sheet';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AddressSearchModal from '../modal/AddressSearchModal';
+import StoreModal from '../modal/StoreModal';
 
-import {PermissionsAndroid, Platform, TouchableOpacity} from 'react-native';
-import NaverMapView, {Circle, Marker, Path, Polyline, Polygon, Align} from '../../map';
+const dummyMission = [
+  {
+    name: '반이학생마라탕',
+    category: '중식당',
+    day: 7,
+    minCost: 10000,
+    point: 500,
+  },
+  {
+    name: '반이학생마라탕',
+    category: '중식당',
+    day: 7,
+    minCost: 10000,
+    point: 500,
+  },
+  {
+    name: '반이학생마라탕',
+    category: '중식당',
+    day: 7,
+    minCost: 10000,
+    point: 500,
+  },
+];
 
-const P0 = {latitude: 37.564362, longitude: 126.977011};
-const P1 = {latitude: 37.565051, longitude: 126.978567};
-const P2 = {latitude: 37.565383, longitude: 126.976292};
-const P4 = {latitude: 37.564834, longitude: 126.977218};
+const Map = () => {
+  const height = Dimensions.get('screen').height;
+  const insets = useSafeAreaInsets();
+  const listSnapPoint = height - insets.top - 150;
+  const [addressModal, setAddressModal] = useState(false);
+  const [storeModal, setStoreModal] = useState(false);
+  const [storeId, setStoreId] = useState(0);
 
-const Map = ({navigation}) => {
-  const title = 'Map';
-  useEffect(() => {
-    requestLocationPermission();
-  }, []);
+  const openRestaurantModal = async (id: number) => {
+    await setStoreId(id);
+    setStoreModal(true);
+  };
   return (
     <SafeAreaView style={[styles.flex]}>
-      <NaverMapView
-        style={{width: '100%', height: '100%'}}
-        showsMyLocationButton={true}
-        center={{...P0, zoom: 16}}
-        // onTouch={(e) => console.warn('onTouch', JSON.stringify(e.nativeEvent))}
-        onCameraChange={(e) => console.warn('onCameraChange', JSON.stringify(e))}
-        onMapClick={(e) => console.warn('onMapClick', JSON.stringify(e))}
-        useTextureView
+      <AddressSearchModal visible={addressModal} closeAddressModal={() => setAddressModal(false)} />
+      <StoreModal
+        visible={storeModal}
+        closeStoreModal={() => setStoreModal(false)}
+        storeId={storeId}
+      />
+      <View style={[styles.headerWrap]}>
+        <TouchableOpacity style={[styles.header]} onPress={() => setAddressModal(true)}>
+          <Text style={[styles.headerText]}>삼성동</Text>
+          <Icon name="menu-down" size={18} color="black" />
+        </TouchableOpacity>
+      </View>
+      <View style={[styles.webviewWrap]}></View>
+      <BottomSheet
+        snapPoints={[55, listSnapPoint]}
+        handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
       >
-        <Marker
-          coordinate={P0}
-          onClick={() => console.warn('onClick! p0')}
-          caption={{text: 'test caption', align: Align.Left}}
+        <BottomSheetView style={[styles.missionListTextWrap]}>
+          <Text style={[styles.missionListText]}>미션 목록</Text>
+        </BottomSheetView>
+        <BottomSheetFlatList
+          showsVerticalScrollIndicator={false}
+          data={dummyMission}
+          renderItem={({item}) => (
+            <TouchableOpacity onPress={() => openRestaurantModal(0)}>
+              <View style={{width: '100%', height: 300, backgroundColor: 'lightgrey'}}></View>
+            </TouchableOpacity>
+          )}
+          ItemSeparatorComponent={() => <View style={{margin: 16}} />}
         />
-        <Marker coordinate={P1} pinColor="blue" onClick={() => console.warn('onClick! p1')}/>
-        <Marker coordinate={P2} pinColor="red" onClick={() => console.warn('onClick! p2')}/>
-        <Marker coordinate={P4} onClick={() => console.warn('onClick! p4')} image={require("../assets/images/marker.png")} width={48} height={48}/>
-        <Path coordinates={[P0, P1]} onClick={() => console.warn('onClick! path')} width={10}/>
-        <Polyline coordinates={[P1, P2]} onClick={() => console.warn('onClick! polyline')}/>
-        <Circle coordinate={P0} color={"rgba(255,0,0,0.3)"} radius={200} onClick={() => console.warn('onClick! circle')}/>
-        <Polygon coordinates={[P0, P1, P2]} color={`rgba(0, 0, 0, 0.5)`} onClick={() => console.warn('onClick! polygon')}/>
-      </NaverMapView>
-      <TouchableOpacity style={{position: 'absolute', bottom: '10%', right: 8}} onPress={() => navigation.navigate('stack')}>
-        <View style={{backgroundColor: 'gray', padding: 4}}>
-          <Text style={{color: 'white'}}>open stack</Text>
-        </View>
-      </TouchableOpacity>
-      <Text style={{position: 'absolute', top: '95%', width: '100%', textAlign: 'center'}}>Icon made by Pixel perfect from www.flaticon.com</Text>
+      </BottomSheet>
     </SafeAreaView>
   );
 };
-async function requestLocationPermission() {
-  if (Platform.OS !== 'android') return;
-  try {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      {
-        title: 'Location Permission',
-        message: 'show my location need Location permission',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
-      },
-    );
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log('You can use the location');
-    } else {
-      console.log('Location permission denied');
-    }
-  } catch (err) {
-    console.warn(err);
-  }
-}
+
 const styles = StyleSheet.create({
-  flex: {flex: 1},
+  flex: {flex: 1, backgroundColor: '#FFFFFF'},
+  headerWrap: {
+    flexDirection: 'row',
+    width: '100%',
+    borderBottomColor: '#DFDFDF',
+    borderBottomWidth: 1,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  header: {
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    marginLeft: 16,
+    marginBottom: 14,
+    flexDirection: 'row',
+  },
+  headerText: {
+    fontSize: 17,
+    color: 'black',
+    marginRight: 4,
+    fontWeight: '600',
+  },
+  webviewWrap: {
+    flex: 1,
+    backgroundColor: 'grey',
+  },
+  missionListTextWrap: {
+    marginLeft: 16,
+    marginBottom: 16,
+  },
+  missionListText: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });
 
 export default Map;

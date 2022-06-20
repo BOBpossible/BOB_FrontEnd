@@ -44,6 +44,7 @@ const RegisterForm = ({navigation, route}: Props) => {
     setRegisterData({...registerData, birthDate: moment(date).format('YYYY-MM-DD')});
     setDateModal(false);
   };
+  const [focusedName, setFocusedName] = useState(false);
   return (
     <SafeAreaView style={[styles.flex]}>
       <RegisterHeader goBack={goBack} pageNum={1} />
@@ -51,13 +52,19 @@ const RegisterForm = ({navigation, route}: Props) => {
         <View>
           <Text style={[styles.formHeadText]}>이름</Text>
           <TextInput
-            style={[styles.nameInput]}
+            style={[
+              styles.nameInput,
+              focusedName ? {borderColor: '#6C69FF'} : {borderColor: '#DFDFDF', color: '#111111'},
+            ]}
             onChangeText={(text) => {
               setName(text);
               setRegisterData({...registerData, name: text});
             }}
             value={name}
             placeholder="이름을 입력"
+            selectionColor={'#6C69FF'}
+            onBlur={() => setFocusedName(false)}
+            onFocus={() => setFocusedName(true)}
           />
         </View>
         <View style={[styles.gender]}>
@@ -181,7 +188,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 44,
     borderWidth: 1,
-    borderColor: '#DFDFDF',
+    // borderColor: '#DFDFDF',
     borderRadius: 10,
     paddingLeft: 8,
     paddingRight: 8,
