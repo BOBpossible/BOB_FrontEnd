@@ -18,7 +18,6 @@ import {
   MapStoreReviewList,
   MapStoreReviewPhoto,
 } from '../components';
-import {ScrollView} from 'react-native-gesture-handler';
 import ReviewModal from './ReviewModal';
 import {useStyle} from '../hooks';
 
@@ -62,7 +61,6 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
     setReviewModal(true);
   };
   const offset1 = useRef(new Animated.Value(0)).current;
-  useEffect(() => {}, []);
 
   const headerTextStyle = useStyle({
     opacity: offset1.interpolate({
@@ -140,7 +138,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
           {isReview ? <MapStoreReviewList /> : <MapStoreReviewPhoto />}
         </Animated.ScrollView>
         {isReview && (
-          <TouchableOpacity onPress={() => openReviewModal(0)}>
+          <TouchableOpacity onPress={() => openReviewModal()}>
             <View style={[styles.reviewButton]}>
               <Text style={[styles.reviewButtonText]}>리뷰 남기기</Text>
               <Icon name="pencil" size={18} color="#FFFFFF" />
@@ -166,8 +164,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottomColor: '#EDEDED',
-    borderBottomWidth: 1,
   },
   backButton: {
     marginLeft: 16,
