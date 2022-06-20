@@ -98,12 +98,15 @@ const Login = ({}) => {
       </View>
 
       <View style={[styles.loginTitle]}>
-        <Text style={[styles.loginHeadText1]}>Mission!</Text>
-        <Text style={[styles.loginHeadText2]}>BoBpossible</Text>
-        <Text style={[styles.loginSubHeadText]}> 밥미션을 수행하고, 포인트를 적립하라!</Text>
+        <Text style={[styles.loginHeadText1]}>BOB</Text>
+        <Text style={[styles.loginHeadText1]}>PLACE</Text>
+        <Text style={[styles.loginSubHeadText]}>
+          {' '}
+          밥플레이스에서 맛있는 한끼하고 포인트를 모으자!
+        </Text>
       </View>
       <View style={[styles.logoWrap]}>
-        <View style={[styles.logoImage]}></View>
+        <Image source={require('../assets/images/LoginLogo.png')} style={[styles.logoImage]} />
       </View>
       <SocialWebviewModal
         visible={loginModal}
@@ -169,9 +172,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoImage: {
-    width: 280,
-    height: 200,
-    backgroundColor: '#D9D9D9',
+    width: 230,
+    height: 150,
   },
   loginButtonWrap: {
     marginBottom: 30,
