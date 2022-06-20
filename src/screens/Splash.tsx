@@ -54,9 +54,9 @@ const Splash = () => {
 const styles = StyleSheet.create({
   flex: {flex: 1, backgroundColor: '#615DFF', alignItems: 'center'},
   splashTitle: {
-    fontFamily: 'Pretendard-SemiBold',
+    fontFamily: 'Poppins-Bold',
     fontSize: 34,
-    fontWeight: '700',
+    lineHeight: 38,
     color: '#FFFFFF',
     textAlign: 'center',
   },
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     marginTop: 200,
   },
   imageWrap: {
-    marginTop: 36,
+    marginTop: 24,
     alignItems: 'center',
   },
 });

@@ -150,9 +150,9 @@ const styles = StyleSheet.create({
     marginTop: 23, //디버깅용 메뉴 사라지면 53
   },
   loginHeadText1: {
-    fontFamily: 'Pretendard-SemiBold',
+    fontFamily: 'Poppins-Bold',
     fontSize: 44,
-    fontWeight: 'bold',
+    lineHeight: 50,
   },
   loginHeadText2: {
     fontFamily: 'Pretendard-SemiBold',

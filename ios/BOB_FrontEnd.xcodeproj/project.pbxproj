@@ -19,6 +19,7 @@
 		B55C5AD1F396CA32D6B65FB9 /* libPods-BOB_FrontEnd-BOB_FrontEndTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5718D6AAAB3FEAA8D66F85D8 /* libPods-BOB_FrontEnd-BOB_FrontEndTests.a */; };
 		D6D041C14C1D4CC0B3849B2B /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11C955E157164BEF96CBCC24 /* Pretendard-Regular.ttf */; };
 		DAD7698A2860A37300C84CF1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAD769892860A37300C84CF1 /* GoogleService-Info.plist */; };
+		F2D1474B88BC47BDBF1013E0 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 193D3C47DC2D49CAB80AA0A8 /* Poppins-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		8C92B11A84C940C9822EACEE /* Pretendard-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Light.ttf"; path = "../src/assets/fonts/Pretendard-Light.ttf"; sourceTree = "<group>"; };
 		DAD769892860A37300C84CF1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		193D3C47DC2D49CAB80AA0A8 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; name = "Poppins-Bold.ttf"; path = "../src/assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 				3BDBA311056544AC895D2F63 /* Pretendard-Medium.ttf */,
 				11C955E157164BEF96CBCC24 /* Pretendard-Regular.ttf */,
 				4752C974ABD44F989EB7740B /* Pretendard-SemiBold.ttf */,
+				193D3C47DC2D49CAB80AA0A8 /* Poppins-Bold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				D6D041C14C1D4CC0B3849B2B /* Pretendard-Regular.ttf in Resources */,
 				1361569F6A8C4E128DF3EC4A /* Pretendard-SemiBold.ttf in Resources */,
 				DAD7698A2860A37300C84CF1 /* GoogleService-Info.plist in Resources */,
+				F2D1474B88BC47BDBF1013E0 /* Poppins-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
