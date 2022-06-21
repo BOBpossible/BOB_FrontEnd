@@ -4,18 +4,12 @@ import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {RegisterInterface} from '../../data';
 
 type RegisterNameProps = {
-  setName: React.Dispatch<React.SetStateAction<string>>;
-  name: string;
   setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
   registerData: RegisterInterface;
 };
 
-export const RegisterName: FC<RegisterNameProps> = ({
-  setName,
-  name,
-  setRegisterData,
-  registerData,
-}) => {
+export const RegisterName: FC<RegisterNameProps> = ({setRegisterData, registerData}) => {
+  const [name, setName] = useState('');
   const [focusedName, setFocusedName] = useState(false);
   return (
     <View style={[styles.nameWrap]}>

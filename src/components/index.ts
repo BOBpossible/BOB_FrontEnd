@@ -10,4 +10,9 @@ export * from './MapReviewToggleButton';
 export * from './MapStoreReviewPhoto';
 export * from './MapStoreReviewList';
 export * from './MapStoreReview';
+
+//Register Components
 export * from './Register/RegisterName';
+export * from './Register/RegisterGender';
+export * from './Register/RegisterBirthDate';
+export * from './Register/RegisterAddress';
