@@ -36,10 +36,10 @@ const Splash = () => {
 
   return (
     <SafeAreaView style={[styles.flex]}>
-      <View style={[styles.textWrap]}>
+      {/* <View style={[styles.textWrap]}>
         <Text style={[styles.splashTitle]}>BOB</Text>
         <Text style={[styles.splashTitle]}>PLACE.</Text>
-      </View>
+      </View> */}
 
       <View style={[styles.imageWrap]}>
         <Image source={require('../assets/images/bobpool.png')} style={[styles.logoImage]} />
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     marginTop: 200,
   },
   imageWrap: {
-    marginTop: 24,
+    marginTop: 300,
     alignItems: 'center',
   },
 });

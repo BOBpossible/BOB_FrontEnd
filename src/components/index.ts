@@ -10,3 +10,4 @@ export * from './MapReviewToggleButton';
 export * from './MapStoreReviewPhoto';
 export * from './MapStoreReviewList';
 export * from './MapStoreReview';
+export * from './Register/RegisterName';
