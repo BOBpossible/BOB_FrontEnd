@@ -6,21 +6,35 @@ import {RegisterInterface} from '../../data';
 type RegisterNameProps = {
   setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
   registerData: RegisterInterface;
+  onChange: (...event: any[]) => void;
+  value: string;
+  error: boolean;
 };
 
-export const RegisterName: FC<RegisterNameProps> = ({setRegisterData, registerData}) => {
-  const [name, setName] = useState('');
+export const RegisterName: FC<RegisterNameProps> = ({
+  setRegisterData,
+  registerData,
+  onChange,
+  value,
+  error,
+}) => {
   const [focusedName, setFocusedName] = useState(false);
   return (
     <View style={[styles.nameWrap]}>
       <Text style={[styles.formHeadText]}>이름</Text>
       <TextInput
-        style={[styles.nameInput, focusedName ? styles.focusBorder : styles.unfocusBorder]}
-        onChangeText={(text) => {
-          setName(text);
-          setRegisterData({...registerData, name: text});
-        }}
-        value={name}
+        style={[
+          styles.nameInput,
+          error && focusedName
+            ? styles.errorBorderFocus
+            : error && !focusedName
+            ? styles.errorBorderNoFocus
+            : focusedName
+            ? styles.focusBorder
+            : styles.unfocusBorder,
+        ]}
+        onChangeText={onChange}
+        value={value}
         placeholder="이름을 입력"
         selectionColor={'#6C69FF'}
         onBlur={() => setFocusedName(false)}
@@ -37,7 +51,7 @@ const styles = StyleSheet.create({
   nameInput: {
     width: '100%',
     height: 44,
-    borderWidth: 1,
+
     borderRadius: 10,
     paddingLeft: 8,
     paddingRight: 8,
@@ -46,8 +60,10 @@ const styles = StyleSheet.create({
     marginTop: 8,
     color: '#111111',
   },
-  focusBorder: {borderColor: '#6C69FF'},
-  unfocusBorder: {borderColor: '#DFDFDF'},
+  errorBorderFocus: {borderColor: '#E03D32', borderWidth: 1},
+  errorBorderNoFocus: {borderColor: '#E03D32', borderWidth: 0.5},
+  focusBorder: {borderColor: '#6C69FF', borderWidth: 1},
+  unfocusBorder: {borderColor: '#DFDFDF', borderWidth: 1},
   formHeadText: {
     fontSize: 18,
     fontWeight: '600',

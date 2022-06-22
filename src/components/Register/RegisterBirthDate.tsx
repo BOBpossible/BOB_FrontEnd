@@ -1,30 +1,29 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import type {FC} from 'react';
-import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {RegisterInterface} from '../../data';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 
 type RegisterBirthDateProps = {
-  setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
-  registerData: RegisterInterface;
+  onChange: (...event: any[]) => void;
+  value: string;
+  error: boolean;
 };
 
-export const RegisterBirthDate: FC<RegisterBirthDateProps> = ({setRegisterData, registerData}) => {
+export const RegisterBirthDate: FC<RegisterBirthDateProps> = ({onChange, value, error}) => {
   const [dateModal, setDateModal] = useState(false);
-  const [birthDate, setBirthDate] = useState<Date | null>(null);
   const handleConfirm = (date: Date) => {
-    setBirthDate(date);
-    setRegisterData({...registerData, birthDate: moment(date).format('YYYY-MM-DD')});
+    onChange(moment(date).format('YYYY-MM-DD'));
     setDateModal(false);
   };
+
   return (
     <View style={[styles.birthDateWrap]}>
       <Text style={[styles.formHeadText]}>생년월일</Text>
       <TouchableOpacity onPress={() => setDateModal(true)}>
-        <View style={[styles.nameInput, styles.unfocusBorder]}>
-          <Text style={[birthDate === null && styles.placeholder]}>
-            {birthDate === null ? '생년월일 입력' : moment(birthDate).format('YYYY-MM-DD')}
+        <View style={[styles.nameInput, error ? styles.errorBorderNoFocus : styles.unfocusBorder]}>
+          <Text style={[value === '' && styles.placeholder]}>
+            {value === '' ? '생년월일 입력' : value}
           </Text>
         </View>
       </TouchableOpacity>
@@ -64,4 +63,5 @@ const styles = StyleSheet.create({
   },
   birthDateWrap: {marginTop: 28},
   unfocusBorder: {borderColor: '#DFDFDF'},
+  errorBorderNoFocus: {borderColor: '#E03D32', borderWidth: 0.5},
 });

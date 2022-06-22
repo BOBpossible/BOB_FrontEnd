@@ -6,61 +6,66 @@ import {RegisterInterface} from '../../data';
 type RegisterGenderProps = {
   setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
   registerData: RegisterInterface;
+  onChange: (...event: any[]) => void;
+  value: string;
+  error: boolean;
 };
 
-export const RegisterGender: FC<RegisterGenderProps> = ({setRegisterData, registerData}) => {
-  const [gender, setGender] = useState('');
+export const RegisterGender: FC<RegisterGenderProps> = ({
+  setRegisterData,
+  registerData,
+  onChange,
+  value,
+  error,
+}) => {
   return (
     <View style={[styles.genderWrap]}>
       <Text style={[styles.formHeadText]}>성별</Text>
       <View style={[styles.spacebetweenWrap]}>
-        <TouchableOpacity
-          onPress={() => {
-            setGender('MALE');
-            setRegisterData({...registerData, gender: 'MALE'});
-          }}
-        >
+        <TouchableOpacity onPress={() => onChange('MALE')}>
           <View
             style={[
               styles.genderBox,
-              gender === 'MALE' ? styles.genderChecked : styles.genderUnchecked,
+              error
+                ? styles.errorBorderNoFocus
+                : value === 'MALE'
+                ? styles.genderChecked
+                : styles.genderUnchecked,
             ]}
           >
-            <Text style={[gender === 'MALE' ? styles.genderChecked : styles.genderUnchecked]}>
+            <Text style={[value === 'MALE' ? styles.genderChecked : styles.genderUnchecked]}>
               남자
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setGender('FEMALE');
-            setRegisterData({...registerData, gender: 'FEMALE'});
-          }}
-        >
+        <TouchableOpacity onPress={() => onChange('FEMALE')}>
           <View
             style={[
               styles.genderBox,
-              gender === 'FEMALE' ? styles.genderChecked : styles.genderUnchecked,
+              error
+                ? styles.errorBorderNoFocus
+                : value === 'FEMALE'
+                ? styles.genderChecked
+                : styles.genderUnchecked,
             ]}
           >
-            <Text style={[gender === 'FEMALE' ? styles.genderChecked : styles.genderUnchecked]}>
+            <Text style={[value === 'FEMALE' ? styles.genderChecked : styles.genderUnchecked]}>
               여자
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setGender('NULL');
-            setRegisterData({...registerData, gender: 'NULL'});
-          }}
-        >
+        <TouchableOpacity onPress={() => onChange('NULL')}>
           <View
             style={[
               styles.genderBox,
-              gender === 'NULL' ? styles.genderChecked : styles.genderUnchecked,
+              error
+                ? styles.errorBorderNoFocus
+                : value === 'NULL'
+                ? styles.genderChecked
+                : styles.genderUnchecked,
             ]}
           >
-            <Text style={[gender === 'NULL' ? styles.genderChecked : styles.genderUnchecked]}>
+            <Text style={[value === 'NULL' ? styles.genderChecked : styles.genderUnchecked]}>
               선택 안함
             </Text>
           </View>
@@ -88,13 +93,17 @@ const styles = StyleSheet.create({
   genderUnchecked: {
     borderColor: '#DFDFDF',
   },
+  errorBorderNoFocus: {
+    borderColor: '#E03D32',
+    borderWidth: 0.5,
+  },
   genderBox: {
     justifyContent: 'center',
     alignItems: 'center',
     width: 105,
     height: 56,
-    borderWidth: 1,
     borderRadius: 10,
+    borderWidth: 1,
   },
   placeholder: {
     fontSize: 14,

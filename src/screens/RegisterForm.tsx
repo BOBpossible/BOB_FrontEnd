@@ -20,40 +20,131 @@ import {
 import {RegisterInterface} from '../data';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
+import {useForm, Controller} from 'react-hook-form';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
 const RegisterForm = ({navigation, route}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
 
-  //form validation
-  const [nameError, setUserError] = useState(false);
+  //react-hook-form 사용
+  const {
+    control,
+    handleSubmit,
+    formState: {errors, isValid},
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      name: '',
+      gender: '',
+      birthDate: '',
+      address: '',
+    },
+  });
 
   useEffect(() => {
     setRegisterData(route.params.registerData);
   }, []);
 
-  const goNext = () => {
+  const onSubmit = (data: any) => {
+    console.log(data);
     navigation.navigate('RegisterCategory', {registerData});
   };
+
   const goBack = () => {
     navigation.navigate('Register');
   };
-
-  const [focusedPhone, setFocusedPhone] = useState(false);
 
   return (
     <SafeAreaView style={[styles.flex]}>
       <RegisterHeader goBack={goBack} pageNum={1} />
       <KeyboardAvoidingView style={[{flex: 1}]} behavior="padding">
         <ScrollView style={[styles.flex, styles.formWrap]}>
-          <RegisterName setRegisterData={setRegisterData} registerData={registerData} />
-          <RegisterGender setRegisterData={setRegisterData} registerData={registerData} />
-          <RegisterBirthDate setRegisterData={setRegisterData} registerData={registerData} />
-          <RegisterAddress setRegisterData={setRegisterData} registerData={registerData} />
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({field: {onChange, value}}) => {
+              return (
+                <RegisterName
+                  setRegisterData={setRegisterData}
+                  registerData={registerData}
+                  onChange={onChange}
+                  value={value}
+                  error={errors.name !== undefined}
+                />
+              );
+            }}
+            name="name"
+          />
+          {errors.name?.type === 'required' && (
+            <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
+          )}
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({field: {onChange, value}}) => {
+              return (
+                <RegisterGender
+                  setRegisterData={setRegisterData}
+                  registerData={registerData}
+                  onChange={onChange}
+                  value={value}
+                  error={errors.gender !== undefined}
+                />
+              );
+            }}
+            name="gender"
+          />
+          {errors.gender?.type === 'required' && (
+            <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
+          )}
+
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({field: {onChange, value}}) => {
+              return (
+                <RegisterBirthDate
+                  onChange={onChange}
+                  value={value}
+                  error={errors.birthDate !== undefined}
+                />
+              );
+            }}
+            name="birthDate"
+          />
+          {errors.birthDate?.type === 'required' && (
+            <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
+          )}
+
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({field: {onChange, value}}) => {
+              return (
+                <RegisterAddress
+                  onChange={onChange}
+                  value={value}
+                  error={errors.address !== undefined}
+                />
+              );
+            }}
+            name="address"
+          />
+          {errors.address?.type === 'required' && (
+            <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
+          )}
         </ScrollView>
       </KeyboardAvoidingView>
-      <RegisterNextButton goNext={goNext} buttonState={1} />
+      <RegisterNextButton goNext={handleSubmit(onSubmit)} buttonState={isValid ? 1 : 0} />
     </SafeAreaView>
   );
 };
@@ -110,9 +201,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: '#949494',
   },
-  genderWrap: {marginTop: 28},
-  birthDateWrap: {marginTop: 28},
-  addressWrap: {marginTop: 40},
+  errorMessage: {color: '#E03D32', marginLeft: 8, marginTop: 4},
 });
 
 export default RegisterForm;

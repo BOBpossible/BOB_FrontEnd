@@ -10,9 +10,15 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 type AddressSearchModalProps = {
   visible: boolean;
   closeAddressModal: () => void;
+  value?: string;
+  onChange?: (...event: any[]) => void;
 };
 
-const AddressSearchModal: FC<AddressSearchModalProps> = ({visible, closeAddressModal}) => {
+const AddressSearchModal: FC<AddressSearchModalProps> = ({
+  visible,
+  closeAddressModal,
+  onChange,
+}) => {
   const insets = useSafeAreaInsets();
   const setAddressStreet = useSetRecoilState(address);
 
@@ -32,6 +38,9 @@ const AddressSearchModal: FC<AddressSearchModalProps> = ({visible, closeAddressM
           jsOptions={{animation: false, hideMapBtn: true}}
           onSelected={(data) => {
             setAddressStreet({address: data.address, bname: data.bname});
+            if (onChange !== undefined) {
+              onChange(data.address);
+            }
             closeAddressModal();
           }}
           onError={function (error: unknown): void {
