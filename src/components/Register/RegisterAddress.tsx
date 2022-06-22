@@ -5,16 +5,33 @@ import AddressSearchModal from '../../modal/AddressSearchModal';
 import {useRecoilValue} from 'recoil';
 import {address} from '../../state';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {RegisterInterface} from '../../data';
 type RegisterAddressProps = {
+  setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
+  registerData: RegisterInterface;
   onChange: (...event: any[]) => void;
   value: string;
   error: boolean;
 };
 
-export const RegisterAddress: FC<RegisterAddressProps> = ({onChange, value, error}) => {
-  const userAddress = useRecoilValue(address);
+export const RegisterAddress: FC<RegisterAddressProps> = ({
+  setRegisterData,
+  registerData,
+  onChange,
+  value,
+  error,
+}) => {
   const [addressModal, setAddressModal] = useState(false);
+  const userAddress = useRecoilValue(address);
+  useEffect(() => {
+    setRegisterData({
+      ...registerData,
+      addressStreet: userAddress.address,
+      addressDong: userAddress.bname,
+    });
+  }, [userAddress]);
 
+  useEffect(() => {}, [userAddress]);
   return (
     <View style={[styles.addressWrap]}>
       <AddressSearchModal
@@ -22,6 +39,8 @@ export const RegisterAddress: FC<RegisterAddressProps> = ({onChange, value, erro
         closeAddressModal={() => setAddressModal(false)}
         value={value}
         onChange={onChange}
+        registerData={registerData}
+        setRegisterData={setRegisterData}
       />
       <Text style={[styles.formHeadText]}>주소</Text>
       <TouchableOpacity onPress={() => setAddressModal(true)}>
@@ -35,7 +54,7 @@ export const RegisterAddress: FC<RegisterAddressProps> = ({onChange, value, erro
           <Text style={[value === '' && styles.placeholder]}>
             {value === '' ? '주소 찾기' : value}
           </Text>
-          <Icon name="chevron-down" size={25} />
+          <Icon name="chevron-down" size={24} />
         </View>
       </TouchableOpacity>
     </View>

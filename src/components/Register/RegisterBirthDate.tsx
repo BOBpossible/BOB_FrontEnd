@@ -3,17 +3,27 @@ import type {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
+import {RegisterInterface} from '../../data';
 
 type RegisterBirthDateProps = {
+  setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
+  registerData: RegisterInterface;
   onChange: (...event: any[]) => void;
   value: string;
   error: boolean;
 };
 
-export const RegisterBirthDate: FC<RegisterBirthDateProps> = ({onChange, value, error}) => {
+export const RegisterBirthDate: FC<RegisterBirthDateProps> = ({
+  setRegisterData,
+  registerData,
+  onChange,
+  value,
+  error,
+}) => {
   const [dateModal, setDateModal] = useState(false);
   const handleConfirm = (date: Date) => {
     onChange(moment(date).format('YYYY-MM-DD'));
+    setRegisterData({...registerData, birthDate: moment(date).format('YYYY-MM-DD')});
     setDateModal(false);
   };
 

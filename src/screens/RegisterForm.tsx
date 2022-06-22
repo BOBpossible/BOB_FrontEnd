@@ -21,12 +21,27 @@ import {RegisterInterface} from '../data';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
 import {useForm, Controller} from 'react-hook-form';
+import {userToken} from '../state';
+import axios from 'axios';
+import {useRecoilValue} from 'recoil';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
 const RegisterForm = ({navigation, route}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
-
+  const token = useRecoilValue(userToken);
+  const headers = {Authorization: `Bearer ${token}`};
+  const postRegister = async () => {
+    console.log('reach here!');
+    try {
+      const response = await axios.post('https://bobpossible.shop/api/v1/users', registerData, {
+        headers: headers,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log('post register:', error);
+    }
+  };
   //react-hook-form 사용
   const {
     control,
@@ -47,7 +62,7 @@ const RegisterForm = ({navigation, route}: Props) => {
   }, []);
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    postRegister();
     navigation.navigate('RegisterCategory', {registerData});
   };
 
@@ -111,6 +126,8 @@ const RegisterForm = ({navigation, route}: Props) => {
             render={({field: {onChange, value}}) => {
               return (
                 <RegisterBirthDate
+                  setRegisterData={setRegisterData}
+                  registerData={registerData}
                   onChange={onChange}
                   value={value}
                   error={errors.birthDate !== undefined}
@@ -131,6 +148,8 @@ const RegisterForm = ({navigation, route}: Props) => {
             render={({field: {onChange, value}}) => {
               return (
                 <RegisterAddress
+                  setRegisterData={setRegisterData}
+                  registerData={registerData}
                   onChange={onChange}
                   value={value}
                   error={errors.address !== undefined}

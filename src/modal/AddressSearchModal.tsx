@@ -6,18 +6,23 @@ import Postcode from '@actbase/react-daum-postcode';
 import {useSetRecoilState} from 'recoil';
 import {address} from '../state';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {RegisterInterface} from '../data';
 
 type AddressSearchModalProps = {
   visible: boolean;
   closeAddressModal: () => void;
   value?: string;
   onChange?: (...event: any[]) => void;
+  registerData: RegisterInterface;
+  setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
 };
 
 const AddressSearchModal: FC<AddressSearchModalProps> = ({
   visible,
   closeAddressModal,
   onChange,
+  registerData,
+  setRegisterData,
 }) => {
   const insets = useSafeAreaInsets();
   const setAddressStreet = useSetRecoilState(address);

@@ -22,7 +22,12 @@ export const RegisterGender: FC<RegisterGenderProps> = ({
     <View style={[styles.genderWrap]}>
       <Text style={[styles.formHeadText]}>성별</Text>
       <View style={[styles.spacebetweenWrap]}>
-        <TouchableOpacity onPress={() => onChange('MALE')}>
+        <TouchableOpacity
+          onPress={() => {
+            onChange('MALE');
+            setRegisterData({...registerData, gender: 'MALE'});
+          }}
+        >
           <View
             style={[
               styles.genderBox,
@@ -38,7 +43,12 @@ export const RegisterGender: FC<RegisterGenderProps> = ({
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => onChange('FEMALE')}>
+        <TouchableOpacity
+          onPress={() => {
+            onChange('FEMALE');
+            setRegisterData({...registerData, gender: 'FEMALE'});
+          }}
+        >
           <View
             style={[
               styles.genderBox,
@@ -54,7 +64,12 @@ export const RegisterGender: FC<RegisterGenderProps> = ({
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => onChange('NULL')}>
+        <TouchableOpacity
+          onPress={() => {
+            onChange('NULL');
+            setRegisterData({...registerData, gender: 'NULL'});
+          }}
+        >
           <View
             style={[
               styles.genderBox,

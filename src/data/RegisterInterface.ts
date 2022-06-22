@@ -9,7 +9,6 @@ export type RegisterInterface = {
   name: string;
   gender: string;
   birthDate: string;
-  addressDetail: string;
+  addressDong: string;
   addressStreet: string;
-  category: {};
 };

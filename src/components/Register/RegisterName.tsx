@@ -33,7 +33,10 @@ export const RegisterName: FC<RegisterNameProps> = ({
             ? styles.focusBorder
             : styles.unfocusBorder,
         ]}
-        onChangeText={onChange}
+        onChangeText={(text) => {
+          onChange(text);
+          setRegisterData({...registerData, name: text});
+        }}
         value={value}
         placeholder="이름을 입력"
         selectionColor={'#6C69FF'}

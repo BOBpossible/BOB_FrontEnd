@@ -15,6 +15,7 @@ type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 const RegisterCategory = ({navigation, route}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
   const token = useRecoilValue(userToken);
+  const headers = {Authorization: `Bearer ${token}`};
   const [category, setCategory] = useState({
     0: false,
     1: false,
@@ -32,7 +33,18 @@ const RegisterCategory = ({navigation, route}: Props) => {
 
   useEffect(() => {
     setRegisterData(route.params.registerData);
+    getCategories();
   }, []);
+  const getCategories = async () => {
+    try {
+      const response = await axios.get('https://bobpossible.shop/api/v1/categories', {
+        headers: headers,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const goNext = () => {
     postRegister();
@@ -44,17 +56,16 @@ const RegisterCategory = ({navigation, route}: Props) => {
   const getCategoryArray = () => {
     return Object.keys(category).filter((key) => category[key as unknown as keyof typeof category]);
   };
-  const headers = {Authorization: `Bearer ${token}`};
-  const postRegister = async () => {
-    try {
-      const response = await axios.post('https://bobpossible.shop/api/v1/user', registerData, {
-        headers: headers,
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const postRegister = async () => {
+  //   try {
+  //     const response = await axios.post('https://bobpossible.shop/api/v1/user', registerData, {
+  //       headers: headers,
+  //     });
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <SafeAreaView style={[styles.flex]}>
