@@ -18,7 +18,6 @@ const RegisterCategory = ({navigation, route}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
   const [categoryList, setCategoryList] = useState<categoryList>([]);
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
-  console.log(selectedCategories);
   const token = useRecoilValue(userToken);
   const headers = {Authorization: `Bearer ${token}`};
   const postRegister = async () => {
