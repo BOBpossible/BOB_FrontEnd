@@ -1,13 +1,5 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  ScrollView,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, KeyboardAvoidingView, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   RegisterNextButton,
@@ -21,9 +13,6 @@ import {RegisterInterface} from '../data';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
 import {useForm, Controller} from 'react-hook-form';
-import {userToken} from '../state';
-import axios from 'axios';
-import {useRecoilValue} from 'recoil';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
