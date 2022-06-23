@@ -29,19 +29,6 @@ type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
 const RegisterForm = ({navigation, route}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
-  const token = useRecoilValue(userToken);
-  const headers = {Authorization: `Bearer ${token}`};
-  const postRegister = async () => {
-    console.log('reach here!');
-    try {
-      const response = await axios.post('https://bobpossible.shop/api/v1/users', registerData, {
-        headers: headers,
-      });
-      console.log(response);
-    } catch (error) {
-      console.log('post register:', error);
-    }
-  };
   //react-hook-form 사용
   const {
     control,
@@ -62,7 +49,6 @@ const RegisterForm = ({navigation, route}: Props) => {
   }, []);
 
   const onSubmit = (data: any) => {
-    postRegister();
     navigation.navigate('RegisterCategory', {registerData});
   };
 

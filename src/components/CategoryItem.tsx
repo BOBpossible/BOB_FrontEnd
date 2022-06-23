@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
+    marginBottom: 16,
   },
   selected: {borderColor: '#6C69FF', backgroundColor: '#F6F6FE'},
   selectedText: {color: '#6C69FF'},

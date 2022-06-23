@@ -30,7 +30,7 @@ export default function App() {
       const value = await AsyncStorage.getItem('userToken');
       console.log(value);
       if (value !== null) {
-        setIsLogin(true);
+        setIsLogin(false);
       }
     } catch (e) {
       console.log(e);
