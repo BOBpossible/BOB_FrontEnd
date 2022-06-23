@@ -1,4 +1,4 @@
-import axios, {AxiosInstance, axiosInstance} from 'axios';
+import axios, {AxiosInstance} from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const token = AsyncStorage.getItem('userToken');
