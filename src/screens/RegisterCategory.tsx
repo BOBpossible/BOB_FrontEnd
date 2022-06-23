@@ -18,6 +18,8 @@ const RegisterCategory = ({navigation, route}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
   const [categoryList, setCategoryList] = useState<categoryList>([]);
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+
+  //axios 통신 처리들
   const token = useRecoilValue(userToken);
   const headers = {Authorization: `Bearer ${token}`};
   const postRegister = async () => {
@@ -44,10 +46,6 @@ const RegisterCategory = ({navigation, route}: Props) => {
       console.log('category register:', error);
     }
   };
-  useEffect(() => {
-    setRegisterData(route.params.registerData);
-    getCategories();
-  }, []);
   const getCategories = async () => {
     try {
       const response = await axios.get('https://bobpossible.shop/api/v1/categories', {
@@ -59,6 +57,11 @@ const RegisterCategory = ({navigation, route}: Props) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    setRegisterData(route.params.registerData);
+    getCategories();
+  }, []);
 
   const goNext = () => {
     postRegister();

@@ -5,6 +5,7 @@ import BottomSheet, {BottomSheetFlatList, BottomSheetView} from '@gorhom/bottom-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AddressSearchModal from '../modal/AddressSearchModal';
 import StoreModal from '../modal/StoreModal';
+import {WebView} from 'react-native-webview';
 
 const dummyMission = [
   {
@@ -56,7 +57,9 @@ const Map = () => {
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
       </View>
-      <View style={[styles.webviewWrap]}></View>
+      <View style={[styles.webviewWrap]}>
+        <WebView source={{uri: 'https://bobplace.netlify.app/'}} />
+      </View>
       <BottomSheet
         snapPoints={[55, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
@@ -67,8 +70,8 @@ const Map = () => {
         <BottomSheetFlatList
           showsVerticalScrollIndicator={false}
           data={dummyMission}
-          renderItem={({item}) => (
-            <TouchableOpacity onPress={() => openRestaurantModal(0)}>
+          renderItem={({item, index}) => (
+            <TouchableOpacity onPress={() => openRestaurantModal(0)} key={index}>
               <View style={{width: '100%', height: 300, backgroundColor: 'lightgrey'}}></View>
             </TouchableOpacity>
           )}

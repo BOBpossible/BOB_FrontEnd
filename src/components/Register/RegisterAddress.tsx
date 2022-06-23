@@ -23,6 +23,8 @@ export const RegisterAddress: FC<RegisterAddressProps> = ({
 }) => {
   const [addressModal, setAddressModal] = useState(false);
   const userAddress = useRecoilValue(address);
+
+  //지도 모달에서 주소 바뀔때마다 회원가입 데이타 갱신
   useEffect(() => {
     setRegisterData({
       ...registerData,
