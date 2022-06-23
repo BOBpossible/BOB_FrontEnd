@@ -1,5 +1,7 @@
-import React from 'react';
-import {FlatList, Image, StyleSheet, View, Dimensions} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
+import {PhotoModal} from '../modal/PhotoModal';
+import FastImage from 'react-native-fast-image';
 const WIDTH = Dimensions.get('window').width;
 const IMAGESIZE = WIDTH / 3;
 const imagedata = [
@@ -13,22 +15,43 @@ const imagedata = [
   {uri: 'https://source.unsplash.com/1024x768/?man'},
 ];
 
-const renderedImageList = (data: any) => {
-  return (
-    <>
-      {data.map((item) => {
-        return (
-          <View style={{borderColor: '#FFFFFF', borderWidth: 1}}>
-            <Image source={{uri: item.uri}} style={{height: IMAGESIZE - 2, width: IMAGESIZE - 2}} />
-          </View>
-        );
-      })}
-    </>
-  );
-};
-
 export const MapStoreReviewPhoto = () => {
-  return <View style={[styles.reviewPhotoWrap]}>{renderedImageList(imagedata)}</View>;
+  const [photoModal, setPhotoModal] = useState(false);
+  const [reviewPhoto, setReviewPhoto] = useState<{uri: string}>({uri: 'string'});
+  const openPhotoModal = (imageSource: string) => {
+    setReviewPhoto({uri: imageSource});
+    setPhotoModal(true);
+  };
+
+  const renderedImageList = (data: any) => {
+    return (
+      <>
+        {data.map((item, index: number) => {
+          return (
+            <TouchableOpacity onPress={() => openPhotoModal(item.uri)} key={index}>
+              <View style={{borderColor: '#FFFFFF', borderWidth: 1}}>
+                <FastImage
+                  source={{uri: item.uri}}
+                  style={{height: IMAGESIZE - 2, width: IMAGESIZE - 2}}
+                />
+              </View>
+            </TouchableOpacity>
+          );
+        })}
+      </>
+    );
+  };
+
+  return (
+    <View style={[styles.reviewPhotoWrap]}>
+      {renderedImageList(imagedata)}
+      <PhotoModal
+        imageUri={reviewPhoto}
+        visible={photoModal}
+        closePhotoModal={() => setPhotoModal(false)}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

@@ -23,8 +23,15 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
   const [imageUri, setImageUri] = useState<imageData[]>([]);
 
   const submitReview = () => {
-    //post 리뷰
-    //review content, image...
+    var body = new FormData();
+    imageUri.map((image, index) => {
+      var photo = {
+        uri: image.uri,
+        type: 'multipart/form-data',
+        name: image.name,
+      };
+      body.append('image', photo);
+    });
     closeReviewModal();
   };
   return (
