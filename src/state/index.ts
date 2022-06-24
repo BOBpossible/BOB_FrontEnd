@@ -10,5 +10,7 @@ export const address = atom({
   default: {
     address: '',
     bname: '',
+    x: '',
+    y: '',
   },
 });

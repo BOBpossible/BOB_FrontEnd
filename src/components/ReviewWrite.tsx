@@ -61,14 +61,13 @@ export const ReviewWrite: FC<ReviewWriteProps> = ({
   return (
     <View style={[styles.mainContainer]}>
       <View style={[styles.reviewContainer]}>
-        <Text style={styles.storeName}>{name}</Text>
         <Rating
           type="custom"
           ratingColor="#f1c40f"
           ratingBackgroundColor="#EFEFEF"
           onFinishRating={setRating}
           startingValue={rating}
-          imageSize={24}
+          imageSize={35}
           ratingImage={RATE_STAR}
           style={[styles.childView]}
         />

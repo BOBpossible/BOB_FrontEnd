@@ -7,22 +7,18 @@ import {useSetRecoilState} from 'recoil';
 import {address} from '../state';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RegisterInterface} from '../data';
+import {kakaoGeocoder} from '../api/kakaoGeocoder';
 
 type AddressSearchModalProps = {
   visible: boolean;
   closeAddressModal: () => void;
-  value?: string;
   onChange?: (...event: any[]) => void;
-  registerData: RegisterInterface;
-  setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
 };
 
 const AddressSearchModal: FC<AddressSearchModalProps> = ({
   visible,
   closeAddressModal,
   onChange,
-  registerData,
-  setRegisterData,
 }) => {
   const insets = useSafeAreaInsets();
   const setAddressStreet = useSetRecoilState(address);
@@ -41,8 +37,25 @@ const AddressSearchModal: FC<AddressSearchModalProps> = ({
         <Postcode
           style={styles.container}
           jsOptions={{animation: false, hideMapBtn: true}}
-          onSelected={(data) => {
-            setAddressStreet({address: data.address, bname: data.bname});
+          onSelected={async (data) => {
+            const coordiate = await kakaoGeocoder(data.address);
+            if (coordiate !== undefined) {
+              setAddressStreet({
+                address: data.address,
+                bname: data.bname,
+                x: coordiate.x,
+                y: coordiate.y,
+              });
+            } else {
+              //오류, 좌표 설정 실패
+              setAddressStreet({
+                address: data.address,
+                bname: data.bname,
+                x: '0',
+                y: '0',
+              });
+            }
+
             if (onChange !== undefined) {
               onChange(data.address);
             }

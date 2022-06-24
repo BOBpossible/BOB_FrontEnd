@@ -12,5 +12,8 @@ export const createRegister = (): RegisterInterface => {
     birthDate: '',
     addressStreet: '',
     addressDong: '',
+    phone: '',
+    x: '',
+    y: '',
   };
 };

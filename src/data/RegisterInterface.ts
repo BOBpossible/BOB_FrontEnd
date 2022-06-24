@@ -11,4 +11,7 @@ export type RegisterInterface = {
   birthDate: string;
   addressDong: string;
   addressStreet: string;
+  phone: string;
+  x: string;
+  y: string;
 };

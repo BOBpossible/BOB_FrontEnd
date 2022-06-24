@@ -4,6 +4,9 @@ import {Modal, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'rea
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ReviewRate} from '../components/ReviewRate';
 import {ReviewWrite} from '../components/ReviewWrite';
+import axios from 'axios';
+import {useRecoilValue} from 'recoil';
+import {userToken} from '../state';
 
 type ReviewModalProps = {
   storeId: number;
@@ -21,17 +24,47 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
   const [showRating, setShowRating] = useState(true);
   const [reviewContent, setReviewContent] = useState('');
   const [imageUri, setImageUri] = useState<imageData[]>([]);
+  const token = useRecoilValue(userToken);
+  const headers = {Authorization: `Bearer ${token}`};
 
-  const submitReview = () => {
-    var body = new FormData();
+  const postReviewContent = async () => {
+    const data = {storeId: storeId, rate: rating, content: reviewContent};
+    try {
+      const response = await axios.post('https://bobpossible.shop/api/v1/reviews/me', data, {
+        headers: headers,
+      });
+      console.log('review register:', response.data);
+    } catch (error) {
+      console.log('review register:', error);
+    }
+  };
+
+  const postReviewImages = async () => {
+    var formdata = new FormData();
     imageUri.map((image, index) => {
       var photo = {
         uri: image.uri,
-        type: 'multipart/form-data',
+        type: 'image/jpeg',
         name: image.name,
       };
-      body.append('image', photo);
+      formdata.append('reviewImage', photo);
     });
+    try {
+      const response = await axios.post(
+        'https://bobpossible.shop/api/v1/reviews/me/images/1',
+        formdata,
+        {
+          headers: headers,
+        },
+      );
+      console.log('image register:', response.data);
+    } catch (error) {
+      console.log('image register:', error);
+    }
+  };
+
+  const submitReview = async () => {
+    postReviewImages();
     closeReviewModal();
   };
   return (
@@ -48,9 +81,20 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
             }}
           >
             <View style={[styles.backButton]}>
-              <Icon name="close" size={24} color="black" />
+              <Icon name={showRating ? 'close' : 'arrow-left'} size={24} color="black" />
             </View>
           </TouchableOpacity>
+          {!showRating && (
+            <>
+              <View>
+                <Text style={[styles.storeHeaderText]}>반이학생마라탕</Text>
+              </View>
+
+              <View style={[styles.backButton, {opacity: 0}]}>
+                <Icon name="arrow-left" size={24} color="black" />
+              </View>
+            </>
+          )}
         </View>
         {showRating ? (
           <ReviewRate
@@ -90,5 +134,11 @@ const styles = StyleSheet.create({
   backButton: {
     marginLeft: 16,
     marginRight: 16,
+  },
+  storeHeaderText: {
+    fontFamily: 'Pretendard-Medium',
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#000000',
   },
 });

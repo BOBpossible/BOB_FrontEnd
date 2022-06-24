@@ -27,21 +27,19 @@ const RegisterCategory = ({navigation, route}: Props) => {
       const response = await axios.post('https://bobpossible.shop/api/v1/users', registerData, {
         headers: headers,
       });
-      console.log(response);
+      console.log('post register:', response.data.result);
     } catch (error) {
       console.log('post register:', error);
     }
   };
   const postCategories = async () => {
+    const categoriesParams = {favorites: selectedCategories.join(',')};
     try {
-      const response = await axios.post(
-        'https://bobpossible.shop/api/v1/member-categories',
-        selectedCategories,
-        {
-          headers: headers,
-        },
-      );
-      console.log(response);
+      const response = await axios.post('https://bobpossible.shop/api/v1/member-categories', null, {
+        params: categoriesParams,
+        headers: headers,
+      });
+      console.log('category register:', response.data);
     } catch (error) {
       console.log('category register:', error);
     }

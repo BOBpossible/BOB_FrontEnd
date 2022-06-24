@@ -30,6 +30,8 @@ export const RegisterAddress: FC<RegisterAddressProps> = ({
       ...registerData,
       addressStreet: userAddress.address,
       addressDong: userAddress.bname,
+      x: userAddress.x,
+      y: userAddress.y,
     });
   }, [userAddress]);
 
@@ -41,8 +43,6 @@ export const RegisterAddress: FC<RegisterAddressProps> = ({
         closeAddressModal={() => setAddressModal(false)}
         value={value}
         onChange={onChange}
-        registerData={registerData}
-        setRegisterData={setRegisterData}
       />
       <Text style={[styles.formHeadText]}>주소</Text>
       <TouchableOpacity onPress={() => setAddressModal(true)}>

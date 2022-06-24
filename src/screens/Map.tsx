@@ -58,7 +58,12 @@ const Map = () => {
         </TouchableOpacity>
       </View>
       <View style={[styles.webviewWrap]}>
-        <WebView source={{uri: 'https://bobplace.netlify.app/'}} />
+        <WebView
+          source={{uri: 'https://bobplace.netlify.app/'}}
+          onMessage={(event) => {
+            console.log(event.nativeEvent.data);
+          }}
+        />
       </View>
       <BottomSheet
         snapPoints={[55, listSnapPoint]}
@@ -71,7 +76,7 @@ const Map = () => {
           showsVerticalScrollIndicator={false}
           data={dummyMission}
           renderItem={({item, index}) => (
-            <TouchableOpacity onPress={() => openRestaurantModal(0)} key={index}>
+            <TouchableOpacity onPress={() => openRestaurantModal(1)} key={index}>
               <View style={{width: '100%', height: 300, backgroundColor: 'lightgrey'}}></View>
             </TouchableOpacity>
           )}
