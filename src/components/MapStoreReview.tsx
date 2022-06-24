@@ -1,6 +1,7 @@
 import React from 'react';
 import type {FC} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type MapStoreReviewProps = {
@@ -9,17 +10,27 @@ type MapStoreReviewProps = {
   date: string;
   rate: number;
   review: string;
+  openPhotoModal: (imageSource: string) => void;
 };
 
-export const MapStoreReview: FC<MapStoreReviewProps> = ({images, name, date, rate, review}) => {
+export const MapStoreReview: FC<MapStoreReviewProps> = ({
+  images,
+  name,
+  date,
+  rate,
+  review,
+  openPhotoModal,
+}) => {
   const renderedImage = (imagedata: {uri: string; id: number}[]) => {
     return (
       <View style={[styles.reviewRow3]}>
         {imagedata.map((item) => {
           return (
-            <View style={[styles.reviewImageWrap]} key={item.id}>
-              <Image source={{uri: item.uri}} style={[styles.imageSize]} />
-            </View>
+            <TouchableOpacity onPress={() => openPhotoModal(item.uri)}>
+              <View style={[styles.reviewImageWrap]} key={item.id}>
+                <FastImage source={{uri: item.uri}} style={[styles.imageSize]} />
+              </View>
+            </TouchableOpacity>
           );
         })}
       </View>

@@ -14,9 +14,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 enableScreens();
 export default function App() {
   const Stack = createStackNavigator();
-  const [loading, setLoading] = useState(true);
-  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true); //스플래시 화면을 위한 boolean
+  const [isLogin, setIsLogin] = useState<boolean>(false); //로컬스토리지에서 로그인 확인후 어디로 보낼지 결정
 
+  // 실행하면 가장 먼저 로컬에 로그인 정보 있는지 확인
   useEffect(() => {
     getToken();
     const id = setTimeout(() => {
@@ -29,8 +30,9 @@ export default function App() {
     try {
       const value = await AsyncStorage.getItem('userToken');
       console.log(value);
+      //여기서 아이디는 있지만 회원가입을 다 안한 상태라면 로그인 창 띄우고 했다면 메인으로 바로 가기.
       if (value !== null) {
-        setIsLogin(true);
+        setIsLogin(false);
       }
     } catch (e) {
       console.log(e);
@@ -55,7 +57,3 @@ export default function App() {
     </RecoilRoot>
   );
 }
-
-const styles = StyleSheet.create({
-  SafeAreaView: {flex: 1},
-});

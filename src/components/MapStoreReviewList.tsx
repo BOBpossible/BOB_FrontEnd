@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import ReviewModal from '../modal/ReviewModal';
+import {StyleSheet, View} from 'react-native';
+import {PhotoModal} from '../modal/PhotoModal';
 import {MapStoreReview} from './MapStoreReview';
 
 const dummyReviews = [
@@ -56,6 +55,13 @@ const dummyReviews = [
 ];
 
 export const MapStoreReviewList = () => {
+  const [photoModal, setPhotoModal] = useState(false);
+  const [reviewPhoto, setReviewPhoto] = useState<{uri: string}>({uri: 'string'});
+  const openPhotoModal = (imageSource: string) => {
+    setReviewPhoto({uri: imageSource});
+    setPhotoModal(true);
+  };
+
   const renderedReviews = (data: any) => {
     return (
       <>
@@ -67,13 +73,23 @@ export const MapStoreReviewList = () => {
               rate={item.rate}
               review={item.review}
               images={item.images}
+              openPhotoModal={openPhotoModal}
             />
           );
         })}
       </>
     );
   };
-  return <View style={[styles.reviewListWrap]}>{renderedReviews(dummyReviews)}</View>;
+  return (
+    <View style={[styles.reviewListWrap]}>
+      {renderedReviews(dummyReviews)}
+      <PhotoModal
+        imageUri={reviewPhoto}
+        visible={photoModal}
+        closePhotoModal={() => setPhotoModal(false)}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

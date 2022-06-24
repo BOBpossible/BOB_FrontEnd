@@ -1,179 +1,151 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, KeyboardAvoidingView, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {RegisterNextButton, RegisterHeader} from '../components';
+import {
+  RegisterNextButton,
+  RegisterHeader,
+  RegisterName,
+  RegisterGender,
+  RegisterBirthDate,
+  RegisterAddress,
+} from '../components';
 import {RegisterInterface} from '../data';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import moment from 'moment';
-import AddressSearchModal from '../modal/AddressSearchModal';
-import {useRecoilState} from 'recoil';
-import {address} from '../state';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useForm, Controller} from 'react-hook-form';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
 const RegisterForm = ({navigation, route}: Props) => {
-  const [userAddress, setUserAddress] = useRecoilState(address);
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
-  const [name, setName] = useState('');
-  const [gender, setGender] = useState('NULL');
-  const [birthDate, setBirthDate] = useState<Date | null>(null);
-  const [addressModal, setAddressModal] = useState(false);
-  const [addressDetail, setAddressDetail] = useState('');
-  const [dateModal, setDateModal] = useState(false);
+  //react-hook-form 사용
+  const {
+    control,
+    handleSubmit,
+    formState: {errors, isValid},
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      name: '',
+      gender: '',
+      birthDate: '',
+      address: '',
+    },
+  });
 
   useEffect(() => {
     setRegisterData(route.params.registerData);
   }, []);
 
-  useEffect(() => {
-    setRegisterData({...registerData, addressStreet: userAddress.address});
-  }, [userAddress]);
-
-  const goNext = () => {
+  const onSubmit = (data: any) => {
     navigation.navigate('RegisterCategory', {registerData});
   };
+
   const goBack = () => {
     navigation.navigate('Register');
   };
 
-  const handleConfirm = (date: Date) => {
-    setBirthDate(date);
-    setRegisterData({...registerData, birthDate: moment(date).format('YYYY-MM-DD')});
-    setDateModal(false);
-  };
-  const [focusedName, setFocusedName] = useState(false);
   return (
     <SafeAreaView style={[styles.flex]}>
       <RegisterHeader goBack={goBack} pageNum={1} />
-      <View style={[styles.flex, styles.formWrap]}>
-        <View>
-          <Text style={[styles.formHeadText]}>이름</Text>
-          <TextInput
-            style={[
-              styles.nameInput,
-              focusedName ? {borderColor: '#6C69FF'} : {borderColor: '#DFDFDF', color: '#111111'},
-            ]}
-            onChangeText={(text) => {
-              setName(text);
-              setRegisterData({...registerData, name: text});
+      <KeyboardAvoidingView style={[{flex: 1}]} behavior="padding">
+        <ScrollView style={[styles.flex, styles.formWrap]}>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
             }}
-            value={name}
-            placeholder="이름을 입력"
-            selectionColor={'#6C69FF'}
-            onBlur={() => setFocusedName(false)}
-            onFocus={() => setFocusedName(true)}
-          />
-        </View>
-        <View style={[styles.gender]}>
-          <Text style={[styles.formHeadText]}>성별</Text>
-          <View style={[styles.spacebetweenWrap]}>
-            <TouchableOpacity
-              onPress={() => {
-                setGender('MALE');
-                setRegisterData({...registerData, gender: 'MALE'});
-              }}
-            >
-              <View
-                style={[
-                  styles.genderBox,
-                  gender === 'MALE' ? styles.genderChecked : styles.genderUnchecked,
-                ]}
-              >
-                <Text style={[gender === 'MALE' ? styles.genderChecked : styles.genderUnchecked]}>
-                  남자
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setGender('FEMALE');
-                setRegisterData({...registerData, gender: 'FEMALE'});
-              }}
-            >
-              <View
-                style={[
-                  styles.genderBox,
-                  gender === 'FEMALE' ? styles.genderChecked : styles.genderUnchecked,
-                ]}
-              >
-                <Text style={[gender === 'FEMALE' ? styles.genderChecked : styles.genderUnchecked]}>
-                  여자
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setGender('NULL');
-                setRegisterData({...registerData, gender: 'NULL'});
-              }}
-            >
-              <View
-                style={[
-                  styles.genderBox,
-                  gender === 'NULL' ? styles.genderChecked : styles.genderUnchecked,
-                ]}
-              >
-                <Text style={[gender === 'NULL' ? styles.genderChecked : styles.genderUnchecked]}>
-                  선택 안함
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={[styles.birthDate]}>
-          <Text style={[styles.formHeadText]}>생년월일</Text>
-          <TouchableOpacity onPress={() => setDateModal(true)}>
-            <View style={[styles.nameInput]}>
-              <Text style={[birthDate === null && styles.placeholder]}>
-                {birthDate === null ? '생년월일 입력' : moment(birthDate).format('YYYY-MM-DD')}
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <DateTimePickerModal
-            testID="dateTimePicker"
-            isVisible={dateModal}
-            mode="date"
-            onConfirm={handleConfirm}
-            onCancel={() => setDateModal(false)}
-          />
-        </View>
-        <View style={[styles.address]}>
-          <AddressSearchModal
-            visible={addressModal}
-            closeAddressModal={() => setAddressModal(false)}
-          />
-          <Text style={[styles.formHeadText]}>주소</Text>
-          <TouchableOpacity onPress={() => setAddressModal(true)}>
-            <View style={[styles.nameInput, styles.spacebetweenWrap]}>
-              <Text style={[userAddress.address === '' && styles.placeholder]}>
-                {userAddress.address === '' ? '주소 찾기' : userAddress.address}
-              </Text>
-              <Icon name="chevron-down" size={25} />
-            </View>
-          </TouchableOpacity>
-          <TextInput
-            style={[styles.nameInput]}
-            onChangeText={(text) => {
-              setAddressDetail(text);
-              setRegisterData({...registerData, addressDetail: text});
+            render={({field: {onChange, value}}) => {
+              return (
+                <RegisterName
+                  setRegisterData={setRegisterData}
+                  registerData={registerData}
+                  onChange={onChange}
+                  value={value}
+                  error={errors.name !== undefined}
+                />
+              );
             }}
-            value={addressDetail}
-            placeholder="상세주소 입력"
+            name="name"
           />
-        </View>
-        <View />
-      </View>
-      <RegisterNextButton goNext={goNext} buttonState={1} />
+          {errors.name?.type === 'required' && (
+            <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
+          )}
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({field: {onChange, value}}) => {
+              return (
+                <RegisterGender
+                  setRegisterData={setRegisterData}
+                  registerData={registerData}
+                  onChange={onChange}
+                  value={value}
+                  error={errors.gender !== undefined}
+                />
+              );
+            }}
+            name="gender"
+          />
+          {errors.gender?.type === 'required' && (
+            <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
+          )}
+
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({field: {onChange, value}}) => {
+              return (
+                <RegisterBirthDate
+                  setRegisterData={setRegisterData}
+                  registerData={registerData}
+                  onChange={onChange}
+                  value={value}
+                  error={errors.birthDate !== undefined}
+                />
+              );
+            }}
+            name="birthDate"
+          />
+          {errors.birthDate?.type === 'required' && (
+            <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
+          )}
+
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({field: {onChange, value}}) => {
+              return (
+                <RegisterAddress
+                  setRegisterData={setRegisterData}
+                  registerData={registerData}
+                  onChange={onChange}
+                  value={value}
+                  error={errors.address !== undefined}
+                />
+              );
+            }}
+            name="address"
+          />
+          {errors.address?.type === 'required' && (
+            <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
+          )}
+        </ScrollView>
+      </KeyboardAvoidingView>
+      <RegisterNextButton goNext={handleSubmit(onSubmit)} buttonState={isValid ? 1 : 0} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   flex: {flex: 1, backgroundColor: '#FFFFFF'},
-  formWrap: {margin: 16, justifyContent: 'space-between'},
+  formWrap: {marginLeft: 16, marginRight: 16},
   backButton: {
     zIndex: 1,
     justifyContent: 'center',
@@ -188,14 +160,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 44,
     borderWidth: 1,
-    // borderColor: '#DFDFDF',
     borderRadius: 10,
     paddingLeft: 8,
     paddingRight: 8,
     paddingTop: 10,
     paddingBottom: 10,
     marginTop: 8,
+    color: '#111111',
   },
+  focusBorder: {borderColor: '#6C69FF'},
+  unfocusBorder: {borderColor: '#DFDFDF'},
   spacebetweenWrap: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -221,6 +195,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: '#949494',
   },
+  errorMessage: {color: '#E03D32', marginLeft: 8, marginTop: 4},
 });
 
 export default RegisterForm;

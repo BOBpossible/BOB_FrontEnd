@@ -42,6 +42,7 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
   };
 
   const _handleMessage = async (data: any) => {
+    console.log(data);
     const jwt = data.accessToken;
     try {
       await setToken(jwt);
@@ -57,25 +58,24 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
     }
   };
   return (
-    <SafeAreaView style={styles.container}>
-      <WebView
-        ref={webviewRef}
-        source={{uri: source}}
-        // userAgent={userAgent}
-        javaScriptEnabled={true}
-        injectedJavaScript={INJECTED_JAVASCRIPT}
-        onMessage={_handleMessage}
-        onNavigationStateChange={async (e) => {
-          const result = queryString(e.url);
-          if (e.url.includes('bobpossible.shop/auth/success')) {
-            _handleMessage(result);
-            webviewRef.current?.stopLoading();
-          }
-        }}
-        originWhitelist={['*']}
-        incognito={true}
-      />
-    </SafeAreaView>
+    <WebView
+      ref={webviewRef}
+      source={{uri: source}}
+      // userAgent={userAgent}
+      javaScriptEnabled={true}
+      injectedJavaScript={INJECTED_JAVASCRIPT}
+      onMessage={_handleMessage}
+      onNavigationStateChange={async (e) => {
+        const result = queryString(e.url);
+        if (e.url.includes('bobpossible.shop/auth/success')) {
+          _handleMessage(result);
+          webviewRef.current?.stopLoading();
+        }
+      }}
+      originWhitelist={['*']}
+      incognito={true}
+      scrollEnabled={false}
+    />
   );
 };
 export default SocialWebview;

@@ -34,9 +34,9 @@ const Login = ({}) => {
   const [token, setToken] = useRecoilState(userToken);
   const [loginModal, setLoginModal] = useState(false);
   const [source, setSource] = useState('');
-  console.log(source);
   const [loggedIn, setLoggedIn] = useState(false);
 
+  //실행시 구글 로그인 설정 + 로그인 확인 코드
   useEffect(() => {
     GoogleSignin.configure({
       webClientId: '875664333601-gdsrl919s9db2bqcre9emulifoa8rrp6.apps.googleusercontent.com',
@@ -84,6 +84,7 @@ const Login = ({}) => {
   const goRegister = useCallback(() => navigation.navigate('Register'), []);
   return (
     <SafeAreaView style={styles.flex}>
+      {/* 개발 단계시 홈과 가입으로 가는 버튼 */}
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <TouchableOpacity onPress={goMain}>
           <View style={{height: 30, width: 30, borderWidth: 1}}>
@@ -98,12 +99,11 @@ const Login = ({}) => {
       </View>
 
       <View style={[styles.loginTitle]}>
-        <Text style={[styles.loginHeadText1]}>Mission!</Text>
-        <Text style={[styles.loginHeadText2]}>BoBpossible</Text>
-        <Text style={[styles.loginSubHeadText]}> 밥미션을 수행하고, 포인트를 적립하라!</Text>
+        <Text style={[styles.loginHeadText]}>BOB PLACE</Text>
+        <Text style={[styles.loginSubHeadText]}> 맛있는 한끼하고 포인트를 모으자!</Text>
       </View>
       <View style={[styles.logoWrap]}>
-        <View style={[styles.logoImage]}></View>
+        <Image source={require('../assets/images/LoginLogo.png')} style={[styles.logoImage]} />
       </View>
       <SocialWebviewModal
         visible={loginModal}
@@ -146,22 +146,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 23, //디버깅용 메뉴 사라지면 53
   },
-  loginHeadText1: {
-    fontFamily: 'Pretendard-SemiBold',
-    fontSize: 44,
-    fontWeight: 'bold',
-  },
-  loginHeadText2: {
-    fontFamily: 'Pretendard-SemiBold',
-    fontSize: 44,
-    fontWeight: 'bold',
-    color: '#6C69FF',
+  loginHeadText: {
+    fontFamily: 'Poppins-Bold',
+    fontSize: 56,
+    lineHeight: 65,
   },
   loginSubHeadText: {
     fontFamily: 'Pretendard-Light',
     color: '#616161',
-    fontSize: 17,
-    marginTop: 10,
+    fontSize: 23,
   },
   logoWrap: {
     flex: 1,
@@ -169,9 +162,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoImage: {
-    width: 280,
-    height: 200,
-    backgroundColor: '#D9D9D9',
+    width: 230,
+    height: 150,
   },
   loginButtonWrap: {
     marginBottom: 30,

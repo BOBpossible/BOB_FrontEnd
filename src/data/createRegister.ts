@@ -8,10 +8,12 @@ export const createRegister = (): RegisterInterface => {
     locationInfo: false,
     marketing: false,
     name: '',
-    gender: 'NULL',
+    gender: '',
     birthDate: '',
     addressStreet: '',
-    addressDetail: '',
-    category: {},
+    addressDong: '',
+    phone: '',
+    x: '',
+    y: '',
   };
 };

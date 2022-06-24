@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import type {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Rating} from 'react-native-ratings';
 type ReviewRateProps = {
   name: string;
   storeId: number;
-  setRating: (rating: number) => void;
+  setRating: (rate: number) => void;
   rating: number;
   goNext: () => void;
 };
+
 const RATE_STAR = require('../assets/images/Rate_Star.png');
 export const ReviewRate: FC<ReviewRateProps> = ({rating, setRating, storeId, name, goNext}) => {
   return (
@@ -20,7 +21,12 @@ export const ReviewRate: FC<ReviewRateProps> = ({rating, setRating, storeId, nam
           type="custom"
           ratingColor="#f1c40f"
           ratingBackgroundColor="#EFEFEF"
-          onFinishRating={setRating}
+          onFinishRating={(rate: number) => {
+            setRating(rate);
+            setTimeout(() => {
+              goNext();
+            }, 1500);
+          }}
           startingValue={rating}
           imageSize={49}
           ratingImage={RATE_STAR}
@@ -28,11 +34,11 @@ export const ReviewRate: FC<ReviewRateProps> = ({rating, setRating, storeId, nam
         />
       </View>
 
-      <TouchableOpacity onPress={goNext} style={[styles.reviewConfirmButton]}>
+      {/* <TouchableOpacity onPress={goNext} style={[styles.reviewConfirmButton]}>
         <View>
           <Text style={[styles.reviewConfirmButtonText]}>확인</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

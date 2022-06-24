@@ -19,8 +19,8 @@ const SocialWebviewModal: FC<SocialWebViewModalProps> = ({visible, source, close
       style={styles.container}
     >
       <SafeAreaView style={styles.container}>
-        <TouchableOpacity onPress={closeSocialModal}>
-          <View style={[styles.backButton]}>
+        <TouchableOpacity onPress={closeSocialModal} style={[styles.backButton]} activeOpacity={1}>
+          <View>
             <Icon name="arrow-left" size={24} color="black" />
           </View>
         </TouchableOpacity>
@@ -36,8 +36,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backButton: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
     zIndex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    height: 70,
+    width: 70,
+    padding: 15,
   },
 });
