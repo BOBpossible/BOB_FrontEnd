@@ -28,6 +28,13 @@ const options: ImageLibraryOptions = {
   maxHeight: 200,
   quality: 0.5,
 };
+const REVIEW_RATE_TEXT = [
+  '별로였어요',
+  '그저 그랬어요',
+  '괜찮았어요',
+  '맛있었어요',
+  '너무 맛있었어요',
+];
 
 const RATE_STAR = require('../assets/images/Rate_Star.png');
 export const ReviewWrite: FC<ReviewWriteProps> = ({
@@ -71,6 +78,7 @@ export const ReviewWrite: FC<ReviewWriteProps> = ({
           ratingImage={RATE_STAR}
           style={[styles.childView]}
         />
+        <Text style={[styles.rateReviewText]}>{REVIEW_RATE_TEXT[rating - 1]}</Text>
         <TextInput
           style={[styles.reviewContent]}
           multiline={true}
@@ -129,7 +137,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: 'center',
   },
-  childView: {marginTop: 8, marginBottom: 16},
+  childView: {marginTop: 8, marginBottom: 8},
   reviewConfirmButton: {
     width: '100%',
     height: 56,
@@ -167,5 +175,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#EFEFEF',
     marginRight: 8,
+  },
+  rateReviewText: {
+    marginBottom: 14,
+    fontSize: 14,
+    lineHeight: 22,
+    color: '#616161',
   },
 });
