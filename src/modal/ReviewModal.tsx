@@ -48,7 +48,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
     }
   };
 
-  const postReviewImages = async (reviewResponse: Promise<any>) => {
+  const postReviewImages = async () => {
     var formdata = new FormData();
     imageUri.map((image, index) => {
       let photo;
@@ -67,7 +67,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
     });
     try {
       const response = await axios.post(
-        `https://bobpossible.shop/api/v1/reviews/me/images/${reviewResponse.reviewId}`,
+        'https://bobpossible.shop/api/v1/reviews/me/images/21',
         formdata,
         {
           headers: headers,
@@ -81,7 +81,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
 
   const submitReview = async () => {
     const reviewResponse = postReviewContent();
-    postReviewImages(reviewResponse);
+    postReviewImages();
     closeReviewModal();
   };
   return (
