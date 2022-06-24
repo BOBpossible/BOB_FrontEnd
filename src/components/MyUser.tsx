@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import type { FC } from 'react';
+import React, {useState} from 'react';
+import type {FC} from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
-import { Colors } from 'react-native-paper';
+import {Colors} from 'react-native-paper';
 
 export type MyUserProps = {
   userprofile?: any; //?????????
@@ -11,7 +11,7 @@ export type MyUserProps = {
 };
 
 //prettier-ignore
-export const MyUser: FC<MissionUserProps> = ({ userprofile, username, userid, status }) => {
+export const MyUser: FC<MyUserProps> = ({username, userid, status }) => {
   const [statusMessage, setMessage] = useState("");
   // useEffect(()=>{
   //   if (status==='request') {setMessage('미션중')}
