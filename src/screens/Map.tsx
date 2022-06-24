@@ -1,11 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, Dimensions, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomSheet, {BottomSheetFlatList, BottomSheetView} from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AddressSearchModal from '../modal/AddressSearchModal';
 import StoreModal from '../modal/StoreModal';
 import {WebView} from 'react-native-webview';
+import {MapWebview} from '../modal/MapWebview';
 
 const dummyMission = [
   {
@@ -57,14 +65,7 @@ const Map = () => {
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
       </View>
-      <View style={[styles.webviewWrap]}>
-        <WebView
-          source={{uri: 'https://bobplace.netlify.app/'}}
-          onMessage={(event) => {
-            console.log(event.nativeEvent.data);
-          }}
-        />
-      </View>
+      <MapWebview />
       <BottomSheet
         snapPoints={[55, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
@@ -110,10 +111,6 @@ const styles = StyleSheet.create({
     color: 'black',
     marginRight: 4,
     fontWeight: '600',
-  },
-  webviewWrap: {
-    flex: 1,
-    backgroundColor: 'grey',
   },
   missionListTextWrap: {
     marginLeft: 16,

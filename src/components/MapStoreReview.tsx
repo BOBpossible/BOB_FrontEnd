@@ -24,9 +24,9 @@ export const MapStoreReview: FC<MapStoreReviewProps> = ({
   const renderedImage = (imagedata: {uri: string; id: number}[]) => {
     return (
       <View style={[styles.reviewRow3]}>
-        {imagedata.map((item) => {
+        {imagedata.map((item, index) => {
           return (
-            <TouchableOpacity onPress={() => openPhotoModal(item.uri)}>
+            <TouchableOpacity key={index} onPress={() => openPhotoModal(item.uri)}>
               <View style={[styles.reviewImageWrap]} key={item.id}>
                 <FastImage source={{uri: item.uri}} style={[styles.imageSize]} />
               </View>

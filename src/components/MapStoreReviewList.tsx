@@ -65,9 +65,10 @@ export const MapStoreReviewList = () => {
   const renderedReviews = (data: any) => {
     return (
       <>
-        {data.map((item: any) => {
+        {data.map((item: any, index: number) => {
           return (
             <MapStoreReview
+              key={index}
               name={item.name}
               date={item.date}
               rate={item.rate}

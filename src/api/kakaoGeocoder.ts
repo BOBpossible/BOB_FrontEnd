@@ -15,6 +15,6 @@ export const kakaoGeocoder = async (fullAddress: string) => {
     console.log(coordinate);
     return coordinate;
   } catch (error) {
-    console.log('post register:', error);
+    console.log('주소 좌표변환 에러:', error);
   }
 };

@@ -20,6 +20,7 @@ import {
 } from '../components';
 import ReviewModal from './ReviewModal';
 import {useStyle} from '../hooks';
+import FastImage from 'react-native-fast-image';
 
 type StoreModalProps = {
   storeId: number;
@@ -100,19 +101,19 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
           <View>
             <View style={{height: 220}}>
               <Swiper dot={dot()} activeDot={activeDot()} showsButtons={false}>
-                <Image
+                <FastImage
                   source={{uri: 'https://source.unsplash.com/1024x768/?nature'}}
                   style={{width: '100%', height: 220}}
                 />
-                <Image
+                <FastImage
                   source={{uri: 'https://source.unsplash.com/1024x768/?water'}}
                   style={{width: '100%', height: 220}}
                 />
-                <Image
+                <FastImage
                   source={{uri: 'https://source.unsplash.com/1024x768/?girl'}}
                   style={{width: '100%', height: 220}}
                 />
-                <Image
+                <FastImage
                   source={{uri: 'https://source.unsplash.com/1024x768/?tree'}}
                   style={{width: '100%', height: 220}}
                 />

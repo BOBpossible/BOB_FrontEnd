@@ -1,6 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import type {FC} from 'react';
-import {Modal, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Modal,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Platform,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ReviewRate} from '../components/ReviewRate';
 import {ReviewWrite} from '../components/ReviewWrite';
@@ -34,24 +42,32 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
         headers: headers,
       });
       console.log('review register:', response.data);
+      return response.data;
     } catch (error) {
       console.log('review register:', error);
     }
   };
 
-  const postReviewImages = async () => {
+  const postReviewImages = async (reviewResponse: Promise<any>) => {
     var formdata = new FormData();
     imageUri.map((image, index) => {
-      var photo = {
-        uri: image.uri,
-        type: 'image/jpeg',
-        name: image.name,
-      };
+      let photo;
+      Platform.OS === 'ios'
+        ? (photo = {
+            uri: image.uri.replace('file://', ''),
+            type: 'image/jpg',
+            name: image.name,
+          })
+        : (photo = {
+            uri: image.uri,
+            type: 'image/jpeg',
+            name: image.name,
+          });
       formdata.append('reviewImage', photo);
     });
     try {
       const response = await axios.post(
-        'https://bobpossible.shop/api/v1/reviews/me/images/1',
+        `https://bobpossible.shop/api/v1/reviews/me/images/${reviewResponse.reviewId}`,
         formdata,
         {
           headers: headers,
@@ -64,7 +80,8 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
   };
 
   const submitReview = async () => {
-    postReviewImages();
+    const reviewResponse = postReviewContent();
+    postReviewImages(reviewResponse);
     closeReviewModal();
   };
   return (
