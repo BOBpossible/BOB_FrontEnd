@@ -19,7 +19,7 @@ export const MyEditUserInfo = ({navigation}: Props) => {
           console.log('저장');
         }}
       />
-      <View style={[styles.userInfo]}>
+      <View style={[styles.userInfoProfile]}>
         <View style={[styles.profileWrap]}>
           <Image
             style={[styles.profileImg]}
@@ -32,13 +32,19 @@ export const MyEditUserInfo = ({navigation}: Props) => {
         </View>
         <Text style={[styles.usernameText]}>라춘식님</Text>
       </View>
+      <View style={[styles.userInfoEdit]}>
+        <View style={[styles.userInfoEditContent]}></View>
+      </View>
+      <TouchableOpacity onPress={() => console.log('탈퇴')} style={{alignItems: 'flex-end'}}>
+        <Text style={[styles.quitText]}>계정탈퇴</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   flex: {flex: 1},
-  userInfo: {
+  userInfoProfile: {
     height: 120,
     backgroundColor: '#FFFFFF',
     marginBottom: 8,
@@ -68,5 +74,19 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 16,
     // fontWeight: 'bold',
+  },
+  userInfoEdit: {
+    height: 222,
+    backgroundColor: '#FFFFFF',
+  },
+  userInfoEditContent: {
+    marginLeft: 16,
+    marginRight: 16,
+  },
+  quitText: {
+    color: '#777777',
+    fontSize: 14,
+    marginRight: 16,
+    marginTop: 8,
   },
 });

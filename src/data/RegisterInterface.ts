@@ -14,4 +14,5 @@ export type RegisterInterface = {
   phone: string;
   x: string;
   y: string;
+  email?: string;
 };
