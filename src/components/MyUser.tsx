@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import type {FC} from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import {Colors} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
 export type MyUserProps = {
   userprofile?: any; //?????????
@@ -16,10 +17,11 @@ export type MyUserProps = {
 export const MyUser: FC<MyUserProps> = ({username, userEmail, point, status }) => {
   const [statusMessage, setMessage] = useState("");
   useEffect(()=>{
-    if (status === 'identified') {setMessage('인증')}
-    else if (status === 'unidentified') {setMessage('미인증')}
+    if (status === 'unidentified') {setMessage('미인증')}
+    else if (status === 'unidentified') {setMessage('')}
   }, [status]);
-  
+  const navigation = useNavigation();
+
   return (
     <View style={[styles.userInfo]}>
       <View style={[styles.userCard]}>
@@ -36,13 +38,15 @@ export const MyUser: FC<MyUserProps> = ({username, userEmail, point, status }) =
           </View>
           <Text style={[styles.userEmail]}>{userEmail}</Text>
         </View>
-        <View style={[styles.editUserInfo]}>
-          <Text style={{color: '#6C69FF', fontSize: 12}}>회원정보 수정</Text>
-          <Image
-            style={[styles.MyNextImg]}
-            source={require('../assets/images/arrowGrey8.png')} //
-          />
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo')}>
+          <View style={[styles.editUserInfo]}>
+            <Text style={{color: '#6C69FF', fontSize: 12}}>회원정보 수정</Text>
+            <Image
+              style={[styles.MyNextImg]}
+              source={require('../assets/images/arrowGrey8.png')} //
+            />
+          </View>
+        </TouchableOpacity>
       </View>
       <View style={[styles.userPoint]}>
         <View style={{flexDirection: 'row'}}>
@@ -95,6 +99,7 @@ const styles = StyleSheet.create({
     color: '#111111',
     fontSize: 16,
     marginRight: 8,
+    fontWeight: 'bold',
   },
   userauthText: {
     fontSize: 12,
