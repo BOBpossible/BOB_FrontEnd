@@ -23,17 +23,6 @@ export type MissionCardContentProps = {
 
 //prettier-ignore
 export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, point, status}) => {
-  const MissionCardOneButton: FC<MissionCardContentProps> = ({handleOnPress, text }) =>{
-    return (
-      <>
-        <TouchableOpacity onPress={handleOnPress} style={[styles.missionOneButton]}>
-            <View>
-            <Text style={{color: 'white', fontSize: 16}}>{text}</Text>
-          </View>
-        </TouchableOpacity>
-      </>
-    );
-  };
   const MissionCardTwoButton: FC<MissionCardContentProps> = ({handleOnPress, text, cancelBgColor, cancelTextColor, bgColor }) =>{
     function cancleCard(){
       console.log('canceled');
@@ -63,10 +52,6 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
     //성공 버튼 누를 시
     console.log('성공');
   }
-  function handleReviewPress() {
-    //리뷰 버튼 누를 시
-    console.log('리뷰 : 냠 냠 ');
-  }
 
   return (
     <View style={[styles.missionCardWrap]}>
@@ -85,20 +70,15 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
             </Text>
           </View>
         </View>
-        {status === 'start' ?
-        null
-        :
+        {
         status === 'request' ?
-        <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='black' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
+        <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='#2A2A2A' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
         :
         status === 'onrequest' ?
-        <MissionCardTwoButton text='성공 요청중..' bgColor='#2A2A2A' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
+        <MissionCardTwoButton text='성공 요청중..' bgColor='#B7B7B7' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
         :
-        status === 'success' ?
-        <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공' bgColor='#6C69FF' cancelBgColor='#E8E8E8' cancelTextColor='#949494'/>
-        :
-        //  status ==='review'
-        <MissionCardOneButton handleOnPress={handleReviewPress} text='리뷰 남기기' />
+        // status === 'success'
+        <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공 승인' bgColor='#B7B7B7' cancelBgColor='#DFDFDF' cancelTextColor='#949494'/>
         }
       </View>
     </View>

@@ -10,7 +10,7 @@ import {MissionUser} from '../components/MissionUser';
 //"request","onrequest" :'진행중' processCircle  // "success" : '도전 성공' processCircle
 //"review"
 const Mission = () => {
-  const [status, setStatus] = useState<string>('request'); //버튼문구 //"start","request","onrequest","success", "review"
+  const [status, setStatus] = useState<string>('onrequest'); //버튼문구 //"start","request","onrequest","success", "review"
   const [progressnow, setProgressnow] = useState(0); //아래 스위치.  0:진행중  1:진행완료
 
   return (
