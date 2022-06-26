@@ -2,6 +2,7 @@ import React from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Colors} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
 export type MissionCardProps = {
   name: string;
@@ -22,40 +23,11 @@ export type MissionCardContentProps = {
 };
 
 //prettier-ignore
-export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, point, status}) => {
-  const MissionCardTwoButton: FC<MissionCardContentProps> = ({handleOnPress, text, cancelBgColor, cancelTextColor, bgColor }) =>{
-    function cancleCard(){
-      console.log('canceled');
-    }
+export const HomeMissionCard: FC<MissionCardProps> = ({name, category, minCost, point, status}) => {
+    const navigation = useNavigation();
     return (
-      <View style={[styles.missionTwoButton]}>
-        <TouchableOpacity style={[styles.missionButtonLeft, {backgroundColor: `${cancelBgColor}`}]} onPress={cancleCard}>
-          <View >
-            <Text style={{fontSize: 16, color: `${cancelTextColor}`}}>취소</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.missionButtonRight, {backgroundColor: `${bgColor}`}]} onPress={handleOnPress}>
-          <View>
-            <Text style={{color:'white', fontSize: 16}}>{`${text}`}</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
-  function handleRequestPress() {
-    //성공요청 버튼 누를 시
-    console.log('성공요청');
-    // 사장님께 전송 -> 사장님이 확인->
-  }
-  function handleSuccessPress() {
-    //성공 버튼 누를 시
-    console.log('성공');
-  }
-
-  return (
     <View style={[styles.missionCardWrap]}>
-      <View style={[styles.missionCard]}>
+      <TouchableOpacity onPress={() => navigation.navigate('HomeMissionDetails')} style={[styles.missionCard]}>
         <View style={[styles.missionMain]}>
           <View style={[styles.nameBox]}>
             <Text style={[styles.nameText]}>{name}</Text>
@@ -70,17 +42,7 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
             </Text>
           </View>
         </View>
-        {
-        status === 'request' ?
-        <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='#2A2A2A' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
-        :
-        status === 'onrequest' ?
-        <MissionCardTwoButton text='성공 요청중..' bgColor='#B7B7B7' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
-        :
-        // status === 'success'
-        <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공 승인' bgColor='#B7B7B7' cancelBgColor='#DFDFDF' cancelTextColor='#949494'/>
-        }
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -88,7 +50,7 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
 const styles = StyleSheet.create({
   missionCardWrap: {marginLeft: 16, marginRight: 16},
   missionCard: {
-    height: 198,
+    height: 145,
     backgroundColor: Colors.white,
     borderRadius: 12,
     alignItems: 'center', //
@@ -136,20 +98,6 @@ const styles = StyleSheet.create({
   missionTwoButton: {
     flexDirection: 'row',
     height: 48,
-  },
-  missionButtonLeft: {
-    width: '50%',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: 'red',
-    borderBottomLeftRadius: 15,
-  },
-  missionButtonRight: {
-    width: '50%',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: 'yellow',
-    borderBottomRightRadius: 15,
   },
   missionButtonView: {
     borderWidth: 2,

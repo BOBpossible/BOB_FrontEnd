@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Colors} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MyUser} from '../components/MyUser';
+import {useNavigation} from '@react-navigation/native';
 
 const MyPage = () => {
-  const [status, setStatus] = useState<string>('request'); //버튼문구 //"start","request","onrequest","success", "review"//
+  const [status, setStatus] = useState<string>('unidentified'); //인증된 - "identified", 미인증- "unidentified"
+  const navigation = useNavigation();
 
-  const title = 'MyPage';
   const storeData = async (value: string) => {
     try {
       await AsyncStorage.setItem('userToken', value);
@@ -19,6 +20,7 @@ const MyPage = () => {
     storeData('');
   };
   console.log(AsyncStorage.getItem('userToken'));
+
   return (
     <View style={[styles.flex]}>
       <View style={[styles.headerWrap]}>
@@ -26,14 +28,25 @@ const MyPage = () => {
           <Text style={[styles.headerText]}>마이페이지</Text>
         </View>
       </View>
-      <MyUser username={'춘식이'} userid={123} status={status} />
-      <View style={[styles.userWrap]}>
-        <Text>냐</Text>
-      </View>
-      <Text>{title}</Text>
+      <MyUser username={'춘식이'} userEmail={'baegopa@bob.com'} point={2500} status={status} />
+      <TouchableOpacity onPress={() => navigation.navigate('MyReview')}>
+        <View style={[styles.userWrap]}>
+          <Text style={[styles.userMenu]}>작성한 리뷰</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('MyNotifications')}>
+        <View style={[styles.userWrap]}>
+          <Text style={[styles.userMenu]}>알림 설정</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('MyInquiry')}>
+        <View style={[styles.userWrap]}>
+          <Text style={[styles.userMenu]}>1:1 문의</Text>
+        </View>
+      </TouchableOpacity>
       <TouchableOpacity onPress={logout}>
-        <View style={{height: 200, width: 200, borderWidth: 1}}>
-          <Text>로그아웃</Text>
+        <View style={[styles.userWrap]}>
+          <Text style={[styles.userMenu]}>로그아웃</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -46,10 +59,9 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomColor: '#DFDFDF',
     borderBottomWidth: 1,
-    marginBottom: 8,
   },
   header: {
-    height: 40,
+    height: 41,
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
   },
@@ -62,8 +74,15 @@ const styles = StyleSheet.create({
   },
   userWrap: {
     width: '100%',
-    borderBottomColor: '#DFDFDF',
-    borderBottomWidth: 1,
+    height: 68,
+    backgroundColor: '#FFFFFF',
+    marginBottom: 1,
+    justifyContent: 'center',
+  },
+  userMenu: {
+    marginLeft: 22,
+    fontSize: 16,
+    color: '#111111',
   },
 });
 
