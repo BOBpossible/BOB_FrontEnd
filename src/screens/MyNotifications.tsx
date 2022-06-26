@@ -18,7 +18,7 @@ export const MyNotifications = ({navigation}: Props) => {
 
   return (
     <View style={[styles.flex]}>
-      <MyHeader goBack={goBack} title={'알람설정'} />
+      <MyHeader goBack={goBack} title={'알림 설정'} />
       <View style={[styles.eachNotifications]}>
         <Text style={{marginLeft: 21.87, color: '#000000', fontSize: 16}}>{'새로운 이벤트'}</Text>
         <Switch

@@ -10,6 +10,9 @@ export const MyEditUserInfo = ({navigation}: Props) => {
   const goBack = () => {
     navigation.goBack();
   };
+  function editProfileImg() {
+    console.log('수정');
+  }
   return (
     <View style={[styles.flex]}>
       <MyHeader
@@ -20,7 +23,7 @@ export const MyEditUserInfo = ({navigation}: Props) => {
         }}
       />
       <View style={[styles.userInfoProfile]}>
-        <View style={[styles.profileWrap]}>
+        <TouchableOpacity onPress={editProfileImg} style={[styles.profileWrap]}>
           <Image
             style={[styles.profileImg]}
             source={require('../assets/images/tmpUserImage.png')} //
@@ -29,7 +32,7 @@ export const MyEditUserInfo = ({navigation}: Props) => {
             style={[styles.editPen]}
             source={require('../assets/images/editPen.png')} //
           />
-        </View>
+        </TouchableOpacity>
         <Text style={[styles.usernameText]}>라춘식님</Text>
       </View>
       <View style={[styles.userInfoEdit]}>

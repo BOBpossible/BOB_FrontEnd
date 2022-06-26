@@ -48,7 +48,7 @@ export const MyUser: FC<MyUserProps> = ({username, userEmail, point, status }) =
           </View>
         </TouchableOpacity>
       </View>
-      <View style={[styles.userPoint]}>
+      <TouchableOpacity onPress={() => navigation.navigate('MyPoint')} style={[styles.userPoint]}>
         <View style={{flexDirection: 'row'}}>
           <Text style={{marginLeft: 20, color: '#616161', fontSize: 14}}>내 포인트</Text>
           <Text style={{marginLeft: 16, color: '#111111', fontSize: 14}}>{point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
@@ -57,7 +57,7 @@ export const MyUser: FC<MyUserProps> = ({username, userEmail, point, status }) =
             style={[styles.MyNextImg]}
             source={require('../assets/images/arrowGrey10.png')} //
           />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

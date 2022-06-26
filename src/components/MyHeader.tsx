@@ -26,7 +26,9 @@ export const MyHeader: FC<MyHeaderProps> = ({goBack, title, save}) => {
           <Text style={[styles.saveButton]}>저장</Text>
         </TouchableOpacity>
       ) : (
-        <View></View>
+        <View style={{opacity: 0}}>
+          <Text style={[styles.saveButton]}>저장</Text>
+        </View>
       )}
     </View>
   );
