@@ -53,10 +53,7 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
       </View>
     );
   };
-  function handleStartPress() {
-    //미션도전 버튼 누를 시
-    console.log('미션 도전');
-  }
+
   function handleRequestPress() {
     //성공요청 버튼 누를 시
     console.log('성공요청');

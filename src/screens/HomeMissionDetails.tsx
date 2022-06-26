@@ -13,7 +13,7 @@ export const HomeMissionDetails = ({navigation}: Props) => {
   return (
     <View style={[styles.flex]}>
       <MyHeader goBack={goBack} title={'미션 정보'} />
-      <Text>ㅎㅇ</Text>
+      <Text>여기 화면 디자인중</Text>
     </View>
   );
 };
