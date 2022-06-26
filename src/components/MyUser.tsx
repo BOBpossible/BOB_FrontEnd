@@ -1,23 +1,26 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import type {FC} from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import {Colors} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
 export type MyUserProps = {
   userprofile?: any; //?????????
   username: string;
-  userid: number;
-  status: string; //"start","request","onrequest","success", "review"
+  userid?: number; //email로 바꼈나?
+  userEmail: string;
+  point: number;
+  status: string; //"identified","unidentified"
 };
 
 //prettier-ignore
-export const MyUser: FC<MyUserProps> = ({username, userid, status }) => {
+export const MyUser: FC<MyUserProps> = ({username, userEmail, point, status }) => {
   const [statusMessage, setMessage] = useState("");
-  // useEffect(()=>{
-  //   if (status==='request') {setMessage('미션중')}
-  //   else if (status==='onrequest') {setMessage('사장님 확인중')}
-  //   else if (status==='success') {setMessage('미션 성공')}
-  // }, [status]);
+  useEffect(()=>{
+    if (status === 'unidentified') {setMessage('미인증')}
+    else if (status === 'unidentified') {setMessage('')}
+  }, [status]);
+  const navigation = useNavigation();
 
   return (
     <View style={[styles.userInfo]}>
@@ -31,16 +34,30 @@ export const MyUser: FC<MyUserProps> = ({username, userid, status }) => {
         <View style={[styles.userWrap]}>
           <View style={[styles.username]}>
             <Text style={[styles.usernameText]}>{username}</Text>
-            <Text style={[styles.userauthText]}>인증?</Text>
+            <Text style={[styles.userauthText]}>{statusMessage}</Text>
           </View>
-          <Text style={[styles.useridText]}>{userid}</Text>
+          <Text style={[styles.userEmail]}>{userEmail}</Text>
         </View>
-        {/* <View style={[styles.statusWrap]}>
-          <View>
-            <Text style={[styles.statusText, status === 'success' && { color: '#6C69FF' }]}>{statusMessage}</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo')}>
+          <View style={[styles.editUserInfo]}>
+            <Text style={{color: '#6C69FF', fontSize: 12}}>회원정보 수정</Text>
+            <Image
+              style={[styles.MyNextImg]}
+              source={require('../assets/images/arrowGrey8.png')} //
+            />
           </View>
-        </View> */}
+        </TouchableOpacity>
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate('MyPoint')} style={[styles.userPoint]}>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{marginLeft: 20, color: '#616161', fontSize: 14}}>내 포인트</Text>
+          <Text style={{marginLeft: 16, color: '#111111', fontSize: 14}}>{point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
+        </View>
+        <Image
+            style={[styles.MyNextImg]}
+            source={require('../assets/images/arrowGrey10.png')} //
+          />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -53,13 +70,14 @@ const styles = StyleSheet.create({
   },
   userCard: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
+    marginBottom: 18,
   },
   profileWrap: {
-    marginTop: 16,
     marginLeft: 16,
-
-    marginBottom: 14,
-    marginRight: 11,
+    marginRight: 16,
   },
   profileImg: {
     width: 48,
@@ -73,19 +91,23 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   username: {
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   usernameText: {
     color: '#111111',
     fontSize: 16,
-    marginBottom: 2,
+    marginRight: 8,
+    fontWeight: 'bold',
   },
   userauthText: {
-    color: 'red',
+    fontSize: 12,
+    color: '#E03D32',
   },
-  useridText: {
-    fontSize: 14,
-    color: '#111111',
+  userEmail: {
+    fontSize: 12,
+    color: '#616161',
   },
   statusWrap: {
     marginRight: 24,
@@ -94,5 +116,24 @@ const styles = StyleSheet.create({
   statusText: {
     color: '#111111',
     fontSize: 16,
+  },
+  editUserInfo: {
+    flexDirection: 'row',
+    marginRight: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  userPoint: {
+    marginLeft: 16,
+    marginRight: 16,
+    backgroundColor: '#F6F6FE',
+    borderRadius: 10,
+    height: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  MyNextImg: {
+    marginRight: 20,
   },
 });
