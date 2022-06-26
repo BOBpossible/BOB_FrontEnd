@@ -34,7 +34,7 @@ const MyPage = () => {
           <Text style={[styles.userMenu]}>작성한 리뷰</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('MyAlarm')}>
+      <TouchableOpacity onPress={() => navigation.navigate('MyNotifications')}>
         <View style={[styles.userWrap]}>
           <Text style={[styles.userMenu]}>알림 설정</Text>
         </View>

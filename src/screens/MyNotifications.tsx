@@ -3,11 +3,11 @@ import {View, StyleSheet, Text, Switch} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
 import {MyHeader} from '../components/MyHeader';
-import {MyAlarmSwitch} from '../components/MyAlarmSwitch';
+// import {MyNotificationsSwitch} from '../components/MyNotificationsSwitch';
 
-type Props = NativeStackScreenProps<MyStackParamList, 'MyAlarm'>;
+type Props = NativeStackScreenProps<MyStackParamList, 'MyNotifications'>;
 
-export const MyAlarm = ({navigation}: Props) => {
+export const MyNotifications = ({navigation}: Props) => {
   const goBack = () => {
     navigation.goBack();
   };
@@ -19,7 +19,7 @@ export const MyAlarm = ({navigation}: Props) => {
   return (
     <View style={[styles.flex]}>
       <MyHeader goBack={goBack} title={'알람설정'} />
-      <View style={[styles.eachAlarm]}>
+      <View style={[styles.eachNotifications]}>
         <Text style={{marginLeft: 21.87, color: '#000000', fontSize: 16}}>{'새로운 이벤트'}</Text>
         <Switch
           value={onNewevent}
@@ -29,7 +29,7 @@ export const MyAlarm = ({navigation}: Props) => {
           style={{marginRight: 16}}
         />
       </View>
-      <View style={[styles.eachAlarm]}>
+      <View style={[styles.eachNotifications]}>
         <Text style={{marginLeft: 21.87, color: '#000000', fontSize: 16}}>{'리뷰 답변'}</Text>
         <Switch
           value={onReview}
@@ -39,7 +39,7 @@ export const MyAlarm = ({navigation}: Props) => {
           style={{marginRight: 16}}
         />
       </View>
-      <View style={[styles.eachAlarm]}>
+      <View style={[styles.eachNotifications]}>
         <Text style={{marginLeft: 21.87, color: '#000000', fontSize: 16}}>{'문의 내역 답변'}</Text>
         <Switch
           value={onInquiry}
@@ -49,7 +49,7 @@ export const MyAlarm = ({navigation}: Props) => {
           style={{marginRight: 16}}
         />
       </View>
-      {/* <MyAlarmSwitch
+      {/* <MyNotificationsSwitch
           text={'새로운 이벤트'}
           value={onNewevent}
           onValueChange={() => setOnNewevent(!onNewevent)}
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     height: 68,
     backgroundColor: 'white',
   },
-  eachAlarm: {
+  eachNotifications: {
     height: 68,
     backgroundColor: 'white',
     alignItems: 'center',
