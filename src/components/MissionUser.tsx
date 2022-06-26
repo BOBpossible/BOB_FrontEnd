@@ -1,23 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import type { FC } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
-import { Colors } from 'react-native-paper';
+import React from 'react';
+import type {FC} from 'react';
+import {View, StyleSheet, Text, Image} from 'react-native';
+import {Colors} from 'react-native-paper';
 
 export type MissionUserProps = {
-  userprofile?: any; //?????????
+  userprofile?: any; //?????????프사
   username: string;
   userid: number;
-  status: string; //"start","request","onrequest","success", "review"
+  status?: string; //"start","request","onrequest","success", "review"
 };
 
 //prettier-ignore
 export const MissionUser: FC<MissionUserProps> = ({ userprofile, username, userid, status }) => {
-  const [statusMessage, setMessage] = useState("");
-  useEffect(() => {
-    if (status === 'request') { setMessage('미션중') }
-    else if (status === 'onrequest') { setMessage('사장님 확인중') }
-    else if (status === 'success') { setMessage('미션 성공') }
-  }, [status]);
 
   return (
     <View style={[styles.userCard]}>
@@ -30,11 +24,6 @@ export const MissionUser: FC<MissionUserProps> = ({ userprofile, username, useri
       <View style={[styles.userWrap]}>
         <Text style={[styles.usernameText]}>{username}</Text>
         <Text style={[styles.useridText]}>{userid}</Text>
-      </View>
-      <View style={[styles.statusWrap]}>
-        <View>
-          <Text style={[styles.statusText, status === 'success' && { color: '#6C69FF' }]}>{statusMessage}</Text>
-        </View>
       </View>
     </View>
   );

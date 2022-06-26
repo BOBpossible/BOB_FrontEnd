@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text, FlatList, TouchableOpacity} from 'react-native';
 import {MissionCard} from '../components';
+import {MissionSuccessfulCard} from './MissionSuccessfulCard';
 import {useRecoilState} from 'recoil';
 import {userToken} from '../state';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -92,46 +93,28 @@ export const MissionSuccessList = () => {
   });
   return (
     <FlatList
+      style={{marginTop: 18}}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 60, backgroundColor: '#F6F6FA'}}
       scrollEventThrottle={10}
       data={dummyMission}
       renderItem={({item}) => (
         <>
-          <View style={[styles.missionDate]}>
-            <Text>
-              {item.completeMonth}/{item.completeDate}({item.completeDay}) • {item.completeStatus}
-            </Text>
-          </View>
-          <MissionCard
+          <MissionSuccessfulCard
             name={item.name}
             category={item.category}
             day={item.day}
             minCost={item.minCost}
             point={item.point}
-            status="review"
-            handleOnPress={review}
+            completeMonth={item.completeMonth}
+            completeDate={item.completeDate}
+            completeDay={item.completeDay}
+            completeStatus={item.completeStatus}
+            // handleOnPress={review}
           />
         </>
       )}
-      ListHeaderComponent={
-        <TouchableOpacity>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginLeft: 16,
-              marginRight: 16,
-              marginTop: 12,
-              marginBottom: 9,
-            }}
-          >
-            <Text style={{fontSize: 18, color: '#616161'}}>최근 일주일</Text>
-            <Icon name="chevron-down" size={25} />
-            {/* 이거 토글 ? ?  */}
-          </View>
-        </TouchableOpacity>
-      }
-      ItemSeparatorComponent={() => <View style={{margin: 16}} />}
+      ItemSeparatorComponent={() => <View style={{marginTop: 16}} />}
     />
   );
 };
