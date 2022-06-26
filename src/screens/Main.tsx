@@ -1,11 +1,12 @@
 import React, {useRef} from 'react';
-import {View, StyleSheet, Text, Animated} from 'react-native';
+import {View, StyleSheet, Text, Animated, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {MissionCard} from '../components';
+import {HomeMissionCard} from '../components/HomeMissionCard';
 import {AnimatedHeader, HomeMissionListHeader} from '../components';
 import {useRecoilState} from 'recoil';
 import {userToken} from '../state';
+import {useNavigation} from '@react-navigation/native';
 
 const dummyMission = [
   {
@@ -32,6 +33,8 @@ const dummyMission = [
 ];
 
 const Main = () => {
+  const navigation = useNavigation();
+
   const [token, setToken] = useRecoilState(userToken);
   console.log(token);
   const offset = useRef(new Animated.Value(0)).current;
@@ -46,7 +49,7 @@ const Main = () => {
         scrollEventThrottle={10}
         data={dummyMission}
         renderItem={({item}) => (
-          <MissionCard
+          <HomeMissionCard
             name={item.name}
             category={item.category}
             day={item.day}

@@ -89,7 +89,7 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
           </View>
         </View>
         {status === 'start' ?
-        <MissionCardOneButton handleOnPress={handleStartPress} text='미션 도전' />
+        null
         :
         status === 'request' ?
         <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='black' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>

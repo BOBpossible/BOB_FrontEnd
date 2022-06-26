@@ -7,6 +7,7 @@ import Main from '../screens/Main';
 import Mission from '../screens/Mission';
 import MyPage from '../screens/MyPage';
 import {MyNavigator} from './MyNavigator';
+import {HomeNavigator} from './HomeNavigator';
 
 import type {RouteProp, ParamListBase} from '@react-navigation/native';
 import {MapNavigator} from './MapNavigator';
@@ -41,7 +42,7 @@ const Tab = createBottomTabNavigator();
 export const MainNavigator = () => {
   return (
     <Tab.Navigator screenOptions={screenOptions} initialRouteName="Main">
-      <Tab.Screen name="Main" component={Main} options={{tabBarLabel: '홈'}} />
+      <Tab.Screen name="Main" component={HomeNavigator} options={{tabBarLabel: '홈'}} />
       <Tab.Screen name="Mission" component={Mission} options={{tabBarLabel: '미션'}} />
       <Tab.Screen name="MapNavigator" component={MapNavigator} options={{tabBarLabel: '검색'}} />
       {/* <Tab.Screen name="MyPage" component={MyPage} options={{tabBarLabel: '마이페이지'}} /> */}
