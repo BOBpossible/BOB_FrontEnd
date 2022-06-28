@@ -1,6 +1,7 @@
 import React from 'react';
 import type {FC} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type MyHeaderProps = {
   goBack: () => void;
@@ -13,9 +14,7 @@ export const MyHeader: FC<MyHeaderProps> = ({goBack, title, save}) => {
     <View style={[styles.headerWrap]}>
       <TouchableOpacity onPress={goBack}>
         <View style={[styles.backButton]}>
-          <Image
-            source={require('../assets/images/goBack.png')} //
-          />
+          <Icon name="arrow-left" size={24} color="black" />
         </View>
       </TouchableOpacity>
       <View>

@@ -6,6 +6,7 @@ import {MyNotifications} from '../screens/MyNotifications';
 import {MyInquiry} from '../screens/MyInquiry';
 import {MyEditUserInfo} from '../screens/MyEditUserInfo';
 import {MyPoint} from '../screens/MyPoint';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 export type MyStackParamList = {
   MyPage: undefined;
@@ -18,7 +19,15 @@ export type MyStackParamList = {
 
 const Stack = createStackNavigator<MyStackParamList>();
 
-export const MyNavigator = () => {
+export const MyNavigator = ({navigation, route}) => {
+  React.useLayoutEffect(() => {
+    const routeName = getFocusedRouteNameFromRoute(route);
+    if (routeName !== 'MyPage') {
+      navigation.setOptions({tabBarStyle: {display: 'none'}});
+    } else {
+      navigation.setOptions({tabBarStyle: {display: undefined}});
+    }
+  }, [navigation, route]);
   return (
     <Stack.Navigator
       initialRouteName="MyPage"

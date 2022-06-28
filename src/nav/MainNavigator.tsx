@@ -17,7 +17,7 @@ const icons: Record<string, string[]> = {
   Main: ['home', 'home-outline'],
   Mission: ['food', 'food-outline'],
   MapNavigator: ['map-search', 'map-search-outline'],
-  MyPage: ['account-settings', 'account-settings-outline'],
+  MyNavigator: ['account-settings', 'account-settings-outline'],
 };
 
 const screenOptions = ({route}: {route: RouteProp<ParamListBase, string>}) => {
@@ -45,8 +45,11 @@ export const MainNavigator = () => {
       <Tab.Screen name="Main" component={HomeNavigator} options={{tabBarLabel: '홈'}} />
       <Tab.Screen name="Mission" component={Mission} options={{tabBarLabel: '미션'}} />
       <Tab.Screen name="MapNavigator" component={MapNavigator} options={{tabBarLabel: '검색'}} />
-      {/* <Tab.Screen name="MyPage" component={MyPage} options={{tabBarLabel: '마이페이지'}} /> */}
-      <Tab.Screen name="MyPage" component={MyNavigator} options={{tabBarLabel: '마이페이지'}} />
+      <Tab.Screen
+        name="MyNavigator"
+        component={MyNavigator}
+        options={{tabBarLabel: '마이페이지'}}
+      />
     </Tab.Navigator>
   );
 };
