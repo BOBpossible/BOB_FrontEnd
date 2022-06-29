@@ -6,7 +6,6 @@ import {MyUser} from '../components/MyUser';
 import {useNavigation} from '@react-navigation/native';
 
 const MyPage = () => {
-  const [status, setStatus] = useState<string>('unidentified'); //인증된 - "identified", 미인증- "unidentified"
   const navigation = useNavigation();
 
   const storeData = async (value: string) => {
@@ -21,6 +20,13 @@ const MyPage = () => {
   };
   console.log(AsyncStorage.getItem('userToken'));
 
+  // 서버연결 후 수정
+  const username = '밥풀이';
+  const userEmail = 'bobPlace@bob.com';
+  const usrPoint = 2500;
+  const [authStatus, setAuthStatus] = useState<string>('unidentified'); //인증된 - "identified", 미인증- "unidentified"
+  //
+
   return (
     <View style={[styles.flex]}>
       <View style={[styles.headerWrap]}>
@@ -28,13 +34,13 @@ const MyPage = () => {
           <Text style={[styles.headerText]}>마이페이지</Text>
         </View>
       </View>
-      <MyUser username={'춘식이'} userEmail={'baegopa@bob.com'} point={2500} status={status} />
+      <MyUser username={username} userEmail={userEmail} point={usrPoint} status={authStatus} />
       <TouchableOpacity onPress={() => navigation.navigate('MyReview')}>
         <View style={[styles.userWrap]}>
-          <Text style={[styles.userMenu]}>작성한 리뷰</Text>
+          <Text style={[styles.userMenu]}>리뷰 관리</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('MyNotifications')}>
+      <TouchableOpacity onPress={() => navigation.navigate('MyNotificationsSetting')}>
         <View style={[styles.userWrap]}>
           <Text style={[styles.userMenu]}>알림 설정</Text>
         </View>

@@ -5,9 +5,9 @@ import {MyStackParamList} from '../nav/MyNavigator';
 import {MyHeader} from '../components/MyHeader';
 // import {MyNotificationsSwitch} from '../components/MyNotificationsSwitch';
 
-type Props = NativeStackScreenProps<MyStackParamList, 'MyNotifications'>;
+type Props = NativeStackScreenProps<MyStackParamList, 'MyNotificationsSetting'>;
 
-export const MyNotifications = ({navigation}: Props) => {
+export const MyNotificationsSetting = ({navigation}: Props) => {
   const goBack = () => {
     navigation.goBack();
   };

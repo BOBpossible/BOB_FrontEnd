@@ -3,16 +3,19 @@ import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
 import {MyHeader} from '../components/MyHeader';
+import { RegisterName } from '../components';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyEditUserInfo'>;
 
-export const MyEditUserInfo = ({navigation}: Props) => {
+export const MyEditUserInfo = ({navigation, route}: Props) => {
   const goBack = () => {
     navigation.goBack();
   };
   function editProfileImg() {
     console.log('수정');
   }
+  const [username, setUsername] = useState<string>(route.params.username);
+
   return (
     <View style={[styles.flex]}>
       <MyHeader
@@ -26,17 +29,20 @@ export const MyEditUserInfo = ({navigation}: Props) => {
         <TouchableOpacity onPress={editProfileImg} style={[styles.profileWrap]}>
           <Image
             style={[styles.profileImg]}
-            source={require('../assets/images/tmpUserImage.png')} //
+            source={require('../assets/images/bobProfile.png')} //
           />
           <Image
             style={[styles.editPen]}
             source={require('../assets/images/editPen.png')} //
           />
         </TouchableOpacity>
-        <Text style={[styles.usernameText]}>라춘식님</Text>
+        <Text style={[styles.usernameText]}>{username}님</Text>
       </View>
       <View style={[styles.userInfoEdit]}>
-        <View style={[styles.userInfoEditContent]}></View>
+        <View style={[styles.userInfoEditContent]}>
+          {/* 이름
+          전화번호 */}
+        </View>
       </View>
       <TouchableOpacity onPress={() => console.log('탈퇴')} style={{alignItems: 'flex-end'}}>
         <Text style={[styles.quitText]}>계정탈퇴</Text>

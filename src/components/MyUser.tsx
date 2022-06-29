@@ -28,7 +28,7 @@ export const MyUser: FC<MyUserProps> = ({username, userEmail, point, status }) =
         <View style={[styles.profileWrap]}>
           <Image
             style={[styles.profileImg]}
-            source={require('../assets/images/tmpUserImage.png')} //
+            source={require('../assets/images/bobProfile.png')} //
           />
         </View>
         <View style={[styles.userWrap]}>
@@ -38,7 +38,7 @@ export const MyUser: FC<MyUserProps> = ({username, userEmail, point, status }) =
           </View>
           <Text style={[styles.userEmail]}>{userEmail}</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo')}>
+        <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo', {username: username})}>
           <View style={[styles.editUserInfo]}>
             <Text style={{color: '#6C69FF', fontSize: 12}}>회원정보 수정</Text>
             <Image
