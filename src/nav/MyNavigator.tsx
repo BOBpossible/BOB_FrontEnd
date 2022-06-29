@@ -22,7 +22,13 @@ const Stack = createStackNavigator<MyStackParamList>();
 export const MyNavigator = ({navigation, route}) => {
   React.useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
-    if (routeName !== 'MyPage') {
+    if (
+      routeName === 'MyEditUserInfo' ||
+      routeName === 'MyPoint' ||
+      routeName === 'MyReview' ||
+      routeName === 'MyNotificationsSetting' ||
+      routeName === 'MyInquiry'
+    ) {
       navigation.setOptions({tabBarStyle: {display: 'none'}});
     } else {
       navigation.setOptions({tabBarStyle: {display: undefined}});

@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useStyle} from '../hooks';
 import AddressSearchModal from '../modal/AddressSearchModal';
 import {CircleBar} from './HomeCircleBar';
+import {useNavigation} from '@react-navigation/native';
 
 const WIDTH = Dimensions.get('window').width;
 const HEADER_HEIGHT = 210;
@@ -15,6 +16,7 @@ type AnimatedHeaderProps = {
 export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop}) => {
   const [addressModal, setAddressModal] = useState(false);
   const barProgressValue = useRef(new Animated.Value(0)).current;
+  const navigation = useNavigation();
 
   //헤더 길이 바꿔주는 애니메이션 Main.tsx의 스크롤 위치에 따라 변한다
   const heightAnimStyle = useStyle({
@@ -125,7 +127,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
               <Text style={[styles.pointText]}>999,999</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
             <Icon name="bell-outline" size={24} />
           </TouchableOpacity>
         </View>
