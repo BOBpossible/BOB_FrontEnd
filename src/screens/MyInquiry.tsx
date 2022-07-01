@@ -31,7 +31,7 @@ export const MyInquiry = ({navigation}: Props) => {
           <Text style={[!nowWrite && styles.fontTitle4Md]}>나의 문의 내역</Text>
         </TouchableOpacity>
       </View>
-      {nowWrite ? <MyWriteInquiry /> : <MyInquiryList />}
+      {nowWrite ? <MyWriteInquiry /> : <MyInquiryList setNowWrite={setNowWrite} />}
     </SafeAreaView>
   );
 };

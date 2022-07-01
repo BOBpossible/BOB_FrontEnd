@@ -1,25 +1,28 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Animated} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export const MyInquiryMakeButton = () => {
-  const progressValue = useState(new Animated.Value(-15))[0]; //
+export type goWriteProps = {
+  goWrite: () => void;
+};
 
+export const MyInquiryMakeButton: FC<goWriteProps> = ({goWrite}) => {
   return (
     <View style={[styles.progressRow]}>
-      <TouchableOpacity style={[styles.progressToggle]}>
-        <Text style={[styles.buttonText]}>문의 남기기</Text>
-        <Icon name="pencil" size={24} color="white" />
+      <TouchableOpacity style={[styles.progressToggle]} onPress={goWrite}>
+        <Text style={[styles.buttonText]}>문의 남기기 </Text>
+        <Icon name="pencil" size={18} color="white" />
       </TouchableOpacity>
     </View>
   );
 };
-
+//
 const styles = StyleSheet.create({
   progressRow: {
     width: '100%',
     position: 'absolute',
-    bottom: 11,
+    bottom: 0,
+    marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },

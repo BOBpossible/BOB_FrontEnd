@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import {FlatList, Image, StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
 import {MyInquiryDetails} from './MyInquiryListDetails';
 import {MyInquiryMakeButton} from './MyInquiryMakeButton';
@@ -26,8 +26,14 @@ const dummyMission = [
     inquiryId: 3,
   },
 ];
+export type goWriteProps = {
+  setNowWrite: any;
+};
 
-export const MyInquiryList = () => {
+export const MyInquiryList: FC<goWriteProps> = ({setNowWrite}) => {
+  const goWrite = () => {
+    setNowWrite(true);
+  };
   return (
     <View style={[styles.totalWrap]}>
       <FlatList
@@ -48,7 +54,7 @@ export const MyInquiryList = () => {
         )}
         ItemSeparatorComponent={() => <View style={{backgroundColor: '#E8E8E8', height: 1}} />}
       />
-      <MyInquiryMakeButton />
+      <MyInquiryMakeButton goWrite={goWrite} />
     </View>
   );
 };

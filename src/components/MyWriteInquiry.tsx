@@ -17,9 +17,7 @@ export const MyWriteInquiry = () => {
           <TextInput
             style={[styles.nameInput, focusedTitle ? styles.focusBorder : styles.unfocusBorder]}
             onChangeText={(text) => {
-                setTitle(text);
-                //   onChange(text);
-                //   setRegisterData({...registerData, name: text});
+              setTitle(text);
             }}
             value={title}
             placeholder="문의 제목 입력"
@@ -41,8 +39,8 @@ export const MyWriteInquiry = () => {
             placeholder="문의 내용 작성"
             multiline={true}
             selectionColor={'#6C69FF'}
-            onBlur={() => setFocusedTitle(false)}
-            onFocus={() => setFocusedTitle(true)}
+            onBlur={() => setFocusedBody(false)}
+            onFocus={() => setFocusedBody(true)}
           />
         </View>
       </View>
@@ -117,7 +115,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   //
-  buttonWrap: {justifyContent: 'center', alignItems: 'center', margin: 20},
+  buttonWrap: {justifyContent: 'center', alignItems: 'center', marginBottom: 20},
   buttonStyle: {
     width: '100%',
     height: 56,
