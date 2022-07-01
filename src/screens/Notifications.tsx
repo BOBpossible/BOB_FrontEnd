@@ -2,10 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, FlatList, TouchableOpacity} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HomeStackParamList} from '../nav/HomeNavigator';
-import {MyHeader} from '../components/MyHeader';
-import {useRecoilState} from 'recoil';
-import {userToken} from '../state';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {MyHeader} from '../components/My/MyHeader';
 import {NotificationCard} from '../components/NotificationCard';
 
 const dummyMission = [

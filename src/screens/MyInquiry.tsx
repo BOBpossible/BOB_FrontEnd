@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
-import {MyHeader} from '../components/MyHeader';
+import {MyHeader} from '../components/My/MyHeader';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {MyWriteInquiry} from '../components/MyWriteInquiry';
-import {MyInquiryList} from '../components/MyInquiryList';
+import {MyWriteInquiry} from '../components/My/MyWriteInquiry';
+import {MyInquiryList} from '../components/My/MyInquiryList';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyInquiry'>;
 

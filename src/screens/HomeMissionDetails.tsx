@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HomeStackParamList} from '../nav/HomeNavigator';
-import {MyHeader} from '../components/MyHeader';
+import {MyHeader} from '../components/My/MyHeader';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'HomeMissionDetails'>;
 

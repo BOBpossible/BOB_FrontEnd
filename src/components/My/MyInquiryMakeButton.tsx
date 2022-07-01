@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Animated} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type goWriteProps = {

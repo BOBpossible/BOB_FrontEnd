@@ -1,7 +1,6 @@
 import React from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import moment from 'moment';
 
 export type MyInquiryDetailsProps = {
   title: string;
@@ -10,7 +9,6 @@ export type MyInquiryDetailsProps = {
   status: string;
   inquiryId: number;
 };
-// date: '2022-12-03T16:01:34.864Z',
 
 //prettier-ignore
 export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, body, date, status, inquiryId}) => {

@@ -26,7 +26,7 @@ export const MyWriteInquiry = () => {
             onFocus={() => setFocusedTitle(true)}
           />
           <TouchableOpacity onPress={() => setTitle('')} style={[styles.titleXView]}>
-            <Image source={require('../assets/images/closeCircle.png')} style={[styles.titleX]} />
+            <Image source={require('../../assets/images/closeCircle.png')} style={[styles.titleX]} />
           </TouchableOpacity>
         </View>
         <View style={[styles.bodyWrap]}>

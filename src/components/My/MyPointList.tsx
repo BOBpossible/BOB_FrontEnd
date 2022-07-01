@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 
 //prettier-ignore

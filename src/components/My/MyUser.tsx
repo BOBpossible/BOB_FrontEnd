@@ -26,7 +26,7 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) =
         <View style={[styles.profileWrap]}>
           <Image
             style={[styles.profileImg]}
-            source={require('../assets/images/bobProfile.png')} //
+            source={require('../../assets/images/bobProfile.png')} //
           />
         </View>
         <View style={[styles.userWrap]}>
@@ -41,7 +41,7 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) =
             <Text style={{color: '#6C69FF', fontSize: 12}}>회원정보 수정</Text>
             <Image
               style={[styles.MyNextImg]}
-              source={require('../assets/images/arrowGrey8.png')} //
+              source={require('../../assets/images/arrowGrey8.png')} //
             />
           </View>
         </TouchableOpacity>
@@ -53,7 +53,7 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) =
         </View>
         <Image
             style={[styles.MyNextImg]}
-            source={require('../assets/images/arrowGrey10.png')} //
+            source={require('../../assets/images/arrowGrey10.png')} //
           />
       </TouchableOpacity>
     </View>

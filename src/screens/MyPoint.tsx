@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, FlatList} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
-import {MyHeader} from '../components/MyHeader';
-import {MyPointList} from '../components/MyPointList';
+import {MyHeader} from '../components/My/MyHeader';
+import {MyPointList} from '../components/My/MyPointList';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyPoint'>;
 const dummyMission = [
@@ -53,12 +53,14 @@ export const MyPoint = ({navigation, route}: Props) => {
         <View style={[styles.marginLR, styles.myPointWrap]}>
           <View style={[styles.myPointView]}>
             <Text style={{color: '#616161', fontFamily: 'Pretendard-Light'}}>내 포인트</Text>
-            <Text style={{color: '#111111', fontFamily: 'bold', fontSize: 24}}>
-              {userpoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            <Text style={{color: '#111111', fontWeight: 'bold', fontSize: 24}}>
+              {userpoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
             </Text>
           </View>
           <TouchableOpacity style={[styles.changePointView]}>
-            <Text style={{color: '#FFFFFF', fontFamily: 'Pretendard-Medium', fontSize: 12}}>포인트 전환 신청</Text>
+            <Text style={{color: '#FFFFFF', fontFamily: 'Pretendard-Medium', fontSize: 12}}>
+              포인트 전환 신청
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -76,7 +78,7 @@ export const MyPoint = ({navigation, route}: Props) => {
             contentContainerStyle={{paddingBottom: 60}}
             scrollEventThrottle={10}
             data={dummyMission}
-            renderItem={({item}) => (
+            renderItem={() => (
               <>
                 <MyPointList />
               </>
