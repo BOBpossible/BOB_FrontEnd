@@ -24,7 +24,8 @@ export const MyPointList = () => {
         <View style={[styles.listDetailsWrap]}>
             <View style={[styles.listMissionWrap]}>
                 <Text style={[styles.storeNameText, styles.title33B16]}>{title}</Text>
-                <Text style={[styles.missionText]}>{subTitle}</Text>
+                <Text style={[styles.missionText], {fontFamily: 'Pretendard-Light'}}>{subTitle}</Text>
+                {/* <Text style={[styles.missionText], {point > 0 ? fontFamily: 'Pretendard-Light' : fontFamily: 'Pretendard-Light' }}>{subTitle}</Text> */}
             </View>
             <View style={[styles.listPointWrap]}>
                 {point > 0 ?
