@@ -3,7 +3,6 @@ import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
 import {MyHeader} from '../components/MyHeader';
-import { RegisterName } from '../components';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyEditUserInfo'>;
 

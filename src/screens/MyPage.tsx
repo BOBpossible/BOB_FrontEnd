@@ -21,10 +21,10 @@ const MyPage = () => {
   console.log(AsyncStorage.getItem('userToken'));
 
   // 서버연결 후 수정
-  const username = '밥풀이';
-  const userEmail = 'bobPlace@bob.com';
-  const usrPoint = 2500;
-  const [authStatus, setAuthStatus] = useState<string>('unidentified'); //인증된 - "identified", 미인증- "unidentified"
+  const name = '밥풀이';
+  const email = 'bobPlace@bob.com';
+  const point = 2500;
+  const [authentication, setAuthentication] = useState<boolean>(false);
   //
 
   return (
@@ -34,7 +34,7 @@ const MyPage = () => {
           <Text style={[styles.headerText]}>마이페이지</Text>
         </View>
       </View>
-      <MyUser username={username} userEmail={userEmail} point={usrPoint} status={authStatus} />
+      <MyUser authentication={authentication} email={email} name={name} point={point} />
       <TouchableOpacity onPress={() => navigation.navigate('MyReview')}>
         <View style={[styles.userWrap]}>
           <Text style={[styles.userMenu]}>리뷰 관리</Text>

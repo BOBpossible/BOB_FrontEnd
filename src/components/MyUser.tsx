@@ -1,25 +1,23 @@
 import React, {useState, useEffect} from 'react';
 import type {FC} from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import {Colors} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 
 export type MyUserProps = {
-  userprofile?: any; //?????????
-  username: string;
-  userid?: number; //email로 바꼈나?
-  userEmail: string;
+  authentication: boolean;
+  email: string;
+  name: string;
   point: number;
-  status: string; //"identified","unidentified"
 };
 
 //prettier-ignore
-export const MyUser: FC<MyUserProps> = ({username, userEmail, point, status }) => {
+export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) => {
   const [statusMessage, setMessage] = useState("");
   useEffect(()=>{
-    if (status === 'unidentified') {setMessage('미인증')}
-    else if (status === 'unidentified') {setMessage('')}
-  }, [status]);
+    if (!authentication) {setMessage('미인증')}
+    else {setMessage('')}
+  }, [authentication]);
   const navigation = useNavigation();
 
   return (
@@ -33,12 +31,12 @@ export const MyUser: FC<MyUserProps> = ({username, userEmail, point, status }) =
         </View>
         <View style={[styles.userWrap]}>
           <View style={[styles.username]}>
-            <Text style={[styles.usernameText]}>{username}</Text>
+            <Text style={[styles.usernameText]}>{name}님</Text>
             <Text style={[styles.userauthText]}>{statusMessage}</Text>
           </View>
-          <Text style={[styles.userEmail]}>{userEmail}</Text>
+          <Text style={[styles.userEmail]}>{email}</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo', {username: username})}>
+        <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo', {username: name})}>
           <View style={[styles.editUserInfo]}>
             <Text style={{color: '#6C69FF', fontSize: 12}}>회원정보 수정</Text>
             <Image
@@ -48,7 +46,7 @@ export const MyUser: FC<MyUserProps> = ({username, userEmail, point, status }) =
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('MyPoint')} style={[styles.userPoint]}>
+      <TouchableOpacity onPress={() => navigation.navigate('MyPoint', {point: point})} style={[styles.userPoint]}>
         <View style={{flexDirection: 'row'}}>
           <Text style={{marginLeft: 20, color: '#616161', fontSize: 14}}>내 포인트</Text>
           <Text style={{marginLeft: 16, color: '#111111', fontSize: 14}}>{point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>

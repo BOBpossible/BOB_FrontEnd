@@ -11,7 +11,7 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 export type MyStackParamList = {
   MyPage: undefined;
   MyEditUserInfo: {username: string};
-  MyPoint: undefined;
+  MyPoint: {point: number};
   MyReview: undefined;
   MyNotificationsSetting: undefined;
   MyInquiry: undefined;
