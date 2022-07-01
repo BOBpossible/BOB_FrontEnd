@@ -78,14 +78,7 @@ export const MyPoint = ({navigation, route}: Props) => {
             data={dummyMission}
             renderItem={({item}) => (
               <>
-                <MyPointList
-                  date={item.date}
-                  storeId={item.storeId}
-                  storeName={item.storeName}
-                  mission={item.mission}
-                  status={item.status}
-                  point={item.point}
-                />
+                <MyPointList />
               </>
             )}
             ItemSeparatorComponent={() => <View style={{marginTop: 32}} />}
