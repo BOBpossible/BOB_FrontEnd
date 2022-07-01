@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
-import {MyHeader} from '../components/MyHeader';
+import {MyHeader} from '../components/My/MyHeader';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyReview'>;
 

@@ -1,12 +1,10 @@
 import React, {useState, useCallback} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {Colors} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {MyUser} from '../components/MyUser';
+import {MyUser} from '../components/My/MyUser';
 import {useNavigation} from '@react-navigation/native';
 
 const MyPage = () => {
-  const [status, setStatus] = useState<string>('unidentified'); //인증된 - "identified", 미인증- "unidentified"
   const navigation = useNavigation();
 
   const storeData = async (value: string) => {
@@ -21,6 +19,13 @@ const MyPage = () => {
   };
   console.log(AsyncStorage.getItem('userToken'));
 
+  // 서버연결 후 수정
+  const name = '밥풀이';
+  const email = 'bobPlace@bob.com';
+  const point = 2500;
+  const [authentication, setAuthentication] = useState<boolean>(false);
+  //
+
   return (
     <View style={[styles.flex]}>
       <View style={[styles.headerWrap]}>
@@ -28,24 +33,24 @@ const MyPage = () => {
           <Text style={[styles.headerText]}>마이페이지</Text>
         </View>
       </View>
-      <MyUser username={'춘식이'} userEmail={'baegopa@bob.com'} point={2500} status={status} />
+      <MyUser authentication={authentication} email={email} name={name} point={point} />
       <TouchableOpacity onPress={() => navigation.navigate('MyReview')}>
-        <View style={[styles.userWrap]}>
-          <Text style={[styles.userMenu]}>작성한 리뷰</Text>
+        <View style={[styles.userWrap]} >
+          <Text style={[styles.userMenu]}>리뷰 관리</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('MyNotifications')}>
-        <View style={[styles.userWrap]}>
+      <TouchableOpacity onPress={() => navigation.navigate('MyNotificationsSetting')}>
+        <View style={[styles.userWrap]} >
           <Text style={[styles.userMenu]}>알림 설정</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('MyInquiry')}>
-        <View style={[styles.userWrap]}>
+        <View style={[styles.userWrap]} >
           <Text style={[styles.userMenu]}>1:1 문의</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={logout}>
-        <View style={[styles.userWrap]}>
+        <View style={[styles.userWrap]} >
           <Text style={[styles.userMenu]}>로그아웃</Text>
         </View>
       </TouchableOpacity>

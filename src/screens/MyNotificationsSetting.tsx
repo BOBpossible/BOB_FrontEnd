@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, Switch} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
-import {MyHeader} from '../components/MyHeader';
-// import {MyNotificationsSwitch} from '../components/MyNotificationsSwitch';
+import {MyHeader} from '../components/My/MyHeader';
+// import {MyNotificationsSwitch} from '../components/My/MyNotificationsSwitch';
 
-type Props = NativeStackScreenProps<MyStackParamList, 'MyNotifications'>;
+type Props = NativeStackScreenProps<MyStackParamList, 'MyNotificationsSetting'>;
 
-export const MyNotifications = ({navigation}: Props) => {
+export const MyNotificationsSetting = ({navigation}: Props) => {
   const goBack = () => {
     navigation.goBack();
   };
