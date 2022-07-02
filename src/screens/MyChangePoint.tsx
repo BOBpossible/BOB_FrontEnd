@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, FlatList} from 'react-native';
+//prettier-ignore
+import {View, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
 import {MyHeader} from '../components/My/MyHeader';
@@ -7,40 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MyBankModal from '../modal/MyBankModal';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyChangePoint'>;
-const dummyMission = [
-  {
-    date: '6.24',
-    storeId: 1,
-    storeName: '마라마라마라탕',
-    mission: '20000원 이상',
-    status: 1,
-    point: 200,
-  },
-  {
-    date: '6.9',
-    storeId: 13,
-    storeName: '어쩌고 맛집',
-    mission: '15000원 이상',
-    status: 1,
-    point: 3000,
-  },
-  {
-    date: '6.4',
-    storeId: 144,
-    storeName: '저쩌고 댕맛집',
-    mission: '17000원 이상',
-    status: 0,
-    point: 400,
-  },
-  {
-    date: '6.15',
-    storeId: 1433,
-    storeName: '와라라라 맛집',
-    mission: '18000원 이상',
-    status: 0,
-    point: 500,
-  },
-];
+
 export const MyChangePoint = ({navigation, route}: Props) => {
   const [point, setPoint] = useState<number>(route.params.point);
   const [focusedPoint, setFocusedPoint] = useState(false);
@@ -92,7 +60,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
         <View style={[styles.titleNinput]}>
           <Text style={[styles.title4Md, {marginBottom: 8}]}>예금주</Text>
           <TextInput
-            style={[styles.inputText, focusedPoint ? styles.focusBorder : styles.unfocusBorder]}
+            style={[styles.inputText, focusedName ? styles.focusBorder : styles.unfocusBorder]}
             onChangeText={(text) => {
               setInputName(text);
             }}
@@ -121,7 +89,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
         <View style={[styles.titleNinput]}>
           <Text style={[styles.title4Md, {marginBottom: 8}]}>계좌 번호</Text>
           <TextInput
-            style={[styles.inputText, focusedPoint ? styles.focusBorder : styles.unfocusBorder]}
+            style={[styles.inputText, focusedAccounts ? styles.focusBorder : styles.unfocusBorder]}
             onChangeText={(text) => {
               setInputAccounts(text);
             }}
