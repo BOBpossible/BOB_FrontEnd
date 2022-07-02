@@ -71,7 +71,7 @@ const Map = () => {
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
       >
         <BottomSheetView style={[styles.missionListTextWrap]}>
-          <Text style={[styles.missionListText]}>미션 목록</Text>
+          <Text style={[styles.missionListText]}>이번주 미션</Text>
         </BottomSheetView>
         <BottomSheetFlatList
           showsVerticalScrollIndicator={false}

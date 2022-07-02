@@ -3,7 +3,8 @@ import {View, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, FlatL
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
 import {MyHeader} from '../components/My/MyHeader';
-import {MyPointList} from '../components/My/MyPointList';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MyBankModal from '../modal/MyBankModal';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyChangePoint'>;
 const dummyMission = [
@@ -52,6 +53,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
   const goBack = () => {
     navigation.goBack();
   };
+  const [openBankModal, setOpenBankModal] = useState(false);
   return (
     <SafeAreaView style={[styles.flex, {backgroundColor: 'white'}]}>
       <MyHeader goBack={goBack} title={'포인트 전환 신청'} />
@@ -102,7 +104,19 @@ export const MyChangePoint = ({navigation, route}: Props) => {
         </View>
         <View style={[styles.titleNinput]}>
           <Text style={[styles.title4Md, {marginBottom: 8}]}>은행</Text>
-          {/* 입력창 */}
+          <TouchableOpacity
+            onPress={() => setOpenBankModal(true)}
+            style={[
+              styles.inputText,
+              styles.unfocusBorder,
+              {flexDirection: 'row', justifyContent: 'space-between'},
+            ]}
+          >
+            <Text style={{color: '#949494', fontFamily: 'Pretendard-Light', fontSize: 16}}>
+              은행 선택
+            </Text>
+            <Icon name="menu-down" size={24} color="black" />
+          </TouchableOpacity>
         </View>
         <View style={[styles.titleNinput]}>
           <Text style={[styles.title4Md, {marginBottom: 8}]}>계좌 번호</Text>
@@ -118,6 +132,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
           />
         </View>
       </View>
+      <MyBankModal visible={openBankModal} closeBankModal={() => setOpenBankModal(false)} />
     </SafeAreaView>
   );
 };
