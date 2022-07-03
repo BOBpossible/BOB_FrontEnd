@@ -56,25 +56,23 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
         ? (photo = {
             uri: image.uri.replace('file://', ''),
             type: 'image/jpg',
-            name: image.name,
+            name: 'image',
           })
         : (photo = {
             uri: image.uri,
             type: 'image/jpeg',
-            name: image.name,
+            name: 'image',
           });
       formdata.append('reviewImage', photo);
+      console.log(photo);
     });
-    console.log(formdata);
     try {
-      const response = await axios.post(
-        `https://bobpossible.shop/api/v1/reviews/me/images/${reviewResponse}`,
-        formdata,
-        {
-          headers: headers,
-        },
-      );
-      console.log('image register:', response.data);
+      const response = await fetch('https://bobpossible.shop/api/v1/reviews/me/images/1', {
+        method: 'POST',
+        headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data'},
+        body: formdata,
+      });
+      console.log('image register:', response);
     } catch (error) {
       console.log('image register:', error);
     }
