@@ -63,3 +63,8 @@ buck-out/
 
 # 인증 키 등
 .env
+
+
+
+# 디자인시스템
+zDesign.txt
