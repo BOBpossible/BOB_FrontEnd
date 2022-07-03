@@ -7,6 +7,7 @@ import {MyInquiry} from '../screens/MyInquiry';
 import {MyEditUserInfo} from '../screens/MyEditUserInfo';
 import {MyPoint} from '../screens/MyPoint';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import {MyChangePoint} from '../screens/MyChangePoint';
 
 export type MyStackParamList = {
   MyPage: undefined;
@@ -15,6 +16,7 @@ export type MyStackParamList = {
   MyReview: undefined;
   MyNotificationsSetting: undefined;
   MyInquiry: undefined;
+  MyChangePoint: undefined;
 };
 
 const Stack = createStackNavigator<MyStackParamList>();
@@ -27,7 +29,8 @@ export const MyNavigator = ({navigation, route}) => {
       routeName === 'MyPoint' ||
       routeName === 'MyReview' ||
       routeName === 'MyNotificationsSetting' ||
-      routeName === 'MyInquiry'
+      routeName === 'MyInquiry' ||
+      routeName === 'MyChangePoint'
     ) {
       navigation.setOptions({tabBarStyle: {display: 'none'}});
     } else {
@@ -45,6 +48,7 @@ export const MyNavigator = ({navigation, route}) => {
       <Stack.Screen name="MyReview" component={MyReview} />
       <Stack.Screen name="MyNotificationsSetting" component={MyNotificationsSetting} />
       <Stack.Screen name="MyInquiry" component={MyInquiry} />
+      <Stack.Screen name="MyChangePoint" component={MyChangePoint} />
     </Stack.Navigator>
   );
 };

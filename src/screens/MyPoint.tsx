@@ -41,7 +41,7 @@ const dummyMission = [
   },
 ];
 export const MyPoint = ({navigation, route}: Props) => {
-  const [userpoint, setUserpoint] = useState<number>(route.params.point);
+  const [point, setPoint] = useState<number>(route.params.point);
 
   const goBack = () => {
     navigation.goBack();
@@ -54,11 +54,14 @@ export const MyPoint = ({navigation, route}: Props) => {
           <View style={[styles.myPointView]}>
             <Text style={{color: '#616161', fontFamily: 'Pretendard-Light'}}>내 포인트</Text>
             <Text style={{color: '#111111', fontWeight: 'bold', fontSize: 24}}>
-              {userpoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
+              {point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
             </Text>
           </View>
           <TouchableOpacity style={[styles.changePointView]}>
-            <Text style={{color: '#FFFFFF', fontFamily: 'Pretendard-Medium', fontSize: 12}}>
+            <Text
+              style={{color: '#FFFFFF', fontFamily: 'Pretendard-Medium', fontSize: 12}}
+              onPress={() => navigation.navigate('MyChangePoint', {point: point})}
+            >
               포인트 전환 신청
             </Text>
           </TouchableOpacity>

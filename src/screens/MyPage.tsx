@@ -35,22 +35,22 @@ const MyPage = () => {
       </View>
       <MyUser authentication={authentication} email={email} name={name} point={point} />
       <TouchableOpacity onPress={() => navigation.navigate('MyReview')}>
-        <View style={[styles.userWrap]} >
+        <View style={[styles.userWrap]}>
           <Text style={[styles.userMenu]}>리뷰 관리</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('MyNotificationsSetting')}>
-        <View style={[styles.userWrap]} >
+        <View style={[styles.userWrap]}>
           <Text style={[styles.userMenu]}>알림 설정</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('MyInquiry')}>
-        <View style={[styles.userWrap]} >
+        <View style={[styles.userWrap]}>
           <Text style={[styles.userMenu]}>1:1 문의</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={logout}>
-        <View style={[styles.userWrap]} >
+        <View style={[styles.userWrap]}>
           <Text style={[styles.userMenu]}>로그아웃</Text>
         </View>
       </TouchableOpacity>
