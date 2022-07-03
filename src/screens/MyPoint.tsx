@@ -4,6 +4,7 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
 import {MyHeader} from '../components/My/MyHeader';
 import {MyPointList} from '../components/My/MyPointList';
+import {DesignSystem} from '../assets/DesignSystem';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyPoint'>;
 const dummyMission = [
@@ -47,13 +48,13 @@ export const MyPoint = ({navigation, route}: Props) => {
     navigation.goBack();
   };
   return (
-    <SafeAreaView style={[styles.flex]}>
+    <SafeAreaView style={[styles.flex, {backgroundColor: 'white'}]}>
       <MyHeader goBack={goBack} title={'내 포인트'} />
       <View style={{backgroundColor: '#FFFFFF'}}>
         <View style={[styles.marginLR, styles.myPointWrap]}>
           <View style={[styles.myPointView]}>
-            <Text style={{color: '#616161', fontFamily: 'Pretendard-Light'}}>내 포인트</Text>
-            <Text style={{color: '#111111', fontWeight: 'bold', fontSize: 24}}>
+            <Text style={[DesignSystem.body1Lt, {color: '#616161'}]}>내 포인트</Text>
+            <Text style={{color: '#111111', fontWeight: 'bold', fontFamily: 'Pretendard-SemiBold', fontSize: 24}}>
               {point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
             </Text>
           </View>
@@ -69,26 +70,20 @@ export const MyPoint = ({navigation, route}: Props) => {
       </View>
       {/* 포인트내역 */}
       <View style={[styles.pointListWrap]}>
-        <View style={[styles.marginLR]}>
-          <Text
-            style={{marginTop: 16, color: '#111111', fontFamily: 'Pretendard-Medium', fontSize: 19}}
-          >
-            포인트 내역
-          </Text>
-          <FlatList
-            style={{marginTop: 12}}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{paddingBottom: 60}}
-            scrollEventThrottle={10}
-            data={dummyMission}
-            renderItem={() => (
-              <>
-                <MyPointList />
-              </>
-            )}
-            ItemSeparatorComponent={() => <View style={{marginTop: 32}} />}
-          />
-        </View>
+        <Text style={[DesignSystem.subtitle2, {marginTop: 16, color: '#111111'}]}>포인트 내역</Text>
+        <FlatList
+          style={{marginTop: 12}}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{paddingBottom: 60}}
+          scrollEventThrottle={10}
+          data={dummyMission}
+          renderItem={() => (
+            <>
+              <MyPointList />
+            </>
+          )}
+          ItemSeparatorComponent={() => <View style={{marginTop: 32}} />}
+        />
       </View>
     </SafeAreaView>
   );
@@ -119,6 +114,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pointListWrap: {
+    marginLeft: 16,
+    marginRight: 16,
     backgroundColor: 'white',
     flex: 1,
   },

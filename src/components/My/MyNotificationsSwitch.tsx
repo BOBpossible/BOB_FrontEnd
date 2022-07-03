@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import type {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, Switch, View, Image} from 'react-native';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 export type MyNotificationsSwitchProps = {
   text: string;
@@ -11,7 +12,7 @@ export type MyNotificationsSwitchProps = {
 export const MyNotificationsSwitch: FC<MyNotificationsSwitchProps> = ({text, value, onValueChange}) => {
   return (
     <View>
-      <Text style={{marginLeft: 21.87, color: '#000000', fontSize: 16}}>{text}</Text>
+      <Text style={[DesignSystem.body1Lt, {marginLeft: 21.88, color: '#000000'}]}>{text}</Text>
       <Switch
         value={value}
         trackColor={{false: '#DFDFDF', true: '#6C69FF'}}
