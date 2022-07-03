@@ -3,8 +3,8 @@ import {StyleSheet} from 'react-native';
 
 export const DesignSystem = StyleSheet.create({
   centerArrange: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'center', //가로축정렬
+    justifyContent: 'center', //세로축정렬
   },
   h1SB: {
     fontSize: 24,
