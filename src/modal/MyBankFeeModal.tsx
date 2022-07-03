@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import type {FC} from 'react';
 import {
   Modal,
@@ -8,10 +8,8 @@ import {
   View,
   TouchableWithoutFeedback,
   Dimensions,
-  Image,
-  FlatList,
 } from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
 
 type MyBankFeeModalProps = {
   visible: boolean;
@@ -20,6 +18,7 @@ type MyBankFeeModalProps = {
 
 const MyBankModal: FC<MyBankFeeModalProps> = ({visible, closeBankFeeModal}) => {
   const MARGINBOTTOM = Dimensions.get('screen').height / 2 - 80;
+  const navigation = useNavigation();
 
   return (
     <Modal visible={visible} transparent statusBarTranslucent animationType="fade">
@@ -37,7 +36,7 @@ const MyBankModal: FC<MyBankFeeModalProps> = ({visible, closeBankFeeModal}) => {
               <TouchableOpacity style={[styles.buttonStyle, styles.cancelButton]} onPress={closeBankFeeModal}>
                 <Text style={{color: '#616161', fontFamily: 'Pretendard-Regular', fontSize: 16}}>취소</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.buttonStyle, styles.okButton]}>
+              <TouchableOpacity style={[styles.buttonStyle, styles.okButton]} onPress={() => navigation.navigate('MyChangePointDone')}>
                 <Text style={[styles.body1Lt, {color: '#FFFFFF', fontFamily: 'Pretendard-Medium', fontSize: 16}]}>확인</Text>
               </TouchableOpacity>
             </View>

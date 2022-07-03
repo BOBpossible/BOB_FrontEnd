@@ -54,10 +54,12 @@ const MyBankModal: FC<MyBankModalProps> = ({visible, closeBankModal, selectedBan
               <TouchableOpacity key={index} onPress={() => setSelectedBank(item['name'])}>
                 {/* //closeBankModal도해야하는데... */}
                 <View
-                  style={[styles.banksWrap, selectedBank === item['name'] && styles.selectedBanksWrap]}
+                  style={[styles.banksWrap, selectedBank === item.name && styles.selectedBanksWrap]}
                 >
                   <Image source={item['imgSrc']} style={{marginBottom: 4}} />
-                  <Text style={{color: '#383838', fontFamily: 'Pretendard-Medium', fontSize: 14}}>{item['name']}</Text>
+                  <Text style={{color: '#383838', fontFamily: 'Pretendard-Medium', fontSize: 14}}>
+                    {item.name}
+                  </Text>
                 </View>
               </TouchableOpacity>
             )}
