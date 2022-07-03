@@ -2,6 +2,7 @@ import React from 'react';
 import type {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 export type MyHeaderProps = {
   goBack: () => void;
@@ -18,7 +19,7 @@ export const MyHeader: FC<MyHeaderProps> = ({goBack, title, save}) => {
         </View>
       </TouchableOpacity>
       <View>
-        <Text style={[styles.headerText]}>{title}</Text>
+        <Text style={[DesignSystem.title4Md, {color: 'black'}]}>{title}</Text>
       </View>
       {save !== undefined ? (
         <TouchableOpacity onPress={save}>
@@ -48,13 +49,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 16,
-  },
-  headerText: {
-    fontSize: 17,
-    color: 'black',
-    marginLeft: 16,
-    marginRight: 16,
-    // fontWeight: '600',
   },
   saveButton: {
     marginRight: 16,

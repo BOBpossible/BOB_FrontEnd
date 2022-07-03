@@ -3,6 +3,8 @@ import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import {Colors} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
+import {DesignSystem} from '../../assets/DesignSystem';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type MyUserProps = {
   authentication: boolean;
@@ -13,7 +15,7 @@ export type MyUserProps = {
 
 //prettier-ignore
 export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) => {
-  const [statusMessage, setMessage] = useState("");
+  const [statusMessage, setMessage] = useState('');
   useEffect(()=>{
     if (!authentication) {setMessage('미인증')}
     else {setMessage('')}
@@ -22,40 +24,40 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) =
 
   return (
     <View style={[styles.userInfo]}>
-      <View style={[styles.userCard]}>
-        <View style={[styles.profileWrap]}>
+      <View style={{marginLeft: 16, marginRight:16}}>
+        <View style={[styles.userCard]}>
           <Image
             style={[styles.profileImg]}
             source={require('../../assets/images/bobProfile.png')} //
           />
-        </View>
-        <View style={[styles.userWrap]}>
-          <View style={[styles.username]}>
-            <Text style={[styles.usernameText]}>{name}님</Text>
-            <Text style={[styles.userauthText]}>{statusMessage}</Text>
+          <View style={[styles.userWrap]}>
+            <View style={[styles.username]}>
+              <Text style={[DesignSystem.title3SB, styles.usernameText]}>{name}님</Text>
+              <Text style={[DesignSystem.caption1Lt, styles.userauthText]}>{statusMessage}</Text>
+            </View>
+            <Text style={[DesignSystem.caption1Lt, styles.userEmail]}>{email}</Text>
           </View>
-          <Text style={[styles.userEmail]}>{email}</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo', {username: name})}>
+            <View style={[styles.editUserInfo]}>
+              <Text style={[DesignSystem.caption1Lt, {color: '#6C69FF'}]}>회원정보 수정</Text>
+              <Image
+                style={{width: 24}}
+                source={require('../../assets/images/arrowGrey8.png')} //
+              />
+            </View>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo', {username: name})}>
-          <View style={[styles.editUserInfo]}>
-            <Text style={{color: '#6C69FF', fontSize: 12}}>회원정보 수정</Text>
-            <Image
+        <TouchableOpacity onPress={() => navigation.navigate('MyPoint', {point: point})} style={[styles.userPointWrap]}>
+          <View style={[DesignSystem.centerArrange, {flexDirection: 'row' }]}>
+            <Text style={[DesignSystem.body2Lt, {marginLeft: 20, marginRight: 16}]}>내 포인트</Text>
+            <Text style={[DesignSystem.title4Md, {color: '#111111'}]}>{point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
+          </View>
+          <Image
               style={[styles.MyNextImg]}
-              source={require('../../assets/images/arrowGrey8.png')} //
+              source={require('../../assets/images/arrowGrey10.png')} //
             />
-          </View>
         </TouchableOpacity>
-      </View>
-      <TouchableOpacity onPress={() => navigation.navigate('MyPoint', {point: point})} style={[styles.userPoint]}>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{marginLeft: 20, color: '#616161', fontSize: 14}}>내 포인트</Text>
-          <Text style={{marginLeft: 16, color: '#111111', fontSize: 14}}>{point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
         </View>
-        <Image
-            style={[styles.MyNextImg]}
-            source={require('../../assets/images/arrowGrey10.png')} //
-          />
-      </TouchableOpacity>
     </View>
   );
 };
@@ -73,15 +75,11 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 18,
   },
-  profileWrap: {
-    marginLeft: 16,
-    marginRight: 16,
-  },
   profileImg: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    // marginBottom: 8,
+    marginRight: 16,
   },
   userWrap: {
     flex: 1,
@@ -95,16 +93,12 @@ const styles = StyleSheet.create({
   },
   usernameText: {
     color: '#111111',
-    fontSize: 16,
     marginRight: 8,
-    fontWeight: 'bold',
   },
   userauthText: {
-    fontSize: 12,
     color: '#E03D32',
   },
   userEmail: {
-    fontSize: 12,
     color: '#616161',
   },
   statusWrap: {
@@ -117,13 +111,10 @@ const styles = StyleSheet.create({
   },
   editUserInfo: {
     flexDirection: 'row',
-    marginRight: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  userPoint: {
-    marginLeft: 16,
-    marginRight: 16,
+  userPointWrap: {
     backgroundColor: '#F6F6FE',
     borderRadius: 10,
     height: 48,

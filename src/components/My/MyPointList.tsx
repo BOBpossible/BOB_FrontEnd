@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import moment from 'moment';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 //prettier-ignore
 export const MyPointList = () => {
@@ -17,19 +18,19 @@ export const MyPointList = () => {
   return (
     <View style={[styles.listWrap]}>
         <View style={[styles.listDayWrap]}>
-            <Text style={[styles.dateText, styles.title33B16]}>{month}.{day}</Text>
+            <Text style={[styles.dateText, DesignSystem.title3SB]}>{month}.{day}</Text>
         </View>
         <View style={[styles.listDetailsWrap]}>
             <View style={[styles.listMissionWrap]}>
-                <Text style={[styles.storeNameText, styles.title33B16]}>{title}</Text>
+                <Text style={[styles.storeNameText, DesignSystem.title3SB]}>{title}</Text>
                 <Text style={[styles.missionText], {fontFamily: 'Pretendard-Light'}}>{subTitle}</Text>
                 {/* <Text style={[styles.missionText], {point > 0 ? fontFamily: 'Pretendard-Light' : fontFamily: 'Pretendard-Light' }}>{subTitle}</Text> */}
             </View>
             <View style={[styles.listPointWrap]}>
                 {point > 0 ?
-                <Text style={[styles.title33B16, {color: '#6C69FF'}]}>{point.toString().replace(/\B(?=(\d{3})(?!\d))/g, ',')}P</Text>
+                <Text style={[DesignSystem.title3SB, {color: '#6C69FF'}]}>{point.toString().replace(/\B(?=(\d{3})(?!\d))/g, ',')}P</Text>
                 :
-                <Text style={[styles.title33B16, {color: '#B7B7B7'}]}>{point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P</Text>
+                <Text style={[DesignSystem.title3SB, {color: '#B7B7B7'}]}>{point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P</Text>
                 }
             </View>
 
@@ -39,10 +40,6 @@ export const MyPointList = () => {
 };
 
 const styles = StyleSheet.create({
-  title33B16: {
-    fontSize: 16,
-    fontFamily: 'Pretendard-SemiBold',
-  },
   listWrap: {
     flexDirection: 'row',
   },

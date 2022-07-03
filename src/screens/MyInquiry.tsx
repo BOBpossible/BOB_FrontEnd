@@ -6,6 +6,7 @@ import {MyHeader} from '../components/My/MyHeader';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {MyWriteInquiry} from '../components/My/MyWriteInquiry';
 import {MyInquiryList} from '../components/My/MyInquiryList';
+import {DesignSystem} from '../assets/DesignSystem';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyInquiry'>;
 
@@ -22,13 +23,29 @@ export const MyInquiry = ({navigation}: Props) => {
           style={[styles.inquiryMenu, nowWrite && styles.now]}
           onPress={() => setNowWrite(true)}
         >
-          <Text style={[nowWrite && styles.fontTitle4Md]}>문의하기</Text>
+          <Text
+            style={
+              nowWrite
+                ? [DesignSystem.title3SB, {color: '#6C69FF'}]
+                : [DesignSystem.body1Lt, DesignSystem.grey8]
+            }
+          >
+            문의하기
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.inquiryMenu, !nowWrite && styles.now]}
           onPress={() => setNowWrite(false)}
         >
-          <Text style={[!nowWrite && styles.fontTitle4Md]}>나의 문의 내역</Text>
+          <Text
+            style={
+              !nowWrite
+                ? [DesignSystem.title3SB, {color: '#6C69FF'}]
+                : [DesignSystem.body1Lt, DesignSystem.grey8]
+            }
+          >
+            나의 문의 내역
+          </Text>
         </TouchableOpacity>
       </View>
       {nowWrite ? <MyWriteInquiry /> : <MyInquiryList setNowWrite={setNowWrite} />}
@@ -38,11 +55,6 @@ export const MyInquiry = ({navigation}: Props) => {
 
 const styles = StyleSheet.create({
   flex: {flex: 1},
-  fontTitle4Md: {
-    fontFamily: 'Pretendard-Medium',
-    fontSize: 16,
-    color: '#6C69FF',
-  },
   menuView: {
     flexDirection: 'row',
     justifyContent: 'space-around',

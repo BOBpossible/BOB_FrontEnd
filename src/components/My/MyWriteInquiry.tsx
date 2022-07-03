@@ -26,7 +26,10 @@ export const MyWriteInquiry = () => {
             onFocus={() => setFocusedTitle(true)}
           />
           <TouchableOpacity onPress={() => setTitle('')} style={[styles.titleXView]}>
-            <Image source={require('../../assets/images/closeCircle.png')} style={[styles.titleX]} />
+            <Image
+              source={require('../../assets/images/closeCircle.png')}
+              style={[styles.titleX]}
+            />
           </TouchableOpacity>
         </View>
         <View style={[styles.bodyWrap]}>
@@ -72,6 +75,7 @@ const styles = StyleSheet.create({
   },
   titleWrap: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   nameInput: {
     width: '100%',
@@ -93,6 +97,7 @@ const styles = StyleSheet.create({
   titleXView: {
     width: 18,
     height: 18,
+    right: 26,
   },
   titleX: {
     width: 18,
