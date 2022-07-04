@@ -13,12 +13,12 @@ export type MapStoreBottomSheetProps = {
 };
 
 const convertDistance = (distance: number) => {
-    if(distance >= 1000) {
-        return (`${distance/1000}km`)
-    } else {
-        return (`${distance}m`)
-    }
-}
+  if (distance >= 1000) {
+    return `${distance / 1000}km`;
+  } else {
+    return `${distance}m`;
+  }
+};
 
 export const MapStoreBottomSheet: FC<MapStoreBottomSheetProps> = ({
   storeName,
@@ -29,24 +29,41 @@ export const MapStoreBottomSheet: FC<MapStoreBottomSheetProps> = ({
 }) => {
   return (
     <View>
-    <FastImage source={image} style={{height: 220}} />
-    <View style={[styles.storeInfoWrap]}>
-      
-      <View style={[styles.flexRow, {justifyContent: 'space-between', marginBottom: 8}]}>
-        <View style={{backgroundColor: '#6C69FF', paddingHorizontal: 6, paddingVertical: 4, borderRadius: 10}}>
-          <Text style={[styles.storePoint]}>{point} P</Text>
+      <FastImage source={image} style={{height: 220}} />
+      <View style={[styles.storeInfoWrap]}>
+        <View style={[styles.flexRow, {justifyContent: 'space-between', marginBottom: 8}]}>
+          <View
+            style={{
+              backgroundColor: '#6C69FF',
+              paddingHorizontal: 6,
+              paddingVertical: 4,
+              borderRadius: 10,
+            }}
+          >
+            <Text style={[styles.storePoint]}>{point} P</Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              position: 'absolute',
+              top: 3,
+              right: 3,
+            }}
+          >
+            <Text style={[styles.storeInfo]}>가게정보</Text>
+            <Icon name="chevron-right" size={22} />
+          </View>
         </View>
-        <Text style={[styles.storeInfo]}>가게정보 ></Text>
-   
+        <View style={[styles.flexRow, {marginBottom: 4}]}>
+          <Text style={[styles.storeName]}>{storeName}</Text>
+          <Text style={[styles.storeDistance]}>{convertDistance(distance)}</Text>
+        </View>
+        <View style={[styles.flexRow]}>
+          <Text style={[styles.storeCategory]}>{storeCategory}</Text>
+        </View>
       </View>
-      <View style={[styles.flexRow, {marginBottom: 4}]}>
-        <Text style={[styles.storeName]}>{storeName}</Text>
-        <Text style={[styles.storeDistance]}>{convertDistance(distance)}</Text>
-      </View>
-      <View style={[styles.flexRow]}>
-        <Text style={[styles.storeCategory]}>{storeCategory}</Text>
-      </View>
-    </View>
     </View>
   );
 };
@@ -84,6 +101,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard-SemiBold',
     fontSize: 12,
     color: '#FFFFFF',
+  },
+  storeInfo: {
+    fontFamily: 'Pretendard-Light',
+    fontSize: 14,
+    lineHeight: 22,
+    color: '#616161',
   },
   storeDistance: {
     marginLeft: 8,
