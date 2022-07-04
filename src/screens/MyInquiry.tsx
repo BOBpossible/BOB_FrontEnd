@@ -26,7 +26,7 @@ export const MyInquiry = ({navigation}: Props) => {
           <Text
             style={
               nowWrite
-                ? [DesignSystem.title3SB, {color: '#6C69FF'}]
+                ? [DesignSystem.title3SB, DesignSystem.grey17]
                 : [DesignSystem.body1Lt, DesignSystem.grey8]
             }
           >
@@ -40,7 +40,7 @@ export const MyInquiry = ({navigation}: Props) => {
           <Text
             style={
               !nowWrite
-                ? [DesignSystem.title3SB, {color: '#6C69FF'}]
+                ? [DesignSystem.title3SB, DesignSystem.grey17]
                 : [DesignSystem.body1Lt, DesignSystem.grey8]
             }
           >

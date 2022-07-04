@@ -20,7 +20,7 @@ export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, body, date, 
     <View style={{flex: 1}}>
         <TouchableOpacity onPress={handleReviewPress} style={[styles.listDetailsWrap]}>
             <View style={[styles.listLeftWrap]}>
-                <Text style={[styles.titleText, DesignSystem.title4Md]}>{title}</Text>
+                <Text style={[styles.titleText, DesignSystem.title4Md]}>{title.length < 24 ? title : title.slice(0,24)}{title.length < 24 ? null : '...'}</Text>
                 <Text style={[DesignSystem.body2Lt, {color: '#949494'}]}>{date.slice(0,4)}-{date.slice(5,7)}-{date.slice(8,10)}</Text>
             </View>
             <View>

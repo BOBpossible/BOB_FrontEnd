@@ -63,11 +63,11 @@ export const MyChangePoint = ({navigation, route}: Props) => {
                   onFocus={() => setFocusedPoint(true)}
                 />
                 <Text style={{position: 'relative', right: 22, color: '#949494', fontFamily: 'Pretendard-Light', fontSize: 16}}>
-                  원
+                  P
                 </Text>
               </View>
               <Text style={[styles.caption1Light, {color: '#949494'}]}>
-                포인트는 5000P 부터 5,000원 단위로 전환 가능합니다.
+                포인트는 5,000P 단위로 전환 가능합니다.
               </Text>
               <Text style={[styles.caption1Light]}>또한, 송금 수수료 500P가 차감됩니다.</Text>
             </View>
