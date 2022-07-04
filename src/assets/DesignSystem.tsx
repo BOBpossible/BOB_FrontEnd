@@ -9,54 +9,67 @@ export const DesignSystem = StyleSheet.create({
   h1SB: {
     fontSize: 24,
     fontFamily: 'Pretendard-SemiBold',
+    lineHeight: 34,
   },
   h2SB: {
     fontSize: 17,
     fontFamily: 'Pretendard-SemiBold',
+    lineHeight: 27,
   },
   h3SB: {
     fontSize: 14,
     fontFamily: 'Pretendard-SemiBold',
+    lineHeight: 22,
   },
   subtitle1: {
     fontSize: 23,
     fontFamily: 'Pretendard-SemiBold',
+    lineHeight: 33,
   },
   subtitle2: {
     fontSize: 19,
     fontFamily: 'Pretendard-Medium',
+    lineHeight: 29,
   },
   title1SB: {
     fontSize: 18,
     fontFamily: 'Pretendard-SemiBold',
+    lineHeight: 28,
   },
   title2Regular: {
     fontSize: 16,
     fontFamily: 'Pretendard-Regular',
+    lineHeight: 28,
   },
   title3SB: {
     fontSize: 16,
     fontFamily: 'Pretendard-SemiBold',
+    lineHeight: 24,
   },
   title4Md: {
     fontSize: 16,
     fontFamily: 'Pretendard-Medium',
+    lineHeight: 24,
   },
   body1Lt: {
     fontSize: 16,
     fontFamily: 'Pretendard-Light',
+    lineHeight: 24,
   },
   body2Lt: {
     fontSize: 14,
     fontFamily: 'Pretendard-Light',
+    lineHeight: 22,
   },
   caption1Lt: {
     fontSize: 12,
     fontFamily: 'Pretendard-Light',
+    lineHeight: 20,
   },
   caption2Lt: {
     fontSize: 10,
     fontFamily: 'Pretendard-Light',
+    lineHeight: 18,
   },
   grey1: {
     color: '#FCFCFC',
@@ -108,5 +121,8 @@ export const DesignSystem = StyleSheet.create({
   },
   grey17: {
     color: '#111111',
+  },
+  purple5: {
+    color: '#6C69FF',
   },
 });

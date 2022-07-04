@@ -7,5 +7,8 @@ declare namespace ReactNavigation {
     RegisterCategory: {registerData: RegisterInterface};
     KakaoLogin: undefined;
     NaverLogin: undefined;
+    HomeMissionDetails: {missionId: number};
+    Mission: {missionId: number};
+    Notifications: {userId: number};
   }
 }

@@ -5,6 +5,7 @@ import {useStyle} from '../hooks';
 import AddressSearchModal from '../modal/AddressSearchModal';
 import {CircleBar} from './HomeCircleBar';
 import {useNavigation} from '@react-navigation/native';
+import {DesignSystem} from '../assets/DesignSystem';
 
 const WIDTH = Dimensions.get('window').width;
 const HEADER_HEIGHT = 210;
@@ -86,7 +87,9 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     return (
       <Animated.View style={[styles.circleWrap, circleAnimStyle]}>
         <CircleBar radius={60} progress={7} />
-        <Text style={{marginTop: 8}}>미션 10개 달성시 1000P</Text>
+        <Text style={[DesignSystem.body2Lt, {marginTop: 8, marginBottom: 14, fontWeight: '500'}]}>
+          미션 10개 달성시 1000P
+        </Text>
       </Animated.View>
     );
   };
@@ -100,7 +103,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           </View>
           <View style={[styles.shrinkHeaderTextWrap]}>
             <Text style={[styles.shrinkHeaderTextOne]}>7</Text>
-            <Text style={[styles.shrinkHeaderTextTwo]}>/</Text>
+            <Text style={[styles.shrinkHeaderTextTwo]}>/ </Text>
             <Text style={[styles.shrinkHeaderTextThree]}>10</Text>
           </View>
         </View>
@@ -127,7 +130,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
               <Text style={[styles.pointText]}>999,999</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Notifications', {userId: 0})}>
             <Icon name="bell-outline" size={24} />
           </TouchableOpacity>
         </View>
@@ -138,7 +141,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
       </View>
       <TouchableOpacity style={[{position: 'absolute', top: 60 + paddingTop, right: 20}]}>
         <Animated.View style={[howtoAnimStyle, styles.flexRow]}>
-          <Text style={[styles.howtoText]}>사용방법</Text>
+          <Text style={[DesignSystem.body1Lt, DesignSystem.grey8]}>사용방법</Text>
           <View style={[styles.questionWrap]}>
             <Text>?</Text>
           </View>
@@ -200,17 +203,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   outerBar: {
-    width: 290,
-    height: 8,
-    borderRadius: 10,
+    width: '85%',
+    height: 6,
+    borderRadius: 5,
     backgroundColor: '#EDEDED',
   },
   innerBar: {
     position: 'absolute',
     left: 0,
     top: 0,
-    height: 8,
-    borderRadius: 10,
+    height: 6,
+    borderRadius: 5,
     backgroundColor: '#615EFF',
   },
   progressWrap: {
@@ -222,7 +225,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#AAAAF9',
+    borderColor: '#C8C8C8',
     paddingTop: 3.5,
     paddingBottom: 3.5,
     paddingLeft: 8,
@@ -249,12 +252,21 @@ const styles = StyleSheet.create({
   },
   shrinkHeaderTextOne: {
     fontSize: 22,
+    fontFamily: 'Pretendard-Regular',
+    fontWeight: '200',
+    color: '#111111',
   },
   shrinkHeaderTextTwo: {
     fontSize: 15,
+    fontFamily: 'Pretendard-Light',
+    fontWeight: '200',
+    color: '#7D7D7D',
   },
   shrinkHeaderTextThree: {
     fontSize: 15,
+    fontFamily: 'Pretendard-Light',
+    fontWeight: '200',
+    color: '#7D7D7D',
   },
   howtoText: {
     fontSize: 14,
@@ -262,10 +274,10 @@ const styles = StyleSheet.create({
     color: '#7879F7',
   },
   questionWrap: {
-    width: 18,
-    height: 18,
+    width: 20,
+    height: 20,
     borderRadius: 18,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: '#DFDFDF',
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 8,
