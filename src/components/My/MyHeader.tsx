@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomColor: '#DFDFDF',
     borderBottomWidth: 1,
-    height: 41,
+    height: 50,
     backgroundColor: '#FFFFFF',
   },
   backButton: {

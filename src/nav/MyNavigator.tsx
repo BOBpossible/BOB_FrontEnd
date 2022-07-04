@@ -12,7 +12,7 @@ import {MyChangePointDone} from '../screens/MyChangePointDone';
 
 export type MyStackParamList = {
   MyPage: undefined;
-  MyEditUserInfo: {username: string};
+  MyEditUserInfo: {username: string; auth: string};
   MyPoint: {point: number};
   MyReview: undefined;
   MyNotificationsSetting: undefined;

@@ -1,19 +1,24 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Image, Text, TouchableOpacity, TextInput} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
 import {MyHeader} from '../components/My/MyHeader';
+import {DesignSystem} from '../assets/DesignSystem';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyEditUserInfo'>;
 
 export const MyEditUserInfo = ({navigation, route}: Props) => {
+  const [username, setUsername] = useState<string>(route.params.username);
+  const [auth, setAuth] = useState<string>(route.params.auth);
+  const [email, setEmail] = useState('');
+  const [focusedEmail, setFocusedEmail] = useState(false);
+
   const goBack = () => {
     navigation.goBack();
   };
   function editProfileImg() {
     console.log('수정');
   }
-  const [username, setUsername] = useState<string>(route.params.username);
 
   return (
     <View style={[styles.flex]}>
@@ -21,6 +26,7 @@ export const MyEditUserInfo = ({navigation, route}: Props) => {
         goBack={goBack}
         title={'회원정보 수정'}
         save={() => {
+          //변경한 정보를 서버에 보내기 로직
           console.log('저장');
         }}
       />
@@ -39,8 +45,25 @@ export const MyEditUserInfo = ({navigation, route}: Props) => {
       </View>
       <View style={[styles.userInfoEdit]}>
         <View style={[styles.userInfoEditContent]}>
-          {/* 이름
-          전화번호 */}
+          <View style={[styles.emailNinput]}>
+            <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom:8}]}>이메일</Text>
+            <TextInput
+              style={[styles.inputText, focusedEmail ? styles.focusBorder : styles.unfocusBorder]}
+              onChangeText={(text) => {
+                setEmail(text);
+              }}
+              value={email.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              onBlur={() => setFocusedEmail(false)}
+              onFocus={() => setFocusedEmail(true)}
+            />
+          </View>
+          <View style={[styles.phoneNinput]}>
+            <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom:8}]}>전화번호</Text>
+            <View style={[styles.phoneAuth]}>
+              <Text>🚨전화번호인증🚨</Text>
+            </View>
+            <Text style={[DesignSystem.caption1Lt, {color: '#E03D32', marginLeft: 8}]}>{auth}</Text>
+          </View>
         </View>
       </View>
       <TouchableOpacity onPress={() => console.log('탈퇴')} style={{alignItems: 'flex-end'}}>
@@ -88,8 +111,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   userInfoEditContent: {
+    marginTop: 12,
     marginLeft: 16,
     marginRight: 16,
+    marginBottom: 16,
+  },
+  emailNinput: {
+    marginBottom: 20,
+  },
+  inputText: {
+    width: '100%',
+    height: 44,
+    borderRadius: 10,
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 10,
+    paddingBottom: 10,
+    color: '#111111',
+  },
+  focusBorder: {borderColor: '#6C69FF', borderWidth: 1},
+  unfocusBorder: {borderColor: '#DFDFDF', borderWidth: 1},
+  phoneNinput: {
+
+  },
+  phoneAuth: {
+
   },
   quitText: {
     color: '#777777',
