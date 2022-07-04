@@ -14,7 +14,7 @@ import {MapNavigator} from './MapNavigator';
 type TabBarIconProps = {focused: boolean; color: string; size: number};
 
 const icons: Record<string, string[]> = {
-  Main: ['home', 'home-outline'],
+  HomeNavigator: ['home', 'home-outline'],
   Mission: ['food', 'food-outline'],
   MapNavigator: ['map-search', 'map-search-outline'],
   MyNavigator: ['account-settings', 'account-settings-outline'],
@@ -42,7 +42,7 @@ const Tab = createBottomTabNavigator();
 export const MainNavigator = () => {
   return (
     <Tab.Navigator screenOptions={screenOptions} initialRouteName="Main">
-      <Tab.Screen name="Main" component={HomeNavigator} options={{tabBarLabel: '홈'}} />
+      <Tab.Screen name="HomeNavigator" component={HomeNavigator} options={{tabBarLabel: '홈'}} />
       <Tab.Screen name="Mission" component={Mission} options={{tabBarLabel: '미션'}} />
       <Tab.Screen name="MapNavigator" component={MapNavigator} options={{tabBarLabel: '검색'}} />
       <Tab.Screen

@@ -1,42 +1,38 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import {View, StyleSheet, Text, Dimensions, TouchableOpacity} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomSheet, {BottomSheetFlatList, BottomSheetView} from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AddressSearchModal from '../modal/AddressSearchModal';
 import StoreModal from '../modal/StoreModal';
-import {WebView} from 'react-native-webview';
 import {MapWebview} from '../modal/MapWebview';
+import {MapStoreBottomSheet} from '../components/MapStoreBottomSheet';
 import {DesignSystem} from '../assets/DesignSystem';
 
 const dummyMission = [
   {
+    storeId: 0,
     name: '반이학생마라탕',
+    distance: 1000,
     category: '중식당',
-    day: 7,
-    minCost: 10000,
     point: 500,
+    image: {uri: 'https://source.unsplash.com/1024x768/?food'},
   },
   {
+    storeId: 0,
     name: '반이학생마라탕',
+    distance: 1000,
     category: '중식당',
-    day: 7,
-    minCost: 10000,
     point: 500,
+    image: {uri: 'https://source.unsplash.com/1024x768/?food'},
   },
   {
+    storeId: 0,
     name: '반이학생마라탕',
+    distance: 1000,
     category: '중식당',
-    day: 7,
-    minCost: 10000,
     point: 500,
+    image: {uri: 'https://source.unsplash.com/1024x768/?food'},
   },
 ];
 
@@ -78,11 +74,17 @@ const Map = () => {
           showsVerticalScrollIndicator={false}
           data={dummyMission}
           renderItem={({item, index}) => (
-            <TouchableOpacity onPress={() => openRestaurantModal(1)} key={index}>
-              <View style={{width: '100%', height: 300, backgroundColor: 'lightgrey'}}></View>
+            <TouchableOpacity onPress={() => openRestaurantModal(item.storeId)} key={index}>
+              <MapStoreBottomSheet
+                storeName={item.name}
+                storeCategory={item.category}
+                point={item.point}
+                distance={item.distance}
+                image={item.image}
+              />
             </TouchableOpacity>
           )}
-          ItemSeparatorComponent={() => <View style={{margin: 16}} />}
+          ItemSeparatorComponent={() => <View style={{marginTop: 4}} />}
         />
       </BottomSheet>
     </SafeAreaView>
