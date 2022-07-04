@@ -10,6 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const dummyMission = [
   {
+    missionId: 0,
     name: '반이학생마라탕',
     category: '중식당',
     day: 7,
@@ -17,6 +18,7 @@ const dummyMission = [
     point: 500,
   },
   {
+    missionId: 1,
     name: '반이학생마라탕',
     category: '중식당',
     day: 7,
@@ -24,6 +26,7 @@ const dummyMission = [
     point: 500,
   },
   {
+    missionId: 2,
     name: '반이학생마라탕',
     category: '중식당',
     day: 7,
@@ -49,6 +52,7 @@ const Main = () => {
         data={dummyMission}
         renderItem={({item}) => (
           <HomeMissionCard
+            missionId={item.missionId}
             name={item.name}
             category={item.category}
             day={item.day}
@@ -65,6 +69,8 @@ const Main = () => {
           })(event);
         }}
         ItemSeparatorComponent={() => <View style={[styles.missionSeperate]} />}
+        ListFooterComponent={() => <View />}
+        ListFooterComponentStyle={{marginTop: 53}}
       />
     </SafeAreaView>
   );
@@ -79,6 +85,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6F6FA',
   },
   missionSeperate: {
-    margin: 16,
+    marginTop: 12,
   },
 });

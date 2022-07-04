@@ -16,7 +16,7 @@ const Stack = createStackNavigator<HomeStackParamList>();
 export const HomeNavigator = ({navigation, route}) => {
   React.useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
-    if (routeName === 'Notifications') {
+    if (routeName === 'Notifications' || routeName === 'HomeMissionDetails') {
       navigation.setOptions({tabBarStyle: {display: 'none'}});
     } else {
       navigation.setOptions({tabBarStyle: {display: undefined}});
@@ -25,7 +25,7 @@ export const HomeNavigator = ({navigation, route}) => {
   return (
     <Stack.Navigator
       initialRouteName="Main"
-      screenOptions={{headerShown: false, gestureEnabled: true}}
+      screenOptions={{headerShown: false, gestureEnabled: false}}
     >
       <Stack.Screen name="Main" component={Main} />
       <Stack.Screen name="HomeMissionDetails" component={HomeMissionDetails} />
