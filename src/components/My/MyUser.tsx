@@ -33,11 +33,11 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) =
           <View style={[styles.userWrap]}>
             <View style={[styles.username]}>
               <Text style={[DesignSystem.title3SB, styles.usernameText]}>{name}님</Text>
-              <Text style={[DesignSystem.caption1Lt, styles.userauthText]}>{statusMessage}</Text>
+              <Text style={[DesignSystem.caption1Lt, {color: '#E03D32'}]}>{statusMessage}</Text>
             </View>
             <Text style={[DesignSystem.caption1Lt, styles.userEmail]}>{email}</Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo', {username: name})}>
+          <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo', {username: name, auth: statusMessage})}>
             <View style={[styles.editUserInfo]}>
               <Text style={[DesignSystem.caption1Lt, {color: '#6C69FF'}]}>회원정보 수정</Text>
               <Image
@@ -94,9 +94,6 @@ const styles = StyleSheet.create({
   usernameText: {
     color: '#111111',
     marginRight: 8,
-  },
-  userauthText: {
-    color: '#E03D32',
   },
   userEmail: {
     color: '#616161',

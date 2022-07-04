@@ -7,6 +7,7 @@ import AddressSearchModal from '../modal/AddressSearchModal';
 import StoreModal from '../modal/StoreModal';
 import {MapWebview} from '../modal/MapWebview';
 import {MapStoreBottomSheet} from '../components/MapStoreBottomSheet';
+import {DesignSystem} from '../assets/DesignSystem';
 
 const dummyMission = [
   {
@@ -57,7 +58,7 @@ const Map = () => {
       />
       <View style={[styles.headerWrap]}>
         <TouchableOpacity style={[styles.header]} onPress={() => setAddressModal(true)}>
-          <Text style={[styles.headerText]}>삼성동</Text>
+          <Text style={[DesignSystem.h2SB, {color: 'black', marginRight: 11}]}>삼성동</Text>
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
       </View>
@@ -93,26 +94,17 @@ const Map = () => {
 const styles = StyleSheet.create({
   flex: {flex: 1, backgroundColor: '#FFFFFF'},
   headerWrap: {
-    flexDirection: 'row',
     width: '100%',
     borderBottomColor: '#DFDFDF',
     borderBottomWidth: 1,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    height: 50,
+    justifyContent: 'center',
   },
   header: {
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
     marginLeft: 16,
-    marginBottom: 14,
     flexDirection: 'row',
-  },
-  headerText: {
-    fontSize: 17,
-    color: 'black',
-    marginRight: 4,
-    fontWeight: '600',
   },
   missionListTextWrap: {
     marginLeft: 16,

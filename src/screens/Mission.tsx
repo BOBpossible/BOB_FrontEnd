@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {DesignSystem} from '../assets/DesignSystem';
 import {MissionCard} from '../components';
 import {MissionProcess} from '../components/MissionProcess';
 import {MissionProgressSwitch} from '../components/MissionProgressSwitch';
@@ -17,7 +18,7 @@ const Mission = () => {
     <SafeAreaView style={[styles.flex]}>
       <View style={[styles.headerWrap]}>
         <View style={[styles.header]}>
-          <Text style={[styles.headerText]}>미션</Text>
+          <Text style={[styles.headerText, DesignSystem.h2SB, {color: 'black'}]}>미션</Text>
         </View>
       </View>
       <View style={{backgroundColor: '#F6F6FA', height: '100%'}}>
@@ -46,22 +47,16 @@ const Mission = () => {
 
 const styles = StyleSheet.create({
   flex: {flex: 1, backgroundColor: '#FFFFFF'},
-  header: {
-    height: 40,
-    backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
-  },
   headerWrap: {
     width: '100%',
     borderBottomColor: '#DFDFDF',
     borderBottomWidth: 1,
+    height: 50,
+    justifyContent: 'center',
   },
-  headerText: {
-    fontSize: 17,
-    color: 'black',
+  header: {
+    backgroundColor: '#FFFFFF',
     marginLeft: 16,
-    marginRight: 16,
-    fontWeight: '600',
   },
 });
 

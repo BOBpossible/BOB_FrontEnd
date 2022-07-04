@@ -34,7 +34,6 @@ const dummyMission = [
 
 const Main = () => {
   const navigation = useNavigation();
-
   const [token, setToken] = useRecoilState(userToken);
   console.log(token);
   const offset = useRef(new Animated.Value(0)).current;
