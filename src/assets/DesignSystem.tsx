@@ -54,7 +54,7 @@ export const DesignSystem = StyleSheet.create({
   body1Lt: {
     fontSize: 16,
     fontFamily: 'Pretendard-Light',
-    lineHeight: 24,
+    lineHeight: 16,
   },
   body2Lt: {
     fontSize: 14,
