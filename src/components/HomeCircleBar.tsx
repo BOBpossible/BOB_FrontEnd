@@ -29,8 +29,9 @@ export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
       position: 'absolute',
     },
     progressText: {
-      fontSize: 50,
-      fontWeight: '300',
+      fontFamily: 'Pretendard-Light',
+      fontSize: 45,
+      fontWeight: '200',
       color: '#111111',
     },
     progressTextBox: {
@@ -51,13 +52,18 @@ export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
       borderBottomRightRadius: radius,
       transform: [{rotate: '0deg'}],
     },
+    progressTotalText: {
+      fontFamily: 'Pretendard-Light',
+      fontSize: 18,
+      color: '#7D7D7D',
+    },
   });
   return (
     <View style={[styles.flex]}>
       <AnimatedCircularProgress
         style={{transform: [{scaleX: -1}]}}
-        size={120}
-        width={7}
+        size={108}
+        width={5}
         fill={progress * 10}
         tintColor="#615EFF"
         duration={2000}
@@ -68,8 +74,8 @@ export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
         {() => (
           <View style={[{transform: [{scaleX: -1}]}, styles.progressTextBox]}>
             <Text style={[styles.progressText]}>{progress}</Text>
-            <Text style={{fontSize: 25}}>/</Text>
-            <Text style={{fontSize: 20, lineHeight: 20}}>10</Text>
+            <Text style={[styles.progressTotalText]}>/ </Text>
+            <Text style={[styles.progressTotalText]}>10</Text>
           </View>
         )}
       </AnimatedCircularProgress>

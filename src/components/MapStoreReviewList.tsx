@@ -15,6 +15,10 @@ const dummyReviews = [
     ],
     review:
       '너무 맛있어요! 최고! 포인트도 낭낭하니 많아요~~~ 추천추천 미션밥파서블 덕분에 인생폈다',
+    reply: {
+      date: '2022.05.05',
+      comment: '저희 식당을 찾아주셔서 진심으로 감사합니다. 다음에도 방문 해주세요. ^^',
+    },
   },
   {
     name: '이아영',
@@ -23,6 +27,7 @@ const dummyReviews = [
     images: [{uri: 'https://source.unsplash.com/1024x768/?tree', id: 3}],
     review:
       '너무 맛있어요! 최고! 너무 맛있어요! 최고!너무 맛있어요! 최고!너무 맛있어요! 최고!너무 맛있어요! 최고!',
+    reply: null,
   },
   {
     name: '이예진',
@@ -33,6 +38,7 @@ const dummyReviews = [
       {uri: 'https://source.unsplash.com/1024x768/?boy', id: 5},
     ],
     review: '너무 맛있어요! 최고!',
+    reply: null,
   },
   {
     name: '박승민',
@@ -51,6 +57,10 @@ const dummyReviews = [
       {uri: 'https://source.unsplash.com/1024x768/?boy', id: 8},
     ],
     review: '너무 맛있어요! 최고!',
+    reply: {
+      date: '2022.05.05',
+      comment: '저희 식당을 찾아주셔서 진심으로 감사합니다. 다음에도 방문 해주세요. ^^',
+    },
   },
 ];
 
@@ -74,6 +84,7 @@ export const MapStoreReviewList = () => {
               rate={item.rate}
               review={item.review}
               images={item.images}
+              reply={item.reply}
               openPhotoModal={openPhotoModal}
             />
           );

@@ -5,6 +5,7 @@ import {useStyle} from '../hooks';
 import AddressSearchModal from '../modal/AddressSearchModal';
 import {CircleBar} from './HomeCircleBar';
 import {useNavigation} from '@react-navigation/native';
+import {DesignSystem} from '../assets/DesignSystem';
 
 const WIDTH = Dimensions.get('window').width;
 const HEADER_HEIGHT = 210;
@@ -21,7 +22,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   //헤더 길이 바꿔주는 애니메이션 Main.tsx의 스크롤 위치에 따라 변한다
   const heightAnimStyle = useStyle({
     height: animatedValue.interpolate({
-      inputRange: [0, HEADER_HEIGHT - 100], //스크롤100 까지는 같은 속도로 스크롤 업
+      inputRange: [0, HEADER_HEIGHT - 90], //스크롤100 까지는 같은 속도로 스크롤 업
       outputRange: [HEADER_HEIGHT + paddingTop, 110 + paddingTop], //아이폰을 위한 insets.top 추가
       extrapolate: 'clamp',
     }),
@@ -86,7 +87,20 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     return (
       <Animated.View style={[styles.circleWrap, circleAnimStyle]}>
         <CircleBar radius={60} progress={7} />
-        <Text style={{marginTop: 8}}>미션 10개 달성시 1000P</Text>
+        <Text
+          style={[
+            DesignSystem.grey17,
+            {
+              marginTop: 8,
+              marginBottom: 14,
+              fontFamily: 'Pretendard-Medium',
+              fontSize: 13,
+              lineHeight: 22,
+            },
+          ]}
+        >
+          미션 10개 달성시 1000P
+        </Text>
       </Animated.View>
     );
   };
@@ -100,11 +114,18 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           </View>
           <View style={[styles.shrinkHeaderTextWrap]}>
             <Text style={[styles.shrinkHeaderTextOne]}>7</Text>
-            <Text style={[styles.shrinkHeaderTextTwo]}>/</Text>
+            <Text style={[styles.shrinkHeaderTextTwo]}>/ </Text>
             <Text style={[styles.shrinkHeaderTextThree]}>10</Text>
           </View>
         </View>
-        <Text>미션 10개 달성시 1,000P</Text>
+        <View>
+          <Text>
+            <Text style={[styles.shrinkHeaderMissionText, DesignSystem.grey10]}>
+              미션 10개 달성시
+            </Text>
+            <Text style={[styles.shrinkHeaderMissionText, DesignSystem.purple5]}> 1,000P</Text>
+          </Text>
+        </View>
       </Animated.View>
     );
   };
@@ -127,7 +148,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
               <Text style={[styles.pointText]}>999,999</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Notifications', {userId: 0})}>
             <Icon name="bell-outline" size={24} />
           </TouchableOpacity>
         </View>
@@ -138,7 +159,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
       </View>
       <TouchableOpacity style={[{position: 'absolute', top: 60 + paddingTop, right: 20}]}>
         <Animated.View style={[howtoAnimStyle, styles.flexRow]}>
-          <Text style={[styles.howtoText]}>사용방법</Text>
+          <Text style={[DesignSystem.body1Lt, DesignSystem.grey8]}>사용방법</Text>
           <View style={[styles.questionWrap]}>
             <Text>?</Text>
           </View>
@@ -158,16 +179,18 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     backgroundColor: 'white', ////
-    shadowColor: '#000',
+    shadowColor: '#000C8A',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 0,
     },
-    shadowOpacity: 0.35,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 3,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
+    borderColor: '#E8E8E8',
+    borderWidth: 1,
   },
   flexRow: {
     flexDirection: 'row',
@@ -200,17 +223,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   outerBar: {
-    width: 290,
-    height: 8,
-    borderRadius: 10,
+    width: '85%',
+    height: 6,
+    borderRadius: 5,
     backgroundColor: '#EDEDED',
   },
   innerBar: {
     position: 'absolute',
     left: 0,
     top: 0,
-    height: 8,
-    borderRadius: 10,
+    height: 6,
+    borderRadius: 5,
     backgroundColor: '#615EFF',
   },
   progressWrap: {
@@ -222,7 +245,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#AAAAF9',
+    borderColor: '#C8C8C8',
     paddingTop: 3.5,
     paddingBottom: 3.5,
     paddingLeft: 8,
@@ -241,7 +264,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: WIDTH - 32, //alignItems: center 당할 뷰 라서 옆 마진 16+16 을 빼주면 알아서 마진: 16 을 한 효과가 나타날것
-    marginBottom: 6,
   },
   shrinkHeaderTextWrap: {
     flexDirection: 'row',
@@ -249,12 +271,26 @@ const styles = StyleSheet.create({
   },
   shrinkHeaderTextOne: {
     fontSize: 22,
+    fontFamily: 'Pretendard-Regular',
+    fontWeight: '200',
+    color: '#111111',
   },
   shrinkHeaderTextTwo: {
     fontSize: 15,
+    fontFamily: 'Pretendard-Light',
+    fontWeight: '200',
+    color: '#7D7D7D',
   },
   shrinkHeaderTextThree: {
     fontSize: 15,
+    fontFamily: 'Pretendard-Light',
+    fontWeight: '200',
+    color: '#7D7D7D',
+  },
+  shrinkHeaderMissionText: {
+    fontSize: 12,
+    lineHeight: 20,
+    fontFamily: 'Pretendard-Medium',
   },
   howtoText: {
     fontSize: 14,
@@ -262,10 +298,10 @@ const styles = StyleSheet.create({
     color: '#7879F7',
   },
   questionWrap: {
-    width: 18,
-    height: 18,
+    width: 20,
+    height: 20,
     borderRadius: 18,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: '#DFDFDF',
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 8,
