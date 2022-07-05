@@ -1,14 +1,14 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import MyPage from '../screens/MyPage';
-import {MyReview} from '../screens/MyReview';
-import {MyNotificationsSetting} from '../screens/MyNotificationsSetting';
-import {MyInquiry} from '../screens/MyInquiry';
-import {MyEditUserInfo} from '../screens/MyEditUserInfo';
-import {MyPoint} from '../screens/MyPoint';
+import MyPage from '../screens/my/MyPage';
+import {MyReview} from '../screens/my/MyReview';
+import {MyNotificationsSetting} from '../screens/my/MyNotificationsSetting';
+import {MyInquiry} from '../screens/my/MyInquiry';
+import {MyEditUserInfo} from '../screens/my/MyEditUserInfo';
+import {MyPoint} from '../screens/my/MyPoint';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
-import {MyChangePoint} from '../screens/MyChangePoint';
-import {MyChangePointDone} from '../screens/MyChangePointDone';
+import {MyChangePoint} from '../screens/my/MyChangePoint';
+import {MyChangePointDone} from '../screens/my/MyChangePointDone';
 
 export type MyStackParamList = {
   MyPage: undefined;

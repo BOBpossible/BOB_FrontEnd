@@ -2,14 +2,14 @@ import React, {useState} from 'react';
 //prettier-ignore
 import {View, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView, ScrollView, Platform} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {MyStackParamList} from '../nav/MyNavigator';
-import {MyHeader} from '../components/My/MyHeader';
+import {MyStackParamList} from '../../nav/MyNavigator';
+import {MyHeader} from '../../components/My/MyHeader';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import MyBankModal from '../modal/MyBankModal';
-import MyBankFeeModal from '../modal/MyBankFeeModal';
-import {DesignSystem} from '../assets/DesignSystem';
+import MyBankModal from '../../modal/MyBankModal';
+import MyBankFeeModal from '../../modal/MyBankFeeModal';
+import {DesignSystem} from '../../assets/DesignSystem';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {calHeight, calWidth} from '../assets/CalculateLength';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyChangePoint'>;
 
