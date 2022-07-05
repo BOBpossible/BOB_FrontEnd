@@ -1,14 +1,24 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {View, Animated, Text, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Animated,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useStyle} from '../hooks';
-import AddressSearchModal from '../modal/AddressSearchModal';
+import {useStyle} from '../../hooks';
+import AddressSearchModal from '../../modal/AddressSearchModal';
 import {CircleBar} from './HomeCircleBar';
 import {useNavigation} from '@react-navigation/native';
-import {DesignSystem} from '../assets/DesignSystem';
+import {DesignSystem} from '../../assets/DesignSystem';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight} from '../../assets/CalculateLength';
 
 const WIDTH = Dimensions.get('window').width;
-const HEADER_HEIGHT = 210;
+const HEADER_HEIGHT = Platform.OS === 'ios' ? hp(25.8) : hp(28.6);
 type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
   paddingTop: number;
@@ -22,8 +32,11 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   //헤더 길이 바꿔주는 애니메이션 Main.tsx의 스크롤 위치에 따라 변한다
   const heightAnimStyle = useStyle({
     height: animatedValue.interpolate({
-      inputRange: [0, HEADER_HEIGHT - 90], //스크롤100 까지는 같은 속도로 스크롤 업
-      outputRange: [HEADER_HEIGHT + paddingTop, 110 + paddingTop], //아이폰을 위한 insets.top 추가
+      inputRange: [0, HEADER_HEIGHT - hp(calHeight(100))], //스크롤100 까지는 같은 속도로 스크롤 업
+      outputRange: [
+        HEADER_HEIGHT + paddingTop,
+        Platform.OS === 'ios' ? hp(13.55) + paddingTop : hp(calHeight(110)) + paddingTop,
+      ], //아이폰을 위한 insets.top 추가
       extrapolate: 'clamp',
     }),
   });
@@ -52,14 +65,14 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
 
   const circleAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
-      inputRange: [30, 70],
+      inputRange: [30, 60],
       outputRange: [1, 0],
       extrapolate: 'clamp',
     }),
     transform: [
       {
         scale: animatedValue.interpolate({
-          inputRange: [30, 70],
+          inputRange: [30, 60],
           outputRange: [1, 0.8],
           extrapolate: 'clamp',
         }),
@@ -69,7 +82,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
 
   const barAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
-      inputRange: [65, 75],
+      inputRange: [60, 65],
       outputRange: [0, 1],
       extrapolate: 'clamp',
     }),
@@ -86,21 +99,8 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   const expandHeader = () => {
     return (
       <Animated.View style={[styles.circleWrap, circleAnimStyle]}>
-        <CircleBar radius={60} progress={7} />
-        <Text
-          style={[
-            DesignSystem.grey17,
-            {
-              marginTop: 8,
-              marginBottom: 14,
-              fontFamily: 'Pretendard-Medium',
-              fontSize: 13,
-              lineHeight: 22,
-            },
-          ]}
-        >
-          미션 10개 달성시 1000P
-        </Text>
+        <CircleBar progress={7} />
+        <Text style={[DesignSystem.grey17, styles.circleBar]}>미션 10개 달성시 1000P</Text>
       </Animated.View>
     );
   };
@@ -138,7 +138,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           closeAddressModal={() => setAddressModal(false)}
         />
         <TouchableOpacity style={[styles.flexRow]} onPress={() => setAddressModal(true)}>
-          <Text style={[styles.locationText]}>삼성동</Text>
+          <Text style={[DesignSystem.subtitle2, DesignSystem.grey17]}>삼성동</Text>
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
         <View style={[styles.flexRow]}>
@@ -158,7 +158,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
         {expandHeader()}
       </View>
       <TouchableOpacity
-        style={[{position: 'absolute', top: 60 + paddingTop, right: 20}]}
+        style={[{position: 'absolute', top: 50 + paddingTop, right: 20}]}
         onPress={() => {
           navigation.navigate('HowTo1');
         }}
@@ -192,8 +192,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 10,
     elevation: 3,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
     borderColor: '#E8E8E8',
     borderWidth: 1,
   },
@@ -201,10 +201,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 30, ///
-  },
-  locationText: {
-    fontSize: 20,
-    fontWeight: '600',
   },
   header: {
     flexDirection: 'row',
@@ -249,7 +245,7 @@ const styles = StyleSheet.create({
   pointWrap: {
     flexDirection: 'row',
     borderRadius: 20,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#C8C8C8',
     paddingTop: 3.5,
     paddingBottom: 3.5,
@@ -260,10 +256,10 @@ const styles = StyleSheet.create({
   },
   pointP: {
     color: '#6C69FF',
-    fontWeight: 'bold',
+    fontFamily: 'Pretendard-SemiBold',
     fontSize: 14,
   },
-  pointText: {fontSize: 14, fontWeight: '600', color: '#555555'},
+  pointText: {fontSize: 14, color: '#555555', fontFamily: 'Pretendard-SemiBold'},
   shrinkHeaderWrap: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -276,20 +272,17 @@ const styles = StyleSheet.create({
   },
   shrinkHeaderTextOne: {
     fontSize: 22,
-    fontFamily: 'Pretendard-Regular',
-    fontWeight: '200',
+    fontFamily: 'Pretendard-Light',
     color: '#111111',
   },
   shrinkHeaderTextTwo: {
     fontSize: 15,
     fontFamily: 'Pretendard-Light',
-    fontWeight: '200',
     color: '#7D7D7D',
   },
   shrinkHeaderTextThree: {
     fontSize: 15,
     fontFamily: 'Pretendard-Light',
-    fontWeight: '200',
     color: '#7D7D7D',
   },
   shrinkHeaderMissionText: {
@@ -310,5 +303,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 8,
+  },
+  circleBar: {
+    marginTop: 8,
+    marginBottom: 14,
+    fontFamily: 'Pretendard-Medium',
+    fontSize: 13,
+    lineHeight: 22,
   },
 });

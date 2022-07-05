@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {DesignSystem} from '../assets/DesignSystem';
+import {DesignSystem} from '../../assets/DesignSystem';
 export const HomeMissionListHeader = () => {
   return (
     <View style={[styles.missionListHeaderWrap]}>
@@ -9,8 +9,8 @@ export const HomeMissionListHeader = () => {
       <View style={[styles.missionListBalloon]}>
         <Icon name="menu-left" size={32} style={[styles.headerIconStyle]} />
         <View style={[styles.flexRow]}>
-          <Text style={[styles.ballonText, styles.ballonTextPurple]}>7일후에</Text>
-          <Text style={[styles.ballonText, styles.ballonTextWhite]}> 사라져요!</Text>
+          <Text style={[styles.ballonTextOne]}>7일후에</Text>
+          <Text style={[styles.ballonTextTwo]}> 사라져요!</Text>
         </View>
       </View>
     </View>
@@ -44,11 +44,16 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row',
   },
-  ballonText: {
-    fontFamily: 'Pretendard-Medium',
+  ballonTextOne: {
+    fontFamily: 'Pretendard-SemiBold',
     fontSize: 12,
     lineHeight: 20,
+    color: '#FFFFFF',
   },
-  ballonTextPurple: {fontWeight: '600', color: '#FFFFFF'},
-  ballonTextWhite: {fontWeight: '400', color: '#FFFFFF'},
+  ballonTextTwo: {
+    fontFamily: 'Pretendard-Regular',
+    fontSize: 12,
+    lineHeight: 20,
+    color: '#FFFFFF',
+  },
 });

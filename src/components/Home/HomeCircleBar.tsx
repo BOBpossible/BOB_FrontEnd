@@ -1,37 +1,20 @@
 import React, {useEffect} from 'react';
 import type {FC} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import {calHeight} from '../../assets/CalculateLength';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export type CircleBarProps = {
-  radius: number;
   progress: number;
 };
-export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
+export const CircleBar: FC<CircleBarProps> = ({progress}) => {
   const styles = StyleSheet.create({
     flex: {flex: 1},
-    bigCircle: {
-      zIndex: 0,
-      width: radius * 2,
-      height: radius * 2,
-      borderRadius: radius,
-      backgroundColor: '#EDEDED',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    progressLayer: {
-      zIndex: 2,
-      width: radius * 2 - 12,
-      height: radius * 2 - 12,
-      borderRadius: radius,
-      backgroundColor: '#FFFFFF',
-      position: 'absolute',
-    },
     progressText: {
       fontFamily: 'Pretendard-Light',
       fontSize: 45,
-      fontWeight: '200',
       color: '#111111',
     },
     progressTextBox: {
@@ -39,18 +22,6 @@ export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
       alignItems: 'baseline',
       justifyContent: 'flex-start',
       zIndex: 3,
-    },
-    progressCircleOne: {
-      position: 'absolute',
-      left: 0,
-      top: 0,
-      width: radius,
-      height: radius * 2,
-      backgroundColor: '#615EFF',
-      borderRadius: radius,
-      borderTopRightRadius: radius,
-      borderBottomRightRadius: radius,
-      transform: [{rotate: '0deg'}],
     },
     progressTotalText: {
       fontFamily: 'Pretendard-Light',
@@ -62,7 +33,7 @@ export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
     <View style={[styles.flex]}>
       <AnimatedCircularProgress
         style={{transform: [{scaleX: -1}]}}
-        size={108}
+        size={Platform.OS === 'ios' ? hp((108 / 812) * 100) : hp(calHeight(108))}
         width={5}
         fill={progress * 10}
         tintColor="#615EFF"

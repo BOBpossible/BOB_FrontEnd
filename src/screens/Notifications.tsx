@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, FlatList, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, FlatList, TouchableOpacity, SafeAreaView} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HomeStackParamList} from '../nav/HomeNavigator';
 import {MyHeader} from '../components/My/MyHeader';
@@ -47,16 +47,17 @@ export const Notifications = ({navigation}: Props) => {
     navigation.goBack();
   };
   return (
-    <View style={[styles.flex]}>
-      <MyHeader goBack={goBack} title={'알림'} />
-      <FlatList
-        style={{marginTop: 12, marginLeft: 16, marginRight: 16,}}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 60}}
-        scrollEventThrottle={10}
-        data={dummyMission}
-        renderItem={({item}) => (
-          <>
+    <>
+      <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
+      <SafeAreaView style={[styles.flex]}>
+        <MyHeader goBack={goBack} title={'알림'} />
+        <FlatList
+          style={{marginLeft: 16, marginRight: 16}}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{paddingBottom: 60, marginTop: 12}}
+          scrollEventThrottle={10}
+          data={dummyMission}
+          renderItem={({item}) => (
             <NotificationCard
               isNewMission={item.isNewMission}
               storeName={item.storeName}
@@ -65,14 +66,15 @@ export const Notifications = ({navigation}: Props) => {
               date={item.date}
               status={item.status}
             />
-          </>
-        )}
-        ItemSeparatorComponent={() => <View style={{marginTop: 8}} />}
-      />
-    </View>
+          )}
+          ItemSeparatorComponent={() => <View style={{marginTop: 8}} />}
+        />
+      </SafeAreaView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  flex: {flex: 1},
+  flex: {flex: 1, backgroundColor: '#F8F8F8'},
+  flexTop: {},
 });
