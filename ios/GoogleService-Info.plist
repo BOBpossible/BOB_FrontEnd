@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>875664333601-4snbjmlfvl2ocvpvcgcdmsgn3o35r3s0.apps.googleusercontent.com</string>
+	<string>875664333601-tcsjcab1onq9fjurhimnr0qeg0fj0qm7.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.875664333601-4snbjmlfvl2ocvpvcgcdmsgn3o35r3s0</string>
+	<string>com.googleusercontent.apps.875664333601-tcsjcab1onq9fjurhimnr0qeg0fj0qm7</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>875664333601-70lt84v3hp8393bfr9s25m826otbdcdn.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.bob-frontend</string>
+	<string>com.liark.bobplace</string>
 	<key>PROJECT_ID</key>
 	<string>bobpossible-67a56</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:875664333601:ios:5f68149f233c2a374e7c60</string>
+	<string>1:875664333601:ios:72494288e9598a244e7c60</string>
 </dict>
 </plist>

@@ -18,7 +18,7 @@
 		B4E8BB0CC51D45948C47C1BA /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C92B11A84C940C9822EACEE /* Pretendard-Light.ttf */; };
 		B55C5AD1F396CA32D6B65FB9 /* libPods-BOB_FrontEnd-BOB_FrontEndTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5718D6AAAB3FEAA8D66F85D8 /* libPods-BOB_FrontEnd-BOB_FrontEndTests.a */; };
 		D6D041C14C1D4CC0B3849B2B /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11C955E157164BEF96CBCC24 /* Pretendard-Regular.ttf */; };
-		DAD7698A2860A37300C84CF1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAD769892860A37300C84CF1 /* GoogleService-Info.plist */; };
+		DA0493B728749E5000F9CA59 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA0493B628749E5000F9CA59 /* GoogleService-Info.plist */; };
 		F2D1474B88BC47BDBF1013E0 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 193D3C47DC2D49CAB80AA0A8 /* Poppins-Bold.ttf */; };
 /* End PBXBuildFile section */
 
@@ -54,8 +54,8 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BOB_FrontEnd/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-BOB_FrontEnd-BOB_FrontEndTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BOB_FrontEnd-BOB_FrontEndTests.release.xcconfig"; path = "Target Support Files/Pods-BOB_FrontEnd-BOB_FrontEndTests/Pods-BOB_FrontEnd-BOB_FrontEndTests.release.xcconfig"; sourceTree = "<group>"; };
 		8C92B11A84C940C9822EACEE /* Pretendard-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Light.ttf"; path = "../src/assets/fonts/Pretendard-Light.ttf"; sourceTree = "<group>"; };
+		DA0493B628749E5000F9CA59 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DA4D399328742AD400BCAFF5 /* BOB_FrontEnd.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = BOB_FrontEnd.entitlements; path = BOB_FrontEnd/BOB_FrontEnd.entitlements; sourceTree = "<group>"; };
-		DAD769892860A37300C84CF1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -99,8 +99,8 @@
 		13B07FAE1A68108700A75B9A /* BOB_FrontEnd */ = {
 			isa = PBXGroup;
 			children = (
+				DA0493B628749E5000F9CA59 /* GoogleService-Info.plist */,
 				DA4D399328742AD400BCAFF5 /* BOB_FrontEnd.entitlements */,
-				DAD769892860A37300C84CF1 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -272,12 +272,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				DA0493B728749E5000F9CA59 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				B4E8BB0CC51D45948C47C1BA /* Pretendard-Light.ttf in Resources */,
 				8E1F266BB8F64BE79E9EC94D /* Pretendard-Medium.ttf in Resources */,
 				D6D041C14C1D4CC0B3849B2B /* Pretendard-Regular.ttf in Resources */,
 				1361569F6A8C4E128DF3EC4A /* Pretendard-SemiBold.ttf in Resources */,
-				DAD7698A2860A37300C84CF1 /* GoogleService-Info.plist in Resources */,
 				F2D1474B88BC47BDBF1013E0 /* Poppins-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
