@@ -4,6 +4,6 @@ export const calWidth = (width: number) => {
 };
 
 export const calHeight = (height: number) => {
-  const calculatedWidth = (height / 734) * 100;
-  return calculatedWidth;
+  const calculatedHeight = (height / 734) * 100;
+  return calculatedHeight;
 };
