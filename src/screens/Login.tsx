@@ -2,12 +2,7 @@ import React, {useCallback, useState, useEffect} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image, Platform} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import appleAuth, {
-  AppleButton,
-  AppleAuthRequestOperation,
-  AppleAuthRequestScope,
-  AppleAuthCredentialState,
-} from '@invertase/react-native-apple-authentication';
+import {AppleButton, appleAuth} from '@invertase/react-native-apple-authentication';
 import SocialWebviewModal from '../modal/SocialWebviewModal';
 import {useRecoilState} from 'recoil';
 import {userToken} from '../state';
@@ -17,16 +12,16 @@ import {GoogleSignin, GoogleSigninButton} from '@react-native-google-signin/goog
 const onAppleButtonPress = async () => {
   // performs login request
   const appleAuthRequestResponse = await appleAuth.performRequest({
-    requestedOperation: AppleAuthRequestOperation.LOGIN,
-    requestedScopes: [AppleAuthRequestScope.EMAIL, AppleAuthRequestScope.FULL_NAME],
+    requestedOperation: appleAuth.Operation.LOGIN,
+    requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
   });
-
   // get current authentication state for user
+  // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
   const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
 
   // use credentialState response to ensure the user is authenticated
-  if (credentialState === AppleAuthCredentialState.AUTHORIZED) {
-    // user is authenticated
+  if (credentialState === appleAuth.State.AUTHORIZED) {
+    appleAuthRequestResponse.identityToken;
   }
 };
 const Login = ({}) => {
@@ -35,6 +30,13 @@ const Login = ({}) => {
   const [loginModal, setLoginModal] = useState(false);
   const [source, setSource] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
+    return appleAuth.onCredentialRevoked(async () => {
+      console.warn('If this function executes, User Credentials have been Revoked');
+    });
+  }, []); // passing in an empty array as the second argument ensures this is only ran once when component mounts initially.
 
   //실행시 구글 로그인 설정 + 로그인 확인 코드
   useEffect(() => {
