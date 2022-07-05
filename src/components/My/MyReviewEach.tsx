@@ -4,6 +4,7 @@ import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Colors} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {DesignSystem} from '../../assets/DesignSystem';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type MyReviewEachProps = {
   name: string;
@@ -33,7 +34,9 @@ export const MyReviewEach: FC<MyReviewEachProps> = ({name, date, rate, content, 
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.stars]}>
-                    <Text>{rate}⭐⭐⭐⭐⭐⭐⭐⭐</Text>
+                {[...Array(rate)].map((e, i) => (
+                  <Icon name="star" size={18} color={'#FFDE69'} />
+                ))}
                 </View>
                 <View style={[styles.reviewContents]}>
                     <Text style={{fontFamily: 'Pretendard-Light', fontSize: 16, color: 'black'}}>{content}</Text>

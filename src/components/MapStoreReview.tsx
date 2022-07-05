@@ -3,6 +3,7 @@ import type {FC} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {DesignSystem} from '../assets/DesignSystem';
 
 type MapStoreReviewProps = {
   images: {uri: string; id: number}[] | [];
@@ -45,13 +46,24 @@ export const MapStoreReview: FC<MapStoreReviewProps> = ({
         <Text>{date}</Text>
       </View>
       <View style={[styles.reviewRow2]}>
-        <Icon name="star" size={18} color={'#6C69FF'} />
+        <Icon name="star" size={18} color={'#FFDE69'} />
         <Text style={[styles.reviewRate]}>{rate}</Text>
       </View>
       <View style={[styles.reviewRow3]}>
         <Text style={[styles.reviewText]}>{review}</Text>
       </View>
       {renderedImage(images)}
+      {reply !== null && (
+        <View style={{width: '100%', marginTop: 12}}>
+          <View style={{flexDirection: 'row', marginBottom: 8}}>
+            <Text style={[styles.replyHeader]}>사장님 답글</Text>
+            <Text style={[styles.replyDate]}>{reply.date}</Text>
+          </View>
+          <View style={[styles.replyComment]}>
+            <Text style={[DesignSystem.body2Lt, DesignSystem.grey17]}>{reply.comment}</Text>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -92,5 +104,20 @@ const styles = StyleSheet.create({
   imageSize: {
     height: 80,
     width: 80,
+  },
+  replyHeader: {
+    color: '#7D7D7D',
+    marginRight: 8,
+    fontFamily: 'Pretendard-Light',
+    fontSize: 14,
+    lineHeight: 14,
+  },
+  replyDate: {color: '#B7B7B7', fontFamily: 'Pretendard-Light', fontSize: 14, lineHeight: 14},
+  replyComment: {
+    borderColor: '#DFDFDF',
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
 });

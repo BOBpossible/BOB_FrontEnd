@@ -46,6 +46,7 @@ const dummyReviews = [
     rate: 3,
     images: [],
     review: '너무 맛있어요! 최고!',
+    reply: null,
   },
   {
     name: '김진범',

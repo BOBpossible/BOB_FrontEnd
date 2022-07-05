@@ -27,7 +27,7 @@ export const MapStoreInfo: FC<MapStoreInfoProps> = ({
       <View style={[styles.flexRow, styles.rowSeperate]}>
         <Text style={[styles.storeTime]}>{storeTime}</Text>
         <View style={[styles.flexRow, styles.rateMargin]}>
-          <Icon name="star" size={14} color={'#6C69FF'} />
+          <Icon name="star" size={14} color={'#FFDE69'} />
           <Text style={[styles.storeRate]}>{storeRate}</Text>
         </View>
       </View>
