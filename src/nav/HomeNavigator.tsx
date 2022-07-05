@@ -9,6 +9,7 @@ export type HomeStackParamList = {
   Main: undefined;
   HomeMissionDetails: undefined;
   Notifications: undefined;
+  Mission: {missionId: string};
 };
 
 const Stack = createStackNavigator<HomeStackParamList>();

@@ -10,6 +10,7 @@ type MapStoreReviewProps = {
   date: string;
   rate: number;
   review: string;
+  reply: {date: string; comment: string} | null;
   openPhotoModal: (imageSource: string) => void;
 };
 
@@ -19,6 +20,7 @@ export const MapStoreReview: FC<MapStoreReviewProps> = ({
   date,
   rate,
   review,
+  reply,
   openPhotoModal,
 }) => {
   const renderedImage = (imagedata: {uri: string; id: number}[]) => {

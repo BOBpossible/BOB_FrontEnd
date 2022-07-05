@@ -69,7 +69,7 @@ export const HomeMissionDetails = ({navigation}: Props) => {
           <TouchableOpacity
             onPress={() => {
               navigation.pop();
-              navigation.navigate('Mission');
+              navigation.navigate('Mission', {missionId: 1});
             }}
             style={[styles.missionButton]}
           >

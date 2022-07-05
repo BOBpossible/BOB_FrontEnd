@@ -43,7 +43,7 @@ const Main = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView edges={['top']}>
+    <SafeAreaView edges={['top']} style={{flex: 1, backgroundColor: '#F6F6FA'}}>
       <AnimatedHeader animatedValue={offset} paddingTop={insets.top} />
       <Animated.FlatList
         showsVerticalScrollIndicator={false}

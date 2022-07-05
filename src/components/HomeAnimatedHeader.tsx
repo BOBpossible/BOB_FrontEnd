@@ -22,7 +22,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   //헤더 길이 바꿔주는 애니메이션 Main.tsx의 스크롤 위치에 따라 변한다
   const heightAnimStyle = useStyle({
     height: animatedValue.interpolate({
-      inputRange: [0, HEADER_HEIGHT - 100], //스크롤100 까지는 같은 속도로 스크롤 업
+      inputRange: [0, HEADER_HEIGHT - 90], //스크롤100 까지는 같은 속도로 스크롤 업
       outputRange: [HEADER_HEIGHT + paddingTop, 110 + paddingTop], //아이폰을 위한 insets.top 추가
       extrapolate: 'clamp',
     }),
@@ -87,7 +87,18 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     return (
       <Animated.View style={[styles.circleWrap, circleAnimStyle]}>
         <CircleBar radius={60} progress={7} />
-        <Text style={[DesignSystem.body2Lt, {marginTop: 8, marginBottom: 14, fontWeight: '500'}]}>
+        <Text
+          style={[
+            DesignSystem.grey17,
+            {
+              marginTop: 8,
+              marginBottom: 14,
+              fontFamily: 'Pretendard-Medium',
+              fontSize: 13,
+              lineHeight: 22,
+            },
+          ]}
+        >
           미션 10개 달성시 1000P
         </Text>
       </Animated.View>
@@ -107,7 +118,14 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
             <Text style={[styles.shrinkHeaderTextThree]}>10</Text>
           </View>
         </View>
-        <Text>미션 10개 달성시 1,000P</Text>
+        <View>
+          <Text>
+            <Text style={[styles.shrinkHeaderMissionText, DesignSystem.grey10]}>
+              미션 10개 달성시
+            </Text>
+            <Text style={[styles.shrinkHeaderMissionText, DesignSystem.purple5]}> 1,000P</Text>
+          </Text>
+        </View>
       </Animated.View>
     );
   };
@@ -161,16 +179,18 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     backgroundColor: 'white', ////
-    shadowColor: '#000',
+    shadowColor: '#000C8A',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 0,
     },
-    shadowOpacity: 0.35,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 3,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
+    borderColor: '#E8E8E8',
+    borderWidth: 1,
   },
   flexRow: {
     flexDirection: 'row',
@@ -244,7 +264,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: WIDTH - 32, //alignItems: center 당할 뷰 라서 옆 마진 16+16 을 빼주면 알아서 마진: 16 을 한 효과가 나타날것
-    marginBottom: 6,
   },
   shrinkHeaderTextWrap: {
     flexDirection: 'row',
@@ -267,6 +286,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard-Light',
     fontWeight: '200',
     color: '#7D7D7D',
+  },
+  shrinkHeaderMissionText: {
+    fontSize: 12,
+    lineHeight: 20,
+    fontFamily: 'Pretendard-Medium',
   },
   howtoText: {
     fontSize: 14,

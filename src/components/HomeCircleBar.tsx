@@ -29,7 +29,7 @@ export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
       position: 'absolute',
     },
     progressText: {
-      fontFamily: 'Pretendard-Medium',
+      fontFamily: 'Pretendard-Light',
       fontSize: 45,
       fontWeight: '200',
       color: '#111111',
@@ -55,7 +55,6 @@ export const CircleBar: FC<CircleBarProps> = ({radius, progress}) => {
     progressTotalText: {
       fontFamily: 'Pretendard-Light',
       fontSize: 18,
-      fontWeight: '200',
       color: '#7D7D7D',
     },
   });
