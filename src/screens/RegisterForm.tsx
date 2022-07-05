@@ -52,7 +52,7 @@ const RegisterForm = ({navigation, route}: Props) => {
         style={[{flex: 1}]}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <ScrollView style={[styles.flex, styles.formWrap]}>
+        {/* <ScrollView style={[styles.flex, styles.formWrap]}>
           <Controller
             control={control}
             rules={{
@@ -139,9 +139,9 @@ const RegisterForm = ({navigation, route}: Props) => {
           {errors.address?.type === 'required' && (
             <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
           )}
-        </ScrollView>
+        </ScrollView> */}
       </KeyboardAvoidingView>
-      <RegisterNextButton goNext={handleSubmit(onSubmit)} buttonState={isValid ? 1 : 0} />
+      <RegisterNextButton goNext={handleSubmit(onSubmit)} buttonState={1} />
     </SafeAreaView>
   );
 };

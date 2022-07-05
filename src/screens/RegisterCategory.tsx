@@ -64,7 +64,8 @@ const RegisterCategory = ({navigation, route}: Props) => {
   const goNext = () => {
     postRegister();
     postCategories();
-    navigation.reset({routes: [{name: 'MainNavigator'}]});
+    // navigation.reset({routes: [{name: 'MainNavigator'}]});
+    navigation.navigate('RegisterDone');
   };
   const goBack = () => {
     navigation.navigate('RegisterForm', {registerData});
