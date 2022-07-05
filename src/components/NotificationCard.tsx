@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {Colors} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native';
+import {DesignSystem} from '../assets/DesignSystem';
 
 export type NotificationCardProps = {
   isNewMission: boolean; //미션알림1인지 리뷰남기란 알림0인지
@@ -15,30 +14,28 @@ export type NotificationCardProps = {
 
 //prettier-ignore
 export const NotificationCard: FC<NotificationCardProps> = ({isNewMission, storeName, storeId, mission, date, status }) => {
-  const navigation = useNavigation();
-
   return (
     <>
     {isNewMission === true ?
       <TouchableOpacity style={[styles.notiCard, status === 0 && {opacity: 0.5 }]}>
         <View style={[styles.notiWrap]}>
-          <View style={status ===1 ? [styles.dot] : [styles.noDot]}>
+          <View style={status === 1 ? [styles.dot] : [styles.noDot]}>
           </View>
           <View style={[styles.notiView]}>
-            <Text style={[styles.message]}>새로운 미션이 도착했습니다.</Text>
-            <Text style={[styles.mission]}><Text style={{color: '#6C69FF'}}>{storeName}</Text>에서 {mission}의 식사를 하세요!</Text>
+            <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>새로운 미션이 도착했습니다.</Text>
+            <Text style={[DesignSystem.body1Lt, DesignSystem.grey10]}><Text style={{color: '#6C69FF'}}>{storeName}</Text>에서 {mission}의 식사를 하세요!</Text>
             <Text style={[styles.date]}>{date}</Text>
           </View>
         </View>
       </TouchableOpacity>
       :
-      <TouchableOpacity style={[styles.notiCard, status === 0 && {opacity: 0.5 }]}>
+      <TouchableOpacity style={[styles.notiCard, status === 0 && {opacity: 0.5 }]} onPress={() => {}}>
         <View style={[styles.notiWrap]}>
           <View style={status ===1 ? [styles.dot] : [styles.noDot]}>
           </View>
           <View style={[styles.notiView]}>
-            <Text style={[styles.message]}>리뷰를 남겨주세요.</Text>
-            <Text style={[styles.mission]}><Text style={{color: '#6C69FF'}}>{storeName}</Text>의 음식이 맛있었다면 리뷰를 남겨주세요.</Text>
+            <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>리뷰를 남겨주세요.</Text>
+            <Text style={[DesignSystem.body1Lt, DesignSystem.grey10]}><Text style={{color: '#6C69FF'}}>{storeName}</Text>의 음식이 맛있었다면 리뷰를 남겨주세요.</Text>
             <Text style={[styles.date]}>{date}</Text>
           </View>
         </View>
