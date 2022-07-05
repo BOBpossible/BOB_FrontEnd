@@ -157,7 +157,12 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
         {shrinkHeader()}
         {expandHeader()}
       </View>
-      <TouchableOpacity style={[{position: 'absolute', top: 60 + paddingTop, right: 20}]}>
+      <TouchableOpacity
+        style={[{position: 'absolute', top: 60 + paddingTop, right: 20}]}
+        onPress={() => {
+          navigation.navigate('HowTo1');
+        }}
+      >
         <Animated.View style={[howtoAnimStyle, styles.flexRow]}>
           <Text style={[DesignSystem.body1Lt, DesignSystem.grey8]}>사용방법</Text>
           <View style={[styles.questionWrap]}>
