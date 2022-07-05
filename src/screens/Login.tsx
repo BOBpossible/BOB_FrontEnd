@@ -7,23 +7,9 @@ import SocialWebviewModal from '../modal/SocialWebviewModal';
 import {useRecoilState} from 'recoil';
 import {userToken} from '../state';
 import auth from '@react-native-firebase/auth';
+import axios from 'axios';
 import {GoogleSignin, GoogleSigninButton} from '@react-native-google-signin/google-signin';
 
-const onAppleButtonPress = async () => {
-  // performs login request
-  const appleAuthRequestResponse = await appleAuth.performRequest({
-    requestedOperation: appleAuth.Operation.LOGIN,
-    requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-  });
-  // get current authentication state for user
-  // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
-  const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
-
-  // use credentialState response to ensure the user is authenticated
-  if (credentialState === appleAuth.State.AUTHORIZED) {
-    appleAuthRequestResponse.identityToken;
-  }
-};
 const Login = ({}) => {
   const navigation = useNavigation();
   const [token, setToken] = useRecoilState(userToken);
@@ -64,6 +50,24 @@ const Login = ({}) => {
   const signUpWithSNS = async (social: string) => {
     setSource(`https://bobpossible.shop/oauth2/authorization/${social}`);
     setLoginModal(true);
+  };
+
+  const onAppleButtonPress = async () => {
+    // performs login request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+    // get current authentication state for user
+    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user,
+    );
+
+    // use credentialState response to ensure the user is authenticated
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      const {identityToken, name, email} = appleAuthRequestResponse;
+    }
   };
 
   //
