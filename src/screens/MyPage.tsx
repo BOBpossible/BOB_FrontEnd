@@ -1,8 +1,9 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MyUser} from '../components/My/MyUser';
 import {useNavigation} from '@react-navigation/native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const MyPage = () => {
   const navigation = useNavigation();
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
   },
   userWrap: {
     width: '100%',
-    height: 68,
+    height: hp('9%'),
     backgroundColor: '#FFFFFF',
     marginBottom: 1,
     justifyContent: 'center',
