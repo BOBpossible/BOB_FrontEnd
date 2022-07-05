@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, Text, TextInput, View, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
 
 export const MyWriteInquiry = () => {
   const [focusedTitle, setFocusedTitle] = useState(false);
@@ -13,55 +15,60 @@ export const MyWriteInquiry = () => {
   return (
     <View style={[styles.totalWrap]}>
       <View style={{flex: 1}}>
-        <View style={[styles.titleWrap]}>
-          <TextInput
-            style={[styles.nameInput, focusedTitle ? styles.focusBorder : styles.unfocusBorder]}
-            onChangeText={(text) => {
-              setTitle(text);
-            }}
-            value={title}
-            placeholder="문의 제목 입력"
-            selectionColor={'#6C69FF'}
-            onBlur={() => setFocusedTitle(false)}
-            onFocus={() => setFocusedTitle(true)}
-          />
-          <TouchableOpacity onPress={() => setTitle('')} style={[styles.titleXView]}>
-            <Image
-              source={require('../../assets/images/closeCircle.png')}
-              style={[styles.titleX]}
+        <KeyboardAvoidingView
+          style={[{flex: 1}]}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <View style={[styles.titleWrap]}>
+            <TextInput
+              style={[styles.nameInput, focusedTitle ? styles.focusBorder : styles.unfocusBorder]}
+              onChangeText={(text) => {
+                setTitle(text);
+              }}
+              value={title}
+              placeholder="문의 제목 입력"
+              selectionColor={'#6C69FF'}
+              onBlur={() => setFocusedTitle(false)}
+              onFocus={() => setFocusedTitle(true)}
             />
-          </TouchableOpacity>
-        </View>
-        <View style={[styles.bodyWrap]}>
-          <TextInput
-            style={[styles.bodyInput]}
-            onChangeText={(text) => {
-              setBody(text);
-            }}
-            value={body}
-            placeholder="문의 내용 작성"
-            multiline={true}
-            selectionColor={'#6C69FF'}
-            onBlur={() => setFocusedBody(false)}
-            onFocus={() => setFocusedBody(true)}
-          />
-        </View>
+            <TouchableOpacity onPress={() => setTitle('')} style={[styles.titleXView]}>
+              <Image
+                source={require('../../assets/images/closeCircle.png')}
+                style={[styles.titleX]}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={[styles.bodyWrap]}>
+            <TextInput
+              style={[styles.bodyInput]}
+              onChangeText={(text) => {
+                setBody(text);
+              }}
+              value={body}
+              placeholder="문의 내용 작성"
+              multiline={true}
+              selectionColor={'#6C69FF'}
+              onBlur={() => setFocusedBody(false)}
+              onFocus={() => setFocusedBody(true)}
+            />
+          </View>
+        </KeyboardAvoidingView>
+        <TouchableOpacity
+          onPress={handleSubmit}
+          style={[styles.buttonWrap]}
+          disabled={title !== '' && body !== '' ? false : true}
+        >
+          {title !== '' && body !== '' ? (
+            <View style={[styles.buttonStyle, styles.activeButton]}>
+              <Text style={[styles.activeButtonText]}>문의하기</Text>
+            </View>
+          ) : (
+            <View style={[styles.buttonStyle, styles.inactiveButton]}>
+              <Text style={[styles.inactiveButtonText]}>문의하기</Text>
+            </View>
+          )}
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        onPress={handleSubmit}
-        style={[styles.buttonWrap]}
-        disabled={title !== '' && body !== '' ? false : true}
-      >
-        {title !== '' && body !== '' ? (
-          <View style={[styles.buttonStyle, styles.activeButton]}>
-            <Text style={[styles.activeButtonText]}>문의하기</Text>
-          </View>
-        ) : (
-          <View style={[styles.buttonStyle, styles.inactiveButton]}>
-            <Text style={[styles.inactiveButtonText]}>문의하기</Text>
-          </View>
-        )}
-      </TouchableOpacity>
     </View>
   );
 };
@@ -79,7 +86,7 @@ const styles = StyleSheet.create({
   },
   nameInput: {
     width: '100%',
-    height: 44,
+    height: hp(calHeight(44)),
     borderRadius: 10,
     paddingLeft: 8,
     paddingRight: 8,
@@ -95,20 +102,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   titleXView: {
-    width: 18,
-    height: 18,
-    right: 26,
+    width: wp(calWidth(18)),
+    height: hp(calHeight(18)),
+    right: wp(calWidth(26)),
   },
   titleX: {
-    width: 18,
-    height: 18,
+    width: wp(calWidth(18)),
+    height: hp(calHeight(18)),
   },
   bodyWrap: {
     marginTop: 16,
   },
   bodyInput: {
     width: '100%',
-    height: 220,
+    height: hp(calHeight(220)),
     backgroundColor: '#F5F5F5',
     borderRadius: 10,
     paddingLeft: 8,
@@ -120,10 +127,10 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   //
-  buttonWrap: {justifyContent: 'center', alignItems: 'center', marginBottom: 20},
+  buttonWrap: {justifyContent: 'center', alignItems: 'center', marginBottom: 16},
   buttonStyle: {
     width: '100%',
-    height: 56,
+    height: hp(calHeight(56)),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,

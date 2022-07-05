@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, FlatList} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
 import {MyHeader} from '../components/My/MyHeader';
@@ -34,7 +34,7 @@ const dummyMission = [
       },
     ],
     name: '가게이름2',
-    rate: 5,
+    rate: 3,
     reply: [
       {
         date: '2022-07-03T11:09:37.593Z',
@@ -92,11 +92,9 @@ export const MyReview = ({navigation}: Props) => {
   };
   return (
     <SafeAreaView style={[styles.flex]}>
-      <MyHeader goBack={goBack} title={'리뷰'} />
+      <MyHeader goBack={goBack} title={'리뷰 관리'} />
       <FlatList
-        // style={{marginLeft: 16, marginRight: 16,}}
         showsVerticalScrollIndicator={false}
-        // contentContainerStyle={{paddingBottom: 60}}
         scrollEventThrottle={10}
         data={dummyMission}
         renderItem={({item}) => (

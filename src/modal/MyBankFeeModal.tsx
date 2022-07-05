@@ -28,9 +28,9 @@ const MyBankModal: FC<MyBankFeeModalProps> = ({visible, closeBankFeeModal}) => {
         </TouchableWithoutFeedback>
         <View style={[styles.modalContainer, {marginBottom: MARGINBOTTOM}]}>
           <View style={[styles.contentWrap]}>
-            <View style={[styles.textWrap]}>
+            <View>
               <Text style={[styles.title1SB]}>입금신청 안내</Text>
-              <Text style={[styles.body1Lt, {marginTop: 10, marginBottom: 10}]}>입금시 수수료 500포인트가 차감됩니다.</Text>
+              <Text style={[styles.body1Lt, {marginTop: 10, marginBottom: 10}]}>입금 수수료 500포인트가 차감됩니다.</Text>
             </View>
             <View style={[styles.buttonWrap]}>
               <TouchableOpacity style={[styles.buttonStyle, styles.cancelButton]} onPress={closeBankFeeModal}>
@@ -81,9 +81,6 @@ const styles = StyleSheet.create({
     margin: 20,
     flexDirection: 'column',
   },
-  textWrap: {
-
-  },
   buttonWrap: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -100,6 +97,6 @@ const styles = StyleSheet.create({
     borderColor: '#949494',
   },
   okButton: {
-    backgroundColor: '#6C69FF',
+    backgroundColor: '#2A2A2A',
   },
 });

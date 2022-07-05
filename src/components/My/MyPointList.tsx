@@ -1,16 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import moment from 'moment';
 import {DesignSystem} from '../../assets/DesignSystem';
 
+export type MyPointListProps = {
+  date: string;
+  title: string;
+  subTitle?: string;
+  point: number;
+};
+
 //prettier-ignore
-export const MyPointList = () => {
-  // 서버연결 후 수정
-  const date = '2022-12-03T16:01:34.864Z';
-  const point = -500;
-  const title = '밥플레이스';
-  const subTitle = '20000원 이상 식사';
-  //
+export const MyPointList: FC<MyPointListProps> = ({date, title, subTitle, point}) => {
   const formatDate = new moment(date.slice(0,10), 'YYYY-MM-DD').format('YYMMDD');
   const month = formatDate.slice(2,3) === '0' ? formatDate.slice(3,4) : formatDate.slice(2,4);
   const day = formatDate.slice(4,5) === '0' ? formatDate.slice(5,6) : formatDate.slice(4,6);
@@ -23,8 +24,7 @@ export const MyPointList = () => {
         <View style={[styles.listDetailsWrap]}>
             <View style={[styles.listMissionWrap]}>
                 <Text style={[styles.storeNameText, DesignSystem.title3SB]}>{title}</Text>
-                <Text style={[styles.missionText], {fontFamily: 'Pretendard-Light'}}>{subTitle}</Text>
-                {/* <Text style={[styles.missionText], {point > 0 ? fontFamily: 'Pretendard-Light' : fontFamily: 'Pretendard-Light' }}>{subTitle}</Text> */}
+                {subTitle !== undefined && (<Text style={[styles.missionText, {fontFamily: 'Pretendard-Light'}]}>{subTitle}</Text>)}
             </View>
             <View style={[styles.listPointWrap]}>
                 {point > 0 ?

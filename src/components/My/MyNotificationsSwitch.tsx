@@ -9,6 +9,8 @@ export type MyNotificationsSwitchProps = {
   onValueChange: () => void;
 };
 
+//호출하지 않는 컴포넌트임.
+
 export const MyNotificationsSwitch: FC<MyNotificationsSwitchProps> = ({text, value, onValueChange}) => {
   return (
     <View>

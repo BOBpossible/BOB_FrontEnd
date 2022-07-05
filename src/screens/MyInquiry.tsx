@@ -7,6 +7,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {MyWriteInquiry} from '../components/My/MyWriteInquiry';
 import {MyInquiryList} from '../components/My/MyInquiryList';
 import {DesignSystem} from '../assets/DesignSystem';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight} from '../assets/CalculateLength';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyInquiry'>;
 
@@ -26,7 +28,7 @@ export const MyInquiry = ({navigation}: Props) => {
           <Text
             style={
               nowWrite
-                ? [DesignSystem.title3SB, DesignSystem.grey17]
+                ? [DesignSystem.title4Md, DesignSystem.grey17]
                 : [DesignSystem.body1Lt, DesignSystem.grey8]
             }
           >
@@ -40,7 +42,7 @@ export const MyInquiry = ({navigation}: Props) => {
           <Text
             style={
               !nowWrite
-                ? [DesignSystem.title3SB, DesignSystem.grey17]
+                ? [DesignSystem.title4Md, DesignSystem.grey17]
                 : [DesignSystem.body1Lt, DesignSystem.grey8]
             }
           >
@@ -59,7 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    height: 50,
+    height: hp(calHeight(50)),
     backgroundColor: '#F6F6F6',
   },
   now: {
@@ -72,8 +74,6 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',
-  },
-  myInquiryList: {
-
+    backgroundColor: '#F6F6F6',
   },
 });

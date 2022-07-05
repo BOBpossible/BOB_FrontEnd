@@ -2,6 +2,8 @@ import React, {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../../assets/DesignSystem';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
 
 export type goWriteProps = {
   goWrite: () => void;
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     bottom: 0,
-    marginBottom: 20,
+    marginBottom: 16,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -31,8 +33,8 @@ const styles = StyleSheet.create({
     borderRadius: 20.5,
     borderColor: '#E8E8E8',
     borderWidth: 1,
-    width: 178,
-    height: 41,
+    width: wp(calWidth(178)),
+    height: hp(calHeight(41)),
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#2A2A2A',

@@ -2,6 +2,8 @@ import React from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {DesignSystem} from '../../assets/DesignSystem';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calWidth} from '../../assets/CalculateLength';
 
 export type MyInquiryDetailsProps = {
   title: string;
@@ -32,10 +34,6 @@ export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, body, date, 
 };
 
 const styles = StyleSheet.create({
-  title4Md: {
-    fontSize: 16,
-    fontFamily: 'Pretendard-Medium',
-  },
   listDetailsWrap: {
     flex: 1,
     flexDirection: 'row',
@@ -44,7 +42,7 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   listLeftWrap: {
-    width: 250,
+    width: wp(calWidth(250)),
   },
   titleText: {
     color: '#000000',
