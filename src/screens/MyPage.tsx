@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MyUser} from '../components/My/MyUser';
 import {useNavigation} from '@react-navigation/native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {DesignSystem} from '../assets/DesignSystem';
+import {calHeight} from '../assets/CalculateLength';
 
 const MyPage = () => {
   const navigation = useNavigation();
@@ -28,34 +30,34 @@ const MyPage = () => {
   //
 
   return (
-    <View style={[styles.flex]}>
+    <SafeAreaView style={[styles.flex, {backgroundColor: '#F8F8F8'}]}>
       <View style={[styles.headerWrap]}>
         <View style={[styles.header]}>
-          <Text style={[styles.headerText]}>마이페이지</Text>
+          <Text style={[styles.headerText, DesignSystem.h2SB]}>마이페이지</Text>
         </View>
       </View>
       <MyUser authentication={authentication} email={email} name={name} point={point} />
       <TouchableOpacity onPress={() => navigation.navigate('MyReview')}>
         <View style={[styles.userWrap]}>
-          <Text style={[styles.userMenu]}>리뷰 관리</Text>
+          <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>리뷰 관리</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('MyNotificationsSetting')}>
         <View style={[styles.userWrap]}>
-          <Text style={[styles.userMenu]}>알림 설정</Text>
+          <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>알림 설정</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('MyInquiry')}>
         <View style={[styles.userWrap]}>
-          <Text style={[styles.userMenu]}>1:1 문의</Text>
+          <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>1:1 문의</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={logout}>
         <View style={[styles.userWrap]}>
-          <Text style={[styles.userMenu]}>로그아웃</Text>
+          <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>로그아웃</Text>
         </View>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -72,23 +74,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerText: {
-    fontSize: 17,
     color: 'black',
     marginLeft: 16,
     marginRight: 16,
-    fontWeight: '600',
   },
   userWrap: {
     width: '100%',
-    height: hp('9%'),
+    height: hp(calHeight(68)),
     backgroundColor: '#FFFFFF',
     marginBottom: 1,
     justifyContent: 'center',
-  },
-  userMenu: {
-    marginLeft: 22,
-    fontSize: 16,
-    color: '#111111',
   },
 });
 

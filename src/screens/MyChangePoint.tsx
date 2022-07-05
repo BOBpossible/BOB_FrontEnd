@@ -8,6 +8,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MyBankModal from '../modal/MyBankModal';
 import MyBankFeeModal from '../modal/MyBankFeeModal';
 import {DesignSystem} from '../assets/DesignSystem';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../assets/CalculateLength';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyChangePoint'>;
 
@@ -43,7 +45,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
             <View style={[styles.titleNinput]}>
               <Text style={[DesignSystem.title4Md, {color: 'black'}]}>전환할 포인트</Text>
               <View style={{flexDirection: 'row-reverse', marginBottom: 2}}>
-                <Text style={{marginRight: 8,color: '#6C69FF',fontFamily: 'Pretendard-Regular',fontSize: 12}}>
+                <Text style={[styles.myPointText]}>
                   내 포인트 {point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
                 </Text>
               </View>
@@ -72,7 +74,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
               <Text style={[styles.caption1Light]}>또한, 송금 수수료 500P가 차감됩니다.</Text>
             </View>
             <View style={[styles.titleNinput]}>
-              <Text style={[styles.title4Md, {marginBottom: 8}]}>예금주</Text>
+              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 8}]}>예금주</Text>
               <TextInput
                 style={[styles.inputText, focusedName ? styles.focusBorder : styles.unfocusBorder]}
                 onChangeText={(text) => {
@@ -85,7 +87,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
               />
             </View>
             <View style={[styles.titleNinput]}>
-              <Text style={[styles.title4Md, {marginBottom: 8}]}>은행</Text>
+              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 8}]}>은행</Text>
               <TouchableOpacity
                 onPress={() => setOpenBankModal(true)}
                 style={[
@@ -101,7 +103,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
               </TouchableOpacity>
             </View>
             <View style={[styles.titleNinput]}>
-              <Text style={[styles.title4Md, {marginBottom: 8}]}>계좌 번호</Text>
+              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 8}]}>계좌 번호</Text>
               <TextInput
                 style={[styles.inputText, focusedAccounts ? styles.focusBorder : styles.unfocusBorder]}
                 onChangeText={(text) => {
@@ -129,9 +131,16 @@ export const MyChangePoint = ({navigation, route}: Props) => {
               <Text style={[styles.activeButtonText]}>입금신청</Text>
             </View>
           ) : (
-            <View style={[styles.buttonStyle, styles.inactiveButton]}>
-              <Text style={[styles.inactiveButtonText]}>입금신청</Text>
-            </View>
+            <>
+              <View style={[styles.fillAlarm]}>
+                <TouchableOpacity style={[styles.progressToggle]}>
+                  <Text style={[DesignSystem.caption1Lt, {color: 'white'}]}>정보작성을 완료해주세요.</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={[styles.buttonStyle, styles.inactiveButton]}>
+                <Text style={[styles.inactiveButtonText]}>입금신청</Text>
+              </View>
+            </>
           )}
         </TouchableOpacity>
       </View>
@@ -168,22 +177,28 @@ const styles = StyleSheet.create({
   titleNinput: {
     marginBottom: 24,
   },
+  myPointText: {
+    marginRight: 8,
+    color: '#6C69FF',
+    fontFamily: 'Pretendard-Regular',
+    fontSize: 12,
+    lineHeight: 20,
+  },
   inputText: {
     width: '100%',
-    height: 44,
+    height: hp(calHeight(44)),
     borderRadius: 10,
     paddingLeft: 8,
     paddingRight: 8,
     paddingTop: 10,
     paddingBottom: 10,
-    color: '#111111',
   },
   focusBorder: {borderColor: '#6C69FF', borderWidth: 1},
   unfocusBorder: {borderColor: '#DFDFDF', borderWidth: 1},
-  buttonWrap: {justifyContent: 'center', alignItems: 'center', marginBottom: 20},
+  buttonWrap: {justifyContent: 'center', alignItems: 'center', marginBottom: 16},
   buttonStyle: {
     width: '100%',
-    height: 56,
+    height: hp(calHeight(56)),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
@@ -199,5 +214,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Pretendard-Medium',
     color: '#C8C8C8',
+  },
+  fillAlarm: {
+    width: '100%',
+    marginBottom: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  progressToggle: {
+    borderRadius: 20.5,
+    borderColor: '#E8E8E8',
+    borderWidth: 1,
+    width: wp(calWidth(214)),
+    height: hp(calHeight(32)),
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#2A2A2A',
+    flexDirection: 'row',
   },
 });

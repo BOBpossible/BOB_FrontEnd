@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Image, Text, TouchableOpacity, TextInput} from 'react-native';
+import {View, StyleSheet, Image, Text, TouchableOpacity, TextInput, SafeAreaView} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../nav/MyNavigator';
 import {MyHeader} from '../components/My/MyHeader';
@@ -21,55 +21,58 @@ export const MyEditUserInfo = ({navigation, route}: Props) => {
   }
 
   return (
-    <View style={[styles.flex]}>
-      <MyHeader
-        goBack={goBack}
-        title={'회원정보 수정'}
-        save={() => {
-          //변경한 정보를 서버에 보내기 로직
-          console.log('저장');
-        }}
-      />
-      <View style={[styles.userInfoProfile]}>
-        <TouchableOpacity onPress={editProfileImg} style={[styles.profileWrap]}>
-          <Image
-            style={[styles.profileImg]}
-            source={require('../assets/images/bobProfile.png')} //
-          />
-          <Image
-            style={[styles.editPen]}
-            source={require('../assets/images/editPen.png')} //
-          />
-        </TouchableOpacity>
-        <Text style={[styles.usernameText]}>{username}님</Text>
-      </View>
-      <View style={[styles.userInfoEdit]}>
-        <View style={[styles.userInfoEditContent]}>
-          <View style={[styles.emailNinput]}>
-            <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom:8}]}>이메일</Text>
-            <TextInput
-              style={[styles.inputText, focusedEmail ? styles.focusBorder : styles.unfocusBorder]}
-              onChangeText={(text) => {
-                setEmail(text);
-              }}
-              value={email.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-              onBlur={() => setFocusedEmail(false)}
-              onFocus={() => setFocusedEmail(true)}
+    <>
+      <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
+      <SafeAreaView style={[styles.flex, {backgroundColor: '#F8F8F8'}]}>
+        <MyHeader
+          goBack={goBack}
+          title={'회원정보 수정'}
+          save={() => {
+            //변경한 정보를 서버에 보내기 로직
+            console.log('저장');
+          }}
+        />
+        <View style={[styles.userInfoProfile]}>
+          <TouchableOpacity onPress={editProfileImg} style={[styles.profileWrap]}>
+            <Image
+              style={[styles.profileImg]}
+              source={require('../assets/images/bobProfile.png')} //
             />
-          </View>
-          <View style={[styles.phoneNinput]}>
-            <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom:8}]}>전화번호</Text>
-            <View style={[styles.phoneAuth]}>
-              <Text>🚨전화번호인증🚨</Text>
+            <Image
+              style={[styles.editPen]}
+              source={require('../assets/images/editPen.png')} //
+            />
+          </TouchableOpacity>
+          <Text style={[styles.usernameText]}>{username}님</Text>
+        </View>
+        <View style={[styles.userInfoEdit]}>
+          <View style={[styles.userInfoEditContent]}>
+            <View style={[styles.emailNinput]}>
+              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom:8}]}>이메일</Text>
+              <TextInput
+                style={[styles.inputText, focusedEmail ? styles.focusBorder : styles.unfocusBorder]}
+                onChangeText={(text) => {
+                  setEmail(text);
+                }}
+                value={email.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                onBlur={() => setFocusedEmail(false)}
+                onFocus={() => setFocusedEmail(true)}
+              />
             </View>
-            <Text style={[DesignSystem.caption1Lt, {color: '#E03D32', marginLeft: 8}]}>{auth}</Text>
+            <View style={[styles.phoneNinput]}>
+              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom:8}]}>전화번호</Text>
+              <View style={[styles.phoneAuth]}>
+                <Text>🚨전화번호인증🚨</Text>
+              </View>
+              <Text style={[DesignSystem.caption1Lt, {color: '#E03D32', marginLeft: 8}]}>{auth}</Text>
+            </View>
           </View>
         </View>
-      </View>
-      <TouchableOpacity onPress={() => console.log('탈퇴')} style={{alignItems: 'flex-end'}}>
-        <Text style={[styles.quitText]}>계정탈퇴</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity onPress={() => console.log('탈퇴')} style={{alignItems: 'flex-end'}}>
+          <Text style={[styles.quitText]}>계정탈퇴</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </>
   );
 };
 
