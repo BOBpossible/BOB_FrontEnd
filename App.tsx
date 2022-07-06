@@ -10,8 +10,12 @@ import {AuthNavigator} from './src/nav';
 import 'react-native-gesture-handler';
 import {enableScreens} from 'react-native-screens';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
 enableScreens();
+
+const queryClient = new QueryClient();
+
 export default function App() {
   const Stack = createStackNavigator();
   const [loading, setLoading] = useState(true); //스플래시 화면을 위한 boolean
@@ -40,20 +44,22 @@ export default function App() {
   };
 
   return (
-    <RecoilRoot>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{headerShown: false, gestureEnabled: false}}>
-            {loading ? (
-              <Stack.Screen name="Splash" component={Splash} />
-            ) : isLogin ? (
-              <Stack.Screen name="MainNavigator" component={MainNavigator} />
-            ) : (
-              <Stack.Screen name="AuthNavigation" component={AuthNavigator} />
-            )}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </RecoilRoot>
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{headerShown: false, gestureEnabled: false}}>
+              {loading ? (
+                <Stack.Screen name="Splash" component={Splash} />
+              ) : isLogin ? (
+                <Stack.Screen name="MainNavigator" component={MainNavigator} />
+              ) : (
+                <Stack.Screen name="AuthNavigation" component={AuthNavigator} />
+              )}
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </RecoilRoot>
+    </QueryClientProvider>
   );
 }

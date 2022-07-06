@@ -49,6 +49,7 @@
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^9.1.0",
     "react-native-webview": "^11.21.2",
+    "react-query": "^3.39.1",
     "recoil": "^0.7.3"
   },
   "devDependencies": {
