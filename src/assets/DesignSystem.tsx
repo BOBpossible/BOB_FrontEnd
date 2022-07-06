@@ -37,7 +37,7 @@ export const DesignSystem = StyleSheet.create({
     lineHeight: 28,
   },
   title2Regular: {
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: 'Pretendard-Regular',
     lineHeight: 28,
   },
@@ -54,7 +54,12 @@ export const DesignSystem = StyleSheet.create({
   body1Lt: {
     fontSize: 16,
     fontFamily: 'Pretendard-Light',
-    lineHeight: 16,
+    lineHeight: 24,
+  },
+  body1Long: {
+    fontSize: 16,
+    fontFamily: 'Pretendard-Light',
+    lineHeight: 26,
   },
   body2Lt: {
     fontSize: 14,

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, Dimensions, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomSheet, {BottomSheetFlatList, BottomSheetView} from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -43,7 +43,10 @@ const Map = () => {
   const [addressModal, setAddressModal] = useState(false);
   const [storeModal, setStoreModal] = useState(false);
   const [storeId, setStoreId] = useState(0);
+  const [noMission, setNoMission] = useState(true);
+  //미션개수 연동 후 삭제
 
+  const getRandom = () => Math.floor(Math.random() * (2 - 0)); //0 or 1
   const openRestaurantModal = async (id: number) => {
     await setStoreId(id);
     setStoreModal(true);
@@ -68,24 +71,37 @@ const Map = () => {
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
       >
         <BottomSheetView style={[styles.missionListTextWrap]}>
-          <Text style={[styles.missionListText]}>이번주 미션</Text>
+          <Text style={[DesignSystem.title3SB, {color: '#111111'}]}>이번주 미션</Text>
         </BottomSheetView>
-        <BottomSheetFlatList
-          showsVerticalScrollIndicator={false}
-          data={dummyMission}
-          renderItem={({item, index}) => (
-            <TouchableOpacity onPress={() => openRestaurantModal(item.storeId)} key={index}>
-              <MapStoreBottomSheet
-                storeName={item.name}
-                storeCategory={item.category}
-                point={item.point}
-                distance={item.distance}
-                image={item.image}
-              />
-            </TouchableOpacity>
-          )}
-          ItemSeparatorComponent={() => <View style={{marginTop: 4}} />}
-        />
+
+        {noMission ? (
+          <View style={[DesignSystem.centerArrange, {flex: 1, marginBottom: 50}]}>
+            <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2}]}>주변에 미션이 없어요🥺</Text>
+            <Text style={[DesignSystem.body1Lt, {color: '#949494', marginBottom: 38}]}>빠른 시일내에 미션을 업데이트 할게요!</Text>
+            {getRandom() ? (
+              <Image source={require('../assets/images/noMission/cryingBob.png')} />
+            ) : (
+              <Image source={require('../assets/images/noMission/cryingBobBowl.png')} />
+            )}
+          </View>
+        ) : (
+          <BottomSheetFlatList
+            showsVerticalScrollIndicator={false}
+            data={dummyMission}
+            renderItem={({item, index}) => (
+              <TouchableOpacity onPress={() => openRestaurantModal(item.storeId)} key={index}>
+                <MapStoreBottomSheet
+                  storeName={item.name}
+                  storeCategory={item.category}
+                  point={item.point}
+                  distance={item.distance}
+                  image={item.image}
+                />
+              </TouchableOpacity>
+            )}
+            ItemSeparatorComponent={() => <View style={{marginTop: 4}} />}
+          />
+        )}
       </BottomSheet>
     </SafeAreaView>
   );
@@ -109,10 +125,6 @@ const styles = StyleSheet.create({
   missionListTextWrap: {
     marginLeft: 16,
     marginBottom: 16,
-  },
-  missionListText: {
-    fontSize: 16,
-    fontWeight: '600',
   },
 });
 

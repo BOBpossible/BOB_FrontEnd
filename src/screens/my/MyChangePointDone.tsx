@@ -2,7 +2,7 @@ import React from 'react';
 //prettier-ignore
 import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {MyStackParamList} from '../nav/MyNavigator';
+import {MyStackParamList} from '../../nav/MyNavigator';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyChangePointDone'>;

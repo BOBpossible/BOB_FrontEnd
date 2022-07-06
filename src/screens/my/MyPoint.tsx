@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, FlatList} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {MyStackParamList} from '../nav/MyNavigator';
-import {MyHeader} from '../components/My/MyHeader';
-import {MyPointList} from '../components/My/MyPointList';
-import {DesignSystem} from '../assets/DesignSystem';
+import {MyStackParamList} from '../../nav/MyNavigator';
+import {MyHeader} from '../../components/My/MyHeader';
+import {MyPointList} from '../../components/My/MyPointList';
+import {DesignSystem} from '../../assets/DesignSystem';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {calHeight, calWidth} from '../assets/CalculateLength';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyPoint'>;
 

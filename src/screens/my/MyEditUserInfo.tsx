@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity, TextInput, SafeAreaView} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {MyStackParamList} from '../nav/MyNavigator';
-import {MyHeader} from '../components/My/MyHeader';
-import {DesignSystem} from '../assets/DesignSystem';
+import {MyStackParamList} from '../../nav/MyNavigator';
+import {MyHeader} from '../../components/My/MyHeader';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyEditUserInfo'>;
 
@@ -36,11 +36,11 @@ export const MyEditUserInfo = ({navigation, route}: Props) => {
           <TouchableOpacity onPress={editProfileImg} style={[styles.profileWrap]}>
             <Image
               style={[styles.profileImg]}
-              source={require('../assets/images/bobProfile.png')} //
+              source={require('../../assets/images/bobProfile.png')} //
             />
             <Image
               style={[styles.editPen]}
-              source={require('../assets/images/editPen.png')} //
+              source={require('../../assets/images/editPen.png')} //
             />
           </TouchableOpacity>
           <Text style={[styles.usernameText]}>{username}님</Text>
