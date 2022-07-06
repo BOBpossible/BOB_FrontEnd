@@ -15,11 +15,13 @@ import {ReviewWrite} from '../components/ReviewWrite';
 import axios from 'axios';
 import {useRecoilValue} from 'recoil';
 import {userToken} from '../state';
+import {DesignSystem} from '../assets/DesignSystem';
 
 type ReviewModalProps = {
   storeId: number;
   visible: boolean;
   closeReviewModal: () => void;
+  openDoneModal: () => void;
 };
 type imageData = {
   uri: string;
@@ -27,7 +29,7 @@ type imageData = {
   name: string;
 };
 
-const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId}) => {
+const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, openDoneModal}) => {
   const [rating, setRating] = useState(0);
   const [showRating, setShowRating] = useState(true);
   const [reviewContent, setReviewContent] = useState('');
@@ -82,6 +84,8 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
     const reviewResponse = postReviewContent();
     postReviewImages(reviewResponse);
     closeReviewModal();
+    //던모달 열기
+    openDoneModal();
   };
   return (
     <Modal visible={visible} animationType="fade">
@@ -103,9 +107,8 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
           {!showRating && (
             <>
               <View>
-                <Text style={[styles.storeHeaderText]}>반이학생마라탕</Text>
+                <Text style={[DesignSystem.title4Md, {color: '#000000'}]}>반이학생마라탕</Text>
               </View>
-
               <View style={[styles.backButton, {opacity: 0}]}>
                 <Icon name="arrow-left" size={24} color="black" />
               </View>
@@ -142,7 +145,7 @@ export default ReviewModal;
 const styles = StyleSheet.create({
   safeView: {flex: 1, backgroundColor: '#FFFFFF'},
   modalHeader: {
-    height: 40,
+    height: 50,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -150,11 +153,5 @@ const styles = StyleSheet.create({
   backButton: {
     marginLeft: 16,
     marginRight: 16,
-  },
-  storeHeaderText: {
-    fontFamily: 'Pretendard-Medium',
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#000000',
   },
 });

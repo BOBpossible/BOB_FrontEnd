@@ -1,4 +1,4 @@
-import React, {useState, useEffect, FC} from 'react';
+import React, {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import moment from 'moment';
 import {DesignSystem} from '../../assets/DesignSystem';
@@ -33,7 +33,6 @@ export const MyPointList: FC<MyPointListProps> = ({date, title, subTitle, point}
                 <Text style={[DesignSystem.title3SB, {color: '#B7B7B7'}]}>{point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P</Text>
                 }
             </View>
-
         </View>
     </View>
   );
