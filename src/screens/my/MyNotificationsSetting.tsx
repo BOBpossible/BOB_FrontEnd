@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text, Switch, SafeAreaView} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {MyStackParamList} from '../nav/MyNavigator';
-import {MyHeader} from '../components/My/MyHeader';
-import {DesignSystem} from '../assets/DesignSystem';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {calHeight} from '../assets/CalculateLength';
+import {MyStackParamList} from '../../nav/MyNavigator';
+import {MyHeader} from '../../components/My/MyHeader';
+import {DesignSystem} from '../../assets/DesignSystem';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight} from '../../assets/CalculateLength';
 type Props = NativeStackScreenProps<MyStackParamList, 'MyNotificationsSetting'>;
 
 export const MyNotificationsSetting = ({navigation}: Props) => {

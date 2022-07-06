@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {MyStackParamList} from '../nav/MyNavigator';
-import {MyHeader} from '../components/My/MyHeader';
-import {MyReviewEach} from '../components/My/MyReviewEach';
+import {MyStackParamList} from '../../nav/MyNavigator';
+import {MyHeader} from '../../components/My/MyHeader';
+import {MyReviewEach} from '../../components/My/MyReviewEach';
 
 const dummyMission = [
   {
@@ -11,7 +11,7 @@ const dummyMission = [
     date: '2022-07-03T11:09:37.593Z',
     images: [
       {
-        imageUrl: '../assets/images/bobpool.png',
+        imageUrl: '../../assets/images/bobpool.png',
       },
     ],
     name: '가게1',
@@ -30,7 +30,7 @@ const dummyMission = [
     date: '2022-07-03T11:09:37.593Z',
     images: [
       {
-        imageUrl: '../assets/images/bobpool.png',
+        imageUrl: '../../assets/images/bobpool.png',
       },
     ],
     name: '가게이름2',
@@ -49,7 +49,7 @@ const dummyMission = [
     date: '2022-07-03T11:09:37.593Z',
     images: [
       {
-        imageUrl: '../assets/images/bobpool.png',
+        imageUrl: '../../assets/images/bobpool.png',
       },
     ],
     name: '가게이름3',
@@ -68,7 +68,7 @@ const dummyMission = [
     date: '2022-07-03T11:09:37.593Z',
     images: [
       {
-        imageUrl: '../assets/images/bobpool.png',
+        imageUrl: '../../assets/images/bobpool.png',
       },
     ],
     name: '가게이름4',
