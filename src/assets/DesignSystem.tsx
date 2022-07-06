@@ -66,6 +66,11 @@ export const DesignSystem = StyleSheet.create({
     fontFamily: 'Pretendard-Light',
     lineHeight: 24,
   },
+  body2Long: {
+    fontSize: 14,
+    fontFamily: 'Pretendard-Light',
+    lineHeight: 24,
+  },
   caption1Lt: {
     fontSize: 12,
     fontFamily: 'Pretendard-Light',

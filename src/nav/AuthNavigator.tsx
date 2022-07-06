@@ -50,7 +50,6 @@ export const AuthNavigator = () => {
       <Stack.Screen name="HowTo4" component={HowTo4} />
       <Stack.Screen name="HowTo5" component={HowTo5} />
       <Stack.Screen name="HowTo6" component={HowTo6} />
-      {/* 온보딩페이지들여기쭉 */}
       <Stack.Screen name="MainNavigator" component={MainNavigator} />
     </Stack.Navigator>
   );

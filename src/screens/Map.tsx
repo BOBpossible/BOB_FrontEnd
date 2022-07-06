@@ -8,6 +8,7 @@ import StoreModal from '../modal/StoreModal';
 import {MapWebview} from '../modal/MapWebview';
 import {MapStoreBottomSheet} from '../components/MapStoreBottomSheet';
 import {DesignSystem} from '../assets/DesignSystem';
+import DoneModal from '../modal/DoneModal';
 
 const dummyMission = [
   {
@@ -42,8 +43,9 @@ const Map = () => {
   const listSnapPoint = height - insets.top - 150;
   const [addressModal, setAddressModal] = useState(false);
   const [storeModal, setStoreModal] = useState(false);
+  const [doneModal, setDoneModal] = useState(false);
   const [storeId, setStoreId] = useState(0);
-  const [noMission, setNoMission] = useState(true);
+  const [noMission, setNoMission] = useState(false);
   //미션개수 연동 후 삭제
 
   const getRandom = () => Math.floor(Math.random() * (2 - 0)); //0 or 1
@@ -58,6 +60,13 @@ const Map = () => {
         visible={storeModal}
         closeStoreModal={() => setStoreModal(false)}
         storeId={storeId}
+        openDoneModal={() => setDoneModal(true)}
+      />
+      <DoneModal
+        visible={doneModal}
+        closeDoneModal={() => setDoneModal(false)}
+        category={'리뷰'}
+        point={100} //서버 받아서 수정 ---------------------------------------------!
       />
       <View style={[styles.headerWrap]}>
         <TouchableOpacity style={[styles.header]} onPress={() => setAddressModal(true)}>

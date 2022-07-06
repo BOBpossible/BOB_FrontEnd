@@ -26,6 +26,7 @@ type StoreModalProps = {
   storeId: number;
   visible: boolean;
   closeStoreModal: () => void;
+  openDoneModal: () => void;
 };
 
 const dot = () => {
@@ -55,7 +56,7 @@ const activeDot = () => {
   return <View style={activeDotStyle} />;
 };
 
-const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) => {
+const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal, openDoneModal}) => {
   const [isReview, setIsReview] = useState(false);
   const [reviewModal, setReviewModal] = useState(false);
   const openReviewModal = async () => {
@@ -150,6 +151,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
           visible={reviewModal}
           closeReviewModal={() => setReviewModal(false)}
           storeId={storeId}
+          openDoneModal={openDoneModal}
         />
       </SafeAreaView>
     </Modal>

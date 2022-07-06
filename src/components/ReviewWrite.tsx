@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import type {FC} from 'react';
-import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform} from 'react-native';
 import {Rating} from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ImageLibraryOptions, launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { DesignSystem } from '../assets/DesignSystem';
 
 type imageData = {
   uri: string;
@@ -78,7 +79,7 @@ export const ReviewWrite: FC<ReviewWriteProps> = ({
           ratingImage={RATE_STAR}
           style={[styles.childView]}
         />
-        <Text style={[styles.rateReviewText]}>{REVIEW_RATE_TEXT[rating - 1]}</Text>
+        <Text style={[DesignSystem.body2Lt, styles.rateReviewText]}>{REVIEW_RATE_TEXT[rating - 1]}</Text>
         <TextInput
           style={[styles.reviewContent]}
           multiline={true}
@@ -112,7 +113,7 @@ export const ReviewWrite: FC<ReviewWriteProps> = ({
 
       <TouchableOpacity onPress={submitReview} style={[styles.reviewConfirmButton]}>
         <View>
-          <Text style={[styles.reviewConfirmButtonText]}>확인</Text>
+          <Text style={[styles.reviewConfirmButtonText]}>리뷰 등록</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -145,6 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#6C69FF',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: Platform.OS === 'android' && 16,
   },
   reviewConfirmButtonText: {
     color: '#FFFFFF',
@@ -178,8 +180,6 @@ const styles = StyleSheet.create({
   },
   rateReviewText: {
     marginBottom: 14,
-    fontSize: 14,
-    lineHeight: 22,
     color: '#616161',
   },
 });
