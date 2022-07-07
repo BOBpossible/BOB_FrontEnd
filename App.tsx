@@ -38,7 +38,7 @@ export default function App() {
         setIsLogin(true);
       }
     } catch (error) {
-      console.log(error);
+      console.log('register Status', error);
     }
   };
 

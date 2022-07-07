@@ -1,8 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import Main from '../screens/Main';
-import {HomeMissionDetails} from '../screens/HomeMissionDetails';
-import {Notifications} from '../screens/Notifications';
+import Main from '../screens/Home/Main';
+import {HomeMissionDetails} from '../screens/Home/HomeMissionDetails';
+import {Notifications} from '../screens/Home/Notifications';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 export type HomeStackParamList = {
