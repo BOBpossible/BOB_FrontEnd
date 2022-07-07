@@ -2,6 +2,7 @@ import React from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
 import {Colors} from 'react-native-paper';
+import { DesignSystem } from '../assets/DesignSystem';
 
 export type MissionUserProps = {
   userprofile?: any; //?????????프사
@@ -18,12 +19,12 @@ export const MissionUser: FC<MissionUserProps> = ({ userprofile, username, useri
       <View style={[styles.profileWrap]}>
         <Image
           style={[styles.profileImg]}
-          source={require('../assets/images/tmpUserImage.png')} //
+          source={require('../assets/images/bobProfile.png')} //
         />
       </View>
       <View style={[styles.userWrap]}>
-        <Text style={[styles.usernameText]}>{username}</Text>
-        <Text style={[styles.useridText]}>{userid}</Text>
+        <Text style={[DesignSystem.title4Md, styles.usernameText]}>{username}</Text>
+        <Text style={[DesignSystem.body2Lt, styles.useridText]}>{userid}</Text>
       </View>
     </View>
   );
@@ -58,12 +59,10 @@ const styles = StyleSheet.create({
   },
   usernameText: {
     color: '#111111',
-    fontSize: 16,
     marginBottom: 2,
   },
   useridText: {
-    fontSize: 14,
-    color: '#111111',
+    color: '#616161',
   },
   statusWrap: {
     marginRight: 24,

@@ -6,13 +6,12 @@ import {DesignSystem} from '../assets/DesignSystem';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type MissionCardProps = {
-  name: string;
-  category: string;
-  day?: number;
-  minCost: number;
+  mission: string;
+  missionId?: number;
   point: number;
-  status?: string; //"start","request","onrequest","success", "review"
-  // handleOnPress?: () => void;
+  storeCategory: string;
+  storeName: string;
+  missionStatus?: string; //"NEW","PROGRESS","OWNER_CHECK"
 };
 export type MissionCardContentProps = {
   handleOnPress?: () => void;
@@ -24,7 +23,7 @@ export type MissionCardContentProps = {
 };
 
 //prettier-ignore
-export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, point, status}) => {
+export const MissionCard: FC<MissionCardProps> = ({mission, missionId, point, storeCategory, storeName, missionStatus}) => {
   const MissionCardTwoButton: FC<MissionCardContentProps> = ({handleOnPress, text, cancelBgColor, cancelTextColor, bgColor }) =>{
     function cancleCard(){
       console.log('canceled');
@@ -34,7 +33,7 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
         <View style={[styles.missionTwoButton]}>
           <TouchableOpacity style={[styles.missionButtonLeft, {backgroundColor: `${cancelBgColor}`}]} onPress={cancleCard}>
             <View >
-              <Text style={{fontSize: 16, color: `${cancelTextColor}`}}>취소</Text>
+              <Text style={[DesignSystem.body1Lt, {color: `${cancelTextColor}`}]}>취소</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity disabled={text === '성공 요청' ? false : true} style={[styles.missionButtonRight, {backgroundColor: `${bgColor}`}]} onPress={handleOnPress}>
@@ -66,34 +65,34 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
       <View style={[styles.missionCard]}>
         <View style={[styles.missionMain]}>
           <View style={[styles.nameBox]}>
-            <Text style={[styles.nameText]}>{name}</Text>
-            <Text style={[styles.categoryText]}>{category}</Text>
+            <Text style={[DesignSystem.title4Md, styles.nameText]}>{storeName}</Text>
+            <Text style={[DesignSystem.body2Lt, styles.categoryText]}>{storeCategory}</Text>
           </View>
           <View style={[styles.seperateLine]} />
           <View>
             <Text>
-              <Text style={[styles.costText]}>{minCost}원 이상</Text>
-              <Text>의 식사시 </Text>
+              <Text style={[styles.costText]}>{mission}</Text>
+              <Text> 결제시 </Text>
               <Text style={[styles.pointText]}>{point}P 적립</Text>
             </Text>
           </View>
         </View>
         {
-        status === 'request' ?
+        missionStatus === 'NEW' ?
         <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='#6C69FF' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
         :
-        status === 'onrequest' ?
+        missionStatus === 'PROGRESS' ?
         <MissionCardTwoButton text='성공 요청중..' bgColor='#B7B7B7' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
         :
-        // status === 'success'
+        // missionStatus === 'OWNER_CHECK'
         <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공 승인' bgColor='#B7B7B7' cancelBgColor='#DFDFDF' cancelTextColor='#949494'/>
         }
       </View>
-      {status === 'request' && (
+      {missionStatus === 'NEW' && (
           <View style={{width: '100%', flexDirection: 'row-reverse'}}>
             <View style={[DesignSystem.centerArrange, {top: -7, width: '50%'}]}>
               <Icon name="triangle" size={12} style={[styles.headerIconStyle]} />
-              <View style={[styles.requestBallon, DesignSystem.centerArrange]}>
+              <View style={[styles.NEWBallon, DesignSystem.centerArrange]}>
                 <View style={[styles.flexRow]}>
                   <Text style={[styles.ballonTextTwo]}>포장/식사 </Text>
                   <Text style={[styles.ballonTextOne]}>미션 완료 후</Text>
@@ -124,28 +123,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   seperateLine: {
-    borderWidth: 0.5,
+    height: 1,
     width: 303,
-    borderColor: '#DFDFDF',
+    backgroundColor: '#DFDFDF',
     marginBottom: 16,
   },
   nameText: {
     color: '#111111',
-    fontSize: 16,
     marginBottom: 4,
   },
   categoryText: {
-    fontSize: 14,
     color: '#616161',
     marginBottom: 16,
   },
   costText: {
-    color: '#111111',
+    fontFamily: 'Pretendard-medium',
+    fontWeight: '500',
     fontSize: 16,
+    lineHeight: 24,
+    color: '#111111',
   },
   pointText: {
-    color: '#6C69FF',
+    fontFamily: 'Pretendard-medium',
+    fontWeight: '500',
     fontSize: 16,
+    lineHeight: 24,
+    color: '#6C69FF',
   },
   missionOneButton: {
     height: 48,
@@ -177,7 +180,7 @@ const styles = StyleSheet.create({
   missionButtonView: {
     borderWidth: 2,
   },
-  requestBallon: {
+  NEWBallon: {
     //말풍선
     flexDirection: 'column',
     backgroundColor: '#383838',
