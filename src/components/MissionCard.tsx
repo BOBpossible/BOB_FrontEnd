@@ -2,6 +2,8 @@ import React from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Colors} from 'react-native-paper';
+import {DesignSystem} from '../assets/DesignSystem';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type MissionCardProps = {
   name: string;
@@ -28,18 +30,24 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
       console.log('canceled');
     }
     return (
-      <View style={[styles.missionTwoButton]}>
-        <TouchableOpacity style={[styles.missionButtonLeft, {backgroundColor: `${cancelBgColor}`}]} onPress={cancleCard}>
-          <View >
-            <Text style={{fontSize: 16, color: `${cancelTextColor}`}}>취소</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.missionButtonRight, {backgroundColor: `${bgColor}`}]} onPress={handleOnPress}>
-          <View>
-            <Text style={{color:'white', fontSize: 16}}>{`${text}`}</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <>
+        <View style={[styles.missionTwoButton]}>
+          <TouchableOpacity style={[styles.missionButtonLeft, {backgroundColor: `${cancelBgColor}`}]} onPress={cancleCard}>
+            <View >
+              <Text style={{fontSize: 16, color: `${cancelTextColor}`}}>취소</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity disabled={text === '성공 요청' ? false : true} style={[styles.missionButtonRight, {backgroundColor: `${bgColor}`}]} onPress={handleOnPress}>
+            <View>
+              {text === '성공 요청' ? (
+                <Text style={[DesignSystem.title3SB, {color:'white'}]}>{`${text}`}</Text>
+              ) : (
+                <Text style={[DesignSystem.title4Md, {color:'white'}]}>{`${text}`}</Text>
+              )}
+            </View>
+          </TouchableOpacity>
+        </View>
+      </>
     );
   };
 
@@ -72,7 +80,7 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
         </View>
         {
         status === 'request' ?
-        <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='#2A2A2A' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
+        <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='#6C69FF' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
         :
         status === 'onrequest' ?
         <MissionCardTwoButton text='성공 요청중..' bgColor='#B7B7B7' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
@@ -81,6 +89,21 @@ export const MissionCard: FC<MissionCardProps> = ({name, category, minCost, poin
         <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공 승인' bgColor='#B7B7B7' cancelBgColor='#DFDFDF' cancelTextColor='#949494'/>
         }
       </View>
+      {status === 'request' && (
+          <View style={{width: '100%', flexDirection: 'row-reverse'}}>
+            <View style={[DesignSystem.centerArrange, {top: -7, width: '50%'}]}>
+              <Icon name="triangle" size={12} style={[styles.headerIconStyle]} />
+              <View style={[styles.requestBallon, DesignSystem.centerArrange]}>
+                <View style={[styles.flexRow]}>
+                  <Text style={[styles.ballonTextTwo]}>포장/식사 </Text>
+                  <Text style={[styles.ballonTextOne]}>미션 완료 후</Text>
+                  <Text style={[styles.ballonTextTwo]}> 클릭!</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        )}
+{/* // */}
     </View>
   );
 };
@@ -153,5 +176,36 @@ const styles = StyleSheet.create({
   },
   missionButtonView: {
     borderWidth: 2,
+  },
+  requestBallon: {
+    //말풍선
+    flexDirection: 'column',
+    backgroundColor: '#383838',
+    top: -3,
+    height: 38,
+    borderRadius: 6,
+    paddingRight: 13,
+    paddingLeft: 13,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  headerIconStyle: {
+    color: '#2A2A2A',
+  },
+  flexRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ballonTextOne: {
+    fontFamily: 'Pretendard-SemiBold',
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#AAAAF9',
+  },
+  ballonTextTwo: {
+    fontFamily: 'Pretendard-Regular',
+    fontSize: 12,
+    color: '#FFFFFF',
+    fontWeight: '800',
   },
 });
