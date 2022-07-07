@@ -46,7 +46,7 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
     const jwt = data.accessToken;
     try {
       await setToken(jwt);
-      storeData(jwt);
+      await storeData(jwt);
     } catch (e) {
       console.log(e);
     }

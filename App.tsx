@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {RecoilRoot} from 'recoil';
-import {StyleSheet, SafeAreaView, Text} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
 import Splash from './src/screens/Splash';
@@ -11,6 +10,7 @@ import 'react-native-gesture-handler';
 import {enableScreens} from 'react-native-screens';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {QueryClient, QueryClientProvider} from 'react-query';
+import {customAxios} from './src/api/customAxios';
 
 enableScreens();
 
@@ -30,13 +30,25 @@ export default function App() {
     return () => clearTimeout(id);
   }, []);
 
+  const getRegisterStatus = async (token: string) => {
+    try {
+      //진범이가 실제 get api 만들어주면 정확한 url 입력 요망
+      const response = await customAxios(token).get('/v1/api/user/registerStatus');
+      if (response.data.result.registerStatus === 'DONE') {
+        setIsLogin(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getToken = async () => {
     try {
       const value = await AsyncStorage.getItem('userToken');
-      console.log(value);
       //여기서 아이디는 있지만 회원가입을 다 안한 상태라면 로그인 창 띄우고 했다면 메인으로 바로 가기.
       if (value !== null) {
-        setIsLogin(false);
+        //GET user register status 그리고 그안에서 setIslogin true 만들거나 false로 냅두기
+        getRegisterStatus(value);
       }
     } catch (e) {
       console.log(e);

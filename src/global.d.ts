@@ -1,6 +1,6 @@
 declare namespace ReactNavigation {
   interface RootParamList {
-    CustomerLogin: undefined;
+    Login: undefined;
     OwnerLogin: undefined;
     MainNavigator: undefined;
     Register: undefined;

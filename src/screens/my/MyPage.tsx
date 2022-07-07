@@ -3,7 +3,10 @@ import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView} from 'react-nati
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MyUser} from '../../components/My/MyUser';
 import {useNavigation} from '@react-navigation/native';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {calHeight} from '../../assets/CalculateLength';
 
@@ -18,7 +21,8 @@ const MyPage = () => {
     }
   };
   const logout = () => {
-    storeData('');
+    AsyncStorage.setItem('userToken', '');
+    navigation.navigate('Login');
   };
   console.log(AsyncStorage.getItem('userToken'));
 
@@ -41,12 +45,16 @@ const MyPage = () => {
         <MyUser authentication={authentication} email={email} name={name} point={point} />
         <TouchableOpacity onPress={() => navigation.navigate('MyReview')}>
           <View style={[styles.myMenuWrap]}>
-            <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>리뷰 관리</Text>
+            <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>
+              리뷰 관리
+            </Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('MyNotificationsSetting')}>
           <View style={[styles.myMenuWrap]}>
-            <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>알림 설정</Text>
+            <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>
+              알림 설정
+            </Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('MyInquiry')}>

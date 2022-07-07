@@ -7,46 +7,50 @@ import SocialWebviewModal from '../modal/SocialWebviewModal';
 import {useRecoilState} from 'recoil';
 import {userToken} from '../state';
 import auth from '@react-native-firebase/auth';
-import axios from 'axios';
-import {GoogleSignin, GoogleSigninButton} from '@react-native-google-signin/google-signin';
+import {customAxios} from '../api/customAxios';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({}) => {
   const navigation = useNavigation();
   const [token, setToken] = useRecoilState(userToken);
   const [loginModal, setLoginModal] = useState(false);
   const [source, setSource] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
-    if (Platform.OS === 'ios') {
-      return appleAuth.onCredentialRevoked(async () => {
-        console.warn('If this function executes, User Credentials have been Revoked');
+  console.log('로그인 화면: 저장공간에 있는 토큰', token);
+
+  const postLogin = async (data: any) => {
+    try {
+      const response = await customAxios().post('/auth/authorization/google', null, {
+        params: data,
       });
+      console.log('login data:', response.data);
+      setToken(response.data.result.accessToken);
+      AsyncStorage.setItem('userToken', response.data.result.accessToken);
+      if (response.data.result.registerStatus === 'NEW') {
+        navigation.navigate('Register');
+      } else {
+        navigation.navigate('MainNavigator');
+      }
+    } catch (error) {
+      console.log('login data:', error);
     }
-  }, []); // passing in an empty array as the second argument ensures this is only ran once when component mounts initially.
+  };
 
   //실행시 구글 로그인 설정 + 로그인 확인 코드
   useEffect(() => {
-    GoogleSignin.configure({
-      webClientId: '875664333601-gdsrl919s9db2bqcre9emulifoa8rrp6.apps.googleusercontent.com',
-    });
-    //로그인 되어 있는지 확인
-    auth().onAuthStateChanged((user) => {
-      if (user) {
-        // console.log(auth().currentUser);
-        setLoggedIn(true);
-        let timer = setTimeout(() => {
-          console.log(`구글로그인 되어있음 - ${auth().currentUser?.displayName}`);
-          console.log('홈화면으로 이동');
-          goMain();
-        }, 2000);
-        // navigation.navigate('Register'); //로그인 되어있따면 회웝가입으로 바로
-      } else {
-        console.log('구글로그인 되어있지않음');
-        setLoggedIn(false);
-      }
-    });
+    if (Platform.OS === 'ios') {
+      GoogleSignin.configure({
+        webClientId: '875664333601-tcsjcab1onq9fjurhimnr0qeg0fj0qm7.apps.googleusercontent.com',
+      });
+      return appleAuth.onCredentialRevoked(async () => {
+        console.warn('If this function executes, User Credentials have been Revoked');
+      });
+    } else {
+      GoogleSignin.configure({
+        webClientId: '875664333601-gdsrl919s9db2bqcre9emulifoa8rrp6.apps.googleusercontent.com',
+      });
+    }
   }, []);
 
   const signUpWithSNS = async (social: string) => {
@@ -55,38 +59,49 @@ const Login = ({}) => {
   };
 
   const onAppleButtonPress = async () => {
-    // performs login request
-    const appleAuthRequestResponse = await appleAuth.performRequest({
-      requestedOperation: appleAuth.Operation.LOGIN,
-      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-    });
-    // get current authentication state for user
-    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
-    const credentialState = await appleAuth.getCredentialStateForUser(
-      appleAuthRequestResponse.user,
-    );
+    try {
+      // performs login request
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+      });
+      // get current authentication state for user
+      // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+      const credentialState = await appleAuth.getCredentialStateForUser(
+        appleAuthRequestResponse.user,
+      );
 
-    // use credentialState response to ensure the user is authenticated
-    if (credentialState === appleAuth.State.AUTHORIZED) {
-      const {identityToken, name, email} = appleAuthRequestResponse;
+      // use credentialState response to ensure the user is authenticated
+      if (credentialState === appleAuth.State.AUTHORIZED) {
+        const {email, fullName} = appleAuthRequestResponse;
+        const data = {name: fullName, email: email};
+        postLogin(data);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   //
   async function onGoogleButtonPress() {
     try {
-      console.log('PressedGoogle');
-      const {idToken} = await GoogleSignin.signIn();
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      return auth().signInWithCredential(googleCredential);
+      const userInfo = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(userInfo.idToken);
+      const data = {
+        name: userInfo.user.name,
+        email: userInfo.user.email,
+      };
+
+      postLogin(data);
+      auth().signInWithCredential(googleCredential);
     } catch (err) {
       console.log('onGoogleButtonPress ERROR', err);
     }
   }
-  function onGoogleLogout() {
-    console.log('구글 로그아웃 합니다');
-    auth().signOut();
-  }
+  // function onGoogleLogout() {
+  //   console.log('구글 로그아웃 합니다');
+  //   auth().signOut();
+  // }
 
   const goMain = useCallback(() => navigation.navigate('MainNavigator'), []);
   const goRegister = useCallback(() => navigation.navigate('Register'), []);
@@ -138,9 +153,6 @@ const Login = ({}) => {
             style={[styles.iconButton]}
             source={require('../assets/images/GoogleButton.png')}
           />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => onGoogleLogout()}>
-          <Text>(테스트용)구글 로그아웃</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
