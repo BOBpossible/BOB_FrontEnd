@@ -21,12 +21,15 @@ const Login = ({}) => {
 
   const postLogin = async (data: any) => {
     try {
-      const response = await customAxios().post('/auth/authorization/google', null, {
+      const response = await customAxios().post('/auth/authorization/login', null, {
         params: data,
       });
       console.log('login data:', response.data);
       setToken(response.data.result.accessToken);
-      AsyncStorage.setItem('userToken', response.data.result.accessToken);
+      await AsyncStorage.multiSet([
+        ['accessToken', response.data.result.accessToken],
+        ['refreshToken', response.data.result.refreshToken],
+      ]);
       if (response.data.result.registerStatus === 'NEW') {
         navigation.navigate('Register');
       } else {

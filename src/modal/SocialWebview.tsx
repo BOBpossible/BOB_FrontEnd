@@ -33,9 +33,12 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
     return params;
   };
 
-  const storeData = async (value: string) => {
+  const storeData = async (accessToken: string, refreshToken: string) => {
     try {
-      await AsyncStorage.setItem('userToken', value);
+      await AsyncStorage.multiSet([
+        ['accessToken', accessToken],
+        ['refreshToken', refreshToken],
+      ]);
     } catch (e) {
       console.log(e);
     }
@@ -43,10 +46,9 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
 
   const _handleMessage = async (data: any) => {
     console.log(data);
-    const jwt = data.accessToken;
     try {
-      await setToken(jwt);
-      await storeData(jwt);
+      await setToken(data.accessToken);
+      await storeData(data.accessToken, data.refreshToken);
     } catch (e) {
       console.log(e);
     }

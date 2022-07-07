@@ -17,7 +17,7 @@ const Splash = () => {
   const [progressValue] = useState(new Animated.Value(30));
   const getToken = useCallback(async () => {
     try {
-      const value = await AsyncStorage.getItem('userToken');
+      const value = await AsyncStorage.getItem('AccessToken');
       if (value !== null) {
         setToken(value);
       }
