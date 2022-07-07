@@ -16,6 +16,11 @@ import {useNavigation} from '@react-navigation/native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
+import {useQuery} from 'react-query';
+import {customAxios} from '../../api/customAxios';
+import {useRecoilValue} from 'recoil';
+import {userToken} from '../../state';
+import {HomeData} from '../../screens/Home/Main';
 
 const WIDTH = Dimensions.get('window').width;
 const HEADER_HEIGHT = Platform.OS === 'ios' ? hp(25.8) : hp(28.6);
@@ -28,6 +33,15 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   const [addressModal, setAddressModal] = useState(false);
   const barProgressValue = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
+  const token = useRecoilValue(userToken);
+
+  //주소동 받는 퀘리 있어야함
+
+  const getHomeInfo = async () => {
+    const response = await customAxios(token).get('/api/v1/missions/me');
+    return response.data.result;
+  };
+  const {data} = useQuery<HomeData>('homeInfo', getHomeInfo);
 
   //헤더 길이 바꿔주는 애니메이션 Main.tsx의 스크롤 위치에 따라 변한다
   const heightAnimStyle = useStyle({
@@ -113,7 +127,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
             <Animated.View style={[styles.innerBar, widthStyle]} />
           </View>
           <View style={[styles.shrinkHeaderTextWrap]}>
-            <Text style={[styles.shrinkHeaderTextOne]}>7</Text>
+            <Text style={[styles.shrinkHeaderTextOne]}>{data?.rewards}</Text>
             <Text style={[styles.shrinkHeaderTextTwo]}>/ </Text>
             <Text style={[styles.shrinkHeaderTextThree]}>10</Text>
           </View>
@@ -145,7 +159,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           <TouchableOpacity>
             <View style={[styles.pointWrap]}>
               <Text style={[styles.pointP]}>P </Text>
-              <Text style={[styles.pointText]}>999,999</Text>
+              <Text style={[styles.pointText]}>{data?.point}</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Notifications', {userId: 0})}>

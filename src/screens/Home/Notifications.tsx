@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text, FlatList, TouchableOpacity, SafeAreaView} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {HomeStackParamList} from '../nav/HomeNavigator';
-import {MyHeader} from '../components/My/MyHeader';
-import {NotificationCard} from '../components/NotificationCard';
+import {HomeStackParamList} from '../../nav/HomeNavigator';
+import {MyHeader} from '../../components/My/MyHeader';
+import {NotificationCard} from '../../components/NotificationCard';
 
 const dummyMission = [
   {

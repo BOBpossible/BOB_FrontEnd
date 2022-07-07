@@ -3,6 +3,8 @@ import {View, StyleSheet, Text, Image, SafeAreaView, Animated} from 'react-nativ
 import {useRecoilState} from 'recoil';
 import {userToken} from '../state';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {customAxios} from '../api/customAxios';
+import {useQuery} from 'react-query';
 
 const moveUp = (progressValue: Animated.Value) => {
   Animated.timing(progressValue, {
@@ -14,7 +16,9 @@ const moveUp = (progressValue: Animated.Value) => {
 
 const Splash = () => {
   const [token, setToken] = useRecoilState(userToken);
+
   const [progressValue] = useState(new Animated.Value(30));
+
   const getToken = useCallback(async () => {
     try {
       const value = await AsyncStorage.getItem('userToken');
