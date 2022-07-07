@@ -101,13 +101,13 @@ const styles = StyleSheet.create({
   progressToggle: {
     flexDirection: 'row',
     borderRadius: 17.5,
-    borderColor: '#E8E8E8',
+    borderColor: '#DFDFDF',
     borderWidth: 1,
     width: 138,
     height: 34,
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FCFCFC',
   },
   progressSwitch: {
     height: 30,

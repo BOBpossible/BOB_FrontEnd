@@ -1,50 +1,51 @@
 import React, {useState} from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../assets/CalculateLength';
+import {DesignSystem} from '../assets/DesignSystem';
 
 export type MissionProcessProps = {
-  status?: string; //"start","request","onrequest","success", "review"
+  status?: string; //NEW, PROGRESS, OWNER_CHECK
 };
 
 export const MissionProcess: FC<MissionProcessProps> = ({status}) => {
   const nowOnProgress = () => {
-    //prettier-ignore
     return (
       <>
         <View style={{width:14, height:14}}>
-           <View style={[styles.activeCircleBack, {position: 'relative', right: 4, bottom: 4}]} />
-           <View style={[styles.activeCircle, {position: 'relative', bottom: 22, zIndex: 1}]} />
+          <View style={[styles.activeCircleBack, {position: 'relative', right: 4, bottom: 4}]} />
+          <View style={[styles.activeCircle, {position: 'relative', bottom: 22, zIndex: 1}]} />
         </View>
-        <View style={[styles.activeLine, {borderColor: '#C8C8C8'}]} />
-        <View style={[styles.activeCircle, {backgroundColor:'#C8C8C8'}]} />
+        <View style={[styles.processLine]} />
+        <View style={[styles.activeCircle, {backgroundColor: '#C8C8C8'}]} />
       </>
     );
   };
   const nowOnSuccess = () => {
-    //prettier-ignore
     return (
-        <>
-          <View style={[styles.doneCircle]} />
-          <View style={[styles.activeLine]} />
-          <View style={{width:14, height:14}}>
-           <View style={[styles.activeCircleBack, {position: 'relative', right: 4, bottom: 4}]} />
-           <View style={[styles.activeCircle, {position: 'relative', bottom: 22, zIndex: 1}]} />
+      <>
+        <View style={[styles.inactiveCircle]} />
+        <View style={[styles.processLine]} />
+        <View style={{width:14, height:14}}>
+          <View style={[styles.activeCircleBack, {position: 'relative', right: 4, bottom: 4}]} />
+          <View style={[styles.activeCircle, {position: 'relative', bottom: 22, zIndex: 1}]} />
         </View>
-        </>
-      );
+      </>
+    );
   };
   //prettier-ignore
   return (
     <View style={[styles.processWrap]}>
       <View style={[styles.processTextRow]}>
-        <Text style={{color: '#949494'}}>도전!</Text>
-        <Text style={[styles.processCenter, status === 'request' || status === 'onrequest' ? styles.activeProcess : {color: '#949494'}]}>진행중</Text>
-        <Text style={[status === 'success' ? styles.activeProcess : {color: '#949494'}]}>도전 성공</Text>
+        <Text style={[DesignSystem.caption1Lt, {color: '#949494'}]}>미션 도전</Text>
+        <Text style={[DesignSystem.caption1Lt, {color: status === 'NEW' || status === 'PROGRESS' ? '#111111' : '#949494'}]}>진행중</Text>
+        <Text style={[DesignSystem.caption1Lt, {color: status === 'NEW' || status === 'PROGRESS' ? '#949494' : '#111111'}]}>도전 성공</Text>
       </View>
       <View style={[styles.processCircleRow]}>
-        <View style={[styles.doneCircle]} />
-        <View style={[styles.activeLine]} />
-        {status === 'success' ? nowOnSuccess() : nowOnProgress()}
+        <View style={[styles.inactiveCircle]} />
+        <View style={[styles.processLine]} />
+        {status === 'OWNER_CHECK' ? nowOnSuccess() : nowOnProgress()}
       </View>
     </View>
   );
@@ -62,14 +63,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 9,
-    width: 212,
-  },
-  processCenter: {
-    marginLeft: 54,
-    marginRight: 49,
-  },
-  activeProcess: {
-    color: '#111111',
+    width: wp(calWidth(212)),
+    marginLeft: wp(calWidth(80)),
+    marginRight: wp(calWidth(80)),
   },
   processCircleRow: {
     flexDirection: 'row',
@@ -83,11 +79,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#AAAAF9',
     opacity: 0.5,
   },
-  doneCircle: {
+  inactiveCircle: {
     width: 14,
     height: 14,
     borderRadius: 7,
-    backgroundColor: '#2A2A2A',
+    backgroundColor: '#C8C8C8',
   },
   activeCircle: {
     width: 14,
@@ -96,16 +92,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#6C69FF',
     zIndex: -1,
   },
-  inactiveCircle: {
-    width: 14,
-    height: 14,
-    borderRadius: 7,
-    backgroundColor: '#2A2A2A',
-  },
-  activeLine: {
-    borderWidth: 0.5,
+  processLine: {
+    height: 1,
     width: 72,
-    borderColor: 'black',
+    backgroundColor: '#C8C8C8',
     zIndex: -1,
   },
 });
