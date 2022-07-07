@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import type {FC} from 'react';
 import {
   Modal,
@@ -21,7 +21,7 @@ type ReviewModalProps = {
   storeId: number;
   visible: boolean;
   closeReviewModal: () => void;
-  openDoneModal: () => void;
+  openDoneModal?: () => void;
 };
 type imageData = {
   uri: string;
@@ -52,7 +52,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
 
   const postReviewImages = async (reviewResponse: Promise<any>) => {
     var formdata = new FormData();
-    imageUri.map((image, index) => {
+    imageUri.map((image) => {
       let photo;
       Platform.OS === 'ios'
         ? (photo = {

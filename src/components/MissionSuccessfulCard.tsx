@@ -1,20 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {Colors} from 'react-native-paper';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../assets/CalculateLength';
+import {DesignSystem} from '../assets/DesignSystem';
+import ReviewModal from '../modal/ReviewModal';
 
-export type MissionSuccessfulCardProps = {
-  name: string;
-  category: string;
-  day?: number;
-  minCost: number;
-  point: number;
-  // handleOnPress?: () => void;
-  completeMonth: number;
-  completeDate: number;
-  completeDay: string;
-  completeStatus: string;
-};
 export type MissionSuccessfulCardContentProps = {
   handleOnPress?: () => void;
   text: string;
@@ -23,33 +14,53 @@ export type MissionSuccessfulCardContentProps = {
   cancelTextColor?: string;
   bgColor?: string;
 };
+export type MissionSuccessfulCardProps = {
+  mission: string;
+  missionId?: number;
+  point: number;
+  storeCategory: string;
+  storeName: string;
+  missionStatus?: string; //"NEW","PROGRESS","OWNER_CHECK"
+  successDate: string; //성공날짜 서버에 따라 수정필
+};
 
 //prettier-ignore
-export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({name, category, minCost, point, completeMonth, completeDate, completeDay,  completeStatus}) => {
+export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
+  mission, missionId, point, storeCategory, storeName, missionStatus, successDate
+}) => {
+  const [reviewModal, setReviewModal] = useState(false);
   function handleReviewPress() {
-    console.log('리뷰 : 냠 냠 ');
+    setReviewModal(true);
   }
+  const storeId = 1; //서버 후 수정
 
   return (
     <View style={[styles.missionCardWrap]}>
       <View style={[styles.missionCard]}>
         <View style={[styles.missionMain]}>
-          <Text style={[styles.dateText]}>{completeMonth}/{completeDate} ({completeDay}) • {completeStatus}</Text>
+          <Text style={[DesignSystem.caption1Lt, styles.dateText]}>{successDate.slice(5,7)}/{successDate.slice(8,10)} {'(월)'} • {'미션 성공'}</Text>
           <View style={[styles.nameBox]}>
-            <Text style={[styles.nameText]}>{name}</Text>
-            <Text style={[styles.categoryText]}>{category}</Text>
+            <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{storeName}</Text>
+            <Text style={[DesignSystem.body2Lt, DesignSystem.grey10]}>{storeCategory}</Text>
           </View>
           <View style={[styles.seperateLine]} />
-          <View style={{marginBottom: 16, flexDirection: 'row'}}>
-            <Text style={[styles.costText]}>{minCost}원 이상</Text>
-            <Text>의 식사시 </Text>
-            <Text style={[styles.pointText]}>{point}P 적립</Text>
+          <View>
+            <Text>
+              <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{mission}</Text>
+              <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}> 결제시 </Text>
+              <Text style={[DesignSystem.title4Md, DesignSystem.purple5]}>{point}P 적립</Text>
+            </Text>
           </View>
         </View>
         <TouchableOpacity onPress={handleReviewPress} style={[styles.makeReviewButton]}>
-            <Text style={{color: '#949494', fontSize: 14}}>리뷰 남기기</Text>
+            <Text style={[DesignSystem.h3SB, {color: '#6C69FF', fontSize: 14}]}>리뷰 남기기</Text>
         </TouchableOpacity>
       </View>
+      <ReviewModal
+        visible={reviewModal}
+        closeReviewModal={() => setReviewModal(false)}
+        storeId={storeId}
+      />
     </View>
   );
 };
@@ -57,21 +68,16 @@ export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({name, cat
 const styles = StyleSheet.create({
   missionCardWrap: {marginLeft: 16, marginRight: 16},
   missionCard: {
-    height: 210,
-    backgroundColor: Colors.white,
+    height: 198,
+    backgroundColor: 'white',
     borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'center', //
   },
   missionMain: {
+    flex: 1,
     width: 303,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  dateText: {
-    color: '#949494',
-    marginBottom: 7,
-    fontSize: 12,
   },
   nameBox: {
     flexDirection: 'column',
@@ -79,34 +85,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
-  nameText: {
-    color: '#111111',
-    fontSize: 16,
-  },
-  categoryText: {
-    fontSize: 14,
-    color: '#616161',
+  dateText: {
+    color: '#949494',
+    marginBottom: 7,
   },
   seperateLine: {
-    borderWidth: 0.5,
+    height: 1,
     width: 303,
-    borderColor: '#DFDFDF',
+    backgroundColor: '#DFDFDF',
     marginBottom: 12,
   },
-  costText: {
-    color: '#111111',
-    fontSize: 16,
-  },
-  pointText: {
-    color: '#6C69FF',
-    fontSize: 16,
-  },
   makeReviewButton: {
-    width: 303,
+    width: wp(calWidth(303)),
     height: 42,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#C8C8C8',
+    borderColor: '#6C69FF',
     justifyContent: 'center',
     alignItems: 'center',
   },

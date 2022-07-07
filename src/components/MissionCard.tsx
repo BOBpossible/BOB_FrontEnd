@@ -71,9 +71,9 @@ export const MissionCard: FC<MissionCardProps> = ({mission, missionId, point, st
           <View style={[styles.seperateLine]} />
           <View>
             <Text>
-              <Text style={[styles.costText]}>{mission}</Text>
-              <Text> 결제시 </Text>
-              <Text style={[styles.pointText]}>{point}P 적립</Text>
+              <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{mission}</Text>
+              <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}> 결제시 </Text>
+              <Text style={[DesignSystem.title4Md, DesignSystem.purple5]}>{point}P 적립</Text>
             </Text>
           </View>
         </View>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   missionCardWrap: {marginLeft: 16, marginRight: 16},
   missionCard: {
     height: 198,
-    backgroundColor: Colors.white,
+    backgroundColor: 'white',
     borderRadius: 12,
     alignItems: 'center', //
   },
