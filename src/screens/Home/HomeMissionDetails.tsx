@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {HomeStackParamList} from '../nav/HomeNavigator';
-import {MyHeader} from '../components/My/MyHeader';
-import {MapWebview} from '../modal';
-import {createMission, MissionInterface} from '../data';
-import {DesignSystem} from '../assets/DesignSystem';
+import {HomeStackParamList} from '../../nav/HomeNavigator';
+import {MyHeader} from '../../components/My/MyHeader';
+import {MapWebview} from '../../modal';
+import {createMission, MissionInterface} from '../../data';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'HomeMissionDetails'>;
 

@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Colors} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 Icon.loadFont();
-import Main from '../screens/Main';
+import Main from '../screens/Home/Main';
 import Mission from '../screens/Mission';
 import MyPage from '../screens/MyPage';
 import {MyNavigator} from './MyNavigator';
