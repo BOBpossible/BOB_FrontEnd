@@ -10,7 +10,6 @@ import 'react-native-gesture-handler';
 import {enableScreens} from 'react-native-screens';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {QueryClient, QueryClientProvider} from 'react-query';
-import {customAxios} from './src/api/customAxios';
 import {getRegisterStatus, postToken} from './src/api';
 
 enableScreens();
