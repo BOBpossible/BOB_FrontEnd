@@ -9,10 +9,28 @@ import {
 } from 'react-native-responsive-screen';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {calHeight} from '../../assets/CalculateLength';
+import {userToken} from '../../state';
+import {useRecoilValue} from 'recoil';
+import {customAxios} from '../../api/customAxios';
+import {useQuery} from 'react-query';
+import {AxiosError} from 'axios';
+
+export type MyPageData = {
+  authentication: boolean;
+  email: string;
+  name: string;
+  point: number;
+};
 
 const MyPage = () => {
   const navigation = useNavigation();
-
+  const token = useRecoilValue(userToken);
+  // const getUserInfo = async () => {
+  //   const {data} = await customAxios(token).get('/api/v1/users/me');
+  //   return data.result;
+  // };
+  // const {data, isSuccess, isError, error} = useQuery<MyPageData>(['userInfo', token], getUserInfo);
+  // data.point 로 접근
   const storeData = async (value: string) => {
     try {
       await AsyncStorage.setItem('userToken', value);
@@ -43,6 +61,8 @@ const MyPage = () => {
           </View>
         </View>
         <MyUser authentication={authentication} email={email} name={name} point={point} />
+        {/* 서버연결 예시 */}
+        {/* <MyUser authentication={data.authentication} email={data.email} name={data.name} point={data.point} /> */}
         <TouchableOpacity onPress={() => navigation.navigate('MyReview')}>
           <View style={[styles.myMenuWrap]}>
             <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>

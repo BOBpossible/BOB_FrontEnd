@@ -11,16 +11,24 @@ import {MissionNo} from '../components/MissionNo';
 import {customAxios} from '../api/customAxios';
 import {useRecoilValue} from 'recoil';
 import {userToken} from '../state';
+import {useQuery} from 'react-query';
+import {AxiosError} from 'axios';
 
-interface DataResponse {
+export type DataUserType = {
+  authentication: boolean;
+  email: string;
+  name: string;
+  point: number;
+};
+interface DataMissionType {
   mission: string;
   missionId: number;
-  missionStatus: string; //NEW, PROGRESS, OWNER_CHECK
+  missionStatus: string; ///NEW, PROGRESS, OWNER_CHECK
   point: number;
   storeCategory: string;
   storeName: string;
 }
-//"NEW","PROGRESS" :'진행중' processCircle  // "OWNER_CHECK" : '도전 성공' processCircle
+///"NEW","PROGRESS" :'진행중' processCircle  // "OWNER_CHECK" : '도전 성공' processCircle
 
 const Mission = () => {
   const token = useRecoilValue(userToken);
@@ -28,15 +36,20 @@ const Mission = () => {
   const [progressnow, setProgressnow] = useState(0); //아래 스위치. 0:진행중 / 1:진행완료
   const [noMission, setNoMission] = useState(false); //미션이없는상태면 true
   //서버연결후 아래에 var noMission
-
-  const [Data, setData] = useState<DataResponse[]>([]);
+  const getUsersMe = async () => { ///userInfo
+    const {data} = await customAxios(token).get('/api/v1/users/me');
+    return data.result;
+  };
+  const {DataUser, isSuccess, isError, error} = useQuery<DataUserType>(['userInfo', token], getUsersMe);
+  // DataUser.~ 로 접근
+  const [DataMission, setDataMission] = useState<DataMissionType[]>([]);
   const getMissionsMeProgress = async () => {
     const res = await customAxios(token).get('missions/me/progress');
     console.log('getMissionsMeProgress res.data : ', res.data);
-    setData(res.data.result);
-    console.log('데이타저장? :', Data);
-    // Data.length로할지, typeof(Data);
-    // var noMission = useState(Data.length === 0); //미션이없는상태면 true
+    setDataMission(res.data.result);
+    console.log('데이타저장? :', DataMission);
+    // DataMission.length로할지, typeof(DataMission);
+    // var noMission = useState(DataMission.length === 0); ///미션이없는상태면 true
     // var 스코프 호출되는지 확인
   };
 
@@ -52,11 +65,12 @@ const Mission = () => {
         <View style={{flex: 1}}>
           {progressnow === 0 ? (
             noMission ? (
-              <MissionNo progressnow={progressnow} /> //미션없는화면
+              <MissionNo progressnow={progressnow} /> ///미션없는화면
             ) : (
               <View>
                 <MissionProcess status={status} />
                 <MissionUser username={'밥풀이'} userid={123} status={status} />
+                {/* <MissionUser username={DataUser.name} userid={DataUser.userId} status={DataUser.authentication} /> */}
                 <MissionCard
                   mission={'10000원 이상'}
                   missionId={1}
@@ -64,17 +78,17 @@ const Mission = () => {
                   point={500}
                   storeCategory={'중국집'}
                   storeName={'짱맛집'}
-                  // mission={Data.mission}
-                  // missionId={Data.missionId}
-                  // missionStatus={Data.missionStatus}
-                  // point={Data.poin}
-                  // storeCategory={Data.storeCategory}
-                  // storeName={Data.storeName}
+                  // mission={DataMission.mission}
+                  // missionId={DataMission.missionId}
+                  // missionStatus={DataMission.missionStatus}
+                  // point={DataMission.poin}
+                  // storeCategory={DataMission.storeCategory}
+                  // storeName={DataMission.storeName}
                 />
               </View>
             )
           ) : noMission ? (
-            <MissionNo progressnow={progressnow} /> //미션없는화면
+            <MissionNo progressnow={progressnow} /> ///미션없는화면
           ) : (
             <MissionSuccessList />
           )}
