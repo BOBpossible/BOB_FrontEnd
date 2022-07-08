@@ -20,8 +20,11 @@ const MyPage = () => {
       console.log(e);
     }
   };
-  const logout = () => {
-    AsyncStorage.setItem('userToken', '');
+  const logout = async () => {
+    await AsyncStorage.multiSet([
+      ['accessToken', ''],
+      ['refreshToken', ''],
+    ]);
     navigation.navigate('Login');
   };
   console.log(AsyncStorage.getItem('userToken'));

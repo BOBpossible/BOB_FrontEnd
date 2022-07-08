@@ -4,32 +4,30 @@ import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {AppleButton, appleAuth} from '@invertase/react-native-apple-authentication';
 import SocialWebviewModal from '../modal/SocialWebviewModal';
-import {useRecoilState} from 'recoil';
-import {userToken} from '../state';
 import auth from '@react-native-firebase/auth';
 import {customAxios} from '../api/customAxios';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Login = ({}) => {
+const Login = () => {
   const navigation = useNavigation();
-  const [token, setToken] = useRecoilState(userToken);
   const [loginModal, setLoginModal] = useState(false);
   const [source, setSource] = useState('');
-
-  console.log('로그인 화면: 저장공간에 있는 토큰', token);
 
   const postLogin = async (data: any) => {
     try {
       const response = await customAxios().post('/auth/authorization/login', null, {
         params: data,
       });
-      console.log('login data:', response.data);
-      setToken(response.data.result.accessToken);
-      await AsyncStorage.multiSet([
-        ['accessToken', response.data.result.accessToken],
-        ['refreshToken', response.data.result.refreshToken],
-      ]);
+      try {
+        await AsyncStorage.multiSet([
+          ['accessToken', response.data.result.accessToken],
+          ['refreshToken', response.data.result.refreshToken],
+        ]);
+      } catch (e) {
+        console.log('로그인 로컬 저장 에러남...');
+      }
+
       if (response.data.result.registerStatus === 'NEW') {
         navigation.navigate('Register');
       } else {
