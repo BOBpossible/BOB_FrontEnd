@@ -49,7 +49,7 @@ const RegisterForm = ({navigation, route}: Props) => {
     <SafeAreaView style={[styles.flex]}>
       <RegisterHeader goBack={goBack} pageNum={1} />
       <KeyboardAvoidingView
-        style={[{flex: 1}]}
+        style={{flex: 1}}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView style={[styles.flex, styles.formWrap]}>

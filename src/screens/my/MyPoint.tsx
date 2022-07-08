@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, FlatList} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
@@ -7,10 +7,8 @@ import {MyPointList} from '../../components/My/MyPointList';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
-import {userToken} from '../../state';
-import {useRecoilValue} from 'recoil';
 import {customAxios} from '../../api/customAxios';
-import {useQuery} from 'react-query';
+import {useInfiniteQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyPoint'>;
@@ -20,9 +18,12 @@ export type PointsListContent = {
   subTitle: string;
   title: string;
 };
+
 export type PointsListType = {
-  content: PointsListContent[];
-  totalPoints: number;
+  result: PointsListContent[];
+  isLast: boolean;
+  // nextPage: number;
+  pageNumber: number;
 };
 const dummyMission = [
   {
@@ -50,21 +51,61 @@ const dummyMission = [
   },
 ];
 export const MyPoint = ({navigation, route}: Props) => {
-  const token = useRecoilValue(userToken);
   const [point, setPoint] = useState<number>(route.params.point);
+  // ```//한 페이지단위래
+  // {
+  //   result: {
+  //     totalPoints: 0
+  //     point: {
+  //       content: [
+  //         {
+  //           date: . .
+  //         }
+  //       ],
+  //       last: true,
+  //     },
+  //   }
+  // }
+  // ```
   //마이페이지 - 나의 포인트 내역 조회
   const getPointsList = async () => {
-    const {data} = await customAxios(token).get('/api/v1/points/list/me');
-    return data.result;
+    const {data} = await customAxios().get('/api/v1/points/list/me', {
+      params: {
+        pageNumber: 1,
+      },
+    });
+    // console.log('d', data.result.point.content[0].date);
+    return {
+      result: data.result.point.content,
+      isLast: data.result.point.last, //그페이지가 끝인건지 아닌지TF
+      // nextPage: pageParam + 1,
+      pageNumber: data.result.point.pageable.pageNumber,
+      totalPoints: data.result.totalPoints,
+    };
   };
-  const DataPointsList = useQuery<PointsListType>([queryKey.POINTSLIST, token], getPointsList);
+  // const DataPointsList = useQuery<PointsListType>(queryKey.POINTSLIST, getPointsList);
   // DataPointsList.content (//point없애줘..) 로 접근
   // DataPointsList.totalPoints로 접근
 
+  //inf시도
+  const res = useInfiniteQuery<PointsListType>(queryKey.POINTSLIST, getPointsList, {
+    //첫번째인자 - 호출된 가장 마지막에 있는 페이지 데이터
+    //두번째인자 - 호출된 모든 페이지 데이터
+    //(벨로그) 현재 받아온데이터 , 현재 쌓여있는 전체 데이터. 페이지정보 받아올수있다면 사용하면될것
+    // lastPage(첫인자)엔 저 위에 getPointsList에서 리턴한 {result:~, isLAst ~~}
+    getNextPageParam: (lastPage, _allPages) => {
+      if (!lastPage.isLast) return lastPage.pageNumber + 1; //다음 페이지를 호출할 때 사용 될 pageParam
+      // if (!lastPage.isLast) return _allPages.length + 1; // ? _ ?
+      return undefined;
+    },
+  });
+  //
+  console.log('rrr', res.data.pages);
   const goBack = () => {
     navigation.goBack();
   };
-
+  // 호출시
+  // {res.data.pages[0].result[0].date}
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
@@ -74,8 +115,8 @@ export const MyPoint = ({navigation, route}: Props) => {
           <View style={[styles.myPointWrap, styles.marginLR]}>
             <View>
               <Text style={[DesignSystem.body2Lt, {color: '#616161'}]}>내 포인트</Text>
-              <Text style={{color: '#111111', fontFamily: 'Pretendard-SemiBold', fontSize: 24}}>
-                {point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
+              <Text style={[DesignSystem.h1SB, {color: '#111111'}]}>
+                {res.data.pages[0].totalPoints.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
                 {/* {DataPointsList.totalPoints.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P */}
               </Text>
             </View>
@@ -109,6 +150,8 @@ export const MyPoint = ({navigation, route}: Props) => {
                 </>
               )}
               ItemSeparatorComponent={() => <View style={{marginTop: 32}} />}
+              //무한스크롤
+              // onEndReached={ threshold에도달 시 실행할함수}
             />
           </View>
         </View>
