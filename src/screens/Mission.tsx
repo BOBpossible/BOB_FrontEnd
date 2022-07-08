@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {View, StyleSheet, Text, SafeAreaView} from 'react-native';
 import {DesignSystem} from '../assets/DesignSystem';
 import {MissionCard} from '../components';
 import {MissionProcess} from '../components/MissionProcess';
@@ -45,7 +44,7 @@ const Mission = () => {
 
   const [DataMission, setDataMission] = useState<DataMissionType[]>([]);
   const getMissionsMeProgress = async () => {
-    const res = await customAxios(token).get('missions/me/progress');
+    const res = await customAxios().get('missions/me/progress');
     console.log('getMissionsMeProgress res.data : ', res.data);
     setDataMission(res.data.result);
     console.log('데이타저장? :', DataMission);

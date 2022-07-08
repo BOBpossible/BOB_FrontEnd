@@ -21,27 +21,31 @@ import {customAxios} from '../../api/customAxios';
 import {useRecoilValue} from 'recoil';
 import {userToken} from '../../state';
 import {HomeData} from '../../screens/Home/Main';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WIDTH = Dimensions.get('window').width;
 const HEADER_HEIGHT = Platform.OS === 'ios' ? hp(25.8) : hp(28.6);
 type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
   paddingTop: number;
+  data?: HomeData;
 };
 
-export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop}) => {
+export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop, data}) => {
   const [addressModal, setAddressModal] = useState(false);
   const barProgressValue = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
-  const token = useRecoilValue(userToken);
+  const token = AsyncStorage.getItem('accessToken');
 
   //주소동 받는 퀘리 있어야함
 
-  const getHomeInfo = async () => {
-    const response = await customAxios(token).get('/api/v1/missions/me');
-    return response.data.result;
-  };
-  const {data} = useQuery<HomeData>('homeInfo', getHomeInfo);
+  // const getHomeInfo = async () => {
+  //   const response = await customAxios(await token).get('/api/v1/missions/me');
+  //   return response.data.result;
+  // };
+  // const {data} = useQuery<HomeData>('homeInfo', getHomeInfo, {
+  //   retry: false,
+  // });
 
   //헤더 길이 바꿔주는 애니메이션 Main.tsx의 스크롤 위치에 따라 변한다
   const heightAnimStyle = useStyle({
