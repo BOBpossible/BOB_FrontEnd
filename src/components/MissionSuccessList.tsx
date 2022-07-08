@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, FlatList} from 'react-native';
 import {MissionSuccessfulCard} from './MissionSuccessfulCard';
 import {customAxios} from '../api/customAxios';
@@ -73,39 +73,53 @@ const dummyMission = [
     completeStatus: '미션 성공',
   },
 ];
-interface DataResponse {
+interface DataCompletedMissionsType {
+  dayOfWeek: string;
   mission: string;
   missionId: number;
-  missionStatus: string; //NEW, PROGRESS, OWNER_CHECK
+  missionStatus: string; ///NEW, PROGRESS, OWNER_CHECK
   point: number;
   storeCategory: string;
   storeName: string;
+  successDate: string;
 }
-
 export const MissionSuccessList = () => {
   const token = useRecoilValue(userToken);
-  const [CompletedMissionsData, setCompletedMissionsData] = useState<DataResponse[]>([]);
+  const [DataCompletedMissions, setDataCompletedMissions] = useState<DataCompletedMissionsType[]>([]);
 
   const getMissionsMeComplete = async () => {
     const res = await customAxios(token).get('missions/me/complete');
     console.log('getMissionsMeProgress res.data : ', res.data);
     res.data.result.forEach((e: any) => {
-      setCompletedMissionsData((prev) => [
+      setDataCompletedMissions((prev) => [
         ...prev,
         {
+          dayOfWeek: e.dayOfWeek,
           mission: e.mission,
           missionId: e.missionId,
           missionStatus: e.missionStatus,
           point: e.point,
           storeCategory: e.storeCategory,
           storeName: e.storeName,
+          successDate: e.successDate,
         },
       ]);
     });
-    // CompletedMissionsData.length로할지, typeof(CompletedMissionsData);
-    // var noMission = useState(CompletedMissionsData.length === 0); //미션이없는상태면 true
+    // DataCompletedMissions.length로할지, typeof(DataCompletedMissions);
+    // var noMission = useState(DataCompletedMissions.length === 0); //미션이없는상태면 true
     // var 스코프 호출되는지 확인
   };
+  //prettier-ignore
+  const DAYOFWEEK = {
+    MONDAY: '월', TUESDAY: '화', WEDNESSDAY: '수', THURSDAY: '목', FRIDAY: '금', SATURDAY: '토', SUNDAY: '일',
+  };
+  // useEffect(() => {
+  // prettier-ignore
+  //   const DAYOFWEEK = {
+  //     MONDAY: '월', TUESDAY: '화', WEDNESSDAY: '수', THURSDAY: '목', FRIDAY: '금', SATURDAY: '토', SUNDAY: '일',
+  //   };
+  //   // console.log(DAYOFWEEK['MONDAY']);
+  // }, []); ///왜 미션갯수만큼렌더링???
   return (
     <FlatList
       style={{marginTop: 18}}
@@ -113,7 +127,7 @@ export const MissionSuccessList = () => {
       contentContainerStyle={{paddingBottom: 60, backgroundColor: '#F6F6FA'}}
       scrollEventThrottle={10}
       data={dummyMission}
-      // data={CompletedMissionsData}
+      // data={DataCompletedMissions}
       renderItem={({item}) => (
         <>
           <MissionSuccessfulCard
@@ -124,13 +138,15 @@ export const MissionSuccessList = () => {
             storeCategory={'중국집'}
             storeName={'반이학생마라탕'}
             successDate={'2022-07-07T07:43:57.267Z'}
+            dayOfWeek={DAYOFWEEK['MONDAY']}
             // mission={item.mission}
             // missionId={item.missionId}
             // // missionStatus={item.missionStatus}
             // point={item.poin}
             // storeCategory={item.storeCategory}
             // storeName={item.storeName}
-            // successDate={'2022-07-07T07:43:57.267Z'}
+            // successDate={item.successDate}
+            // dayOfWeek={DAYOFWEEK[item.dayOfWeek]}
           />
         </>
       )}

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, FlatList} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
@@ -7,9 +7,23 @@ import {MyPointList} from '../../components/My/MyPointList';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
+import {userToken} from '../../state';
+import {useRecoilValue} from 'recoil';
+import {customAxios} from '../../api/customAxios';
+import {useQuery} from 'react-query';
+import {queryKey} from '../../api/queryKey';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyPoint'>;
-
+export type PointsListContent = {
+  date: string;
+  point: number;
+  subTitle: string;
+  title: string;
+};
+export type PointsListType = {
+  content: PointsListContent[];
+  totalPoints: number;
+};
 const dummyMission = [
   {
     date: '2022-12-03T16:01:34.864Z',
@@ -36,11 +50,21 @@ const dummyMission = [
   },
 ];
 export const MyPoint = ({navigation, route}: Props) => {
+  const token = useRecoilValue(userToken);
   const [point, setPoint] = useState<number>(route.params.point);
+  //마이페이지 - 나의 포인트 내역 조회
+  const getPointsList = async () => {
+    const {data} = await customAxios(token).get('/api/v1/points/list/me');
+    return data.result;
+  };
+  const DataPointsList = useQuery<PointsListType>([queryKey.POINTSLIST, token], getPointsList);
+  // DataPointsList.content (//point없애줘..) 로 접근
+  // DataPointsList.totalPoints로 접근
 
   const goBack = () => {
     navigation.goBack();
   };
+
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
@@ -52,6 +76,7 @@ export const MyPoint = ({navigation, route}: Props) => {
               <Text style={[DesignSystem.body2Lt, {color: '#616161'}]}>내 포인트</Text>
               <Text style={{color: '#111111', fontFamily: 'Pretendard-SemiBold', fontSize: 24}}>
                 {point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
+                {/* {DataPointsList.totalPoints.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P */}
               </Text>
             </View>
             <TouchableOpacity style={[styles.changePointView]}>
@@ -72,6 +97,7 @@ export const MyPoint = ({navigation, route}: Props) => {
               showsVerticalScrollIndicator={false}
               scrollEventThrottle={10}
               data={dummyMission}
+              // data={DataPointsList.content}
               renderItem={({item}) => (
                 <>
                   <MyPointList
