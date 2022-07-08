@@ -7,7 +7,7 @@ const getAccessToken = async () => {
 };
 
 const getRefreshToken = async () => {
-  const refreshtoken = await AsyncStorage.getItem('accessToken');
+  const refreshtoken = await AsyncStorage.getItem('refreshToken');
   return refreshtoken;
 };
 

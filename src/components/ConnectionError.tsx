@@ -13,7 +13,7 @@ export const ConnectionError: FC<ConnectionErrorProps> = ({refetch}) => {
       <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2}]}>
         연결에 실패했어요
       </Text>
-      <Text style={[DesignSystem.body1Lt, {color: '#94949', marginBottom: 38}]}>
+      <Text style={[DesignSystem.body1Lt, {color: '#949494', marginBottom: 38}]}>
         네트워크를 확인해주세요
       </Text>
       <TouchableOpacity

@@ -39,7 +39,9 @@ export default function App() {
         //GET user register status 그리고 그안에서 setIslogin true 만들거나 false로 냅두기
 
         await postToken();
+
         const registerResult = await getRegisterStatus();
+        console.log('가입 상태 확인 요청:', registerResult);
         if (registerResult === 'DONE') {
           setIsLogin(true);
         }
