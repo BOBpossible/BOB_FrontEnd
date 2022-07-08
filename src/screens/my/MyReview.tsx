@@ -88,9 +88,22 @@ const dummyMission = [
     reviewId: 1,
   },
 ];
-export type PointsListType = {
-  content: PointsListContent[];
-  totalPoints: number;
+export type ReviewImagesType = {
+  imageUrl: string;
+};
+export type ReviewReplyType = {
+  date: string;
+  reply: string;
+  reviewReplyId: number;
+};
+export type ReviewsType = {
+  content: string;
+  date: string;
+  images: ReviewImagesType[];
+  name: string;
+  rate: number;
+  reply: ReviewReplyType[];
+  reviewId: number;
 };
 type Props = NativeStackScreenProps<MyStackParamList, 'MyReview'>;
 
@@ -101,7 +114,7 @@ export const MyReview = ({navigation}: Props) => {
     const {data} = await customAxios(token).get('/api/v1/reviews/me');
     return data.result;
   };
-  const DataReviewList = useQuery<PointsListType>([queryKey.REVIEWLIST, token], getReviewsMe);
+  const DataReviews = useQuery<ReviewsType>([queryKey.REVIEWSME, token], getReviewsMe);
 
   const goBack = () => {
     navigation.goBack();
@@ -114,6 +127,7 @@ export const MyReview = ({navigation}: Props) => {
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={10}
         data={dummyMission}
+        // data={DataReviews}
         renderItem={({item}) => (
           <>
             <MyReviewEach
