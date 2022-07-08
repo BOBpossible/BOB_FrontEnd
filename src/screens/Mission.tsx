@@ -40,8 +40,9 @@ const Mission = () => {
     const {data} = await customAxios(token).get('/api/v1/users/me');
     return data.result;
   };
-  const {DataUser, isSuccess, isError, error} = useQuery<DataUserType>(['userInfo', token], getUsersMe);
-  // DataUser.~ 로 접근
+  const DataUser = useQuery<DataUserType>(['userInfo', token], getUsersMe);
+  // DataUser.data.point 이런식으로 접근
+
   const [DataMission, setDataMission] = useState<DataMissionType[]>([]);
   const getMissionsMeProgress = async () => {
     const res = await customAxios(token).get('missions/me/progress');
