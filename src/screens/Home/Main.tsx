@@ -11,6 +11,7 @@ import {useQuery} from 'react-query';
 import {AxiosError} from 'axios';
 import {ConnectionError} from '../../components/ConnectionError';
 import {IHomeData} from '../../data';
+import {queryKey} from '../../api/queryKey';
 
 const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
@@ -20,7 +21,7 @@ const Main = () => {
     const response = await customAxios().get('/api/v1/missions/me');
     return response.data.result;
   };
-  const homeData = useQuery<IHomeData, AxiosError>('homeInfo', getHomeInfo, {
+  const homeData = useQuery<IHomeData, AxiosError>(queryKey.HOMEDATA, getHomeInfo, {
     onError: (err) => {
       console.log(err);
     },

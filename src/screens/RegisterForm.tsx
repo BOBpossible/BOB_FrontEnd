@@ -13,6 +13,7 @@ import {RegisterInterface} from '../data';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
 import {useForm, Controller} from 'react-hook-form';
+import {RegisterPhone} from '../components/Register/RegisterPhone';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
@@ -117,6 +118,8 @@ const RegisterForm = ({navigation, route}: Props) => {
           {errors.birthDate?.type === 'required' && (
             <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
           )}
+
+          <RegisterPhone setRegisterData={setRegisterData} registerData={registerData} />
 
           <Controller
             control={control}
