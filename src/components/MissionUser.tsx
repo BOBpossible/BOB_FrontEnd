@@ -51,6 +51,8 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 28,
     marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#DFDFDF',
   },
   userWrap: {
     flex: 1,
