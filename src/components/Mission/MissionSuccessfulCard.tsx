@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {calHeight, calWidth} from '../assets/CalculateLength';
-import {DesignSystem} from '../assets/DesignSystem';
-import ReviewModal from '../modal/ReviewModal';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
+import {DesignSystem} from '../../assets/DesignSystem';
+import ReviewModal from '../../modal/ReviewModal';
 
 export type MissionSuccessfulCardContentProps = {
   handleOnPress?: () => void;

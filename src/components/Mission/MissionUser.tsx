@@ -2,7 +2,7 @@ import React from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
 import {Colors} from 'react-native-paper';
-import {DesignSystem} from '../assets/DesignSystem';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 export type MissionUserProps = {
   userprofile?: any; //?????????프사
@@ -19,7 +19,7 @@ export const MissionUser: FC<MissionUserProps> = ({ userprofile, username, useri
       <View style={[styles.profileWrap]}>
         <Image
           style={[styles.profileImg]}
-          source={require('../assets/images/bobProfile.png')} //
+          source={require('../../assets/images/bobProfile.png')} //
         />
       </View>
       <View style={[styles.userWrap]}>

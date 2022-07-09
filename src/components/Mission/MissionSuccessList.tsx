@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {View, FlatList} from 'react-native';
 import {MissionSuccessfulCard} from './MissionSuccessfulCard';
-import {customAxios} from '../api/customAxios';
+import {customAxios} from '../../api/customAxios';
 import {useRecoilValue} from 'recoil';
-import {userToken} from '../state';
+import {userToken} from '../../state';
 
 const dummyMission = [
   {

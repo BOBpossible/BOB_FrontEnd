@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {calHeight, calWidth} from '../assets/CalculateLength';
-import {DesignSystem} from '../assets/DesignSystem';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 export type MissionProcessProps = {
   status?: string; //NEW, PROGRESS, OWNER_CHECK
