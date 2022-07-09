@@ -11,7 +11,6 @@ import {customAxios} from '../api/customAxios';
 import {useRecoilValue} from 'recoil';
 import {userToken} from '../state';
 import {useQuery} from 'react-query';
-import {AxiosError} from 'axios';
 
 export type DataUserType = {
   authentication: boolean;
