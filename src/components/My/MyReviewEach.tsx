@@ -15,16 +15,15 @@ export type ReviewReplyType = {
 export type MyReviewEachProps = {
   content: string;
   date: string;
-  images?: ReviewImagesType[];
+  images: ReviewImagesType[];
   name: string;
   rate: number;
-  reply?: ReviewReplyType[];
+  reply: ReviewReplyType[];
   reviewId: number;
 };
 
 //prettier-ignore
 export const MyReviewEach: FC<MyReviewEachProps> = ({name, date, rate, content, images, reply, reviewId}) => {
-  // console.log(reply[0]===undefined);
   return (
     <View style={{backgroundColor: 'white'}}>
       <View style={[styles.totalWrap]}>
@@ -49,10 +48,13 @@ export const MyReviewEach: FC<MyReviewEachProps> = ({name, date, rate, content, 
             <View style={[styles.reviewContents]}>
                 <Text style={[DesignSystem.body1Lt, {color: 'black'}]}>{content}</Text>
             </View>
-            <View style={[styles.reviewImg]}>
-              <Text>🚨🚨🚨🚨🚨🚨🚨🚨🚨리뷰사진🚨🚨🚨🚨🚨</Text>
-              {/* images.imageUrl */}
-            </View>
+            {images.length !== 0 && (
+              <View style={[styles.reviewImg]}>
+                <Text>🚨🚨🚨🚨🚨🚨🚨🚨🚨리뷰사진🚨🚨🚨🚨🚨</Text>
+                {/* images.imageUrl */}
+                {/* 이미지있으면 나타내는 로직 */}
+              </View>
+            )}
         </View>
         {reply[0] !== undefined && (
           <View style={[styles.ownerWrap]}>

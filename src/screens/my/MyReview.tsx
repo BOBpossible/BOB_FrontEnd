@@ -42,13 +42,12 @@ export const MyReview = ({navigation}: Props) => {
     getReviewsMe,
     {
       getNextPageParam: (lastPage, _allPages) => {
-        // console.log('요건몰까',lastPage.data.result.point.last);  //스웨거대로임
         if (!lastPage.data.result.last) return lastPage.data.point.pageable.pageNumber + 1; //다음 페이지를 호출할 때 사용 될 pageParam
         return undefined;
       },
     },
   );
-  console.log('ddddd', data?.pages[0].data.result.content);
+  // console.log('받아온데이터', data?.pages[0].data.result.content);
   const loadMore = () => {
     if (hasNextPage) {
       fetchNextPage();
@@ -75,7 +74,7 @@ export const MyReview = ({navigation}: Props) => {
               date={item.date}
               rate={item.rate}
               content={item.content}
-              // images={item.images} //더미없어서 못보냄
+              images={item.images} //더미없어서 못보냄
               reply={item.reply}
               reviewId={item.reviewId}
             />
