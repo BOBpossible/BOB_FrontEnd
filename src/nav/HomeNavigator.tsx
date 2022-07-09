@@ -7,9 +7,9 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 export type HomeStackParamList = {
   Main: undefined;
-  HomeMissionDetails: undefined;
+  HomeMissionDetails: {missionId: number};
   Notifications: undefined;
-  Mission: {missionId: string};
+  Mission: {missionId: number};
 };
 
 const Stack = createStackNavigator<HomeStackParamList>();

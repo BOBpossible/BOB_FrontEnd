@@ -1,12 +1,18 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import {StyleSheet, View, ActivityIndicator} from 'react-native';
 import WebView, {WebViewMessageEvent} from 'react-native-webview';
 import StoreModal from './StoreModal';
 
-export const MapWebview = () => {
+type MapWebviewProps = {
+  id?: number;
+  userId: number;
+};
+
+export const MapWebview: FC<MapWebviewProps> = ({id, userId}) => {
   const [isLoadingMap, setIsLoadingMap] = useState(true);
   const [storeId, setStoreId] = useState(0);
   const [storeModal, setStoreModal] = useState(false);
+
   const onClickPin = async (event: WebViewMessageEvent) => {
     await setStoreId(parseInt(event.nativeEvent.data, 10));
     setStoreModal(true);
@@ -21,7 +27,11 @@ export const MapWebview = () => {
         closeStoreModal={() => setStoreModal(false)}
       />
       <WebView
-        source={{uri: 'https://bobplace.netlify.app/'}}
+        source={
+          id === undefined
+            ? {uri: `https://bobplace.netlify.app/`} //여기에 userId 뒤에 넣어줘야함!
+            : {uri: `https://bobplace.netlify.app/store/${id}`}
+        }
         onMessage={(event) => {
           onClickPin(event);
         }}
