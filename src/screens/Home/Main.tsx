@@ -12,6 +12,7 @@ import {AxiosError} from 'axios';
 import {ConnectionError} from '../../components/ConnectionError';
 import {IHomeData} from '../../data';
 import {queryKey} from '../../api/queryKey';
+import {HomeNoMission} from '../../components/Home/HomeNoMission';
 
 const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
@@ -45,39 +46,43 @@ const Main = () => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.flex}>
-      {homeData.isFetching ? (
+      {homeData.isLoading ? (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <ActivityIndicator />
         </View>
       ) : (
         <>
           <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
-          <Animated.FlatList
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[styles.missionListContainer]}
-            scrollEventThrottle={10}
-            data={homeData.data?.missions}
-            renderItem={({item}) => (
-              <HomeMissionCard
-                missionId={item.missionId}
-                name={item.storeName}
-                category={item.storeCategory}
-                mission={item.mission}
-                point={item.point}
-                status={false}
-              />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            ListHeaderComponent={<HomeMissionListHeader dday={homeData.data?.dday} />}
-            onScroll={(event) => {
-              Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
-                useNativeDriver: false,
-              })(event);
-            }}
-            ItemSeparatorComponent={() => <View style={[styles.missionSeperate]} />}
-            ListFooterComponent={() => <View />}
-            ListFooterComponentStyle={{marginTop: 40}}
-          />
+          {homeData.data?.missions === null ? (
+            <HomeNoMission />
+          ) : (
+            <Animated.FlatList
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={[styles.missionListContainer]}
+              scrollEventThrottle={10}
+              data={homeData.data?.missions}
+              renderItem={({item}) => (
+                <HomeMissionCard
+                  missionId={item.missionId}
+                  name={item.storeName}
+                  category={item.storeCategory}
+                  mission={item.mission}
+                  point={item.point}
+                  status={false}
+                />
+              )}
+              keyExtractor={(item, index) => index.toString()}
+              ListHeaderComponent={<HomeMissionListHeader dday={homeData.data?.dday} />}
+              onScroll={(event) => {
+                Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
+                  useNativeDriver: false,
+                })(event);
+              }}
+              ItemSeparatorComponent={() => <View style={[styles.missionSeperate]} />}
+              ListFooterComponent={() => <View />}
+              ListFooterComponentStyle={{marginTop: 40}}
+            />
+          )}
         </>
       )}
     </SafeAreaView>
