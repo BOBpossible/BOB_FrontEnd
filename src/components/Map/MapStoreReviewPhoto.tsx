@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
-import {PhotoModal} from '../modal/PhotoModal';
+import {PhotoModal} from '../../modal/PhotoModal';
 import FastImage from 'react-native-fast-image';
 const WIDTH = Dimensions.get('window').width;
 const IMAGESIZE = WIDTH / 3;

@@ -1,6 +1,6 @@
 import React from 'react';
 import type {FC} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 

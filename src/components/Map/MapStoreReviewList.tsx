@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {PhotoModal} from '../modal/PhotoModal';
+import {PhotoModal} from '../../modal/PhotoModal';
 import {MapStoreReview} from './MapStoreReview';
 
 const dummyReviews = [

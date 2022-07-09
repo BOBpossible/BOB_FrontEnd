@@ -3,7 +3,7 @@ import type {FC} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {DesignSystem} from '../assets/DesignSystem';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 type MapStoreReviewProps = {
   images: {uri: string; id: number}[] | [];

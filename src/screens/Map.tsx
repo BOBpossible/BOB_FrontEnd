@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomSheet, {BottomSheetFlatList, BottomSheetView} from '@gorhom/bottom-sheet';
@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AddressSearchModal from '../modal/AddressSearchModal';
 import StoreModal from '../modal/StoreModal';
 import {MapWebview} from '../modal/MapWebview';
-import {MapStoreBottomSheet} from '../components/MapStoreBottomSheet';
+import {MapStoreBottomSheet} from '../components/Map/MapStoreBottomSheet';
 import {DesignSystem} from '../assets/DesignSystem';
 import DoneModal from '../modal/DoneModal';
 
