@@ -9,8 +9,8 @@ type Props = NativeStackScreenProps<MyStackParamList, 'MyEditUserInfo'>;
 
 export const MyEditUserInfo = ({navigation, route}: Props) => {
   const [username, setUsername] = useState<string>(route.params.username);
+  const [email, setEmail] = useState<string>(route.params.email);
   const [auth, setAuth] = useState<string>(route.params.auth);
-  const [email, setEmail] = useState('');
   const [focusedEmail, setFocusedEmail] = useState(false);
 
   const goBack = () => {
@@ -49,22 +49,18 @@ export const MyEditUserInfo = ({navigation, route}: Props) => {
           <View style={[styles.userInfoEditContent]}>
             <View style={[styles.emailNinput]}>
               <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom:8}]}>이메일</Text>
-              <TextInput
-                style={[styles.inputText, focusedEmail ? styles.focusBorder : styles.unfocusBorder]}
-                onChangeText={(text) => {
-                  setEmail(text);
-                }}
-                value={email.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                onBlur={() => setFocusedEmail(false)}
-                onFocus={() => setFocusedEmail(true)}
-              />
+              <Text style={[DesignSystem.body1Lt, {marginLeft: 8, color: '#949494'}]}>{email}</Text>
             </View>
             <View style={[styles.phoneNinput]}>
-              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom:8}]}>전화번호</Text>
+              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 8}]}>
+                전화번호
+              </Text>
               <View style={[styles.phoneAuth]}>
                 <Text>🚨전화번호인증🚨</Text>
               </View>
-              <Text style={[DesignSystem.caption1Lt, {color: '#E03D32', marginLeft: 8}]}>{auth}</Text>
+              <Text style={[DesignSystem.caption1Lt, {color: '#E03D32', marginLeft: 8}]}>
+                {auth}
+              </Text>
             </View>
           </View>
         </View>

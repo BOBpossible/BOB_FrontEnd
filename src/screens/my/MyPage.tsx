@@ -25,11 +25,12 @@ export type MyPageData = {
 const MyPage = () => {
   const navigation = useNavigation();
   const token = useRecoilValue(userToken);
-  // const getUserInfo = async () => {
-  //   const {data} = await customAxios(token).get('/api/v1/users/me');
-  //   return data.result;
-  // };
-  // const {data, isSuccess, isError, error} = useQuery<MyPageData>(['userInfo', token], getUserInfo);
+  const getUserInfo = async () => {
+    const {data} = await customAxios(token).get('/api/v1/users/me');
+    return data.result;
+  };
+  const {data, isSuccess, isError, error} = useQuery<MyPageData>(['userInfo', token], getUserInfo);
+  console.log('ssssssssss', data);
   // data.point 로 접근
   const storeData = async (value: string) => {
     try {
@@ -45,14 +46,7 @@ const MyPage = () => {
     ]);
     navigation.navigate('Login');
   };
-  console.log(AsyncStorage.getItem('userToken'));
-
-  // 서버연결 후 수정
-  const name = '밥풀이';
-  const email = 'bobPlace@bob.com';
-  const point = 2500;
-  const [authentication, setAuthentication] = useState<boolean>(false);
-  //
+  console.log('async userToken', AsyncStorage.getItem('userToken'));
 
   return (
     <>
@@ -63,9 +57,14 @@ const MyPage = () => {
             <Text style={[styles.headerText, DesignSystem.h2SB]}>마이페이지</Text>
           </View>
         </View>
-        <MyUser authentication={authentication} email={email} name={name} point={point} />
-        {/* 서버연결 예시 */}
-        {/* <MyUser authentication={data.authentication} email={data.email} name={data.name} point={data.point} /> */}
+        {data !== undefined && (
+          <MyUser
+            authentication={data.authentication}
+            email={data.email}
+            name={data.name}
+            point={data.point}
+          />
+        )}
         <TouchableOpacity onPress={() => navigation.navigate('MyReview')}>
           <View style={[styles.myMenuWrap]}>
             <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>

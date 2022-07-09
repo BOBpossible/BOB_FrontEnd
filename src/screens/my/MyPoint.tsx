@@ -132,7 +132,7 @@ export const MyPoint = ({navigation, route}: Props) => {
             <View>
               <Text style={[DesignSystem.body2Lt, {color: '#616161'}]}>내 포인트</Text>
               <Text style={[DesignSystem.h1SB, {color: '#111111'}]}>
-                {data?.pages[0].data.result.totalPoints.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
+                {data?.pages[0].data.result.totalPoints.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} P
                 {/* {DataPointsList.totalPoints.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P */}
               </Text>
             </View>
