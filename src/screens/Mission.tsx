@@ -30,7 +30,7 @@ interface DataMissionType {
 
 const Mission = () => {
   const token = useRecoilValue(userToken);
-  const [status, setStatus] = useState<string>('PROGRESS'); //버튼문구 //"NEW","PROGRESS","OWNER_CHECK" //서버연결후삭제
+  const [status, setStatus] = useState<string>('NEW'); //버튼문구 //"NEW","PROGRESS","OWNER_CHECK" //서버연결후삭제
   const [progressnow, setProgressnow] = useState(0); //아래 스위치. 0:진행중 / 1:진행완료
   const [noMission, setNoMission] = useState(false); //미션이없는상태면 true
   //서버연결후 아래에 var noMission

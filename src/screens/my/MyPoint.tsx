@@ -72,9 +72,9 @@ export const MyPoint = ({navigation, route}: Props) => {
     const response = await customAxios().get('/api/v1/points/list/me', {
       params: {
         pageNumber: 0,
+        pageSize: 5, //pageSize ISSUE .  .. . . . . . .
       },
     });
-    // console.log('받아아', response.data.result.point.content.length); //왜 20개씩 옵니까 ? 
     // console.log('여여ㅕㅇ',response);//response.data.result 하면 스웨커대로
     // console.log(data.result.point);x
     // console.log('d', data.result.point.content[0].date);

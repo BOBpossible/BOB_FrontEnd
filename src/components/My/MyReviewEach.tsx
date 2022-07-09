@@ -38,12 +38,11 @@ export const MyReviewEach: FC<MyReviewEachProps> = ({name, date, rate, content, 
                 </TouchableOpacity>
             </View>
             <View style={[styles.stars]}>
-            {/* {Array(rate).map((e, i) => (
+            {[...Array(Number(rate.toFixed()))].map((e, i) => (
               <View key={i}>
                 <Icon name="star" size={18} color={'#FFDE69'} />
               </View>
-            ))} */}
-            {/* 더미 정수로 바꿔주면 실행 */}
+            ))}
             </View>
             <View style={[styles.reviewContents]}>
                 <Text style={[DesignSystem.body1Lt, {color: 'black'}]}>{content}</Text>

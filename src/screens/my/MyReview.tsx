@@ -59,30 +59,33 @@ export const MyReview = ({navigation}: Props) => {
   };
 
   return (
-    <SafeAreaView style={[styles.flex]}>
-      <MyHeader goBack={goBack} title={'리뷰 관리'} />
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={10}
-        data={data?.pages[0].data.result.content}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.8}
-        renderItem={({item}) => (
-          <>
-            <MyReviewEach
-              name={item.name}
-              date={item.date}
-              rate={item.rate}
-              content={item.content}
-              images={item.images} //더미없어서 못보냄
-              reply={item.reply}
-              reviewId={item.reviewId}
-            />
-          </>
-        )}
-        ItemSeparatorComponent={() => <View style={{height: 8}} />}
-      />
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={{flex: 0, backgroundColor: '#F8F8F8'}} />
+      <SafeAreaView style={[styles.flex]}>
+        <MyHeader goBack={goBack} title={'리뷰 관리'} />
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle={10}
+          data={data?.pages[0].data.result.content}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.8}
+          renderItem={({item}) => (
+            <>
+              <MyReviewEach
+                name={item.name}
+                date={item.date}
+                rate={item.rate}
+                content={item.content}
+                images={item.images} //더미없어서 못보냄
+                reply={item.reply}
+                reviewId={item.reviewId}
+              />
+            </>
+          )}
+          ItemSeparatorComponent={() => <View style={{height: 8}} />}
+        />
+      </SafeAreaView>
+    </>
   );
 };
 
