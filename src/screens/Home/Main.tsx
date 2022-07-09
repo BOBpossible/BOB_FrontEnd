@@ -53,7 +53,6 @@ const Main = () => {
       ) : (
         <>
           <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
-<<<<<<< HEAD
           <Animated.FlatList
             showsVerticalScrollIndicator={false}
             contentContainerStyle={[styles.missionListContainer]}
