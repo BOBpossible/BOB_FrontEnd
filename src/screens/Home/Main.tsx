@@ -76,7 +76,7 @@ const Main = () => {
             }}
             ItemSeparatorComponent={() => <View style={[styles.missionSeperate]} />}
             ListFooterComponent={() => <View />}
-            ListFooterComponentStyle={{marginTop: 40}}
+            ListFooterComponentStyle={{marginTop: 100}}
           />
         </>
       )}
