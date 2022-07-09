@@ -20,13 +20,8 @@ export const postToken = async () => {
     const response = await customAxios().post('/auth/token', null, {
       params: {accessToken: accessToken, refreshToken: refreshToken},
     });
-    console.log('리프레시 토큰 응답: ', response);
-    await AsyncStorage.multiSet([
-      ['accessToken', response.data.result.accessToken],
-      ['refreshToken', response.data.result.refreshToken],
-    ]);
-    console.log('리프레시 토큰 성공: ', response);
-    return response;
+    console.log('리프레시 토큰 성공: ', response.data);
+    return response.data;
   } catch (error) {
     console.log('토큰 리프레시 갱신 에러: ', error);
   }
