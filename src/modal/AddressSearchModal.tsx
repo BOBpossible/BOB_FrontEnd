@@ -11,9 +11,9 @@ type AddressSearchModalProps = {
   visible: boolean;
   closeAddressModal: () => void;
   onChange?: (...event: any[]) => void;
-  value: string;
-  setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
-  registerData: RegisterInterface;
+  value?: string;
+  setRegisterData?: React.Dispatch<React.SetStateAction<RegisterInterface>>;
+  registerData?: RegisterInterface;
 };
 
 const AddressSearchModal: FC<AddressSearchModalProps> = ({

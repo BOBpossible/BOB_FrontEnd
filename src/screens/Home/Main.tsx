@@ -12,6 +12,7 @@ import {AxiosError} from 'axios';
 import {ConnectionError} from '../../components/ConnectionError';
 import {IHomeData} from '../../data';
 import {queryKey} from '../../api/queryKey';
+import {HomeNoMission} from '../../components/Home/HomeNoMission';
 
 const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
@@ -45,13 +46,14 @@ const Main = () => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.flex}>
-      {homeData.isFetching ? (
+      {homeData.isLoading ? (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <ActivityIndicator />
         </View>
       ) : (
         <>
           <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
+<<<<<<< HEAD
           <Animated.FlatList
             showsVerticalScrollIndicator={false}
             contentContainerStyle={[styles.missionListContainer]}

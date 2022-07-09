@@ -7,7 +7,7 @@ import {calHeight} from '../../assets/CalculateLength';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export type CircleBarProps = {
-  progress: number;
+  progress?: number;
 };
 export const CircleBar: FC<CircleBarProps> = ({progress}) => {
   const styles = StyleSheet.create({
@@ -35,7 +35,7 @@ export const CircleBar: FC<CircleBarProps> = ({progress}) => {
         style={{transform: [{scaleX: -1}]}}
         size={Platform.OS === 'ios' ? hp((108 / 812) * 100) : hp(calHeight(108))}
         width={5}
-        fill={progress * 10}
+        fill={progress !== undefined ? progress * 10 : 0}
         tintColor="#615EFF"
         duration={2000}
         rotation={0}

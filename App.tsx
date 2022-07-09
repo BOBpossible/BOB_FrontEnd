@@ -37,11 +37,16 @@ export default function App() {
       if (value !== null) {
         //GET user register status 그리고 그안에서 setIslogin true 만들거나 false로 냅두기
 
-        await postToken();
+        const newToken = await postToken();
+
+        await AsyncStorage.multiSet([
+          ['accessToken', newToken.result.accessToken],
+          ['refreshToken', newToken.result.refreshToken],
+        ]);
 
         const registerResult = await getRegisterStatus();
         console.log('가입 상태 확인 요청:', registerResult);
-        if (registerResult === 'DONE') {
+        if (registerResult !== 'NEW') {
           setIsLogin(true);
         }
       }
