@@ -44,7 +44,7 @@ const MyPage = () => {
       ['accessToken', ''],
       ['refreshToken', ''],
     ]);
-    navigation.navigate('Login');
+    navigation.navigate('AuthNavigator');
   };
   console.log('async userToken', AsyncStorage.getItem('userToken'));
 

@@ -10,7 +10,6 @@ import 'react-native-gesture-handler';
 import {enableScreens} from 'react-native-screens';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {QueryClient, QueryClientProvider} from 'react-query';
-import {customAxios} from './src/api/customAxios';
 import {getRegisterStatus, postToken} from './src/api';
 
 enableScreens();
@@ -38,9 +37,16 @@ export default function App() {
       if (value !== null) {
         //GET user register status 그리고 그안에서 setIslogin true 만들거나 false로 냅두기
 
-        await postToken();
+        const newToken = await postToken();
+
+        await AsyncStorage.multiSet([
+          ['accessToken', newToken.result.accessToken],
+          ['refreshToken', newToken.result.refreshToken],
+        ]);
+
         const registerResult = await getRegisterStatus();
-        if (registerResult === 'DONE') {
+        console.log('가입 상태 확인 요청:', registerResult);
+        if (registerResult !== 'NEW') {
           setIsLogin(true);
         }
       }

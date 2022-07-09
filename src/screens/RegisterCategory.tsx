@@ -6,8 +6,7 @@ import {RegisterHeader, RegisterNextButton} from '../components';
 import {CategoryItem} from '../components/CategoryItem';
 import {RegisterInterface} from '../data';
 import {AuthStackParamList} from '../nav';
-import {useRecoilValue} from 'recoil';
-import {userToken} from '../state';
+import {customAxios} from '../api';
 import axios from 'axios';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
@@ -20,14 +19,10 @@ const RegisterCategory = ({navigation, route}: Props) => {
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
 
   //axios 통신 처리들
-  const token = useRecoilValue(userToken);
-  const headers = {Authorization: `Bearer ${token}`};
   const postRegister = async () => {
     try {
-      const response = await axios.post('https://bobpossible.shop/api/v1/users', registerData, {
-        headers: headers,
-      });
-      console.log('post register:', response.data.result);
+      const response = await customAxios().post('/api/v1/users', registerData);
+      console.log('post register:', response.data);
     } catch (error) {
       console.log('post register:', error);
     }
@@ -35,10 +30,13 @@ const RegisterCategory = ({navigation, route}: Props) => {
   const postCategories = async () => {
     const categoriesParams = {favorites: selectedCategories.join(',')};
     try {
-      const response = await axios.post('https://bobpossible.shop/api/v1/member-categories', null, {
-        params: categoriesParams,
-        headers: headers,
-      });
+      const response = await customAxios().post(
+        'https://bobpossible.shop/api/v1/member-categories',
+        null,
+        {
+          params: categoriesParams,
+        },
+      );
       console.log('category register:', response.data);
     } catch (error) {
       console.log('category register:', error);
@@ -46,9 +44,7 @@ const RegisterCategory = ({navigation, route}: Props) => {
   };
   const getCategories = async () => {
     try {
-      const response = await axios.get('https://bobpossible.shop/api/v1/categories', {
-        headers: headers,
-      });
+      const response = await customAxios().get('https://bobpossible.shop/api/v1/categories', {});
       setCategoryList(response.data.result);
       console.log(response.data.result);
     } catch (error) {

@@ -3,7 +3,7 @@ import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RegisterNextButton} from '../components';
 import {createRegister} from '../data/createRegister';
-import {RegisterInterface} from '../data/RegisterInterface';
+import {RegisterInterface} from '../data/Register';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
 import {RegisterHeader, CheckBox} from '../components';

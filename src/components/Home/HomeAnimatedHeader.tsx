@@ -20,32 +20,20 @@ import {useQuery} from 'react-query';
 import {customAxios} from '../../api/customAxios';
 import {useRecoilValue} from 'recoil';
 import {userToken} from '../../state';
-import {HomeData} from '../../screens/Home/Main';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {IHomeData} from '../../data';
 
 const WIDTH = Dimensions.get('window').width;
 const HEADER_HEIGHT = Platform.OS === 'ios' ? hp(25.8) : hp(28.6);
 type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
   paddingTop: number;
-  data?: HomeData;
+  data?: IHomeData;
 };
 
 export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop, data}) => {
   const [addressModal, setAddressModal] = useState(false);
   const barProgressValue = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
-  const token = AsyncStorage.getItem('accessToken');
-
-  //주소동 받는 퀘리 있어야함
-
-  // const getHomeInfo = async () => {
-  //   const response = await customAxios(await token).get('/api/v1/missions/me');
-  //   return response.data.result;
-  // };
-  // const {data} = useQuery<HomeData>('homeInfo', getHomeInfo, {
-  //   retry: false,
-  // });
 
   //헤더 길이 바꿔주는 애니메이션 Main.tsx의 스크롤 위치에 따라 변한다
   const heightAnimStyle = useStyle({
@@ -78,8 +66,8 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     }),
   });
   useEffect(() => {
-    barProgressFill(7);
-  }, [barProgressFill]);
+    barProgressFill(data.rewards);
+  }, [barProgressFill, data.rewards]);
 
   const circleAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
@@ -117,7 +105,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   const expandHeader = () => {
     return (
       <Animated.View style={[styles.circleWrap, circleAnimStyle]}>
-        <CircleBar progress={7} />
+        <CircleBar progress={data?.rewards} />
         <Text style={[DesignSystem.grey17, styles.circleBar]}>미션 10개 달성시 1000P</Text>
       </Animated.View>
     );

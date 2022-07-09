@@ -35,7 +35,8 @@ export const MyNavigator = ({navigation, route}) => {
       routeName === 'MyNotificationsSetting' ||
       routeName === 'MyInquiry' ||
       routeName === 'MyChangePoint' ||
-      routeName === 'MyChangePointDone'
+      routeName === 'MyChangePointDone' ||
+      routeName === 'AuthNavigator'
     ) {
       navigation.setOptions({tabBarStyle: {display: 'none'}});
     } else {
@@ -55,7 +56,11 @@ export const MyNavigator = ({navigation, route}) => {
       <Stack.Screen name="MyInquiry" component={MyInquiry} />
       <Stack.Screen name="MyChangePoint" component={MyChangePoint} />
       <Stack.Screen name="MyChangePointDone" component={MyChangePointDone} />
-      <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
+      <Stack.Screen
+        name="AuthNavigator"
+        component={AuthNavigator}
+        options={{gestureEnabled: false}}
+      />
     </Stack.Navigator>
   );
 };

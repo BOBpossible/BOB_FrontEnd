@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import type {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import AddressSearchModal from '../../modal/AddressSearchModal';
-import {useRecoilValue} from 'recoil';
-import {address} from '../../state';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {RegisterInterface} from '../../data';
 type RegisterAddressProps = {
@@ -22,27 +20,16 @@ export const RegisterAddress: FC<RegisterAddressProps> = ({
   error,
 }) => {
   const [addressModal, setAddressModal] = useState(false);
-  const userAddress = useRecoilValue(address);
 
-  //지도 모달에서 주소 바뀔때마다 회원가입 데이타 갱신
-  useEffect(() => {
-    setRegisterData({
-      ...registerData,
-      addressStreet: userAddress.address,
-      addressDong: userAddress.bname,
-      x: userAddress.x,
-      y: userAddress.y,
-    });
-  }, [userAddress]);
-
-  useEffect(() => {}, [userAddress]);
   return (
     <View style={[styles.addressWrap]}>
       <AddressSearchModal
         visible={addressModal}
         closeAddressModal={() => setAddressModal(false)}
-        value={value}
+        setRegisterData={setRegisterData}
+        registerData={registerData}
         onChange={onChange}
+        value={value}
       />
       <Text style={[styles.formHeadText]}>주소</Text>
       <TouchableOpacity onPress={() => setAddressModal(true)}>
