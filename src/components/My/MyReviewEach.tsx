@@ -15,15 +15,16 @@ export type ReviewReplyType = {
 export type MyReviewEachProps = {
   content: string;
   date: string;
-  images: ReviewImagesType[];
+  images?: ReviewImagesType[];
   name: string;
   rate: number;
-  reply: ReviewReplyType[];
+  reply?: ReviewReplyType[];
   reviewId: number;
 };
 
 //prettier-ignore
 export const MyReviewEach: FC<MyReviewEachProps> = ({name, date, rate, content, images, reply, reviewId}) => {
+  // console.log(reply[0]===undefined);
   return (
     <View style={{backgroundColor: 'white'}}>
       <View style={[styles.totalWrap]}>
@@ -38,11 +39,12 @@ export const MyReviewEach: FC<MyReviewEachProps> = ({name, date, rate, content, 
                 </TouchableOpacity>
             </View>
             <View style={[styles.stars]}>
-            {[...Array(rate)].map((e, i) => (
+            {/* {Array(rate).map((e, i) => (
               <View key={i}>
                 <Icon name="star" size={18} color={'#FFDE69'} />
               </View>
-            ))}
+            ))} */}
+            {/* 더미 정수로 바꿔주면 실행 */}
             </View>
             <View style={[styles.reviewContents]}>
                 <Text style={[DesignSystem.body1Lt, {color: 'black'}]}>{content}</Text>
@@ -52,15 +54,17 @@ export const MyReviewEach: FC<MyReviewEachProps> = ({name, date, rate, content, 
               {/* images.imageUrl */}
             </View>
         </View>
-        <View style={[styles.ownerWrap]}>
-            <View style={[styles.ownerTitle, {alignItems: 'center'}]}>
-                <Text style={{fontFamily: 'Pretendard-Light', fontSize: 14, lineHeight: 14, color: '#7D7D7D', marginRight: 6}}>사장님 답글</Text>
-                <Text style={[DesignSystem.grey7, {fontFamily: 'Pretendard-Light', fontSize: 14, lineHeight: 14}]}>{reply[0].date.slice(0,4)}.{reply[0].date.slice(5,7)}.{reply[0].date.slice(8,10)}</Text>
-            </View>
-            <View style={[styles.ownerContents]}>
-              <Text style={[DesignSystem.body2Long, {color: 'black'}, styles.ownerContentsText]}>{reply[0].reply}</Text>
-            </View>
-        </View>
+        {reply[0] !== undefined && (
+          <View style={[styles.ownerWrap]}>
+              <View style={[styles.ownerTitle, {alignItems: 'center'}]}>
+                  <Text style={{fontFamily: 'Pretendard-Light', fontSize: 14, lineHeight: 14, color: '#7D7D7D', marginRight: 6}}>사장님 답글</Text>
+                  <Text style={[DesignSystem.grey7, {fontFamily: 'Pretendard-Light', fontSize: 14, lineHeight: 14}]}>{reply[0].date.slice(0,4)}.{reply[0].date.slice(5,7)}.{reply[0].date.slice(8,10)}</Text>
+              </View>
+              <View style={[styles.ownerContents]}>
+                <Text style={[DesignSystem.body2Long, {color: 'black'}, styles.ownerContentsText]}>{reply[0].reply}</Text>
+              </View>
+          </View>
+        )}
       </View>
     </View>
   );

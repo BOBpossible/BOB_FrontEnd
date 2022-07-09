@@ -4,90 +4,11 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
 import {MyReviewEach} from '../../components/My/MyReviewEach';
-import {userToken} from '../../state';
-import {useRecoilValue} from 'recoil';
 import {customAxios} from '../../api/customAxios';
-import {useQuery} from 'react-query';
+import {useInfiniteQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
 
-const dummyMission = [
-  {
-    content: '냠냠굿!',
-    date: '2022-07-03T11:09:37.593Z',
-    images: [
-      {
-        imageUrl: '../../assets/images/bobpool.png',
-      },
-    ],
-    name: '가게1',
-    rate: 5,
-    reply: [
-      {
-        date: '2022-07-03T11:09:37.593Z',
-        reply: '감삼다',
-        reviewReplyId: 10,
-      },
-    ],
-    reviewId: 1,
-  },
-  {
-    content: 'JMT!',
-    date: '2022-07-03T11:09:37.593Z',
-    images: [
-      {
-        imageUrl: '../../assets/images/bobpool.png',
-      },
-    ],
-    name: '가게이름2',
-    rate: 3,
-    reply: [
-      {
-        date: '2022-07-03T11:09:37.593Z',
-        reply: '감삼다',
-        reviewReplyId: 10,
-      },
-    ],
-    reviewId: 1,
-  },
-  {
-    content: '와맛있다',
-    date: '2022-07-03T11:09:37.593Z',
-    images: [
-      {
-        imageUrl: '../../assets/images/bobpool.png',
-      },
-    ],
-    name: '가게이름3',
-    rate: 5,
-    reply: [
-      {
-        date: '2022-07-03T11:09:37.593Z',
-        reply: '감삼다',
-        reviewReplyId: 10,
-      },
-    ],
-    reviewId: 1,
-  },
-  {
-    content: '굿',
-    date: '2022-07-03T11:09:37.593Z',
-    images: [
-      {
-        imageUrl: '../../assets/images/bobpool.png',
-      },
-    ],
-    name: '가게이름4',
-    rate: 5,
-    reply: [
-      {
-        date: '2022-07-03T11:09:37.593Z',
-        reply: '감삼다',
-        reviewReplyId: 10,
-      },
-    ],
-    reviewId: 1,
-  },
-];
+type Props = NativeStackScreenProps<MyStackParamList, 'MyReview'>;
 export type ReviewImagesType = {
   imageUrl: string;
 };
@@ -105,16 +26,34 @@ export type ReviewsType = {
   reply: ReviewReplyType[];
   reviewId: number;
 };
-type Props = NativeStackScreenProps<MyStackParamList, 'MyReview'>;
 
 export const MyReview = ({navigation}: Props) => {
-  const token = useRecoilValue(userToken);
-  //마이페이지 - 나의 포인트 내역 조회
+  //마이페이지 - 나의 리뷰 내역 조회
   const getReviewsMe = async () => {
-    const {data} = await customAxios(token).get('/api/v1/reviews/me');
-    return data.result;
+    const response = await customAxios().get('/api/v1/reviews/me', {
+      params: {
+        pageNumber: 0,
+      },
+    });
+    return response;
   };
-  const DataReviews = useQuery<ReviewsType>([queryKey.REVIEWSME, token], getReviewsMe);
+  const {isLoading, data, hasNextPage, fetchNextPage} = useInfiniteQuery(
+    queryKey.REVIEWSME,
+    getReviewsMe,
+    {
+      getNextPageParam: (lastPage, _allPages) => {
+        // console.log('요건몰까',lastPage.data.result.point.last);  //스웨거대로임
+        if (!lastPage.data.result.last) return lastPage.data.point.pageable.pageNumber + 1; //다음 페이지를 호출할 때 사용 될 pageParam
+        return undefined;
+      },
+    },
+  );
+  console.log('ddddd', data?.pages[0].data.result.content);
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
 
   const goBack = () => {
     navigation.goBack();
@@ -126,8 +65,9 @@ export const MyReview = ({navigation}: Props) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={10}
-        data={dummyMission}
-        // data={DataReviews}
+        data={data?.pages[0].data.result.content}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.8}
         renderItem={({item}) => (
           <>
             <MyReviewEach
@@ -135,7 +75,7 @@ export const MyReview = ({navigation}: Props) => {
               date={item.date}
               rate={item.rate}
               content={item.content}
-              images={item.images}
+              // images={item.images} //더미없어서 못보냄
               reply={item.reply}
               reviewId={item.reviewId}
             />

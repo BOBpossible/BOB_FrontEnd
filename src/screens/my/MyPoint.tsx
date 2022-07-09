@@ -10,7 +10,6 @@ import {calHeight, calWidth} from '../../assets/CalculateLength';
 import {customAxios} from '../../api/customAxios';
 import {useInfiniteQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
-import { resolvePath } from 'react-native-reanimated/lib/types/lib/reanimated2/animation/styleAnimation';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyPoint'>;
 export type PointsListContent = {
@@ -19,7 +18,6 @@ export type PointsListContent = {
   subTitle: string;
   title: string;
 };
-
 export type PointsListType = {
   result: PointsListContent[];
   isLast: boolean;
@@ -51,6 +49,7 @@ const dummyMission = [
     point: 500,
   },
 ];
+
 export const MyPoint = ({navigation, route}: Props) => {
   const [point, setPoint] = useState<number>(route.params.point);
   // ```//한 페이지단위래
