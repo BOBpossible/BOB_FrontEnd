@@ -83,9 +83,10 @@ const RegisterCategory = ({navigation, route}: Props) => {
   // };
 
   const renderedCategories = () => {
-    return categoryList.map((item) => {
+    return categoryList.map((item, idx) => {
       return (
         <CategoryItem
+          key={idx}
           onPress={() => {
             if (selectedCategories.includes(item.id)) {
               setSelectedCategories((current) =>
