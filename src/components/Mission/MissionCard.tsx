@@ -3,6 +3,7 @@ import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {customAxios} from '../../api/customAxios';
 
 export type MissionCardProps = {
   mission: string;
@@ -11,6 +12,7 @@ export type MissionCardProps = {
   storeCategory: string;
   storeName: string;
   missionStatus?: string; //"NEW","PROGRESS","OWNER_CHECK"
+  onPressRequestBtn: () => void;
 };
 export type MissionCardContentProps = {
   handleOnPress?: () => void;
@@ -22,7 +24,7 @@ export type MissionCardContentProps = {
 };
 
 //prettier-ignore
-export const MissionCard: FC<MissionCardProps> = ({mission, missionId, point, storeCategory, storeName, missionStatus}) => {
+export const MissionCard: FC<MissionCardProps> = ({mission, missionId, point, storeCategory, storeName, missionStatus, onPressRequestBtn}) => {
   const MissionCardTwoButton: FC<MissionCardContentProps> = ({handleOnPress, text, cancelBgColor, cancelTextColor, bgColor }) =>{
     function cancleCard(){
       console.log('canceled');
@@ -49,14 +51,17 @@ export const MissionCard: FC<MissionCardProps> = ({mission, missionId, point, st
     );
   };
 
-  function handleRequestPress() {
+  const handleRequestPress = () => {
     //성공요청 버튼 누를 시
-    console.log('성공요청');
-    // 사장님께 전송 -> 사장님이 확인->
-  }
+    console.log(missionId,'번 가게 성공요청');
+    onPressRequestBtn();
+    // 사장님께 전;송 -> 사장님이 확인->
+    const patchTest = customAxios().patch(`/api/v1/missions/users/success/${missionId}`, null);
+    console.log(patchTest);//서버더미데이터에 missionId가없다!
+  };
   function handleSuccessPress() {
     //성공 버튼 누를 시
-    console.log('성공');
+    console.log(missionId,'번 가게 성공');
   }
 
   return (
@@ -81,7 +86,7 @@ export const MissionCard: FC<MissionCardProps> = ({mission, missionId, point, st
         <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='#6C69FF' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
         :
         missionStatus === 'PROGRESS' ?
-        <MissionCardTwoButton text='성공 요청중..' bgColor='#B7B7B7' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
+        <MissionCardTwoButton text='성공 요청중..' bgColor='#C8C8C8' cancelBgColor='#EFEFEF' cancelTextColor='#111111'/>
         :
         // missionStatus === 'OWNER_CHECK'
         <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공 승인' bgColor='#B7B7B7' cancelBgColor='#DFDFDF' cancelTextColor='#949494'/>
