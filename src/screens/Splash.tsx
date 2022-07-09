@@ -1,8 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Image, SafeAreaView, Animated} from 'react-native';
-import {useRecoilState} from 'recoil';
-import {userToken} from '../state';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const moveUp = (progressValue: Animated.Value) => {
   Animated.timing(progressValue, {
@@ -13,22 +10,7 @@ const moveUp = (progressValue: Animated.Value) => {
 };
 
 const Splash = () => {
-  const [token, setToken] = useRecoilState(userToken);
   const [progressValue] = useState(new Animated.Value(30));
-  const getToken = useCallback(async () => {
-    try {
-      const value = await AsyncStorage.getItem('userToken');
-      if (value !== null) {
-        setToken(value);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, [setToken]);
-
-  useEffect(() => {
-    getToken();
-  }, [getToken]);
 
   setTimeout(() => {
     moveUp(progressValue);

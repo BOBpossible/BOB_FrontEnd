@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import moment from 'moment';
 import {DesignSystem} from '../../assets/DesignSystem';
 
@@ -22,16 +22,12 @@ export const MyPointList: FC<MyPointListProps> = ({date, title, subTitle, point}
             <Text style={[styles.dateText, DesignSystem.title3SB]}>{month}.{day}</Text>
         </View>
         <View style={[styles.listDetailsWrap]}>
-            <View style={[styles.listMissionWrap]}>
+            <View>
                 <Text style={[styles.storeNameText, DesignSystem.title3SB]}>{title}</Text>
                 {subTitle !== undefined && (<Text style={[styles.missionText, {fontFamily: 'Pretendard-Light'}]}>{subTitle}</Text>)}
             </View>
-            <View style={[styles.listPointWrap]}>
-                {point > 0 ?
-                <Text style={[DesignSystem.title3SB, {color: '#6C69FF'}]}>{point.toString().replace(/\B(?=(\d{3})(?!\d))/g, ',')}P</Text>
-                :
-                <Text style={[DesignSystem.title3SB, {color: '#B7B7B7'}]}>{point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P</Text>
-                }
+            <View>
+                <Text style={[DesignSystem.title3SB, {color: point > 0 ? '#6C69FF' : '#B7B7B7'}]}>{point.toString().replace(/\B(?=(\d{3})(?!\d))/g, ',')}P</Text>
             </View>
         </View>
     </View>
@@ -51,25 +47,14 @@ const styles = StyleSheet.create({
   },
   listDetailsWrap: {
     flex: 1,
-    // backgroundColor: 'yellow',
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  listMissionWrap: {
-
   },
   storeNameText: {
     color: '#3F3F3F',
   },
   missionText: {
     color: '#949494',
-    fontSize: 16,
     fontFamily: 'Pretendard-Light',
-  },
-  listPointWrap: {
-
-  },
-  pointText: {
-    color: '#6C69FF',
   },
 });

@@ -37,7 +37,7 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) =
             </View>
             <Text style={[DesignSystem.caption1Lt, styles.userEmail]}>{email}</Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo', {username: name, auth: statusMessage})}>
+          <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo', {username: name, email: email, auth: statusMessage})}>
             <View style={[styles.editUserInfo]}>
               <Text style={[DesignSystem.caption1Lt, {color: '#6C69FF'}]}>회원정보 수정</Text>
               <Image

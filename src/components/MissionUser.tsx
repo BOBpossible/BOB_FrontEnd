@@ -2,7 +2,7 @@ import React from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
 import {Colors} from 'react-native-paper';
-import { DesignSystem } from '../assets/DesignSystem';
+import {DesignSystem} from '../assets/DesignSystem';
 
 export type MissionUserProps = {
   userprofile?: any; //?????????프사
@@ -51,6 +51,8 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 28,
     marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#DFDFDF',
   },
   userWrap: {
     flex: 1,

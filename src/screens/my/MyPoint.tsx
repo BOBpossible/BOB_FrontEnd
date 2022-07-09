@@ -7,9 +7,25 @@ import {MyPointList} from '../../components/My/MyPointList';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
+import {customAxios} from '../../api/customAxios';
+import {useInfiniteQuery} from 'react-query';
+import {queryKey} from '../../api/queryKey';
+import { resolvePath } from 'react-native-reanimated/lib/types/lib/reanimated2/animation/styleAnimation';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyPoint'>;
+export type PointsListContent = {
+  date: string;
+  point: number;
+  subTitle: string;
+  title: string;
+};
 
+export type PointsListType = {
+  result: PointsListContent[];
+  isLast: boolean;
+  // nextPage: number;
+  pageNumber: number;
+};
 const dummyMission = [
   {
     date: '2022-12-03T16:01:34.864Z',
@@ -37,7 +53,72 @@ const dummyMission = [
 ];
 export const MyPoint = ({navigation, route}: Props) => {
   const [point, setPoint] = useState<number>(route.params.point);
+  // ```//한 페이지단위래
+  // {
+  //   result: {
+  //     totalPoints: 0
+  //     point: {
+  //       content: [
+  //         {
+  //           date: . .
+  //         }
+  //       ],
+  //       last: true,
+  //     },
+  //   }
+  // }
+  // ```
+  //마이페이지 - 나의 포인트 내역 조회
+  const getPointsList = async () => {
+    const response = await customAxios().get('/api/v1/points/list/me', {
+      params: {
+        pageNumber: 0,
+      },
+    });
+    // console.log('받아아', response.data.result.point.content.length); //왜 20개씩 옵니까 ? 
+    // console.log('여여ㅕㅇ',response);//response.data.result 하면 스웨커대로
+    // console.log(data.result.point);x
+    // console.log('d', data.result.point.content[0].date);
+    // return {
+    //   result: data.result.point.content,
+    //   isLast: data.result.point.last, //그페이지가 끝인건지 아닌지TF
+    //   // nextPage: pageParam + 1,
+    //   pageNumber: data.result.point.pageable.pageNumber,
+    //   totalPoints: data.result.totalPoints,
+    // };
+    // console.log(response.data);
+    //{"code": 1000, "isSuccess": true, "message": ["요청에 성공하였습 니다."], "result": {"point": {"content": [Array], "empty": false, "first": true, "last": false, "number": 0, "numberOfElements": 20, "pageable": [Object], "size": 20, "sort": [Object]}, "totalPoints": 750}}
+    return response;
+  };
 
+  //inf시도
+  const {isLoading, data, hasNextPage, fetchNextPage} = useInfiniteQuery(
+    queryKey.POINTSLIST,
+    getPointsList,
+    {
+      //첫번째인자 - 호출된 가장 마지막에 있는 페이지 데이터
+      //두번째인자 - 호출된 모든 페이지 데이터
+      //(벨로그) 현재 받아온데이터 , 현재 쌓여있는 전체 데이터. 페이지정보 받아올수있다면 사용하면될것
+      // lastPage(첫인자)엔 저 위에 getPointsList에서 리턴한 {result:~, isLAst ~~}
+      //getNextPageParam= retrives # of next page
+      getNextPageParam: (lastPage, _allPages) => {
+        // console.log('요건몰까',lastPage.data.result.point.last);  //스웨거대로임
+        if (!lastPage.data.result.point.last) return lastPage.data.result.point.pageable.pageNumber + 1; //다음 페이지를 호출할 때 사용 될 pageParam
+        // if (!lastPage.isLast) return _allPages.length + 1; // ? _ ?
+        return undefined;
+      },
+    },
+  );
+  // console.log('dd',data?.pages[0].data.result.point.content[0]); //더미데이터같은형식
+  console.log('총포인트', data?.pages[0].data.result.totalPoints);
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+  //
+  // console.log('rrr', res.data?.pages);
+  // [{"isLast": false, "pageNumber": 0, "result": [[Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object]], "totalPoints": 750}]
   const goBack = () => {
     navigation.goBack();
   };
@@ -50,8 +131,9 @@ export const MyPoint = ({navigation, route}: Props) => {
           <View style={[styles.myPointWrap, styles.marginLR]}>
             <View>
               <Text style={[DesignSystem.body2Lt, {color: '#616161'}]}>내 포인트</Text>
-              <Text style={{color: '#111111', fontFamily: 'Pretendard-SemiBold', fontSize: 24}}>
-                {point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
+              <Text style={[DesignSystem.h1SB, {color: '#111111'}]}>
+                {data?.pages[0].data.result.totalPoints.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} P
+                {/* {DataPointsList.totalPoints.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P */}
               </Text>
             </View>
             <TouchableOpacity style={[styles.changePointView]}>
@@ -69,9 +151,12 @@ export const MyPoint = ({navigation, route}: Props) => {
             <Text style={[DesignSystem.subtitle2, {marginTop: 16, color: '#111111'}]}>포인트 내역</Text>
             <FlatList
               style={{marginTop: 18}}
-              showsVerticalScrollIndicator={false}
+              showsVerticalScrollIndicator={true}
               scrollEventThrottle={10}
-              data={dummyMission}
+              // data={dummyMission}
+              data={data?.pages[0].data.result.point.content}
+              onEndReached={loadMore}
+              onEndReachedThreshold={0.8}
               renderItem={({item}) => (
                 <>
                   <MyPointList
@@ -83,6 +168,8 @@ export const MyPoint = ({navigation, route}: Props) => {
                 </>
               )}
               ItemSeparatorComponent={() => <View style={{marginTop: 32}} />}
+              //무한스크롤
+              // onEndReached={ threshold에도달 시 실행할함수}
             />
           </View>
         </View>

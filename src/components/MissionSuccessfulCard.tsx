@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -22,11 +22,12 @@ export type MissionSuccessfulCardProps = {
   storeName: string;
   missionStatus?: string; //"NEW","PROGRESS","OWNER_CHECK"
   successDate: string; //성공날짜 서버에 따라 수정필
+  dayOfWeek: string;
 };
 
 //prettier-ignore
 export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
-  mission, missionId, point, storeCategory, storeName, missionStatus, successDate
+  mission, missionId, point, storeCategory, storeName, missionStatus, successDate, dayOfWeek
 }) => {
   const [reviewModal, setReviewModal] = useState(false);
   function handleReviewPress() {
@@ -34,11 +35,12 @@ export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
   }
   const storeId = 1; //서버 후 수정
 
+
   return (
     <View style={[styles.missionCardWrap]}>
       <View style={[styles.missionCard]}>
         <View style={[styles.missionMain]}>
-          <Text style={[DesignSystem.caption1Lt, styles.dateText]}>{successDate.slice(5,7)}/{successDate.slice(8,10)} {'(월)'} • {'미션 성공'}</Text>
+          <Text style={[DesignSystem.caption1Lt, styles.dateText]}>{successDate.slice(5,7)}/{successDate.slice(8,10)} ({dayOfWeek})</Text>
           <View style={[styles.nameBox]}>
             <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{storeName}</Text>
             <Text style={[DesignSystem.body2Lt, DesignSystem.grey10]}>{storeCategory}</Text>

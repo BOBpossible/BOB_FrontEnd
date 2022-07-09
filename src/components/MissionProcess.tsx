@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
   processWrap: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 19,
-    marginBottom: 14,
+    marginTop: 15,
+    marginBottom: 15,
   },
   processTextRow: {
     flexDirection: 'row',

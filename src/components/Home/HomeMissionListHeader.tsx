@@ -2,14 +2,19 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../../assets/DesignSystem';
-export const HomeMissionListHeader = () => {
+
+type HomeMissionListHeaderProps = {
+  dday?: number;
+};
+
+export const HomeMissionListHeader = ({dday}: HomeMissionListHeaderProps) => {
   return (
     <View style={[styles.missionListHeaderWrap]}>
       <Text style={[DesignSystem.title3SB, DesignSystem.grey17]}>이번주 미션</Text>
       <View style={[styles.missionListBalloon]}>
         <Icon name="menu-left" size={32} style={[styles.headerIconStyle]} />
         <View style={[styles.flexRow]}>
-          <Text style={[styles.ballonTextOne]}>7일후에</Text>
+          <Text style={[styles.ballonTextOne]}>{dday}일후에</Text>
           <Text style={[styles.ballonTextTwo]}> 사라져요!</Text>
         </View>
       </View>

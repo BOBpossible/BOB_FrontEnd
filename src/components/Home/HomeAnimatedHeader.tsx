@@ -16,15 +16,21 @@ import {useNavigation} from '@react-navigation/native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
+import {useQuery} from 'react-query';
+import {customAxios} from '../../api/customAxios';
+import {useRecoilValue} from 'recoil';
+import {userToken} from '../../state';
+import {IHomeData} from '../../data';
 
 const WIDTH = Dimensions.get('window').width;
 const HEADER_HEIGHT = Platform.OS === 'ios' ? hp(25.8) : hp(28.6);
 type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
   paddingTop: number;
+  data?: IHomeData;
 };
 
-export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop}) => {
+export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop, data}) => {
   const [addressModal, setAddressModal] = useState(false);
   const barProgressValue = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
@@ -60,8 +66,8 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     }),
   });
   useEffect(() => {
-    barProgressFill(7);
-  }, [barProgressFill]);
+    barProgressFill(data.rewards);
+  }, [barProgressFill, data.rewards]);
 
   const circleAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
@@ -99,7 +105,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   const expandHeader = () => {
     return (
       <Animated.View style={[styles.circleWrap, circleAnimStyle]}>
-        <CircleBar progress={7} />
+        <CircleBar progress={data?.rewards} />
         <Text style={[DesignSystem.grey17, styles.circleBar]}>미션 10개 달성시 1000P</Text>
       </Animated.View>
     );
@@ -113,7 +119,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
             <Animated.View style={[styles.innerBar, widthStyle]} />
           </View>
           <View style={[styles.shrinkHeaderTextWrap]}>
-            <Text style={[styles.shrinkHeaderTextOne]}>7</Text>
+            <Text style={[styles.shrinkHeaderTextOne]}>{data?.rewards}</Text>
             <Text style={[styles.shrinkHeaderTextTwo]}>/ </Text>
             <Text style={[styles.shrinkHeaderTextThree]}>10</Text>
           </View>
@@ -145,7 +151,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           <TouchableOpacity>
             <View style={[styles.pointWrap]}>
               <Text style={[styles.pointP]}>P </Text>
-              <Text style={[styles.pointText]}>999,999</Text>
+              <Text style={[styles.pointText]}>{data?.point}</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Notifications', {userId: 0})}>

@@ -9,10 +9,29 @@ import {
 } from 'react-native-responsive-screen';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {calHeight} from '../../assets/CalculateLength';
+import {userToken} from '../../state';
+import {useRecoilValue} from 'recoil';
+import {customAxios} from '../../api/customAxios';
+import {useQuery} from 'react-query';
+import {AxiosError} from 'axios';
+
+export type MyPageData = {
+  authentication: boolean;
+  email: string;
+  name: string;
+  point: number;
+};
 
 const MyPage = () => {
   const navigation = useNavigation();
-
+  const token = useRecoilValue(userToken);
+  const getUserInfo = async () => {
+    const {data} = await customAxios(token).get('/api/v1/users/me');
+    return data.result;
+  };
+  const {data, isSuccess, isError, error} = useQuery<MyPageData>(['userInfo', token], getUserInfo);
+  console.log('ssssssssss', data);
+  // data.point 로 접근
   const storeData = async (value: string) => {
     try {
       await AsyncStorage.setItem('userToken', value);
@@ -20,18 +39,14 @@ const MyPage = () => {
       console.log(e);
     }
   };
-  const logout = () => {
-    AsyncStorage.setItem('userToken', '');
-    navigation.navigate('Login');
+  const logout = async () => {
+    await AsyncStorage.multiSet([
+      ['accessToken', ''],
+      ['refreshToken', ''],
+    ]);
+    navigation.navigate('AuthNavigator');
   };
-  console.log(AsyncStorage.getItem('userToken'));
-
-  // 서버연결 후 수정
-  const name = '밥풀이';
-  const email = 'bobPlace@bob.com';
-  const point = 2500;
-  const [authentication, setAuthentication] = useState<boolean>(false);
-  //
+  console.log('async userToken', AsyncStorage.getItem('userToken'));
 
   return (
     <>
@@ -42,7 +57,14 @@ const MyPage = () => {
             <Text style={[styles.headerText, DesignSystem.h2SB]}>마이페이지</Text>
           </View>
         </View>
-        <MyUser authentication={authentication} email={email} name={name} point={point} />
+        {data !== undefined && (
+          <MyUser
+            authentication={data.authentication}
+            email={data.email}
+            name={data.name}
+            point={data.point}
+          />
+        )}
         <TouchableOpacity onPress={() => navigation.navigate('MyReview')}>
           <View style={[styles.myMenuWrap]}>
             <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>

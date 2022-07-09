@@ -9,6 +9,7 @@ import {MyPoint} from '../screens/my/MyPoint';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {MyChangePoint} from '../screens/my/MyChangePoint';
 import {MyChangePointDone} from '../screens/my/MyChangePointDone';
+import {AuthNavigator} from './AuthNavigator';
 
 export type MyStackParamList = {
   MyPage: undefined;
@@ -19,6 +20,7 @@ export type MyStackParamList = {
   MyInquiry: undefined;
   MyChangePoint: undefined;
   MyChangePointDone: undefined;
+  AuthNavigator: undefined;
 };
 
 const Stack = createStackNavigator<MyStackParamList>();
@@ -33,7 +35,8 @@ export const MyNavigator = ({navigation, route}) => {
       routeName === 'MyNotificationsSetting' ||
       routeName === 'MyInquiry' ||
       routeName === 'MyChangePoint' ||
-      routeName === 'MyChangePointDone'
+      routeName === 'MyChangePointDone' ||
+      routeName === 'AuthNavigator'
     ) {
       navigation.setOptions({tabBarStyle: {display: 'none'}});
     } else {
@@ -53,6 +56,11 @@ export const MyNavigator = ({navigation, route}) => {
       <Stack.Screen name="MyInquiry" component={MyInquiry} />
       <Stack.Screen name="MyChangePoint" component={MyChangePoint} />
       <Stack.Screen name="MyChangePointDone" component={MyChangePointDone} />
+      <Stack.Screen
+        name="AuthNavigator"
+        component={AuthNavigator}
+        options={{gestureEnabled: false}}
+      />
     </Stack.Navigator>
   );
 };
