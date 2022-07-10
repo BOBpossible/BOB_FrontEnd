@@ -72,10 +72,10 @@ export const MyPoint = ({navigation, route}: Props) => {
   const getPointsList = async () => {
     const response = await customAxios().get('/api/v1/points/list/me', {
       params: {
-        pageNumber: 0,
+        size: 10,
       },
     });
-    // console.log('받아아', response.data.result.point.content.length); //왜 20개씩 옵니까 ? 
+    console.log('길이', response.data.result.point.content.length); //왜 20개씩 옵니까 ? 
     // console.log('여여ㅕㅇ',response);//response.data.result 하면 스웨커대로
     // console.log(data.result.point);x
     // console.log('d', data.result.point.content[0].date);
@@ -103,15 +103,20 @@ export const MyPoint = ({navigation, route}: Props) => {
       //getNextPageParam= retrives # of next page
       getNextPageParam: (lastPage, _allPages) => {
         // console.log('요건몰까',lastPage.data.result.point.last);  //스웨거대로임
-        if (!lastPage.data.result.point.last) return lastPage.data.result.point.pageable.pageNumber + 1; //다음 페이지를 호출할 때 사용 될 pageParam
+        console.log('getNExt', lastPage.data.result.point.size);
+        // if (!lastPage.data.result.point.last) return lastPage.data.result.point.pageable.pageNumber + 1; //다음 페이지를 호출할 때 사용 될 pageParam
+        return lastPage.data.result.point.size + 1; //다음 페이지를 호출할 때 사용 될 pageParam
         // if (!lastPage.isLast) return _allPages.length + 1; // ? _ ?
-        return undefined;
+        // return undefined;
       },
     },
   );
   // console.log('dd',data?.pages[0].data.result.point.content[0]); //더미데이터같은형식
   console.log('총포인트', data?.pages[0].data.result.totalPoints);
+  console.log('__', data?.pages[0].data.result.point);
   const loadMore = () => {
+    console.log('hasNextPage',hasNextPage);
+
     if (hasNextPage) {
       fetchNextPage();
     }
@@ -156,7 +161,7 @@ export const MyPoint = ({navigation, route}: Props) => {
               // data={dummyMission}
               data={data?.pages[0].data.result.point.content}
               onEndReached={loadMore}
-              onEndReachedThreshold={0.8}
+              onEndReachedThreshold={0.3}
               renderItem={({item}) => (
                 <>
                   <MyPointList
@@ -168,8 +173,6 @@ export const MyPoint = ({navigation, route}: Props) => {
                 </>
               )}
               ItemSeparatorComponent={() => <View style={{marginTop: 32}} />}
-              //무한스크롤
-              // onEndReached={ threshold에도달 시 실행할함수}
             />
           </View>
         </View>

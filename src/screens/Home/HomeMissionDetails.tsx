@@ -35,7 +35,7 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
   const missionMutation = useMutation((missionId: number) => patchHomeMissionChallenge(missionId), {
     onSuccess: (data) => {
       console.log('미션 도전 성공: ', data);
-      return queryClient.invalidateQueries('missionProgress');
+      return queryClient.invalidateQueries('missionsProgress');
     },
     onError: (err) => {
       console.log('미션 도전 실패: ', err);
