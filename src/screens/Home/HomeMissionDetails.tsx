@@ -13,61 +13,82 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {HomeStackParamList} from '../../nav/HomeNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
 import {MapWebview} from '../../modal';
-import {createMission, MissionInterface} from '../../data';
+import {IHomeMissionDetail} from '../../data';
 import {DesignSystem} from '../../assets/DesignSystem';
+import {useMutation, useQuery, useQueryClient} from 'react-query';
+import {queryKey} from '../../api/queryKey';
+import {getHomeMissionDetail, patchHomeMissionChallenge} from '../../api';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'HomeMissionDetails'>;
 
-const dummyMission: MissionInterface = {
-  storeName: '반이학생마라탕',
-  storeCategory: '중식당',
-  point: 500,
-  missionContent: '10000원 이상',
-  menuImage: null,
-};
-
-export const HomeMissionDetails = ({navigation}: Props) => {
+export const HomeMissionDetails = ({navigation, route}: Props) => {
+  const queryClient = useQueryClient();
   const insets = useSafeAreaInsets();
-  const [missionInfo, setMissionInfo] = useState<MissionInterface>(createMission);
   const goBack = () => {
     navigation.goBack();
   };
-  useEffect(() => {
-    //get 미션하고 setMissionInfo
-    setMissionInfo(dummyMission);
-  }, []);
+  const missionData = useQuery<IHomeMissionDetail>(
+    queryKey.HOMEMISSION,
+    () => getHomeMissionDetail(route.params.missionId),
+    {
+      onSuccess(data) {
+        console.log('홈 미션 디테일 데이터 받기 성공: ', data);
+      },
+      onError(err) {
+        console.log('홈 미션 디테일 데이터 받기 실패: ', err);
+      },
+    },
+  );
+  const missionMutation = useMutation((missionId: number) => patchHomeMissionChallenge(missionId), {
+    onSuccess: (data) => {
+      console.log('미션 도전 성공: ', data);
+      return queryClient.invalidateQueries('missionProgress');
+    },
+    onError: (err) => {
+      console.log('미션 도전 실패: ', err);
+    },
+  });
+
   return (
     <SafeAreaView style={[styles.flex]}>
       <MyHeader goBack={goBack} title={'미션 정보'} />
-      <MapWebview />
+      <MapWebview id={missionData.data?.storeId} userId={0} />
+
       <View style={[styles.missionCard, {bottom: Platform.OS === 'ios' ? insets.bottom : 0}]}>
         <View style={[styles.missionMain]}>
           <TouchableOpacity style={[styles.nameBox]}>
             <Text style={[DesignSystem.title4Md, DesignSystem.grey17, {marginBottom: 4}]}>
-              {dummyMission.storeName}
+              {missionData.data?.name}
             </Text>
             <Text style={[DesignSystem.body2Lt, DesignSystem.grey10, {marginBottom: 16}]}>
-              {dummyMission.storeCategory}
+              {missionData.data?.category}
             </Text>
           </TouchableOpacity>
           <View style={[DesignSystem.centerArrange, styles.missionContentBox]}>
-            {dummyMission.menuImage !== null && (
+            {missionData.data?.images !== null && (
               <View style={{marginTop: 16}}>
-                {dummyMission.menuImage.map((item, index) => {
-                  return <Image key={index} source={item} style={{width: 60, height: 60}} />;
+                {missionData.data?.images.map((item, index) => {
+                  return (
+                    <Image
+                      key={index}
+                      source={{uri: item.imageUrl}}
+                      style={{width: 60, height: 60}}
+                    />
+                  );
                 })}
               </View>
             )}
             <Text>
-              <Text style={[DesignSystem.title4Md]}>{dummyMission.missionContent}</Text>
+              <Text style={[DesignSystem.title4Md]}>{missionData.data?.mission}</Text>
               <Text style={[DesignSystem.body1Lt]}>의 식사시 </Text>
               <Text style={[DesignSystem.title4Md, DesignSystem.purple5]}>
-                {dummyMission.point}P 적립
+                {missionData.data?.point}P 적립
               </Text>
             </Text>
           </View>
           <TouchableOpacity
             onPress={() => {
+              missionMutation.mutate(route.params.missionId);
               navigation.pop();
               navigation.navigate('Mission', {missionId: 1});
             }}

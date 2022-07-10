@@ -16,10 +16,6 @@ import {useNavigation} from '@react-navigation/native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
-import {useQuery} from 'react-query';
-import {customAxios} from '../../api/customAxios';
-import {useRecoilValue} from 'recoil';
-import {userToken} from '../../state';
 import {IHomeData} from '../../data';
 
 const WIDTH = Dimensions.get('window').width;

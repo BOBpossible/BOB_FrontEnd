@@ -16,6 +16,7 @@ import axios from 'axios';
 import {useRecoilValue} from 'recoil';
 import {userToken} from '../state';
 import {DesignSystem} from '../assets/DesignSystem';
+import DoneModal from './DoneModal';
 
 type ReviewModalProps = {
   storeId: number;
@@ -34,6 +35,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
   const [showRating, setShowRating] = useState(true);
   const [reviewContent, setReviewContent] = useState('');
   const [imageUri, setImageUri] = useState<imageData[]>([]);
+  const [doneModal, setDoneModal] = useState(false);
   const token = useRecoilValue(userToken);
   const headers = {Authorization: `Bearer ${token}`};
 
@@ -135,6 +137,12 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
             setReviewContent={setReviewContent}
           />
         )}
+        <DoneModal
+          visible={doneModal}
+          closeDoneModal={() => setDoneModal(false)}
+          category={'리뷰'}
+          point={100} //서버 받아서 수정 ---------------------------------------------!
+        />
       </SafeAreaView>
     </Modal>
   );

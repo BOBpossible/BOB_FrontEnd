@@ -8,7 +8,6 @@ import StoreModal from '../modal/StoreModal';
 import {MapWebview} from '../modal/MapWebview';
 import {MapStoreBottomSheet} from '../components/Map/MapStoreBottomSheet';
 import {DesignSystem} from '../assets/DesignSystem';
-import DoneModal from '../modal/DoneModal';
 
 const dummyMission = [
   {
@@ -43,7 +42,7 @@ const Map = () => {
   const listSnapPoint = height - insets.top - 150;
   const [addressModal, setAddressModal] = useState(false);
   const [storeModal, setStoreModal] = useState(false);
-  const [doneModal, setDoneModal] = useState(false);
+
   const [storeId, setStoreId] = useState(0);
   const [noMission, setNoMission] = useState(false);
   //미션개수 연동 후 삭제
@@ -60,21 +59,15 @@ const Map = () => {
         visible={storeModal}
         closeStoreModal={() => setStoreModal(false)}
         storeId={storeId}
-        openDoneModal={() => setDoneModal(true)}
       />
-      <DoneModal
-        visible={doneModal}
-        closeDoneModal={() => setDoneModal(false)}
-        category={'리뷰'}
-        point={100} //서버 받아서 수정 ---------------------------------------------!
-      />
+
       <View style={[styles.headerWrap]}>
         <TouchableOpacity style={[styles.header]} onPress={() => setAddressModal(true)}>
           <Text style={[DesignSystem.h2SB, {color: 'black', marginRight: 11}]}>삼성동</Text>
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
       </View>
-      <MapWebview />
+      <MapWebview userId={0} />
       <BottomSheet
         snapPoints={[55, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
@@ -85,8 +78,12 @@ const Map = () => {
 
         {noMission ? (
           <View style={[DesignSystem.centerArrange, {flex: 1, marginBottom: 50}]}>
-            <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2}]}>주변에 미션이 없어요🥺</Text>
-            <Text style={[DesignSystem.body1Lt, {color: '#949494', marginBottom: 38}]}>빠른 시일내에 미션을 업데이트 할게요!</Text>
+            <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2}]}>
+              주변에 미션이 없어요🥺
+            </Text>
+            <Text style={[DesignSystem.body1Lt, {color: '#949494', marginBottom: 38}]}>
+              빠른 시일내에 미션을 업데이트 할게요!
+            </Text>
             {getRandom() ? (
               <Image source={require('../assets/images/noMission/cryingBob.png')} />
             ) : (

@@ -18,3 +18,15 @@ export type IHomeData = {
   point: number;
   rewards: number;
 };
+
+export type IHomeMissionDetail = {
+  addressDetail: string;
+  addressStreet: string;
+  category: string;
+  images: {imageUrl: string}[];
+  mission: string;
+  missionId: number;
+  name: string;
+  point: number;
+  storeId: number;
+};

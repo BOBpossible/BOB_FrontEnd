@@ -1,10 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {FC, useRef} from 'react';
 import {StyleSheet} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {WebView} from 'react-native-webview';
-import {useRecoilState} from 'recoil';
-import {userToken} from '../state';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //let userAgent =
@@ -20,12 +17,11 @@ type SocialWebViewProps = {
 const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
   const navigation = useNavigation();
   const webviewRef = useRef<WebView | null>(null);
-  const [token, setToken] = useRecoilState(userToken);
 
   //GET Login Result URL query param
   const queryString = (rawURL: string) => {
     var regex = /[?&]([^=#]+)=([^&#]*)/g,
-      params = {},
+      params: any = {},
       match;
     while ((match = regex.exec(rawURL))) {
       params[match[1]] = match[2];
@@ -47,7 +43,6 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
   const _handleMessage = async (data: any) => {
     console.log(data);
     try {
-      await setToken(data.accessToken);
       await storeData(data.accessToken, data.refreshToken);
     } catch (e) {
       console.log(e);
@@ -71,8 +66,6 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
         const result = queryString(e.url);
         if (e.url.includes('bobpossible.shop/auth/success')) {
           _handleMessage(result);
-        } else {
-          console.log('소셜로그인 (네이버 카카오) 에러남 ', result);
         }
       }}
       originWhitelist={['*']}
