@@ -2,6 +2,10 @@ import React, {useState} from 'react';
 import {StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
 import {PhotoModal} from '../../modal/PhotoModal';
 import FastImage from 'react-native-fast-image';
+import {useInfiniteQuery} from 'react-query';
+import {queryKey} from '../../api/queryKey';
+import {getStoreReviewImages} from '../../api/store';
+import {IStoreReviewImages} from '../../data';
 const WIDTH = Dimensions.get('window').width;
 const IMAGESIZE = WIDTH / 3;
 const imagedata = [
@@ -15,9 +19,31 @@ const imagedata = [
   {uri: 'https://source.unsplash.com/1024x768/?man'},
 ];
 
-export const MapStoreReviewPhoto = () => {
+type props = {
+  storeId: number;
+};
+
+export const MapStoreReviewPhoto = ({storeId}: props) => {
   const [photoModal, setPhotoModal] = useState(false);
   const [reviewPhoto, setReviewPhoto] = useState<{uri: string}>({uri: 'string'});
+
+  const reviewImages = useInfiniteQuery<IStoreReviewImages>(
+    [queryKey.STOREREVIEWIMAGES, storeId],
+    () => getStoreReviewImages(storeId),
+    {
+      onSuccess(data) {
+        console.log('리뷰 사진 받기 성공: ', data.pages);
+      },
+      getNextPageParam: (lastPage, pages) => {
+        if (!lastPage.last) {
+          return pages.length + 1;
+        } else {
+          return undefined;
+        }
+      },
+    },
+  );
+
   const openPhotoModal = (imageSource: string) => {
     setReviewPhoto({uri: imageSource});
     setPhotoModal(true);
@@ -26,12 +52,12 @@ export const MapStoreReviewPhoto = () => {
   const renderedImageList = (data: any) => {
     return (
       <>
-        {data.map((item, index: number) => {
+        {data[0].content.map((item, index: number) => {
           return (
-            <TouchableOpacity onPress={() => openPhotoModal(item.uri)} key={index}>
+            <TouchableOpacity onPress={() => openPhotoModal(item.imageUrl)} key={index}>
               <View style={{borderColor: '#FFFFFF', borderWidth: 1}}>
                 <FastImage
-                  source={{uri: item.uri}}
+                  source={{uri: item.imageUrl}}
                   style={{height: IMAGESIZE - 2, width: IMAGESIZE - 2}}
                 />
               </View>
@@ -44,7 +70,7 @@ export const MapStoreReviewPhoto = () => {
 
   return (
     <View style={[styles.reviewPhotoWrap]}>
-      {renderedImageList(imagedata)}
+      {renderedImageList(reviewImages.data?.pages)}
       <PhotoModal
         imageUri={reviewPhoto}
         visible={photoModal}

@@ -7,11 +7,9 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
-  Image,
   Animated,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Swiper from 'react-native-swiper';
 import {
   MapStoreInfo,
   MapReviewToggleButton,
@@ -20,39 +18,16 @@ import {
 } from '../components';
 import ReviewModal from './ReviewModal';
 import {useStyle} from '../hooks';
-import FastImage from 'react-native-fast-image';
+import {ImageSwiper} from '../components/Common/ImageSwiper';
+import {useInfiniteQuery, useQuery} from 'react-query';
+import {queryKey} from '../api/queryKey';
+import {getStoreData, getStoreReviewImages} from '../api/store';
+import {IStoreData} from '../data';
 
 type StoreModalProps = {
   storeId: number;
   visible: boolean;
   closeStoreModal: () => void;
-};
-
-const dot = () => {
-  const dotStyle = {
-    backgroundColor: '#ffffffb2',
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginLeft: 2,
-    marginRight: 2,
-    marginTop: 2,
-    marginBottom: -10,
-  };
-  return <View style={dotStyle} />;
-};
-const activeDot = () => {
-  const activeDotStyle = {
-    backgroundColor: '#6C69FF',
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginLeft: 2,
-    marginRight: 2,
-    marginTop: 2,
-    marginBottom: -10,
-  };
-  return <View style={activeDotStyle} />;
 };
 
 const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) => {
@@ -61,8 +36,12 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
   const openReviewModal = async () => {
     setReviewModal(true);
   };
-  const offset1 = useRef(new Animated.Value(0)).current;
 
+  const storeData = useQuery<IStoreData>([queryKey.STOREDATA, storeId], () =>
+    getStoreData(storeId),
+  );
+
+  const offset1 = useRef(new Animated.Value(0)).current;
   const headerTextStyle = useStyle({
     opacity: offset1.interpolate({
       inputRange: [250, 260],
@@ -99,32 +78,13 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
           }}
         >
           <View>
-            <View style={{height: 220}}>
-              <Swiper dot={dot()} activeDot={activeDot()} showsButtons={false}>
-                <FastImage
-                  source={{uri: 'https://source.unsplash.com/1024x768/?nature'}}
-                  style={{width: '100%', height: 220}}
-                />
-                <FastImage
-                  source={{uri: 'https://source.unsplash.com/1024x768/?water'}}
-                  style={{width: '100%', height: 220}}
-                />
-                <FastImage
-                  source={{uri: 'https://source.unsplash.com/1024x768/?girl'}}
-                  style={{width: '100%', height: 220}}
-                />
-                <FastImage
-                  source={{uri: 'https://source.unsplash.com/1024x768/?tree'}}
-                  style={{width: '100%', height: 220}}
-                />
-              </Swiper>
-            </View>
+            <ImageSwiper height={220} imageList={storeData.data?.images} />
             <MapStoreInfo
-              storeName={'반이학생마라탕마라반'}
-              storeCategory={'중식당'}
-              storeTime={'영업종료'}
-              storeRate={4.4}
-              storeAddress={'서울시 성북구 안암동5가 102-60'}
+              storeName={storeData.data?.name}
+              storeCategory={storeData.data?.category}
+              storeStatus={storeData.data?.storeStatus}
+              storeRate={storeData.data?.averageRate}
+              storeAddress={storeData.data?.address.street}
             />
             <View style={{backgroundColor: '#F6F6FA', height: 8}} />
           </View>
@@ -136,7 +96,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
               isReview={isReview}
             />
           </View>
-          {isReview ? <MapStoreReviewList /> : <MapStoreReviewPhoto />}
+          {isReview ? <MapStoreReviewList /> : <MapStoreReviewPhoto storeId={storeId} />}
         </Animated.ScrollView>
         {isReview && (
           <TouchableOpacity onPress={() => openReviewModal()}>

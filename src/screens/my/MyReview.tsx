@@ -4,8 +4,6 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
 import {MyReviewEach} from '../../components/My/MyReviewEach';
-import {userToken} from '../../state';
-import {useRecoilValue} from 'recoil';
 import {customAxios} from '../../api/customAxios';
 import {useQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
@@ -108,13 +106,12 @@ export type ReviewsType = {
 type Props = NativeStackScreenProps<MyStackParamList, 'MyReview'>;
 
 export const MyReview = ({navigation}: Props) => {
-  const token = useRecoilValue(userToken);
   //마이페이지 - 나의 포인트 내역 조회
   const getReviewsMe = async () => {
-    const {data} = await customAxios(token).get('/api/v1/reviews/me');
+    const {data} = await customAxios().get('/api/v1/reviews/me');
     return data.result;
   };
-  const DataReviews = useQuery<ReviewsType>([queryKey.REVIEWSME, token], getReviewsMe);
+  const DataReviews = useQuery<ReviewsType>([queryKey.REVIEWSME], getReviewsMe);
 
   const goBack = () => {
     navigation.goBack();

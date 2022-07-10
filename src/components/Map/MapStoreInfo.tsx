@@ -4,17 +4,27 @@ import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type MapStoreInfoProps = {
-  storeName: string;
-  storeCategory: string;
-  storeTime: string;
-  storeRate: number;
-  storeAddress: string;
+  storeName?: string;
+  storeCategory?: string;
+  storeStatus?: string;
+  storeRate?: number;
+  storeAddress?: string;
+};
+
+const convertStatus = (status?: string) => {
+  if (status === 'CLOSED') {
+    return '영업종료';
+  } else if (status === 'BREAK') {
+    return '브레이크 타임';
+  } else if (status === 'OPEN') {
+    return '영업중';
+  }
 };
 
 export const MapStoreInfo: FC<MapStoreInfoProps> = ({
   storeName,
   storeCategory,
-  storeTime,
+  storeStatus,
   storeRate,
   storeAddress,
 }) => {
@@ -25,10 +35,10 @@ export const MapStoreInfo: FC<MapStoreInfoProps> = ({
         <Text style={[styles.storeCategory]}>{storeCategory}</Text>
       </View>
       <View style={[styles.flexRow, styles.rowSeperate]}>
-        <Text style={[styles.storeTime]}>{storeTime}</Text>
+        <Text style={[styles.storeTime]}>{convertStatus(storeStatus)}</Text>
         <View style={[styles.flexRow, styles.rateMargin]}>
           <Icon name="star" size={14} color={'#FFDE69'} />
-          <Text style={[styles.storeRate]}>{storeRate}</Text>
+          <Text style={[styles.storeRate]}>{storeRate?.toFixed(1)}</Text>
         </View>
       </View>
       <View style={[styles.flexRow]}>
