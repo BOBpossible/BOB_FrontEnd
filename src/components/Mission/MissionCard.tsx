@@ -7,6 +7,9 @@ import {customAxios} from '../../api/customAxios';
 import DoneModal from '../../modal/DoneModal';
 import {useNavigation} from '@react-navigation/native';
 import {IMissionCardProps, IMissionCardContentProps} from '../../data';
+import {useMutation, useQuery, useQueryClient} from 'react-query';
+import {queryKey} from '../../api/queryKey';
+import { patchMissionCancel } from '../../api/mission';
 
 //prettier-ignore
 export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, storeCategory, storeName, missionStatus, onPressRequestBtn}) => {
@@ -16,15 +19,29 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
     navigation.navigate('Main');
     setDoneModal(false);
   };
-
-  const MissionCardTwoButton: FC<IMissionCardContentProps> = ({handleOnPress, text, cancelBgColor, cancelTextColor, bgColor }) =>{
-    function cancleCard(){
-      console.log('canceled');
-    }
+  const queryClient = useQueryClient();
+  const missionMutation = useMutation((missionId: number) => patchMissionCancel(missionId), {
+    onSuccess: (data) => {
+      console.log('미션 도전 성공: ', data);
+      return queryClient.invalidateQueries('missionsProgress');
+    },
+    onError: (err) => {
+      console.log('미션 도전 실패: ', err);
+    },
+  });
+  const MissionCardTwoButton: FC<IMissionCardContentProps> = ({missionId, handleOnPress, text, cancelBgColor, cancelTextColor, bgColor }) =>{
     return (
       <>
         <View style={[styles.missionTwoButton]}>
-          <TouchableOpacity style={[styles.missionButtonLeft, {backgroundColor: `${cancelBgColor}`}]} onPress={cancleCard}>
+          <TouchableOpacity
+            disabled={text === '성공' ? true : false}
+            onPress={() => {
+              missionMutation.mutate(missionId);
+              console.log(missionId, '번 미션 취소');
+              navigation.navigate('Main');
+            }}
+            style={[styles.missionButtonLeft, {backgroundColor: `${cancelBgColor}`}]}
+          >
             <View >
               <Text style={[DesignSystem.body1Lt, {color: `${cancelTextColor}`}]}>취소</Text>
             </View>
@@ -73,10 +90,10 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
         </View>
         {
         missionStatus === 'NEW' ?
-        <MissionCardTwoButton handleOnPress={handleRequestPress} text='성공 요청' bgColor='#6C69FF' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
+        <MissionCardTwoButton missionId={missionId} handleOnPress={handleRequestPress} text='성공 요청' bgColor='#6C69FF' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
         :
         missionStatus === 'PROGRESS' ?
-        <MissionCardTwoButton text='성공 요청중..' bgColor='#C8C8C8' cancelBgColor='#EFEFEF' cancelTextColor='#111111'/>
+        <MissionCardTwoButton missionId={missionId} text='성공 요청중..' bgColor='#C8C8C8' cancelBgColor='#EFEFEF' cancelTextColor='#111111'/>
         :
         // missionStatus === 'OWNER_CHECK'
         <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공' bgColor='#6C69FF' cancelBgColor='#DFDFDF' cancelTextColor='#949494'/>

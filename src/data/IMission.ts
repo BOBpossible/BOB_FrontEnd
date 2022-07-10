@@ -17,6 +17,7 @@ export type IMissionCardProps = {
   onPressRequestBtn: () => void;
 };
 export type IMissionCardContentProps = {
+  missionId?: number;
   handleOnPress?: () => void;
   text: string;
   textColor?: string;
