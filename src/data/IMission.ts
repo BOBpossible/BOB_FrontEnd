@@ -24,3 +24,13 @@ export type IMissionCardContentProps = {
   cancelTextColor?: string;
   bgColor?: string;
 };
+export type IDataCompletedMissionsType = {
+  dayOfWeek: string;
+  mission: string;
+  missionId: number;
+  missionStatus: string; ///NEW, PROGRESS, OWNER_CHECK
+  point: number;
+  storeCategory: string;
+  storeName: string;
+  successDate: string;
+};

@@ -6,3 +6,7 @@ export const getMissionsProgress = async () => {
   //   console.log('GotData', data); //message에 ["요청에 성공"] 떠야함
   return data.result;
 };
+export const getMissionsComplete = async () => {
+  const {response} = await customAxios().get('/api/v1/missions/me/complete');
+  return response.result;
+};

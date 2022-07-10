@@ -18,7 +18,8 @@ import {getUserInfo} from '../api/user';
 const Mission = () => {
   const [status, setStatus] = useState<string>('OWNER_CHECK'); //버튼문구 //"NEW","PROGRESS","OWNER_CHECK" //서버연결후삭제
   //status 이건 여기서 서버로부터 받아와서 아래 컴포넌트에 넘겨줘야할듯. 사장님이 승인했는지 어쩐지
-  const [progressnow, setProgressnow] = useState(0); //아래 스위치. 0:진행중 / 1:진행완료
+  //아래 스위치. 0:진행중 / 1:진행완료
+  const [progressnow, setProgressnow] = useState(0);
   const DataMissionsProgress = useQuery<IMissionsProgress>(
     queryKey.MISSIONSPROGRESS,
     getMissionsProgress,
