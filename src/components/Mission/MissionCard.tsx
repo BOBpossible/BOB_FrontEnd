@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {customAxios} from '../../api/customAxios';
+import DoneModal from '../../modal/DoneModal';
+import {useNavigation} from '@react-navigation/native';
 
 export type MissionCardProps = {
   mission: string;
@@ -25,6 +27,13 @@ export type MissionCardContentProps = {
 
 //prettier-ignore
 export const MissionCard: FC<MissionCardProps> = ({mission, missionId, point, storeCategory, storeName, missionStatus, onPressRequestBtn}) => {
+  const navigation = useNavigation();
+  const [doneModal, setDoneModal] = useState(false);
+  const closeDoneModal = async () => {
+    navigation.navigate('Main');
+    setDoneModal(false);
+  };
+
   const MissionCardTwoButton: FC<MissionCardContentProps> = ({handleOnPress, text, cancelBgColor, cancelTextColor, bgColor }) =>{
     function cancleCard(){
       console.log('canceled');
@@ -37,13 +46,9 @@ export const MissionCard: FC<MissionCardProps> = ({mission, missionId, point, st
               <Text style={[DesignSystem.body1Lt, {color: `${cancelTextColor}`}]}>취소</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity disabled={text === '성공 요청' ? false : true} style={[styles.missionButtonRight, {backgroundColor: `${bgColor}`}]} onPress={handleOnPress}>
+          <TouchableOpacity disabled={text === '성공 요청중..' ? true : false} style={[styles.missionButtonRight, {backgroundColor: `${bgColor}`}]} onPress={handleOnPress}>
             <View>
-              {text === '성공 요청' ? (
-                <Text style={[DesignSystem.title3SB, {color:'white'}]}>{`${text}`}</Text>
-              ) : (
-                <Text style={[DesignSystem.title4Md, {color:'white'}]}>{`${text}`}</Text>
-              )}
+              <Text style={[DesignSystem.title4Md, {color:'white'}]}>{`${text}`}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -51,17 +56,19 @@ export const MissionCard: FC<MissionCardProps> = ({mission, missionId, point, st
     );
   };
 
+  //성공요청 버튼 누를 시
   const handleRequestPress = () => {
-    //성공요청 버튼 누를 시
     console.log(missionId,'번 가게 성공요청');
     onPressRequestBtn();
     // 사장님께 전;송 -> 사장님이 확인->
     const patchTest = customAxios().patch(`/api/v1/missions/users/success/${missionId}`, null);
-    console.log(patchTest);//서버더미데이터에 missionId가없다!
+    console.log(patchTest);//서버더미데이터에 missionId가없어서 undefined이다!
   };
+
+  //성공 버튼 누를 시
   function handleSuccessPress() {
-    //성공 버튼 누를 시
     console.log(missionId,'번 가게 성공');
+    setDoneModal(true);
   }
 
   return (
@@ -89,24 +96,29 @@ export const MissionCard: FC<MissionCardProps> = ({mission, missionId, point, st
         <MissionCardTwoButton text='성공 요청중..' bgColor='#C8C8C8' cancelBgColor='#EFEFEF' cancelTextColor='#111111'/>
         :
         // missionStatus === 'OWNER_CHECK'
-        <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공 승인' bgColor='#B7B7B7' cancelBgColor='#DFDFDF' cancelTextColor='#949494'/>
+        <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공' bgColor='#6C69FF' cancelBgColor='#DFDFDF' cancelTextColor='#949494'/>
         }
       </View>
       {missionStatus === 'NEW' && (
-          <View style={{width: '100%', flexDirection: 'row-reverse'}}>
-            <View style={[DesignSystem.centerArrange, {top: -7, width: '50%'}]}>
-              <Icon name="triangle" size={12} style={[styles.headerIconStyle]} />
-              <View style={[styles.NEWBallon, DesignSystem.centerArrange]}>
-                <View style={[styles.flexRow]}>
-                  <Text style={[styles.ballonTextTwo]}>포장/식사 </Text>
-                  <Text style={[styles.ballonTextOne]}>미션 완료 후</Text>
-                  <Text style={[styles.ballonTextTwo]}> 클릭!</Text>
-                </View>
+        <View style={{width: '100%', flexDirection: 'row-reverse'}}>
+          <View style={[DesignSystem.centerArrange, {top: -7, width: '50%'}]}>
+            <Icon name="triangle" size={12} style={[styles.headerIconStyle]} />
+            <View style={[styles.NEWBallon, DesignSystem.centerArrange]}>
+              <View style={[styles.flexRow]}>
+                <Text style={[styles.ballonTextTwo]}>포장/식사 </Text>
+                <Text style={[styles.ballonTextOne]}>미션 완료 후</Text>
+                <Text style={[styles.ballonTextTwo]}> 클릭!</Text>
               </View>
             </View>
           </View>
-        )}
-{/* // */}
+        </View>
+      )}
+      <DoneModal
+        visible={doneModal}
+        closeDoneModal={closeDoneModal}
+        category={'성공'}
+        point={500}//
+      />
     </View>
   );
 };
