@@ -8,10 +8,11 @@ import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
 import {useQuery} from 'react-query';
 import {ConnectionError} from '../../components/ConnectionError';
-import {IHomeData} from '../../data';
+import {IHomeData, IMissionsProgress} from '../../data';
 import {queryKey} from '../../api/queryKey';
 import {HomeNoMission} from '../../components/Home/HomeNoMission';
 import {getHomeInfo} from '../../api';
+import {getMissionsProgress} from '../../api/mission';
 
 const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
@@ -25,6 +26,11 @@ const Main = () => {
       console.log(data);
     },
   });
+
+  const DataMissionsProgress = useQuery<IMissionsProgress>(
+    queryKey.MISSIONSPROGRESS,
+    getMissionsProgress,
+  );
 
   if (homeData.isError) {
     console.log('Home Error', homeData.error);
@@ -46,6 +52,7 @@ const Main = () => {
         <>
           <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
           <Animated.FlatList
+            style={DataMissionsProgress.data !== null && {opacity: 0.5}}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={[styles.missionListContainer]}
             scrollEventThrottle={10}
@@ -57,7 +64,8 @@ const Main = () => {
                 category={item.storeCategory}
                 mission={item.mission}
                 point={item.point}
-                status={false}
+                status={item.missionStatus}
+                challengeStatus={DataMissionsProgress.data !== null}
               />
             )}
             keyExtractor={(item, index) => index.toString()}

@@ -5,7 +5,7 @@ import StoreModal from './StoreModal';
 
 type MapWebviewProps = {
   id?: number;
-  userId: number;
+  userId?: number;
 };
 
 export const MapWebview: FC<MapWebviewProps> = ({id, userId}) => {
@@ -29,7 +29,7 @@ export const MapWebview: FC<MapWebviewProps> = ({id, userId}) => {
       <WebView
         source={
           id === undefined
-            ? {uri: `https://bobplace.netlify.app/`} //여기에 userId 뒤에 넣어줘야함!
+            ? {uri: `https://bobplace.netlify.app/${userId}`} //여기에 userId 뒤에 넣어줘야함!
             : {uri: `https://bobplace.netlify.app/store/${id}`}
         }
         onMessage={(event) => {
