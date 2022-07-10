@@ -24,7 +24,7 @@ const Mission = () => {
     queryKey.MISSIONSPROGRESS,
     getMissionsProgress,
   );
-  console.log('도전한 미션', DataMissionsProgress?.data); //스웨거에서 result
+  console.log('도전한 미션', DataMissionsProgress); //스웨거에서 result
   const DataUser = useQuery<IgetUsersMe>('userInfo', getUserInfo);
   // console.log('여기서유저', DataUser); //DataUser.data.~
   const onPressRequestBtn = () => {//status바뀌는거 감지하면 이거 필요없을듯 . .. . ?
@@ -43,7 +43,7 @@ const Mission = () => {
         </View>
         <View style={{flex: 1}}>
           {progressnow === 0 ? (
-            DataMissionsProgress.data === undefined ? (
+            DataMissionsProgress.data?.length === 0 ? (
               <MissionNo progressnow={progressnow} /> ///미션없는화면
             ) : (
               <View>

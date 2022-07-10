@@ -22,11 +22,11 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
   const queryClient = useQueryClient();
   const missionMutation = useMutation((missionId: number) => patchMissionCancel(missionId), {
     onSuccess: (data) => {
-      console.log('미션 도전 성공: ', data);
-      return queryClient.invalidateQueries('missionsProgress');
+      console.log('미션 취소 성공: ', data);
+      queryClient.invalidateQueries('missionsProgress');
     },
     onError: (err) => {
-      console.log('미션 도전 실패: ', err);
+      console.log('미션 취소 실패: ', err);
     },
   });
   const MissionCardTwoButton: FC<IMissionCardContentProps> = ({missionId, handleOnPress, text, cancelBgColor, cancelTextColor, bgColor }) =>{
