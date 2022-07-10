@@ -1,18 +1,16 @@
 import React from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
-import {Colors} from 'react-native-paper';
 import {DesignSystem} from '../../assets/DesignSystem';
 
 export type MissionUserProps = {
   userprofile?: any; //?????????프사
-  username: string;
-  userid: number;
-  status?: string; //"start","request","onrequest","success", "review"
+  username?: string;
+  userid?: number;
 };
 
 //prettier-ignore
-export const MissionUser: FC<MissionUserProps> = ({ userprofile, username, userid, status }) => {
+export const MissionUser: FC<MissionUserProps> = ({userprofile, username, userid }) => {
 
   return (
     <View style={[styles.userCard]}>
@@ -33,7 +31,7 @@ export const MissionUser: FC<MissionUserProps> = ({ userprofile, username, useri
 const styles = StyleSheet.create({
   userCard: {
     height: 86,
-    backgroundColor: Colors.white,
+    backgroundColor: 'white',
     borderRadius: 12,
     marginBottom: 12,
     flexDirection: 'row',
@@ -65,13 +63,5 @@ const styles = StyleSheet.create({
   },
   useridText: {
     color: '#616161',
-  },
-  statusWrap: {
-    marginRight: 24,
-    justifyContent: 'center',
-  },
-  statusText: {
-    color: '#111111',
-    fontSize: 16,
   },
 });

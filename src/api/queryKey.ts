@@ -4,4 +4,5 @@ export const queryKey = {
   HOMEDATA: 'homeData',
   HOMEMISSION: 'homeMission',
   ADDRESS: 'address',
+  MISSIONSPROGRESS: 'missionsProgress',
 };

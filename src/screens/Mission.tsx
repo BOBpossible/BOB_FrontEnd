@@ -7,51 +7,30 @@ import {MissionProgressSwitch} from '../components/Mission/MissionProgressSwitch
 import {MissionSuccessList} from '../components/Mission/MissionSuccessList';
 import {MissionUser} from '../components/Mission/MissionUser';
 import {MissionNo} from '../components/Mission/MissionNo';
-import {customAxios} from '../api/customAxios';
-import {useRecoilValue} from 'recoil';
-import {userToken} from '../state';
 import {useQuery} from 'react-query';
+import {queryKey} from '../api/queryKey';
+import {getMissionsProgress} from '../api/mission';
+import {IMissionsProgress, IgetUsersMe} from '../data';
+import {getUserInfo} from '../api/user';
 
-export type DataUserType = {
-  authentication: boolean;
-  email: string;
-  name: string;
-  point: number;
-};
-interface DataMissionType {
-  mission: string;
-  missionId: number;
-  missionStatus: string; ///NEW, PROGRESS, OWNER_CHECK
-  point: number;
-  storeCategory: string;
-  storeName: string;
-}
 ///"NEW","PROGRESS" :'진행중' processCircle  // "OWNER_CHECK" : '도전 성공' processCircle
 
 const Mission = () => {
-  const token = useRecoilValue(userToken);
-  const [status, setStatus] = useState<string>('PROGRESS'); //버튼문구 //"NEW","PROGRESS","OWNER_CHECK" //서버연결후삭제
+  const [status, setStatus] = useState<string>('OWNER_CHECK'); //버튼문구 //"NEW","PROGRESS","OWNER_CHECK" //서버연결후삭제
+  //status 이건 여기서 서버로부터 받아와서 아래 컴포넌트에 넘겨줘야할듯. 사장님이 승인했는지 어쩐지
   const [progressnow, setProgressnow] = useState(0); //아래 스위치. 0:진행중 / 1:진행완료
-  const [noMission, setNoMission] = useState(false); //미션이없는상태면 true
-  //서버연결후 아래에 var noMission
-  const getUsersMe = async () => { ///userInfo
-    const {data} = await customAxios(token).get('/api/v1/users/me');
-    return data.result;
+  const DataMissionsProgress = useQuery<IMissionsProgress>(
+    queryKey.MISSIONSPROGRESS,
+    getMissionsProgress,
+  );
+  // console.log('지금미션', DataMissionsProgress.data); //스웨거에서 result
+  const DataUser = useQuery<IgetUsersMe>('userInfo', getUserInfo);
+  // console.log('여기서유저', DataUser); //DataUser.data.~
+  const onPressRequestBtn = () => {
+    setStatus('PROGRESS');
+    console.log('바꿔');
   };
-  const DataUser = useQuery<DataUserType>(['userInfo', token], getUsersMe);
-  // DataUser.data.point 이런식으로 접근
-
-  const [DataMission, setDataMission] = useState<DataMissionType[]>([]);
-  const getMissionsMeProgress = async () => {
-    const res = await customAxios().get('missions/me/progress');
-    console.log('getMissionsMeProgress res.data : ', res.data);
-    setDataMission(res.data.result);
-    console.log('데이타저장? :', DataMission);
-    // DataMission.length로할지, typeof(DataMission);
-    // var noMission = useState(DataMission.length === 0); ///미션이없는상태면 true
-    // var 스코프 호출되는지 확인
-  };
-
+  console.log(status);
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: 'white'}} />
@@ -63,30 +42,30 @@ const Mission = () => {
         </View>
         <View style={{flex: 1}}>
           {progressnow === 0 ? (
-            noMission ? (
+            DataMissionsProgress.data === undefined ? (
               <MissionNo progressnow={progressnow} /> ///미션없는화면
             ) : (
               <View>
                 <MissionProcess status={status} />
-                <MissionUser username={'밥풀이'} userid={123} status={status} />
-                {/* <MissionUser username={DataUser.name} userid={DataUser.userId} status={DataUser.authentication} /> */}
+                <MissionUser username={DataUser.data?.name} userid={DataUser.data?.userId} />
                 <MissionCard
-                  mission={'10000원 이상'}
-                  missionId={1}
+                  // mission={'10000원 이상'}
+                  // missionId={1}
+                  // missionStatus={status}
+                  // point={500}
+                  // storeCategory={'중국집'}
+                  // storeName={'짱맛집'}
+                  mission={DataMissionsProgress.data?.mission}
+                  missionId={DataMissionsProgress.data?.missionId}
                   missionStatus={status}
-                  point={500}
-                  storeCategory={'중국집'}
-                  storeName={'짱맛집'}
-                  // mission={DataMission.mission}
-                  // missionId={DataMission.missionId}
-                  // missionStatus={DataMission.missionStatus}
-                  // point={DataMission.poin}
-                  // storeCategory={DataMission.storeCategory}
-                  // storeName={DataMission.storeName}
+                  point={DataMissionsProgress.data?.point}
+                  storeCategory={DataMissionsProgress.data?.storeCategory}
+                  storeName={DataMissionsProgress.data?.storeName}
+                  onPressRequestBtn={onPressRequestBtn}
                 />
               </View>
             )
-          ) : noMission ? (
+          ) : DataMissionsProgress.data === undefined ? (
             <MissionNo progressnow={progressnow} /> ///미션없는화면
           ) : (
             <MissionSuccessList />
