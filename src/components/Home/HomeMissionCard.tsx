@@ -10,31 +10,33 @@ export type MissionCardProps = {
   category: string;
   mission: string;
   point: number;
-  status?: boolean;
+  status: string;
+  challengeStatus: boolean; //도전중이라면 true, 아니면 false
 };
 
 //prettier-ignore
-export const HomeMissionCard: FC<MissionCardProps> = ({missionId, name, category, mission, point}) => {
+export const HomeMissionCard: FC<MissionCardProps> = ({missionId, name, category, mission, point, status, challengeStatus}) => {
     const navigation = useNavigation();
-    console.log('뇽',missionId);
     return (
-    <TouchableOpacity onPress={() => navigation.navigate('HomeMissionDetails', {missionId: missionId})} style={[styles.missionCardWrap]}>
-      <View style={[styles.missionCard]}>
-        <View style={[styles.missionMain]}>
-          <View style={[styles.nameBox]}>
-            <Text style={[DesignSystem.title4Md, DesignSystem.grey17, {marginBottom: 4}]}>{name}</Text>
-            <Text style={[DesignSystem.body2Lt, DesignSystem.grey10, {marginBottom: 16}]}>{category}</Text>
-          </View>
-          <View style={[DesignSystem.centerArrange, styles.missionContentBox]}>
-            <Text>
-              <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{mission}</Text>
-              <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>식사시 </Text>
-              <Text style={[DesignSystem.title4Md, DesignSystem.purple5]}>{point}P 적립</Text>
-            </Text>
+    <View pointerEvents={challengeStatus ? 'none' : 'auto'}>
+      <TouchableOpacity disabled={status === 'DONE'} onPress={() => navigation.navigate('HomeMissionDetails', {missionId: missionId})} style={[styles.missionCardWrap]}>
+        <View style={[styles.missionCard]}>
+          <View style={[styles.missionMain]}>
+            <View style={[styles.nameBox]}>
+              <Text style={[DesignSystem.title4Md, DesignSystem.grey17, {marginBottom: 4}]}>{name}</Text>
+              <Text style={[DesignSystem.body2Lt, DesignSystem.grey10, {marginBottom: 16}]}>{category}</Text>
+            </View>
+            <View style={[DesignSystem.centerArrange, styles.missionContentBox]}>
+              <Text>
+                <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{mission} </Text>
+                <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>식사시 </Text>
+                <Text style={[DesignSystem.title4Md, DesignSystem.purple5]}>{point}P 적립</Text>
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 };
 

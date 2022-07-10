@@ -8,6 +8,10 @@ import StoreModal from '../modal/StoreModal';
 import {MapWebview} from '../modal/MapWebview';
 import {MapStoreBottomSheet} from '../components/Map/MapStoreBottomSheet';
 import {DesignSystem} from '../assets/DesignSystem';
+import {useQuery} from 'react-query';
+import {IgetUsersMe} from '../data';
+import {getUserInfo} from '../api';
+import {queryKey} from '../api/queryKey';
 
 const dummyMission = [
   {
@@ -47,6 +51,8 @@ const Map = () => {
   const [noMission, setNoMission] = useState(false);
   //미션개수 연동 후 삭제
 
+  const DataUser = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
+
   const getRandom = () => Math.floor(Math.random() * (2 - 0)); //0 or 1
   const openRestaurantModal = async (id: number) => {
     await setStoreId(id);
@@ -67,7 +73,7 @@ const Map = () => {
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
       </View>
-      <MapWebview userId={0} />
+      <MapWebview userId={DataUser.data?.userId} />
       <BottomSheet
         snapPoints={[55, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
