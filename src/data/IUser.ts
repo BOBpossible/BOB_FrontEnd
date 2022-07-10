@@ -3,5 +3,5 @@ export type IgetUsersMe = {
   email: string;
   name: string;
   point: number;
-  userId?: number;
+  userId: number;
 };
