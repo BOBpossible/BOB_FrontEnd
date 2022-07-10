@@ -10,3 +10,11 @@ export const getMissionsComplete = async () => {
   const {response} = await customAxios().get('/api/v1/missions/me/complete');
   return response.result;
 };
+export const patchMissionCancel = async (missionId: number) => {
+  const response = await customAxios().patch(`/api/v1/missions/users/cancel/${missionId}`);
+  return response.data.message;
+};
+export const patchMissionSuccess = async (missionId: number) => {
+  const response = await customAxios().patch(`/api/v1/missions/users/success/${missionId}`);
+  return response.data.message;
+};

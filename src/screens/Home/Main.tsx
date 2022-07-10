@@ -27,7 +27,7 @@ const Main = () => {
     },
   });
 
-  const DataMissionsProgress = useQuery<IMissionsProgress>(
+  const DataMissionsProgress = useQuery<IMissionsProgress[]>(
     queryKey.MISSIONSPROGRESS,
     getMissionsProgress,
   );
@@ -52,7 +52,7 @@ const Main = () => {
         <>
           <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
           <Animated.FlatList
-            style={DataMissionsProgress.data !== null && {opacity: 0.5}}
+            style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={[styles.missionListContainer]}
             scrollEventThrottle={10}
@@ -65,7 +65,7 @@ const Main = () => {
                 mission={item.mission}
                 point={item.point}
                 status={item.missionStatus}
-                challengeStatus={DataMissionsProgress.data !== null}
+                challengeStatus={DataMissionsProgress.data?.length !== 0}
               />
             )}
             keyExtractor={(item, index) => index.toString()}

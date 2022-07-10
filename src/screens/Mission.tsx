@@ -20,11 +20,11 @@ const Mission = () => {
   //status 이건 여기서 서버로부터 받아와서 아래 컴포넌트에 넘겨줘야할듯. 사장님이 승인했는지 어쩐지
   //아래 스위치. 0:진행중 / 1:진행완료
   const [progressnow, setProgressnow] = useState(0);
-  const DataMissionsProgress = useQuery<IMissionsProgress>(
+  const DataMissionsProgress = useQuery<IMissionsProgress[]>(
     queryKey.MISSIONSPROGRESS,
     getMissionsProgress,
   );
-  // console.log('지금미션', DataMissionsProgress.data); //스웨거에서 result
+  console.log('도전한 미션', DataMissionsProgress); //스웨거에서 result
   const DataUser = useQuery<IgetUsersMe>('userInfo', getUserInfo);
   // console.log('여기서유저', DataUser); //DataUser.data.~
   const onPressRequestBtn = () => {//status바뀌는거 감지하면 이거 필요없을듯 . .. . ?
@@ -43,7 +43,7 @@ const Mission = () => {
         </View>
         <View style={{flex: 1}}>
           {progressnow === 0 ? (
-            DataMissionsProgress.data === undefined ? (
+            DataMissionsProgress.data?.length === 0 ? (
               <MissionNo progressnow={progressnow} /> ///미션없는화면
             ) : (
               <View>
@@ -56,12 +56,12 @@ const Mission = () => {
                   // point={500}
                   // storeCategory={'중국집'}
                   // storeName={'짱맛집'}
-                  mission={DataMissionsProgress.data?.mission}
-                  missionId={DataMissionsProgress.data?.missionId}
+                  mission={DataMissionsProgress?.data[0].mission}
+                  missionId={DataMissionsProgress?.data[0].missionId}
                   missionStatus={status}
-                  point={DataMissionsProgress.data?.point}
-                  storeCategory={DataMissionsProgress.data?.storeCategory}
-                  storeName={DataMissionsProgress.data?.storeName}
+                  point={DataMissionsProgress?.data[0].point}
+                  storeCategory={DataMissionsProgress?.data[0].storeCategory}
+                  storeName={DataMissionsProgress?.data[0].storeName}
                   onPressRequestBtn={onPressRequestBtn}
                 />
               </View>
