@@ -6,27 +6,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {customAxios} from '../../api/customAxios';
 import DoneModal from '../../modal/DoneModal';
 import {useNavigation} from '@react-navigation/native';
-
-export type MissionCardProps = {
-  mission: string;
-  missionId?: number;
-  point: number;
-  storeCategory: string;
-  storeName: string;
-  missionStatus?: string; //"NEW","PROGRESS","OWNER_CHECK"
-  onPressRequestBtn: () => void;
-};
-export type MissionCardContentProps = {
-  handleOnPress?: () => void;
-  text: string;
-  textColor?: string;
-  cancelBgColor?: string;
-  cancelTextColor?: string;
-  bgColor?: string;
-};
+import {IMissionCardProps, IMissionCardContentProps} from '../../data';
 
 //prettier-ignore
-export const MissionCard: FC<MissionCardProps> = ({mission, missionId, point, storeCategory, storeName, missionStatus, onPressRequestBtn}) => {
+export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, storeCategory, storeName, missionStatus, onPressRequestBtn}) => {
   const navigation = useNavigation();
   const [doneModal, setDoneModal] = useState(false);
   const closeDoneModal = async () => {
@@ -34,7 +17,7 @@ export const MissionCard: FC<MissionCardProps> = ({mission, missionId, point, st
     setDoneModal(false);
   };
 
-  const MissionCardTwoButton: FC<MissionCardContentProps> = ({handleOnPress, text, cancelBgColor, cancelTextColor, bgColor }) =>{
+  const MissionCardTwoButton: FC<IMissionCardContentProps> = ({handleOnPress, text, cancelBgColor, cancelTextColor, bgColor }) =>{
     function cancleCard(){
       console.log('canceled');
     }

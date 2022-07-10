@@ -5,4 +5,5 @@ export const queryKey = {
   HOMEMISSION: 'homeMission',
   ADDRESS: 'address',
   MISSIONSPROGRESS: 'missionsProgress',
+  MISSIONSCOMPLETE: 'missionsComplete',
 };

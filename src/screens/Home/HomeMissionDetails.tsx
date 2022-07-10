@@ -1,13 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  Platform,
-} from 'react-native';
+import React from 'react';
+//prettier-ignore
+import {View, StyleSheet, Image, Text, TouchableOpacity, SafeAreaView, Platform} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {HomeStackParamList} from '../../nav/HomeNavigator';
@@ -17,7 +10,7 @@ import {IHomeMissionDetail} from '../../data';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {queryKey} from '../../api/queryKey';
-import {getHomeMissionDetail, patchHomeMissionChallenge} from '../../api';
+import {getHomeMissionDetail, patchHomeMissionChallenge} from '../../api/home';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'HomeMissionDetails'>;
 
@@ -90,7 +83,7 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
             onPress={() => {
               missionMutation.mutate(route.params.missionId);
               navigation.pop();
-              navigation.navigate('Mission', {missionId: 1});
+              navigation.navigate('Mission'); //미션Id연결
             }}
             style={[styles.missionButton]}
           >

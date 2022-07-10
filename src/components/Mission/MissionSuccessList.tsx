@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View, FlatList} from 'react-native';
 import {MissionSuccessfulCard} from './MissionSuccessfulCard';
-import {customAxios} from '../../api/customAxios';
-import {useRecoilValue} from 'recoil';
-import {userToken} from '../../state';
+import {useQuery} from 'react-query';
+import {queryKey} from '../../api/queryKey';
+import {getMissionsComplete} from '../../api/mission';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight} from '../../assets/CalculateLength';
 
 const dummyMission = [
   {
@@ -73,61 +75,22 @@ const dummyMission = [
     completeStatus: '미션 성공',
   },
 ];
-interface DataCompletedMissionsType {
-  dayOfWeek: string;
-  mission: string;
-  missionId: number;
-  missionStatus: string; ///NEW, PROGRESS, OWNER_CHECK
-  point: number;
-  storeCategory: string;
-  storeName: string;
-  successDate: string;
-}
 export const MissionSuccessList = () => {
-  const token = useRecoilValue(userToken);
-  const [DataCompletedMissions, setDataCompletedMissions] = useState<DataCompletedMissionsType[]>([]);
+  const DataMissionsComplete = useQuery(queryKey.MISSIONSCOMPLETE, getMissionsComplete);
+  // console.log('DataMissionsComplete: ', DataMissionsComplete);//DataMissionsComplete.data.~
 
-  const getMissionsMeComplete = async () => {
-    const res = await customAxios(token).get('missions/me/complete');
-    console.log('getMissionsMeProgress res.data : ', res.data);
-    res.data.result.forEach((e: any) => {
-      setDataCompletedMissions((prev) => [
-        ...prev,
-        {
-          dayOfWeek: e.dayOfWeek,
-          mission: e.mission,
-          missionId: e.missionId,
-          missionStatus: e.missionStatus,
-          point: e.point,
-          storeCategory: e.storeCategory,
-          storeName: e.storeName,
-          successDate: e.successDate,
-        },
-      ]);
-    });
-    // DataCompletedMissions.length로할지, typeof(DataCompletedMissions);
-    // var noMission = useState(DataCompletedMissions.length === 0); //미션이없는상태면 true
-    // var 스코프 호출되는지 확인
-  };
   //prettier-ignore
   const DAYOFWEEK = {
     MONDAY: '월', TUESDAY: '화', WEDNESSDAY: '수', THURSDAY: '목', FRIDAY: '금', SATURDAY: '토', SUNDAY: '일',
   };
-  // useEffect(() => {
-  // prettier-ignore
-  //   const DAYOFWEEK = {
-  //     MONDAY: '월', TUESDAY: '화', WEDNESSDAY: '수', THURSDAY: '목', FRIDAY: '금', SATURDAY: '토', SUNDAY: '일',
-  //   };
-  //   // console.log(DAYOFWEEK['MONDAY']);
-  // }, []); ///왜 미션갯수만큼렌더링???
   return (
     <FlatList
-      style={{marginTop: 18}}
+      style={{marginTop: hp(calHeight(16))}}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{paddingBottom: 60, backgroundColor: '#F6F6FA'}}
+      contentContainerStyle={{paddingBottom: hp(calHeight(16)), backgroundColor: '#F6F6FA'}}
       scrollEventThrottle={10}
       data={dummyMission}
-      // data={DataCompletedMissions}
+      // data={DataMissionsComplete.data.result}
       renderItem={({item}) => (
         <>
           <MissionSuccessfulCard
@@ -136,17 +99,18 @@ export const MissionSuccessList = () => {
             // missionStatus={status}
             point={500}
             storeCategory={'중국집'}
+            storeId={1}
             storeName={'반이학생마라탕'}
             successDate={'2022-07-07T07:43:57.267Z'}
             dayOfWeek={DAYOFWEEK['MONDAY']}
+            // dayOfWeek={DAYOFWEEK[item.dayOfWeek]}
             // mission={item.mission}
             // missionId={item.missionId}
-            // // missionStatus={item.missionStatus}
-            // point={item.poin}
+            // point={item.point}
             // storeCategory={item.storeCategory}
+            // storeId={item.storeId}
             // storeName={item.storeName}
             // successDate={item.successDate}
-            // dayOfWeek={DAYOFWEEK[item.dayOfWeek]}
           />
         </>
       )}
