@@ -15,13 +15,14 @@ import {MyHeader} from '../../components/My/MyHeader';
 import {MapWebview} from '../../modal';
 import {IHomeMissionDetail} from '../../data';
 import {DesignSystem} from '../../assets/DesignSystem';
-import {useQuery} from 'react-query';
+import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {queryKey} from '../../api/queryKey';
-import {getHomeMissionDetail} from '../../api';
+import {getHomeMissionDetail, patchHomeMissionChallenge} from '../../api';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'HomeMissionDetails'>;
 
 export const HomeMissionDetails = ({navigation, route}: Props) => {
+  const queryClient = useQueryClient();
   const insets = useSafeAreaInsets();
   const goBack = () => {
     navigation.goBack();
@@ -38,6 +39,15 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
       },
     },
   );
+  const missionMutation = useMutation((missionId: number) => patchHomeMissionChallenge(missionId), {
+    onSuccess: (data) => {
+      console.log('미션 도전 성공: ', data);
+      return queryClient.invalidateQueries('missionProgress');
+    },
+    onError: (err) => {
+      console.log('미션 도전 실패: ', err);
+    },
+  });
 
   return (
     <SafeAreaView style={[styles.flex]}>
@@ -78,6 +88,7 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
           </View>
           <TouchableOpacity
             onPress={() => {
+              missionMutation.mutate(route.params.missionId);
               navigation.pop();
               navigation.navigate('Mission', {missionId: 1});
             }}
