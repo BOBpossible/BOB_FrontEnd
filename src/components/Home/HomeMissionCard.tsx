@@ -16,6 +16,7 @@ export type MissionCardProps = {
 //prettier-ignore
 export const HomeMissionCard: FC<MissionCardProps> = ({missionId, name, category, mission, point}) => {
     const navigation = useNavigation();
+    console.log('뇽',missionId);
     return (
     <TouchableOpacity onPress={() => navigation.navigate('HomeMissionDetails', {missionId: missionId})} style={[styles.missionCardWrap]}>
       <View style={[styles.missionCard]}>

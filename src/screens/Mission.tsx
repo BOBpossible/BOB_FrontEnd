@@ -26,11 +26,11 @@ const Mission = () => {
   // console.log('지금미션', DataMissionsProgress.data); //스웨거에서 result
   const DataUser = useQuery<IgetUsersMe>('userInfo', getUserInfo);
   // console.log('여기서유저', DataUser); //DataUser.data.~
-  const onPressRequestBtn = () => {
+  const onPressRequestBtn = () => {//status바뀌는거 감지하면 이거 필요없을듯 . .. . ?
     setStatus('PROGRESS');
-    console.log('바꿔');
+    console.log('성공요청전송: NEW->PROGRESS');
   };
-  console.log(status);
+
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: 'white'}} />
