@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MyUser} from '../../components/My/MyUser';
@@ -20,7 +20,6 @@ const MyPage = () => {
     return data.result;
   };
   const {data, isSuccess, isError, error} = useQuery<IgetUsersMe>('userInfo', getUserInfo);
-  console.log('ssssssssss', data);
   // data.point 로 접근
   const storeData = async (value: string) => {
     try {
