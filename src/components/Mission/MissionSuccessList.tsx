@@ -99,8 +99,8 @@ export const MissionSuccessList = () => {
             // missionStatus={status}
             point={500}
             storeCategory={'중국집'}
-            storeId={1}
-            storeName={'반이학생마라탕'}
+            storeId={31}
+            storeName={'반이학생마라123탕'}
             successDate={'2022-07-07T07:43:57.267Z'}
             dayOfWeek={DAYOFWEEK['MONDAY']}
             // dayOfWeek={DAYOFWEEK[item.dayOfWeek]}

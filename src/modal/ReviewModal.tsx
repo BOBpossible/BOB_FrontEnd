@@ -17,6 +17,10 @@ import {useRecoilValue} from 'recoil';
 import {userToken} from '../state';
 import {DesignSystem} from '../assets/DesignSystem';
 import DoneModal from './DoneModal';
+import {getStores} from '../api';
+import {queryKey} from '../api/queryKey';
+import {useQuery} from 'react-query';
+import {IStoreInfo} from '../data/IStore';
 
 type ReviewModalProps = {
   storeId: number;
@@ -81,13 +85,19 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
       console.log('image register:', error);
     }
   };
+  const DataStores = useQuery<IStoreInfo>(queryKey.STOREINFO, () => getStores(31));
+  // console.log('DataStores', DataStores.data); //{"address": {"detail": "??", "dong": "안암동", "street": "서울 성북구 보문로14길 31", "x": 127.023872828279, "y": 37.5807545405682}, "averageRate": 0,
+  // "category": "디저트", "images": [], "name": "가게5", "reviewCount": 0, "storeId": 31, "storeStatus": "OPEN"}
 
   const submitReview = async () => {
     const reviewResponse = postReviewContent();
     postReviewImages(reviewResponse);
+    setDoneModal(true); //던모달 열기
+  };
+  const handleCloseAllModal = () => {
+    setDoneModal(false);
     closeReviewModal();
-    //던모달 열기
-    openDoneModal();
+    setShowRating(true);
   };
   return (
     <Modal visible={visible} animationType="fade">
@@ -109,7 +119,9 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
           {!showRating && (
             <>
               <View>
-                <Text style={[DesignSystem.title4Md, {color: '#000000'}]}>반이학생마라탕</Text>
+                <Text style={[DesignSystem.title4Md, {color: '#000000'}]}>
+                  {DataStores.data !== undefined && DataStores.data?.name}
+                </Text>
               </View>
               <View style={[styles.backButton, {opacity: 0}]}>
                 <Icon name="arrow-left" size={24} color="black" />
@@ -117,32 +129,35 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
             </>
           )}
         </View>
-        {showRating ? (
-          <ReviewRate
-            name={'마라탕'}
-            rating={rating}
-            setRating={setRating}
-            storeId={storeId}
-            goNext={() => setShowRating(false)}
-          />
-        ) : (
-          <ReviewWrite
-            name={'마라탕'}
-            submitReview={submitReview}
-            setRating={setRating}
-            rating={rating}
-            imageUri={imageUri}
-            setImageUri={setImageUri}
-            reviewContent={reviewContent}
-            setReviewContent={setReviewContent}
+        {DataStores.data !== undefined &&
+          (showRating ? (
+            <ReviewRate
+              name={DataStores.data?.name}
+              rating={rating}
+              setRating={setRating}
+              storeId={storeId}
+              goNext={() => setShowRating(false)}
+            />
+          ) : (
+            <ReviewWrite
+              name={DataStores.data?.name}
+              submitReview={submitReview}
+              setRating={setRating}
+              rating={rating}
+              imageUri={imageUri}
+              setImageUri={setImageUri}
+              reviewContent={reviewContent}
+              setReviewContent={setReviewContent}
+            />
+          ))}
+        {DataStores.data !== undefined && (
+          <DoneModal
+            visible={doneModal}
+            closeDoneModal={handleCloseAllModal}
+            category={'리뷰'}
+            point={DataStores.data?.point}
           />
         )}
-        <DoneModal
-          visible={doneModal}
-          closeDoneModal={() => setDoneModal(false)}
-          category={'리뷰'}
-          point={100} //서버 받아서 수정 ---------------------------------------------!
-        />
       </SafeAreaView>
     </Modal>
   );
