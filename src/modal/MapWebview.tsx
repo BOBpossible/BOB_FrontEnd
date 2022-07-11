@@ -4,11 +4,11 @@ import WebView, {WebViewMessageEvent} from 'react-native-webview';
 import StoreModal from './StoreModal';
 
 type MapWebviewProps = {
-  id?: number;
+  missionId?: number;
   userId?: number;
 };
 
-export const MapWebview: FC<MapWebviewProps> = ({id, userId}) => {
+export const MapWebview: FC<MapWebviewProps> = ({missionId, userId}) => {
   const [isLoadingMap, setIsLoadingMap] = useState(true);
   const [storeId, setStoreId] = useState(0);
   const [storeModal, setStoreModal] = useState(false);
@@ -28,9 +28,9 @@ export const MapWebview: FC<MapWebviewProps> = ({id, userId}) => {
       />
       <WebView
         source={
-          id === undefined
-            ? {uri: `https://bobplace.netlify.app/${userId}`} //여기에 userId 뒤에 넣어줘야함!
-            : {uri: `https://bobplace.netlify.app/store/${id}`}
+          missionId === undefined
+            ? {uri: `https://bobplace.netlify.app/${userId}`}
+            : {uri: `https://bobplace.netlify.app/store/${missionId}`}
         }
         onMessage={(event) => {
           onClickPin(event);

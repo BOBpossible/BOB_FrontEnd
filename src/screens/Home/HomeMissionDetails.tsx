@@ -45,7 +45,7 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
   return (
     <SafeAreaView style={[styles.flex]}>
       <MyHeader goBack={goBack} title={'미션 정보'} />
-      <MapWebview id={missionData.data?.storeId} userId={0} />
+      <MapWebview missionId={missionData.data?.missionId} userId={0} />
 
       <View style={[styles.missionCard, {bottom: Platform.OS === 'ios' ? insets.bottom : 0}]}>
         <View style={[styles.missionMain]}>
