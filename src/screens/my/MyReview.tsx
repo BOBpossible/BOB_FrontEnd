@@ -4,115 +4,19 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
 import {MyReviewEach} from '../../components/My/MyReviewEach';
-import {customAxios} from '../../api/customAxios';
-import {useQuery} from 'react-query';
+import {useInfiniteQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
+import {getReviewsMe} from '../../api';
+import {IReviewsType} from '../../data';
 
-const dummyMission = [
-  {
-    content: '냠냠굿!',
-    date: '2022-07-03T11:09:37.593Z',
-    images: [
-      {
-        imageUrl: '../../assets/images/bobpool.png',
-      },
-    ],
-    name: '가게1',
-    rate: 5,
-    reply: [
-      {
-        date: '2022-07-03T11:09:37.593Z',
-        reply: '감삼다',
-        reviewReplyId: 10,
-      },
-    ],
-    reviewId: 1,
-  },
-  {
-    content: 'JMT!',
-    date: '2022-07-03T11:09:37.593Z',
-    images: [
-      {
-        imageUrl: '../../assets/images/bobpool.png',
-      },
-    ],
-    name: '가게이름2',
-    rate: 3,
-    reply: [
-      {
-        date: '2022-07-03T11:09:37.593Z',
-        reply: '감삼다',
-        reviewReplyId: 10,
-      },
-    ],
-    reviewId: 1,
-  },
-  {
-    content: '와맛있다',
-    date: '2022-07-03T11:09:37.593Z',
-    images: [
-      {
-        imageUrl: '../../assets/images/bobpool.png',
-      },
-    ],
-    name: '가게이름3',
-    rate: 5,
-    reply: [
-      {
-        date: '2022-07-03T11:09:37.593Z',
-        reply: '감삼다',
-        reviewReplyId: 10,
-      },
-    ],
-    reviewId: 1,
-  },
-  {
-    content: '굿',
-    date: '2022-07-03T11:09:37.593Z',
-    images: [
-      {
-        imageUrl: '../../assets/images/bobpool.png',
-      },
-    ],
-    name: '가게이름4',
-    rate: 5,
-    reply: [
-      {
-        date: '2022-07-03T11:09:37.593Z',
-        reply: '감삼다',
-        reviewReplyId: 10,
-      },
-    ],
-    reviewId: 1,
-  },
-];
-export type ReviewImagesType = {
-  imageUrl: string;
-};
-export type ReviewReplyType = {
-  date: string;
-  reply: string;
-  reviewReplyId: number;
-};
-export type ReviewsType = {
-  content: string;
-  date: string;
-  images: ReviewImagesType[];
-  name: string;
-  rate: number;
-  reply: ReviewReplyType[];
-  reviewId: number;
-};
 type Props = NativeStackScreenProps<MyStackParamList, 'MyReview'>;
 
 export const MyReview = ({navigation}: Props) => {
-  //마이페이지 - 나의 포인트 내역 조회
-  const getReviewsMe = async () => {
-    const {data} = await customAxios().get('/api/v1/reviews/me');
-    return data.result;
-  };
-  const DataReviews = useQuery<ReviewsType>([queryKey.REVIEWSME], getReviewsMe);
-
+  const DataReviews = useInfiniteQuery<IReviewsType>([queryKey.REVIEWSME], getReviewsMe, {
+    getNextPageParam: (lastPage, pages) => {
+      return pages.length;
+    },
+  });
   const goBack = () => {
     navigation.goBack();
   };
@@ -121,21 +25,30 @@ export const MyReview = ({navigation}: Props) => {
     <SafeAreaView style={[styles.flex]}>
       <MyHeader goBack={goBack} title={'리뷰 관리'} />
       <FlatList
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
         scrollEventThrottle={10}
-        data={dummyMission}
-        // data={DataReviews}
+        data={DataReviews.data?.pages}
+        onEndReached={() => {
+          DataReviews.fetchNextPage();
+        }}
         renderItem={({item}) => (
           <>
-            <MyReviewEach
-              name={item.name}
-              date={item.date}
-              rate={item.rate}
-              content={item.content}
-              images={item.images}
-              reply={item.reply}
-              reviewId={item.reviewId}
-            />
+            {/* {console.log('iiiiiiiiiiiiii', item.content)} */}
+            {item.content.map((e: any, i: number) => {
+              return (
+                <View key={i}>
+                  <MyReviewEach
+                    name={e.name}
+                    date={e.date}
+                    rate={e.rate}
+                    content={e.content}
+                    images={e.images}
+                    reply={e.reply}
+                    reviewId={e.reviewId}
+                  />
+                </View>
+              );
+            })}
           </>
         )}
         ItemSeparatorComponent={() => <View style={{height: 8}} />}

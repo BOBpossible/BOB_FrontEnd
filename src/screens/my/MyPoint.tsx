@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, FlatList, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, FlatList} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
@@ -7,11 +7,9 @@ import {MyPointList} from '../../components/My/MyPointList';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
-import {customAxios} from '../../api/customAxios';
 import {useInfiniteQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
-import { resolvePath } from 'react-native-reanimated/lib/types/lib/reanimated2/animation/styleAnimation';
-import { getPointsList } from '../../api';
+import {getPointsList} from '../../api';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyPoint'>;
 export type PointsListContent = {
@@ -70,17 +68,12 @@ export const MyPoint = ({navigation, route}: Props) => {
       },
     },
   );
-
   // console.log('has?', DataPointsList.hasNextPage);
   // console.log('DataPointsList', DataPointsList.data?.pages[0].data.result.point.content);
 
-  //
-  // console.log('rrr', res.data?.pages);
-  // [{"isLast": false, "pageNumber": 0, "result": [[Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object], [Object]], "totalPoints": 750}]
   const goBack = () => {
     navigation.goBack();
   };
-  console.log('pg', DataPointsList);
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
@@ -122,14 +115,17 @@ export const MyPoint = ({navigation, route}: Props) => {
               // onEndReachedThreshold={0.3}
               renderItem={({item}) => (
                 <>
+                  {/* {console.log('iiiiiiiiiiiiii', item.data.result.point.content)} */}
                   {item.data.result.point.content.map((e: any, i: number) => {
                     return (
-                      <MyPointList
-                        date={e.date}
-                        title={e.title}
-                        subTitle={e.subTitle}
-                        point={e.point}
-                      />
+                      <View key={i}>
+                        <MyPointList
+                          date={e.date}
+                          title={e.title}
+                          subTitle={e.subTitle}
+                          point={e.point}
+                        />
+                      </View>
                     );
                   })}
                 </>
