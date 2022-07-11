@@ -26,9 +26,16 @@ type props = {
   isReview: boolean;
   setIsReview: React.Dispatch<React.SetStateAction<boolean>>;
   offset: Animated.Value;
+  reviewCount?: number;
 };
 
-export const MapStoreReviewPhoto = ({storeData, isReview, setIsReview, offset}: props) => {
+export const MapStoreReviewPhoto = ({
+  storeData,
+  isReview,
+  setIsReview,
+  offset,
+  reviewCount,
+}: props) => {
   const [photoModal, setPhotoModal] = useState(false);
   const [reviewPhoto, setReviewPhoto] = useState<{uri: string}>({uri: 'string'});
 
@@ -82,6 +89,7 @@ export const MapStoreReviewPhoto = ({storeData, isReview, setIsReview, offset}: 
               toggleReview={() => setIsReview(true)}
               togglePhoto={() => setIsReview(false)}
               isReview={isReview}
+              reviewCount={reviewCount}
             />
           </View>
         </>
@@ -89,7 +97,7 @@ export const MapStoreReviewPhoto = ({storeData, isReview, setIsReview, offset}: 
       data={reviewImages.data?.pages}
       renderItem={({item}) => {
         return (
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
             {item.data.result.content.map((image: any) => (
               <TouchableOpacity onPress={() => openPhotoModal(image.imageUrl)}>
                 <View style={{borderColor: '#FFFFFF', borderWidth: 1}}>

@@ -6,12 +6,14 @@ type MapReviewToggleButtonProps = {
   toggleReview: () => void;
   togglePhoto: () => void;
   isReview: boolean;
+  reviewCount: number;
 };
 
 export const MapReviewToggleButton: FC<MapReviewToggleButtonProps> = ({
   toggleReview,
   togglePhoto,
   isReview,
+  reviewCount,
 }) => {
   return (
     <View style={[styles.ToggleWrap]}>
@@ -27,7 +29,9 @@ export const MapReviewToggleButton: FC<MapReviewToggleButtonProps> = ({
             {marginLeft: 34},
           ]}
         >
-          <Text style={[isReview ? styles.toggleTextOn : styles.toggleTextOff]}>리뷰 100</Text>
+          <Text style={[isReview ? styles.toggleTextOn : styles.toggleTextOff]}>
+            리뷰 {reviewCount}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
