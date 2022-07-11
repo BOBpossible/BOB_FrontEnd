@@ -18,6 +18,7 @@ import {getStores, postReview, postReviewImages} from '../api';
 import {queryKey} from '../api/queryKey';
 import {useMutation, useQuery} from 'react-query';
 import {IStoreInfo} from '../data/IStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ReviewModalProps = {
   storeId: number;
@@ -44,6 +45,9 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
       onSuccess(data) {
         console.log(data);
       },
+      onError(err) {
+        console.log(err);
+      },
     },
   );
 
@@ -51,6 +55,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
     (data: {storeId: number; content: string; rate: number}) => postReview(data),
     {
       onSuccess(data) {
+        console.log(data);
         if (imageUri.length !== 0) {
           reviewImageMutation.mutate(data.result);
         }
@@ -58,7 +63,8 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
     },
   );
 
-  // const postReviewImages = async (reviewResponse: Promise<any>) => {
+  // const postReviewImages = async (reviewId: number) => {
+  //   const token = await AsyncStorage.getItem('accessToken');
   //   var formdata = new FormData();
   //   imageUri.map((image) => {
   //     let photo;
@@ -77,16 +83,20 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
   //     console.log(photo);
   //   });
   //   try {
-  //     const response = await fetch('https://bobpossible.shop/api/v1/reviews/me/images/1', {
-  //       method: 'POST',
-  //       headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data'},
-  //       body: formdata,
-  //     });
+  //     const response = await fetch(
+  //       `https://bobpossible.shop/api/v1/reviews/me/images/${reviewId}`,
+  //       {
+  //         method: 'POST',
+  //         headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data'},
+  //         body: formdata,
+  //       },
+  //     );
   //     console.log('image register:', response);
   //   } catch (error) {
   //     console.log('image register:', error);
   //   }
   // };
+
   const DataStores = useQuery<IStoreInfo>(queryKey.STOREINFO, () => getStores(storeId));
   // console.log('DataStores', DataStores.data); //{"address": {"detail": "??", "dong": "안암동", "street": "서울 성북구 보문로14길 31", "x": 127.023872828279, "y": 37.5807545405682}, "averageRate": 0,
   // "category": "디저트", "images": [], "name": "가게5", "reviewCount": 0, "storeId": 31, "storeStatus": "OPEN"}

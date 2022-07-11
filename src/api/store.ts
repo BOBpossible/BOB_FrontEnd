@@ -1,5 +1,6 @@
 import {Platform} from 'react-native';
 import {customAxios} from './customAxios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type imageData = {
   uri: string;
@@ -42,11 +43,12 @@ export const getStoreReviewList = async ({pageParam = 0}, storeId?: number) => {
 };
 
 export const postReview = async (data: {storeId: number; rate: number; content: string}) => {
-  const response = await customAxios().post('https://bobpossible.shop/api/v1/reviews/me', data);
-  return response.data.result;
+  const response = await customAxios().post('/api/v1/reviews/me', data);
+  return response.data;
 };
 
 export const postReviewImages = async (imageList: imageData[], reviewId: number) => {
+  const token = await AsyncStorage.getItem('accessToken');
   var formdata = new FormData();
   imageList.map((image) => {
     let photo;
@@ -63,13 +65,38 @@ export const postReviewImages = async (imageList: imageData[], reviewId: number)
         });
     formdata.append('reviewImage', photo);
   });
-  // const response = await fetch('https://bobpossible.shop/api/v1/reviews/me/images/1', {
-  //   method: 'POST',
-  //   headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data'},
-  //   body: formdata,
-  // });
-  const response = await customAxios().post(`/api/v1/reviews/me/images/${reviewId}`, formdata, {
-    headers: {'Content-Type': 'multipart/form-data'},
-  });
-  return response;
+  try {
+    const response = await fetch(`https://bobpossible.shop/api/v1/reviews/me/images/${reviewId}`, {
+      method: 'POST',
+      headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data'},
+      body: formdata,
+    });
+    console.log('image register 성공:', response);
+  } catch (error) {
+    console.log('image register:', error);
+  }
 };
+
+// export const postReviewImages = async (imageList: imageData[], reviewId: number) => {
+//   var formdata = new FormData();
+//   imageList.map((image) => {
+//     let photo;
+//     Platform.OS === 'ios'
+//       ? (photo = {
+//           uri: image.uri.replace('file://', ''),
+//           type: 'image/jpg',
+//           name: 'image',
+//         })
+//       : (photo = {
+//           uri: image.uri,
+//           type: 'image/jpeg',
+//           name: 'image',
+//         });
+//     formdata.append('reviewImage', photo);
+//   });
+
+//   const response = await customAxios().post(`/api/v1/reviews/me/images/${reviewId}`, formdata, {
+//     headers: {'Content-Type': 'multipart/form-data'},
+//   });
+//   return response;
+// };
