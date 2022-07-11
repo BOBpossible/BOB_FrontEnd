@@ -77,8 +77,8 @@ export const MapStoreReviewList = ({storeData, isReview, setIsReview, offset}: p
       data={reviewList.data?.pages}
       renderItem={({item, index}) => {
         return (
-          <View>
-            {item.data.result.content.map((review: IStoreReview, index2: number) => (
+          <View key={index}>
+            {item.data.result.content.map((review: IStoreReview) => (
               <MapStoreReview
                 name={review.name}
                 date={review.date}
