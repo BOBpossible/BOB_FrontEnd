@@ -1,71 +1,23 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ActivityIndicator, Animated, StyleSheet, View} from 'react-native';
+import {queryKey} from '../../api/queryKey';
+import {getStoreReviewList} from '../../api/store';
 import {PhotoModal} from '../../modal/PhotoModal';
 import {MapStoreReview} from './MapStoreReview';
+import {useInfiniteQuery} from 'react-query';
+import {MapReviewToggleButton} from './MapReviewToggleButton';
+import {MapStoreInfo} from '..';
+import {ImageSwiper} from '../Common/ImageSwiper';
+import {IStoreData, IStoreReview} from '../../data';
 
-const dummyReviews = [
-  {
-    name: '박성호',
-    date: '2022-06-16',
-    rate: 3,
-    images: [
-      {uri: 'https://source.unsplash.com/1024x768/?tree', id: 0},
-      {uri: 'https://source.unsplash.com/1024x768/?girl', id: 1},
-      {uri: 'https://source.unsplash.com/1024x768/?boy', id: 2},
-    ],
-    review:
-      '너무 맛있어요! 최고! 포인트도 낭낭하니 많아요~~~ 추천추천 미션밥파서블 덕분에 인생폈다',
-    reply: {
-      date: '2022.05.05',
-      comment: '저희 식당을 찾아주셔서 진심으로 감사합니다. 다음에도 방문 해주세요. ^^',
-    },
-  },
-  {
-    name: '이아영',
-    date: '2022-06-14',
-    rate: 3,
-    images: [{uri: 'https://source.unsplash.com/1024x768/?tree', id: 3}],
-    review:
-      '너무 맛있어요! 최고! 너무 맛있어요! 최고!너무 맛있어요! 최고!너무 맛있어요! 최고!너무 맛있어요! 최고!',
-    reply: null,
-  },
-  {
-    name: '이예진',
-    date: '2022-06-13',
-    rate: 3,
-    images: [
-      {uri: 'https://source.unsplash.com/1024x768/?girl', id: 4},
-      {uri: 'https://source.unsplash.com/1024x768/?boy', id: 5},
-    ],
-    review: '너무 맛있어요! 최고!',
-    reply: null,
-  },
-  {
-    name: '박승민',
-    date: '2022-06-12',
-    rate: 3,
-    images: [],
-    review: '너무 맛있어요! 최고!',
-    reply: null,
-  },
-  {
-    name: '김진범',
-    date: '2022-06-10',
-    rate: 3,
-    images: [
-      {uri: 'https://source.unsplash.com/1024x768/?tree', id: 6},
-      {uri: 'https://source.unsplash.com/1024x768/?girl', id: 7},
-      {uri: 'https://source.unsplash.com/1024x768/?boy', id: 8},
-    ],
-    review: '너무 맛있어요! 최고!',
-    reply: {
-      date: '2022.05.05',
-      comment: '저희 식당을 찾아주셔서 진심으로 감사합니다. 다음에도 방문 해주세요. ^^',
-    },
-  },
-];
+type props = {
+  storeData?: IStoreData;
+  isReview: boolean;
+  setIsReview: React.Dispatch<React.SetStateAction<boolean>>;
+  offset: Animated.Value;
+};
 
-export const MapStoreReviewList = () => {
+export const MapStoreReviewList = ({storeData, isReview, setIsReview, offset}: props) => {
   const [photoModal, setPhotoModal] = useState(false);
   const [reviewPhoto, setReviewPhoto] = useState<{uri: string}>({uri: 'string'});
   const openPhotoModal = (imageSource: string) => {
@@ -73,41 +25,105 @@ export const MapStoreReviewList = () => {
     setPhotoModal(true);
   };
 
-  const renderedReviews = (data: any) => {
-    return (
-      <>
-        {data.map((item: any, index: number) => {
-          return (
-            <MapStoreReview
-              key={index}
-              name={item.name}
-              date={item.date}
-              rate={item.rate}
-              review={item.review}
-              images={item.images}
-              reply={item.reply}
-              openPhotoModal={openPhotoModal}
-            />
-          );
-        })}
-      </>
-    );
-  };
-  return (
-    <View style={[styles.reviewListWrap]}>
-      {renderedReviews(dummyReviews)}
-      <PhotoModal
-        imageUri={reviewPhoto}
-        visible={photoModal}
-        closePhotoModal={() => setPhotoModal(false)}
-      />
-    </View>
+  const reviewList = useInfiniteQuery(
+    [queryKey.STOREREVIEWLIST, storeData?.storeId],
+    ({pageParam}) => getStoreReviewList({pageParam}, storeData?.storeId),
+    {
+      getNextPageParam: (lastPage, pages) => {
+        console.log('페이지들:', pages.length);
+        if (lastPage.data.result.last === false) {
+          return pages.length + 1;
+        } else {
+          return undefined;
+        }
+      },
+    },
   );
+
+  return (
+    <Animated.FlatList
+      onScroll={(event) => {
+        Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
+          useNativeDriver: false,
+        })(event);
+      }}
+      ListHeaderComponent={
+        <>
+          <View>
+            <ImageSwiper height={220} imageList={storeData?.images} />
+            <PhotoModal
+              imageUri={reviewPhoto}
+              visible={photoModal}
+              closePhotoModal={() => setPhotoModal(false)}
+            />
+            <MapStoreInfo
+              storeName={storeData?.name}
+              storeCategory={storeData?.category}
+              storeStatus={storeData?.storeStatus}
+              storeRate={storeData?.averageRate}
+              storeAddress={storeData?.address.street}
+            />
+            <View style={{backgroundColor: '#F6F6FA', height: 8}} />
+          </View>
+          <View style={[styles.reviewToggleWrap]}>
+            <MapReviewToggleButton
+              toggleReview={() => setIsReview(true)}
+              togglePhoto={() => setIsReview(false)}
+              isReview={isReview}
+            />
+          </View>
+        </>
+      }
+      data={reviewList.data?.pages}
+      renderItem={({item, index}) => {
+        return (
+          <View key={index}>
+            {item.data.result.content.map((review: IStoreReview) => (
+              <MapStoreReview
+                name={review.name}
+                date={review.date}
+                rate={review.rate}
+                content={review.content}
+                images={review.images}
+                reply={review.reply}
+                openPhotoModal={openPhotoModal}
+              />
+            ))}
+          </View>
+        );
+      }}
+      contentContainerStyle={styles.reviewListWrap}
+      onEndReached={() => {
+        if (reviewList.hasNextPage) {
+          reviewList.fetchNextPage();
+        }
+      }}
+      ListFooterComponent={
+        <>{reviewList.isFetching && !reviewList.isFetchingNextPage && <ActivityIndicator />}</>
+      }
+    />
+  );
+
+  // return (
+  //   <View style={[styles.reviewListWrap]}>
+  //     {renderedReviews(dummyReviews)}
+  //     <PhotoModal
+  //       imageUri={reviewPhoto}
+  //       visible={photoModal}
+  //       closePhotoModal={() => setPhotoModal(false)}
+  //     />
+  //   </View>
+  // );
 };
 
 const styles = StyleSheet.create({
   reviewListWrap: {
     backgroundColor: '#FFFFFF',
-    flex: 1,
+  },
+  reviewToggleWrap: {
+    backgroundColor: '#FFFFFF',
+    height: 50,
+    borderBottomColor: '#EDEDED',
+    borderBottomWidth: 1,
   },
 });

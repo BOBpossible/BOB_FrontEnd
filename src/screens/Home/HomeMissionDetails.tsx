@@ -59,13 +59,13 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
           </TouchableOpacity>
           <View style={[DesignSystem.centerArrange, styles.missionContentBox]}>
             {missionData.data?.images !== null && (
-              <View style={{marginTop: 16}}>
+              <View style={{marginBottom: 16, flexDirection: 'row'}}>
                 {missionData.data?.images.map((item, index) => {
                   return (
                     <Image
                       key={index}
                       source={{uri: item.imageUrl}}
-                      style={{width: 60, height: 60}}
+                      style={{width: 60, height: 60, marginRight: 8}}
                     />
                   );
                 })}

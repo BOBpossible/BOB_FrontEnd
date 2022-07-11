@@ -8,4 +8,8 @@ export const queryKey = {
   MISSIONSCOMPLETE: 'missionsComplete',
   USERINFO: 'userInfo',
   STOREINFO: 'storeInfo',
+  STORELIST: 'storeList',
+  STOREDATA: 'storeData',
+  STOREREVIEWIMAGES: 'storeReviewImages',
+  STOREREVIEWLIST: 'storeReviewList',
 };
