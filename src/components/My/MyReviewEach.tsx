@@ -3,27 +3,10 @@ import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-export type ReviewImagesType = {
-  imageUrl: string;
-};
-export type ReviewReplyType = {
-  date: string;
-  reply: string;
-  reviewReplyId: number;
-};
-export type MyReviewEachProps = {
-  content: string;
-  date: string;
-  images: ReviewImagesType[];
-  name: string;
-  rate: number;
-  reply: ReviewReplyType[];
-  reviewId: number;
-};
+import {IMyReviewEachProps} from '../../data';
 
 //prettier-ignore
-export const MyReviewEach: FC<MyReviewEachProps> = ({name, date, rate, content, images, reply, reviewId}) => {
+export const MyReviewEach: FC<IMyReviewEachProps> = ({name, date, rate, content, images, reply, reviewId}) => {
   return (
     <View style={{backgroundColor: 'white'}}>
       <View style={[styles.totalWrap]}>
@@ -52,15 +35,17 @@ export const MyReviewEach: FC<MyReviewEachProps> = ({name, date, rate, content, 
               {/* images.imageUrl */}
             </View>
         </View>
-        <View style={[styles.ownerWrap]}>
-            <View style={[styles.ownerTitle, {alignItems: 'center'}]}>
-                <Text style={{fontFamily: 'Pretendard-Light', fontSize: 14, lineHeight: 14, color: '#7D7D7D', marginRight: 6}}>사장님 답글</Text>
-                <Text style={[DesignSystem.grey7, {fontFamily: 'Pretendard-Light', fontSize: 14, lineHeight: 14}]}>{reply[0].date.slice(0,4)}.{reply[0].date.slice(5,7)}.{reply[0].date.slice(8,10)}</Text>
-            </View>
-            <View style={[styles.ownerContents]}>
-              <Text style={[DesignSystem.body2Long, {color: 'black'}, styles.ownerContentsText]}>{reply[0].reply}</Text>
-            </View>
-        </View>
+        {reply.length !== 0 && (
+          <View style={[styles.ownerWrap]}>
+              <View style={[styles.ownerTitle, {alignItems: 'center'}]}>
+                  <Text style={{fontFamily: 'Pretendard-Light', fontSize: 14, lineHeight: 14, color: '#7D7D7D', marginRight: 6}}>사장님 답글</Text>
+                  <Text style={[DesignSystem.grey7, {fontFamily: 'Pretendard-Light', fontSize: 14, lineHeight: 14}]}>{reply[0].date.slice(0,4)}.{reply[0].date.slice(5,7)}.{reply[0].date.slice(8,10)}</Text>
+              </View>
+              <View style={[styles.ownerContents]}>
+                <Text style={[DesignSystem.body2Long, {color: 'black'}, styles.ownerContentsText]}>{reply[0].reply}</Text>
+              </View>
+          </View>
+        )}
       </View>
     </View>
   );
