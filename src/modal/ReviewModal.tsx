@@ -12,14 +12,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ReviewRate} from '../components/ReviewRate';
 import {ReviewWrite} from '../components/ReviewWrite';
-import axios from 'axios';
-import {useRecoilValue} from 'recoil';
-import {userToken} from '../state';
 import {DesignSystem} from '../assets/DesignSystem';
 import DoneModal from './DoneModal';
-import {getStores} from '../api';
+import {getStores, postReview, postReviewImages} from '../api';
 import {queryKey} from '../api/queryKey';
-import {useQuery} from 'react-query';
+import {useMutation, useQuery} from 'react-query';
 import {IStoreInfo} from '../data/IStore';
 
 type ReviewModalProps = {
@@ -34,70 +31,74 @@ type imageData = {
   name: string;
 };
 
-const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, openDoneModal}) => {
+const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId}) => {
   const [rating, setRating] = useState(0);
   const [showRating, setShowRating] = useState(true);
   const [reviewContent, setReviewContent] = useState('');
   const [imageUri, setImageUri] = useState<imageData[]>([]);
   const [doneModal, setDoneModal] = useState(false);
-  const token = useRecoilValue(userToken);
-  const headers = {Authorization: `Bearer ${token}`};
 
-  const postReviewContent = async () => {
-    const data = {storeId: storeId, rate: rating, content: reviewContent};
-    try {
-      const response = await axios.post('https://bobpossible.shop/api/v1/reviews/me', data, {
-        headers: headers,
-      });
-      console.log('review register:', response.data);
-      return response.data.result;
-    } catch (error) {
-      console.log('review register:', error);
-    }
-  };
+  const reviewImageMutation = useMutation(
+    (reviewId: number) => postReviewImages(imageUri, reviewId),
+    {
+      onSuccess(data) {
+        console.log(data);
+      },
+    },
+  );
 
-  const postReviewImages = async (reviewResponse: Promise<any>) => {
-    var formdata = new FormData();
-    imageUri.map((image) => {
-      let photo;
-      Platform.OS === 'ios'
-        ? (photo = {
-            uri: image.uri.replace('file://', ''),
-            type: 'image/jpg',
-            name: 'image',
-          })
-        : (photo = {
-            uri: image.uri,
-            type: 'image/jpeg',
-            name: 'image',
-          });
-      formdata.append('reviewImage', photo);
-      console.log(photo);
-    });
-    try {
-      const response = await fetch('https://bobpossible.shop/api/v1/reviews/me/images/1', {
-        method: 'POST',
-        headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data'},
-        body: formdata,
-      });
-      console.log('image register:', response);
-    } catch (error) {
-      console.log('image register:', error);
-    }
-  };
-  const DataStores = useQuery<IStoreInfo>(queryKey.STOREINFO, () => getStores(31));
+  const reviewMutation = useMutation(
+    (data: {storeId: number; content: string; rate: number}) => postReview(data),
+    {
+      onSuccess(data) {
+        if (imageUri.length !== 0) {
+          reviewImageMutation.mutate(data.result);
+        }
+      },
+    },
+  );
+
+  // const postReviewImages = async (reviewResponse: Promise<any>) => {
+  //   var formdata = new FormData();
+  //   imageUri.map((image) => {
+  //     let photo;
+  //     Platform.OS === 'ios'
+  //       ? (photo = {
+  //           uri: image.uri.replace('file://', ''),
+  //           type: 'image/jpg',
+  //           name: 'image',
+  //         })
+  //       : (photo = {
+  //           uri: image.uri,
+  //           type: 'image/jpeg',
+  //           name: 'image',
+  //         });
+  //     formdata.append('reviewImage', photo);
+  //     console.log(photo);
+  //   });
+  //   try {
+  //     const response = await fetch('https://bobpossible.shop/api/v1/reviews/me/images/1', {
+  //       method: 'POST',
+  //       headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data'},
+  //       body: formdata,
+  //     });
+  //     console.log('image register:', response);
+  //   } catch (error) {
+  //     console.log('image register:', error);
+  //   }
+  // };
+  const DataStores = useQuery<IStoreInfo>(queryKey.STOREINFO, () => getStores(storeId));
   // console.log('DataStores', DataStores.data); //{"address": {"detail": "??", "dong": "안암동", "street": "서울 성북구 보문로14길 31", "x": 127.023872828279, "y": 37.5807545405682}, "averageRate": 0,
   // "category": "디저트", "images": [], "name": "가게5", "reviewCount": 0, "storeId": 31, "storeStatus": "OPEN"}
 
   const submitReview = async () => {
-    const reviewResponse = postReviewContent();
-    postReviewImages(reviewResponse);
+    await reviewMutation.mutate({storeId: storeId, content: reviewContent, rate: rating});
     setDoneModal(true); //던모달 열기
   };
   const handleCloseAllModal = () => {
+    setShowRating(true);
     setDoneModal(false);
     closeReviewModal();
-    setShowRating(true);
   };
   return (
     <Modal visible={visible} animationType="fade">
