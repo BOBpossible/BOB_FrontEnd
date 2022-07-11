@@ -33,3 +33,23 @@ export type IStoreReviewImages = {
   content: {imageUrl: string; reviewId: number}[];
   last: boolean;
 };
+
+export type IStoreReview = {
+  content: string;
+  date: string;
+  images: [
+    {
+      imageUrl: string;
+    },
+  ];
+  name: string;
+  rate: number;
+  reply: [
+    {
+      date: string;
+      reply: string;
+      reviewReplyId: number;
+    },
+  ];
+  reviewId: number;
+};

@@ -68,7 +68,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
             <Icon name="arrow-left" size={24} color="black" />
           </View>
         </View>
-        <Animated.ScrollView
+        {/* <Animated.ScrollView
           stickyHeaderIndices={[1]}
           scrollEventThrottle={10}
           onScroll={(event) => {
@@ -96,8 +96,23 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
               isReview={isReview}
             />
           </View>
-          {isReview ? <MapStoreReviewList /> : <MapStoreReviewPhoto storeId={storeId} />}
-        </Animated.ScrollView>
+          
+        </Animated.ScrollView> */}
+        {isReview ? (
+          <MapStoreReviewList
+            storeData={storeData.data}
+            isReview={isReview}
+            setIsReview={setIsReview}
+            offset={offset1}
+          />
+        ) : (
+          <MapStoreReviewPhoto
+            storeData={storeData.data}
+            isReview={isReview}
+            setIsReview={setIsReview}
+            offset={offset1}
+          />
+        )}
         {isReview && (
           <TouchableOpacity onPress={() => openReviewModal()}>
             <View style={[styles.reviewButton]}>

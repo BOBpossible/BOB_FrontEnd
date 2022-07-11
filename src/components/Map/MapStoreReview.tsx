@@ -6,12 +6,12 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../../assets/DesignSystem';
 
 type MapStoreReviewProps = {
-  images: {uri: string; id: number}[] | [];
+  images: {imageUrl: string}[];
   name: string;
   date: string;
   rate: number;
-  review: string;
-  reply: {date: string; comment: string} | null;
+  content: string;
+  reply: {date: string; reply: string; reviewReplyId: number}[];
   openPhotoModal: (imageSource: string) => void;
 };
 
@@ -20,18 +20,18 @@ export const MapStoreReview: FC<MapStoreReviewProps> = ({
   name,
   date,
   rate,
-  review,
+  content,
   reply,
   openPhotoModal,
 }) => {
-  const renderedImage = (imagedata: {uri: string; id: number}[]) => {
+  const renderedImage = (imagedata: {imageUrl: string}[]) => {
     return (
       <View style={[styles.reviewRow3]}>
         {imagedata.map((item, index) => {
           return (
-            <TouchableOpacity key={index} onPress={() => openPhotoModal(item.uri)}>
-              <View style={[styles.reviewImageWrap]} key={item.id}>
-                <FastImage source={{uri: item.uri}} style={[styles.imageSize]} />
+            <TouchableOpacity key={index} onPress={() => openPhotoModal(item.imageUrl)}>
+              <View style={[styles.reviewImageWrap]}>
+                <FastImage source={{uri: item.imageUrl}} style={[styles.imageSize]} />
               </View>
             </TouchableOpacity>
           );
@@ -50,17 +50,17 @@ export const MapStoreReview: FC<MapStoreReviewProps> = ({
         <Text style={[styles.reviewRate]}>{rate}</Text>
       </View>
       <View style={[styles.reviewRow3]}>
-        <Text style={[styles.reviewText]}>{review}</Text>
+        <Text style={[styles.reviewText]}>{content}</Text>
       </View>
       {renderedImage(images)}
-      {reply !== null && (
+      {reply.length !== 0 && (
         <View style={{width: '100%', marginTop: 12}}>
           <View style={{flexDirection: 'row', marginBottom: 8}}>
             <Text style={[styles.replyHeader]}>사장님 답글</Text>
-            <Text style={[styles.replyDate]}>{reply.date}</Text>
+            <Text style={[styles.replyDate]}>{reply[0].date}</Text>
           </View>
           <View style={[styles.replyComment]}>
-            <Text style={[DesignSystem.body2Lt, DesignSystem.grey17]}>{reply.comment}</Text>
+            <Text style={[DesignSystem.body2Lt, DesignSystem.grey17]}>{reply[0].reply}</Text>
           </View>
         </View>
       )}
