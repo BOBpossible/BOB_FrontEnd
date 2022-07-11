@@ -61,43 +61,14 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
           </TouchableOpacity>
 
           <Animated.View style={[headerTextStyle]}>
-            <Text style={[styles.storeHeaderText]}>반이학생마라탕</Text>
+            <Text style={[styles.storeHeaderText]}>{storeData.data?.name}</Text>
           </Animated.View>
 
           <View style={[styles.backButton, {opacity: 0}]}>
             <Icon name="arrow-left" size={24} color="black" />
           </View>
         </View>
-        {/* <Animated.ScrollView
-          stickyHeaderIndices={[1]}
-          scrollEventThrottle={10}
-          onScroll={(event) => {
-            Animated.event([{nativeEvent: {contentOffset: {y: offset1}}}], {
-              useNativeDriver: false,
-            })(event);
-          }}
-        >
-          <View>
-            <ImageSwiper height={220} imageList={storeData.data?.images} />
-            <MapStoreInfo
-              storeName={storeData.data?.name}
-              storeCategory={storeData.data?.category}
-              storeStatus={storeData.data?.storeStatus}
-              storeRate={storeData.data?.averageRate}
-              storeAddress={storeData.data?.address.street}
-            />
-            <View style={{backgroundColor: '#F6F6FA', height: 8}} />
-          </View>
 
-          <View style={[styles.reviewToggleWrap]}>
-            <MapReviewToggleButton
-              toggleReview={() => setIsReview(true)}
-              togglePhoto={() => setIsReview(false)}
-              isReview={isReview}
-            />
-          </View>
-          
-        </Animated.ScrollView> */}
         {isReview ? (
           <MapStoreReviewList
             storeData={storeData.data}
