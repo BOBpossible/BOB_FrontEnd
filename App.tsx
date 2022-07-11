@@ -10,7 +10,19 @@ import 'react-native-gesture-handler';
 import {enableScreens} from 'react-native-screens';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {QueryClient, QueryClientProvider} from 'react-query';
-import {getRegisterStatus, postToken} from './src/api';
+import {getRegisterStatus, postFcmToken, postToken} from './src/api';
+import messaging from '@react-native-firebase/messaging';
+
+async function requestUserPermission() {
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  if (enabled) {
+    console.log('Authorization status:', authStatus);
+  }
+}
 
 enableScreens();
 
@@ -24,6 +36,15 @@ export default function App() {
   // 실행하면 가장 먼저 로컬에 로그인 정보 있는지 확인
   useEffect(() => {
     getToken();
+
+    requestUserPermission();
+
+    messaging()
+      .getToken()
+      .then((token) => {
+        return postFcmToken(token);
+      });
+
     const id = setTimeout(() => {
       setLoading(false);
     }, 2000);
