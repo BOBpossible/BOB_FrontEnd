@@ -12,6 +12,9 @@ export const getPointsList = async ({pageParam = 0}) => {
       page: pageParam,
       size: 5,
     },
+  });
+  return response;
+};
 export const getStoreData = async (storeId?: number) => {
   const response = await customAxios().get(`/api/v1/stores/${storeId}`);
   return response.data.result;

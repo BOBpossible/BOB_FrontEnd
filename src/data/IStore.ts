@@ -1,5 +1,4 @@
 // 가게 정보 인터페이스
-
 export type IStoreInfo = {
   storeId: number;
   name: string;
@@ -7,6 +6,7 @@ export type IStoreInfo = {
   distance: number;
   category: string;
   point: number;
+};
 export type IStoreMap = {
   addressDetail: string;
   addressStreet: string;

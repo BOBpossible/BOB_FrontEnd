@@ -80,6 +80,7 @@ export const MyPoint = ({navigation, route}: Props) => {
   const goBack = () => {
     navigation.goBack();
   };
+  console.log('pg', DataPointsList);
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
