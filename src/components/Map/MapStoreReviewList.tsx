@@ -15,9 +15,16 @@ type props = {
   isReview: boolean;
   setIsReview: React.Dispatch<React.SetStateAction<boolean>>;
   offset: Animated.Value;
+  reviewCount?: number;
 };
 
-export const MapStoreReviewList = ({storeData, isReview, setIsReview, offset}: props) => {
+export const MapStoreReviewList = ({
+  storeData,
+  isReview,
+  setIsReview,
+  offset,
+  reviewCount,
+}: props) => {
   const [photoModal, setPhotoModal] = useState(false);
   const [reviewPhoto, setReviewPhoto] = useState<{uri: string}>({uri: 'string'});
   const openPhotoModal = (imageSource: string) => {
@@ -70,6 +77,7 @@ export const MapStoreReviewList = ({storeData, isReview, setIsReview, offset}: p
               toggleReview={() => setIsReview(true)}
               togglePhoto={() => setIsReview(false)}
               isReview={isReview}
+              reviewCount={reviewCount}
             />
           </View>
         </>

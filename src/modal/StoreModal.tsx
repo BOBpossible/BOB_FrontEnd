@@ -75,6 +75,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
             isReview={isReview}
             setIsReview={setIsReview}
             offset={offset1}
+            reviewCount={storeData.data?.reviewCount}
           />
         ) : (
           <MapStoreReviewPhoto
@@ -82,6 +83,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
             isReview={isReview}
             setIsReview={setIsReview}
             offset={offset1}
+            reviewCount={storeData.data?.reviewCount}
           />
         )}
         {isReview && (
