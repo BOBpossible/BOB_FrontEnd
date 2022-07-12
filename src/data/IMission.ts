@@ -8,11 +8,11 @@ export type IMissionsProgress = {
   storeName: string;
 };
 export type IMissionCardProps = {
-  mission: string;
+  mission?: string;
   missionId?: number;
-  point: number;
-  storeCategory: string;
-  storeName: string;
+  point?: number;
+  storeCategory?: string;
+  storeName?: string;
   missionStatus?: string; //"NEW","PROGRESS","OWNER_CHECK"
   onPressRequestBtn: () => void;
 };

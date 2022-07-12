@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {View, StyleSheet, Text, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomSheet, {
@@ -17,6 +17,8 @@ import {IgetUsersMe, IStoreMap} from '../data';
 import {getAddress, getStoreList, getUserInfo} from '../api';
 import {queryKey} from '../api/queryKey';
 import {IAddress} from '../data/Common';
+import {ConnectionError} from '../components/ConnectionError';
+import WebView from 'react-native-webview';
 
 const Map = () => {
   const height = Dimensions.get('screen').height;
@@ -25,8 +27,8 @@ const Map = () => {
   const [addressModal, setAddressModal] = useState(false);
   const [storeModal, setStoreModal] = useState(false);
   const [storeId, setStoreId] = useState(0);
-  const [noMission, setNoMission] = useState(false);
   //미션개수 연동 후 삭제
+  const webviewRef = useRef<WebView | null>(null);
 
   const DataUser = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
   const userId = DataUser.data?.userId;
@@ -39,11 +41,17 @@ const Map = () => {
         console.log('가게 리스트 받기 성공: ', data);
       },
       onError(err) {
-        setNoMission(true);
         console.log('가게 리스트 받기 실패: ', err);
       },
     },
   );
+
+  const Address = useQuery<IAddress>(queryKey.ADDRESS, getAddress);
+  if (Address.isSuccess) {
+    if (webviewRef.current !== null) {
+      webviewRef.current.reload();
+    }
+  }
 
   const sortList = (data?: IStoreMap[]) => {
     data?.sort(function (a, b) {
@@ -52,7 +60,6 @@ const Map = () => {
     return data;
   };
 
-  const Address = useQuery<IAddress>(queryKey.ADDRESS, getAddress);
   const getRandom = () => Math.floor(Math.random() * (2 - 0)); //0 or 1
   const openRestaurantModal = async (id: number) => {
     await setStoreId(id);
@@ -62,6 +69,11 @@ const Map = () => {
     (props: any) => <BottomSheetBackdrop {...props} disappearsOnIndex={0} appearsOnIndex={1} />,
     [],
   );
+
+  if (DataUser.isError || StoreList.isError) {
+    return <ConnectionError refetch={DataUser.refetch} />;
+  }
+
   return (
     <SafeAreaView style={[styles.flex]}>
       <AddressSearchModal visible={addressModal} closeAddressModal={() => setAddressModal(false)} />
@@ -78,18 +90,19 @@ const Map = () => {
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
       </View>
-      <MapWebview userId={DataUser.data?.userId} />
+      <MapWebview userId={DataUser.data?.userId} webviewRef={webviewRef} />
 
       <BottomSheet
         snapPoints={[55, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
         backdropComponent={renderBackdrop}
+        style={{zIndex: 10}}
       >
         <BottomSheetView style={[styles.missionListTextWrap]}>
           <Text style={[DesignSystem.title3SB, {color: '#111111'}]}>내 주변 가게</Text>
         </BottomSheetView>
 
-        {DataUser.isError ? (
+        {StoreList.data?.length === 0 ? (
           <View style={[DesignSystem.centerArrange, {flex: 1, marginBottom: 50}]}>
             <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2}]}>
               주변에 미션이 없어요🥺
