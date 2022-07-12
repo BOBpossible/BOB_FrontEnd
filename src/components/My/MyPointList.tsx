@@ -15,7 +15,6 @@ export const MyPointList: FC<MyPointListProps> = ({date, title, subTitle, point}
   const formatDate = new moment(date.slice(0,10), 'YYYY-MM-DD').format('YYMMDD');
   const month = formatDate.slice(2,3) === '0' ? formatDate.slice(3,4) : formatDate.slice(2,4);
   const day = formatDate.slice(4,5) === '0' ? formatDate.slice(5,6) : formatDate.slice(4,6);
-
   return (
     <View style={[styles.listWrap]}>
         <View style={[styles.listDayWrap]}>
@@ -37,6 +36,7 @@ export const MyPointList: FC<MyPointListProps> = ({date, title, subTitle, point}
 const styles = StyleSheet.create({
   listWrap: {
     flexDirection: 'row',
+    marginBottom: 32, //
   },
   listDayWrap: {
     marginRight: 16,

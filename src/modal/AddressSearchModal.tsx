@@ -6,6 +6,10 @@ import Postcode from '@actbase/react-daum-postcode';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {RegisterInterface} from '../data';
 import {kakaoGeocoder} from '../api/kakaoGeocoder';
+import {useMutation, useQueryClient} from 'react-query';
+import {patchAddress} from '../api';
+import {queryKey} from '../api/queryKey';
+import {IAddress} from '../data/Common';
 
 type AddressSearchModalProps = {
   visible: boolean;
@@ -24,8 +28,17 @@ const AddressSearchModal: FC<AddressSearchModalProps> = ({
   setRegisterData,
   registerData,
 }) => {
+  const queryClient = useQueryClient();
   const insets = useSafeAreaInsets();
-
+  const addressMutation = useMutation((address: IAddress) => patchAddress(address), {
+    onSuccess: (data) => {
+      console.log('주소 변경 성공: ', data);
+      queryClient.invalidateQueries(queryKey.ADDRESS);
+    },
+    onError: (err) => {
+      console.log('주소 변경 실패: ', err);
+    },
+  });
   return (
     <Modal visible={visible} animationType="slide">
       <SafeAreaView style={{flex: 1}}>
@@ -43,22 +56,30 @@ const AddressSearchModal: FC<AddressSearchModalProps> = ({
           onSelected={async (data) => {
             const coordiate = await kakaoGeocoder(data.address);
             if (coordiate !== undefined) {
-              setRegisterData({
-                ...registerData,
-                addressStreet: data.address,
-                addressDong: data.bname,
-                x: coordiate.x,
-                y: coordiate.y,
-              });
+              if (registerData !== undefined && setRegisterData !== undefined) {
+                setRegisterData({
+                  ...registerData,
+                  addressStreet: data.address,
+                  addressDong: data.bname,
+                  x: coordiate.x,
+                  y: coordiate.y,
+                });
+              } else {
+                addressMutation.mutate({addressStreet: data.address, addressDong: data.bname});
+              }
             } else {
               //오류, 좌표 설정 실패
-              setRegisterData({
-                ...registerData,
-                addressStreet: data.address,
-                addressDong: data.bname,
-                x: '0',
-                y: '0',
-              });
+              if (registerData !== undefined && setRegisterData !== undefined) {
+                setRegisterData({
+                  ...registerData,
+                  addressStreet: data.address,
+                  addressDong: data.bname,
+                  x: '0',
+                  y: '0',
+                });
+              } else {
+                addressMutation.mutate({addressStreet: data.address, addressDong: data.bname});
+              }
             }
 
             if (onChange !== undefined) {

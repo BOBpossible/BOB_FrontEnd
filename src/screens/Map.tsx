@@ -1,41 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {View, StyleSheet, Text, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
-import BottomSheet, {BottomSheetFlatList, BottomSheetView} from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetFlatList,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AddressSearchModal from '../modal/AddressSearchModal';
 import StoreModal from '../modal/StoreModal';
 import {MapWebview} from '../modal/MapWebview';
-import {MapStoreBottomSheet} from '../components/MapStoreBottomSheet';
+import {MapStoreBottomSheet} from '../components/Map/MapStoreBottomSheet';
 import {DesignSystem} from '../assets/DesignSystem';
-import DoneModal from '../modal/DoneModal';
-
-const dummyMission = [
-  {
-    storeId: 0,
-    name: '반이학생마라탕',
-    distance: 1000,
-    category: '중식당',
-    point: 500,
-    image: {uri: 'https://source.unsplash.com/1024x768/?food'},
-  },
-  {
-    storeId: 0,
-    name: '반이학생마라탕',
-    distance: 1000,
-    category: '중식당',
-    point: 500,
-    image: {uri: 'https://source.unsplash.com/1024x768/?food'},
-  },
-  {
-    storeId: 0,
-    name: '반이학생마라탕',
-    distance: 1000,
-    category: '중식당',
-    point: 500,
-    image: {uri: 'https://source.unsplash.com/1024x768/?food'},
-  },
-];
+import {useQuery} from 'react-query';
+import {IgetUsersMe, IStoreMap} from '../data';
+import {getAddress, getStoreList, getUserInfo} from '../api';
+import {queryKey} from '../api/queryKey';
+import {IAddress} from '../data/Common';
 
 const Map = () => {
   const height = Dimensions.get('screen').height;
@@ -43,16 +24,43 @@ const Map = () => {
   const listSnapPoint = height - insets.top - 150;
   const [addressModal, setAddressModal] = useState(false);
   const [storeModal, setStoreModal] = useState(false);
-  const [doneModal, setDoneModal] = useState(false);
   const [storeId, setStoreId] = useState(0);
   const [noMission, setNoMission] = useState(false);
   //미션개수 연동 후 삭제
 
+  const DataUser = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
+  const userId = DataUser.data?.userId;
+  const StoreList = useQuery<IStoreMap[]>(
+    [queryKey.STORELIST, userId],
+    () => getStoreList(userId),
+    {
+      enabled: !!userId,
+      onSuccess(data) {
+        console.log('가게 리스트 받기 성공: ', data);
+      },
+      onError(err) {
+        console.log('가게 리스트 받기 실패: ', err);
+      },
+    },
+  );
+
+  const sortList = (data?: IStoreMap[]) => {
+    data?.sort(function (a, b) {
+      return Number(b.mission) - Number(a.mission);
+    });
+    return data;
+  };
+
+  const Address = useQuery<IAddress>(queryKey.ADDRESS, getAddress);
   const getRandom = () => Math.floor(Math.random() * (2 - 0)); //0 or 1
   const openRestaurantModal = async (id: number) => {
     await setStoreId(id);
     setStoreModal(true);
   };
+  const renderBackdrop = useCallback(
+    (props: any) => <BottomSheetBackdrop {...props} disappearsOnIndex={0} appearsOnIndex={1} />,
+    [],
+  );
   return (
     <SafeAreaView style={[styles.flex]}>
       <AddressSearchModal visible={addressModal} closeAddressModal={() => setAddressModal(false)} />
@@ -60,33 +68,35 @@ const Map = () => {
         visible={storeModal}
         closeStoreModal={() => setStoreModal(false)}
         storeId={storeId}
-        openDoneModal={() => setDoneModal(true)}
       />
-      <DoneModal
-        visible={doneModal}
-        closeDoneModal={() => setDoneModal(false)}
-        category={'리뷰'}
-        point={100} //서버 받아서 수정 ---------------------------------------------!
-      />
+
       <View style={[styles.headerWrap]}>
-        <TouchableOpacity style={[styles.header]} onPress={() => setAddressModal(true)}>
-          <Text style={[DesignSystem.h2SB, {color: 'black', marginRight: 11}]}>삼성동</Text>
+        <TouchableOpacity onPress={() => setAddressModal(true)} style={[styles.header]}>
+          <Text style={[DesignSystem.h2SB, {color: 'black', marginRight: 11}]}>
+            {Address.data?.addressDong}
+          </Text>
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
       </View>
-      <MapWebview />
+      <MapWebview userId={DataUser.data?.userId} />
+
       <BottomSheet
         snapPoints={[55, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
+        backdropComponent={renderBackdrop}
       >
         <BottomSheetView style={[styles.missionListTextWrap]}>
-          <Text style={[DesignSystem.title3SB, {color: '#111111'}]}>이번주 미션</Text>
+          <Text style={[DesignSystem.title3SB, {color: '#111111'}]}>내 주변 가게</Text>
         </BottomSheetView>
 
         {noMission ? (
           <View style={[DesignSystem.centerArrange, {flex: 1, marginBottom: 50}]}>
-            <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2}]}>주변에 미션이 없어요🥺</Text>
-            <Text style={[DesignSystem.body1Lt, {color: '#949494', marginBottom: 38}]}>빠른 시일내에 미션을 업데이트 할게요!</Text>
+            <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2}]}>
+              주변에 미션이 없어요🥺
+            </Text>
+            <Text style={[DesignSystem.body1Lt, {color: '#949494', marginBottom: 38}]}>
+              빠른 시일내에 미션을 업데이트 할게요!
+            </Text>
             {getRandom() ? (
               <Image source={require('../assets/images/noMission/cryingBob.png')} />
             ) : (
@@ -96,7 +106,7 @@ const Map = () => {
         ) : (
           <BottomSheetFlatList
             showsVerticalScrollIndicator={false}
-            data={dummyMission}
+            data={sortList(StoreList.data)}
             renderItem={({item, index}) => (
               <TouchableOpacity onPress={() => openRestaurantModal(item.storeId)} key={index}>
                 <MapStoreBottomSheet
@@ -104,7 +114,8 @@ const Map = () => {
                   storeCategory={item.category}
                   point={item.point}
                   distance={item.distance}
-                  image={item.image}
+                  image={item.imageUrl}
+                  mission={item.mission}
                 />
               </TouchableOpacity>
             )}
@@ -119,10 +130,10 @@ const Map = () => {
 const styles = StyleSheet.create({
   flex: {flex: 1, backgroundColor: '#FFFFFF'},
   headerWrap: {
-    width: '100%',
     borderBottomColor: '#DFDFDF',
     borderBottomWidth: 1,
     height: 50,
+    width: '100%',
     justifyContent: 'center',
   },
   header: {
@@ -130,6 +141,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 16,
     flexDirection: 'row',
+    width: 100,
   },
   missionListTextWrap: {
     marginLeft: 16,

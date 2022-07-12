@@ -6,23 +6,19 @@ import {HomeMissionCard} from '../../components/Home/HomeMissionCard';
 import {AnimatedHeader, HomeMissionListHeader} from '../../components';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
-import {customAxios} from '../../api/customAxios';
 import {useQuery} from 'react-query';
-import {AxiosError} from 'axios';
 import {ConnectionError} from '../../components/ConnectionError';
-import {IHomeData} from '../../data';
+import {IHomeData, IMissionsProgress} from '../../data';
 import {queryKey} from '../../api/queryKey';
 import {HomeNoMission} from '../../components/Home/HomeNoMission';
+import {getHomeInfo} from '../../api';
+import {getMissionsProgress} from '../../api/mission';
 
 const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
 
-  const getHomeInfo = async () => {
-    const response = await customAxios().get('/api/v1/missions/me');
-    return response.data.result;
-  };
-  const homeData = useQuery<IHomeData, AxiosError>(queryKey.HOMEDATA, getHomeInfo, {
+  const homeData = useQuery<IHomeData>(queryKey.HOMEDATA, getHomeInfo, {
     onError: (err) => {
       console.log(err);
     },
@@ -31,14 +27,11 @@ const Main = () => {
     },
   });
 
-  //밑에 주석된 코드는 mission.tsx에서 쓰면 user 정보를 캐싱하기에 나중에 옮길것!
+  const DataMissionsProgress = useQuery<IMissionsProgress[]>(
+    queryKey.MISSIONSPROGRESS,
+    getMissionsProgress,
+  );
 
-  // const getUserInfo = async () => {
-  //   const {data} = await customAxios(token).get('/api/v1/users/me');
-  //   return data;
-  // };
-
-  // const {data, isSuccess, isError, error} = useQuery(['userInfo', token], getUserInfo);
   if (homeData.isError) {
     console.log('Home Error', homeData.error);
     return <ConnectionError refetch={homeData.refetch} />;
@@ -50,10 +43,16 @@ const Main = () => {
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <ActivityIndicator />
         </View>
+      ) : homeData.data?.missions === null ? (
+        <>
+          <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
+          <HomeNoMission />
+        </>
       ) : (
         <>
           <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
           <Animated.FlatList
+            style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={[styles.missionListContainer]}
             scrollEventThrottle={10}
@@ -65,7 +64,8 @@ const Main = () => {
                 category={item.storeCategory}
                 mission={item.mission}
                 point={item.point}
-                status={false}
+                status={item.missionStatus}
+                challengeStatus={DataMissionsProgress.data?.length !== 0}
               />
             )}
             keyExtractor={(item, index) => index.toString()}

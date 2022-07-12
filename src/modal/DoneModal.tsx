@@ -1,20 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import type {FC} from 'react';
-import {
-  Modal,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Platform,
-} from 'react-native';
+import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {ReviewRate} from '../components/ReviewRate';
-import {ReviewWrite} from '../components/ReviewWrite';
-import axios from 'axios';
-import {useRecoilValue} from 'recoil';
-import {userToken} from '../state';
 import {DesignSystem} from '../assets/DesignSystem';
 
 type DoneModalProps = {
@@ -25,8 +12,6 @@ type DoneModalProps = {
 };
 
 const DoneModal: FC<DoneModalProps> = ({visible, closeDoneModal, category, point}) => {
-  const token = useRecoilValue(userToken);
-
   return (
     <Modal visible={visible} animationType="fade">
       <View style={[styles.flex]}>
@@ -96,7 +81,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 });
-
 
 // import {NativeStackScreenProps} from '@react-navigation/native-stack';
 // import React, {FC, useEffect, useState} from 'react';

@@ -12,10 +12,12 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ReviewRate} from '../components/ReviewRate';
 import {ReviewWrite} from '../components/ReviewWrite';
-import axios from 'axios';
-import {useRecoilValue} from 'recoil';
-import {userToken} from '../state';
 import {DesignSystem} from '../assets/DesignSystem';
+import DoneModal from './DoneModal';
+import {getStores, postReview, postReviewImages} from '../api';
+import {queryKey} from '../api/queryKey';
+import {useMutation, useQuery, useQueryClient} from 'react-query';
+import {IStoreInfo} from '../data/IStore';
 
 type ReviewModalProps = {
   storeId: number;
@@ -29,63 +31,54 @@ type imageData = {
   name: string;
 };
 
-const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, openDoneModal}) => {
+const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId}) => {
   const [rating, setRating] = useState(0);
   const [showRating, setShowRating] = useState(true);
   const [reviewContent, setReviewContent] = useState('');
   const [imageUri, setImageUri] = useState<imageData[]>([]);
-  const token = useRecoilValue(userToken);
-  const headers = {Authorization: `Bearer ${token}`};
+  const [doneModal, setDoneModal] = useState(false);
 
-  const postReviewContent = async () => {
-    const data = {storeId: storeId, rate: rating, content: reviewContent};
-    try {
-      const response = await axios.post('https://bobpossible.shop/api/v1/reviews/me', data, {
-        headers: headers,
-      });
-      console.log('review register:', response.data);
-      return response.data.result;
-    } catch (error) {
-      console.log('review register:', error);
-    }
-  };
+  const queryClient = useQueryClient();
 
-  const postReviewImages = async (reviewResponse: Promise<any>) => {
-    var formdata = new FormData();
-    imageUri.map((image) => {
-      let photo;
-      Platform.OS === 'ios'
-        ? (photo = {
-            uri: image.uri.replace('file://', ''),
-            type: 'image/jpg',
-            name: 'image',
-          })
-        : (photo = {
-            uri: image.uri,
-            type: 'image/jpeg',
-            name: 'image',
-          });
-      formdata.append('reviewImage', photo);
-      console.log(photo);
-    });
-    try {
-      const response = await fetch('https://bobpossible.shop/api/v1/reviews/me/images/1', {
-        method: 'POST',
-        headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data'},
-        body: formdata,
-      });
-      console.log('image register:', response);
-    } catch (error) {
-      console.log('image register:', error);
-    }
-  };
+  const reviewImageMutation = useMutation(
+    (reviewId: number) => postReviewImages(imageUri, reviewId),
+    {
+      onSuccess(data) {
+        console.log(data);
+        queryClient.invalidateQueries(queryKey.STOREINFO);
+      },
+      onError(err) {
+        console.log(err);
+      },
+    },
+  );
+
+  const reviewMutation = useMutation(
+    (data: {storeId: number; content: string; rate: number}) => postReview(data),
+    {
+      onSuccess(data) {
+        console.log(data);
+        if (imageUri.length !== 0) {
+          reviewImageMutation.mutate(data.result);
+        } else {
+          queryClient.invalidateQueries(queryKey.STOREINFO);
+        }
+      },
+    },
+  );
+
+  const DataStores = useQuery<IStoreInfo>(queryKey.STOREINFO, () => getStores(storeId));
 
   const submitReview = async () => {
-    const reviewResponse = postReviewContent();
-    postReviewImages(reviewResponse);
+    await reviewMutation.mutate({storeId: storeId, content: reviewContent, rate: rating});
+    setDoneModal(true); //던모달 열기
+  };
+  const handleCloseAllModal = () => {
+    setShowRating(true);
+    setRating(0);
+    setReviewContent('');
+    setDoneModal(false);
     closeReviewModal();
-    //던모달 열기
-    openDoneModal();
   };
   return (
     <Modal visible={visible} animationType="fade">
@@ -107,7 +100,9 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
           {!showRating && (
             <>
               <View>
-                <Text style={[DesignSystem.title4Md, {color: '#000000'}]}>반이학생마라탕</Text>
+                <Text style={[DesignSystem.title4Md, {color: '#000000'}]}>
+                  {DataStores.data !== undefined && DataStores.data?.name}
+                </Text>
               </View>
               <View style={[styles.backButton, {opacity: 0}]}>
                 <Icon name="arrow-left" size={24} color="black" />
@@ -115,24 +110,33 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
             </>
           )}
         </View>
-        {showRating ? (
-          <ReviewRate
-            name={'마라탕'}
-            rating={rating}
-            setRating={setRating}
-            storeId={storeId}
-            goNext={() => setShowRating(false)}
-          />
-        ) : (
-          <ReviewWrite
-            name={'마라탕'}
-            submitReview={submitReview}
-            setRating={setRating}
-            rating={rating}
-            imageUri={imageUri}
-            setImageUri={setImageUri}
-            reviewContent={reviewContent}
-            setReviewContent={setReviewContent}
+        {DataStores.data !== undefined &&
+          (showRating ? (
+            <ReviewRate
+              name={DataStores.data?.name}
+              rating={rating}
+              setRating={setRating}
+              storeId={storeId}
+              goNext={() => setShowRating(false)}
+            />
+          ) : (
+            <ReviewWrite
+              name={DataStores.data?.name}
+              submitReview={submitReview}
+              setRating={setRating}
+              rating={rating}
+              imageUri={imageUri}
+              setImageUri={setImageUri}
+              reviewContent={reviewContent}
+              setReviewContent={setReviewContent}
+            />
+          ))}
+        {DataStores.data !== undefined && (
+          <DoneModal
+            visible={doneModal}
+            closeDoneModal={handleCloseAllModal}
+            category={'리뷰'}
+            point={DataStores.data?.point}
           />
         )}
       </SafeAreaView>

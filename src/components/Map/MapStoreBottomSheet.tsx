@@ -1,6 +1,6 @@
 import React from 'react';
 import type {FC} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 
@@ -9,14 +9,15 @@ export type MapStoreBottomSheetProps = {
   storeCategory: string;
   point: number;
   distance: number;
-  image: {uri: string};
+  image: string;
+  mission: boolean;
 };
 
 const convertDistance = (distance: number) => {
   if (distance >= 1000) {
-    return `${distance / 1000}km`;
+    return `${(distance / 1000).toFixed(1)}km`;
   } else {
-    return `${distance}m`;
+    return `${Math.round(distance)}m`;
   }
 };
 
@@ -26,22 +27,26 @@ export const MapStoreBottomSheet: FC<MapStoreBottomSheetProps> = ({
   point,
   distance,
   image,
+  mission,
 }) => {
   return (
     <View>
-      <FastImage source={image} style={{height: 220}} />
+      <FastImage source={{uri: image}} style={{height: 220}} />
       <View style={[styles.storeInfoWrap]}>
         <View style={[styles.flexRow, {justifyContent: 'space-between', marginBottom: 8}]}>
-          <View
-            style={{
-              backgroundColor: '#6C69FF',
-              paddingHorizontal: 6,
-              paddingVertical: 4,
-              borderRadius: 10,
-            }}
-          >
-            <Text style={[styles.storePoint]}>{point} P</Text>
-          </View>
+          {mission && (
+            <View
+              style={{
+                backgroundColor: '#6C69FF',
+                paddingHorizontal: 6,
+                paddingVertical: 4,
+                borderRadius: 10,
+              }}
+            >
+              <Text style={[styles.storePoint]}>{point} P</Text>
+            </View>
+          )}
+
           <View
             style={{
               flexDirection: 'row',

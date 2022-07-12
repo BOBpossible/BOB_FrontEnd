@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MyUser} from '../../components/My/MyUser';
@@ -9,28 +9,17 @@ import {
 } from 'react-native-responsive-screen';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {calHeight} from '../../assets/CalculateLength';
-import {userToken} from '../../state';
-import {useRecoilValue} from 'recoil';
 import {customAxios} from '../../api/customAxios';
 import {useQuery} from 'react-query';
-import {AxiosError} from 'axios';
-
-export type MyPageData = {
-  authentication: boolean;
-  email: string;
-  name: string;
-  point: number;
-};
+import {IgetUsersMe} from '../../data';
 
 const MyPage = () => {
   const navigation = useNavigation();
-  const token = useRecoilValue(userToken);
   const getUserInfo = async () => {
-    const {data} = await customAxios(token).get('/api/v1/users/me');
+    const {data} = await customAxios().get('/api/v1/users/me');
     return data.result;
   };
-  const {data, isSuccess, isError, error} = useQuery<MyPageData>(['userInfo', token], getUserInfo);
-  console.log('ssssssssss', data);
+  const {data, isSuccess, isError, error} = useQuery<IgetUsersMe>('userInfo', getUserInfo);
   // data.point 로 접근
   const storeData = async (value: string) => {
     try {

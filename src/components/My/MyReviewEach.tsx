@@ -3,27 +3,10 @@ import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-export type ReviewImagesType = {
-  imageUrl: string;
-};
-export type ReviewReplyType = {
-  date: string;
-  reply: string;
-  reviewReplyId: number;
-};
-export type MyReviewEachProps = {
-  content: string;
-  date: string;
-  images: ReviewImagesType[];
-  name: string;
-  rate: number;
-  reply: ReviewReplyType[];
-  reviewId: number;
-};
+import {IMyReviewEachProps} from '../../data';
 
 //prettier-ignore
-export const MyReviewEach: FC<MyReviewEachProps> = ({name, date, rate, content, images, reply, reviewId}) => {
+export const MyReviewEach: FC<IMyReviewEachProps> = ({name, date, rate, content, images, reply, reviewId}) => {
   return (
     <View style={{backgroundColor: 'white'}}>
       <View style={[styles.totalWrap]}>
@@ -38,7 +21,7 @@ export const MyReviewEach: FC<MyReviewEachProps> = ({name, date, rate, content, 
                 </TouchableOpacity>
             </View>
             <View style={[styles.stars]}>
-            {[...Array(Number(rate.toFixed()))].map((e, i) => (
+            {[...Array(rate)].map((e, i) => (
               <View key={i}>
                 <Icon name="star" size={18} color={'#FFDE69'} />
               </View>
@@ -47,15 +30,12 @@ export const MyReviewEach: FC<MyReviewEachProps> = ({name, date, rate, content, 
             <View style={[styles.reviewContents]}>
                 <Text style={[DesignSystem.body1Lt, {color: 'black'}]}>{content}</Text>
             </View>
-            {images.length !== 0 && (
-              <View style={[styles.reviewImg]}>
-                <Text>🚨🚨🚨🚨🚨🚨🚨🚨🚨리뷰사진🚨🚨🚨🚨🚨</Text>
-                {/* images.imageUrl */}
-                {/* 이미지있으면 나타내는 로직 */}
-              </View>
-            )}
+            <View style={[styles.reviewImg]}>
+              <Text>🚨🚨🚨🚨🚨🚨🚨🚨🚨리뷰사진🚨🚨🚨🚨🚨</Text>
+              {/* images.imageUrl */}
+            </View>
         </View>
-        {reply[0] !== undefined && (
+        {reply.length !== 0 && (
           <View style={[styles.ownerWrap]}>
               <View style={[styles.ownerTitle, {alignItems: 'center'}]}>
                   <Text style={{fontFamily: 'Pretendard-Light', fontSize: 14, lineHeight: 14, color: '#7D7D7D', marginRight: 6}}>사장님 답글</Text>

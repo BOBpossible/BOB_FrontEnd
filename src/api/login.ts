@@ -33,6 +33,15 @@ export const getRegisterStatus = async () => {
     const response = await customAxios().get('/api/v1/users/me/register-status');
     return response.data.result.registerStatus;
   } catch (error) {
-    console.log('register Status', error);
+    console.log('회원가입 상태 정보 받기 실패', error);
+  }
+};
+
+export const postFcmToken = async (token: string) => {
+  try {
+    const response = await customAxios().post('/api/v1/fcm/me', token);
+    return response.data;
+  } catch (error) {
+    console.log('파이어베이스 토큰 받기 실패', error);
   }
 };

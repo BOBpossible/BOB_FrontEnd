@@ -4,56 +4,19 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
 import {MyReviewEach} from '../../components/My/MyReviewEach';
-import {customAxios} from '../../api/customAxios';
 import {useInfiniteQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
+import {getReviewsMe} from '../../api';
+import {IReviewsType} from '../../data';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyReview'>;
-export type ReviewImagesType = {
-  imageUrl: string;
-};
-export type ReviewReplyType = {
-  date: string;
-  reply: string;
-  reviewReplyId: number;
-};
-export type ReviewsType = {
-  content: string;
-  date: string;
-  images: ReviewImagesType[];
-  name: string;
-  rate: number;
-  reply: ReviewReplyType[];
-  reviewId: number;
-};
 
 export const MyReview = ({navigation}: Props) => {
-  //마이페이지 - 나의 리뷰 내역 조회
-  const getReviewsMe = async () => {
-    const response = await customAxios().get('/api/v1/reviews/me', {
-      params: {
-        pageNumber: 0,
-      },
-    });
-    return response;
-  };
-  const {isLoading, data, hasNextPage, fetchNextPage} = useInfiniteQuery(
-    queryKey.REVIEWSME,
-    getReviewsMe,
-    {
-      getNextPageParam: (lastPage, _allPages) => {
-        if (!lastPage.data.result.last) return lastPage.data.point.pageable.pageNumber + 1; //다음 페이지를 호출할 때 사용 될 pageParam
-        return undefined;
-      },
+  const DataReviews = useInfiniteQuery<IReviewsType>([queryKey.REVIEWSME], getReviewsMe, {
+    getNextPageParam: (lastPage, pages) => {
+      return pages.length;
     },
-  );
-  // console.log('받아온데이터', data?.pages[0].data.result.content);
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
+  });
   const goBack = () => {
     navigation.goBack();
   };
@@ -64,22 +27,30 @@ export const MyReview = ({navigation}: Props) => {
       <SafeAreaView style={[styles.flex]}>
         <MyHeader goBack={goBack} title={'리뷰 관리'} />
         <FlatList
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={true}
           scrollEventThrottle={10}
-          data={data?.pages[0].data.result.content}
-          onEndReached={loadMore}
-          onEndReachedThreshold={0.8}
+          data={DataReviews.data?.pages}
+          onEndReached={() => {
+            DataReviews.fetchNextPage();
+          }}
           renderItem={({item}) => (
             <>
-              <MyReviewEach
-                name={item.name}
-                date={item.date}
-                rate={item.rate}
-                content={item.content}
-                images={item.images} //더미없어서 못보냄
-                reply={item.reply}
-                reviewId={item.reviewId}
-              />
+              {/* {console.log('iiiiiiiiiiiiii', item.content)} */}
+              {item.content.map((e: any, i: number) => {
+                return (
+                  <View key={i}>
+                    <MyReviewEach
+                      name={e.name}
+                      date={e.date}
+                      rate={e.rate}
+                      content={e.content}
+                      images={e.images}
+                      reply={e.reply}
+                      reviewId={e.reviewId}
+                    />
+                  </View>
+                );
+              })}
             </>
           )}
           ItemSeparatorComponent={() => <View style={{height: 8}} />}

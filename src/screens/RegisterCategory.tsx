@@ -7,7 +7,6 @@ import {CategoryItem} from '../components/CategoryItem';
 import {RegisterInterface} from '../data';
 import {AuthStackParamList} from '../nav';
 import {customAxios} from '../api';
-import axios from 'axios';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
@@ -60,7 +59,6 @@ const RegisterCategory = ({navigation, route}: Props) => {
   const goNext = () => {
     postRegister();
     postCategories();
-    // navigation.reset({routes: [{name: 'MainNavigator'}]});
     navigation.navigate('RegisterDone');
   };
   const goBack = () => {

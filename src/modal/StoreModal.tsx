@@ -7,11 +7,9 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
-  Image,
   Animated,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Swiper from 'react-native-swiper';
 import {
   MapStoreInfo,
   MapReviewToggleButton,
@@ -20,50 +18,30 @@ import {
 } from '../components';
 import ReviewModal from './ReviewModal';
 import {useStyle} from '../hooks';
-import FastImage from 'react-native-fast-image';
+import {ImageSwiper} from '../components/Common/ImageSwiper';
+import {useInfiniteQuery, useQuery} from 'react-query';
+import {queryKey} from '../api/queryKey';
+import {getStoreData, getStoreReviewImages} from '../api/store';
+import {IStoreData} from '../data';
 
 type StoreModalProps = {
   storeId: number;
   visible: boolean;
   closeStoreModal: () => void;
-  openDoneModal: () => void;
 };
 
-const dot = () => {
-  const dotStyle = {
-    backgroundColor: '#ffffffb2',
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginLeft: 2,
-    marginRight: 2,
-    marginTop: 2,
-    marginBottom: -10,
-  };
-  return <View style={dotStyle} />;
-};
-const activeDot = () => {
-  const activeDotStyle = {
-    backgroundColor: '#6C69FF',
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginLeft: 2,
-    marginRight: 2,
-    marginTop: 2,
-    marginBottom: -10,
-  };
-  return <View style={activeDotStyle} />;
-};
-
-const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal, openDoneModal}) => {
+const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) => {
   const [isReview, setIsReview] = useState(false);
   const [reviewModal, setReviewModal] = useState(false);
   const openReviewModal = async () => {
     setReviewModal(true);
   };
-  const offset1 = useRef(new Animated.Value(0)).current;
 
+  const storeData = useQuery<IStoreData>([queryKey.STOREDATA, storeId], () =>
+    getStoreData(storeId),
+  );
+
+  const offset1 = useRef(new Animated.Value(0)).current;
   const headerTextStyle = useStyle({
     opacity: offset1.interpolate({
       inputRange: [250, 260],
@@ -83,62 +61,31 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal, ope
           </TouchableOpacity>
 
           <Animated.View style={[headerTextStyle]}>
-            <Text style={[styles.storeHeaderText]}>반이학생마라탕</Text>
+            <Text style={[styles.storeHeaderText]}>{storeData.data?.name}</Text>
           </Animated.View>
 
           <View style={[styles.backButton, {opacity: 0}]}>
             <Icon name="arrow-left" size={24} color="black" />
           </View>
         </View>
-        <Animated.ScrollView
-          stickyHeaderIndices={[1]}
-          scrollEventThrottle={10}
-          onScroll={(event) => {
-            Animated.event([{nativeEvent: {contentOffset: {y: offset1}}}], {
-              useNativeDriver: false,
-            })(event);
-          }}
-        >
-          <View>
-            <View style={{height: 220}}>
-              <Swiper dot={dot()} activeDot={activeDot()} showsButtons={false}>
-                <FastImage
-                  source={{uri: 'https://source.unsplash.com/1024x768/?nature'}}
-                  style={{width: '100%', height: 220}}
-                />
-                <FastImage
-                  source={{uri: 'https://source.unsplash.com/1024x768/?water'}}
-                  style={{width: '100%', height: 220}}
-                />
-                <FastImage
-                  source={{uri: 'https://source.unsplash.com/1024x768/?girl'}}
-                  style={{width: '100%', height: 220}}
-                />
-                <FastImage
-                  source={{uri: 'https://source.unsplash.com/1024x768/?tree'}}
-                  style={{width: '100%', height: 220}}
-                />
-              </Swiper>
-            </View>
-            <MapStoreInfo
-              storeName={'반이학생마라탕마라반'}
-              storeCategory={'중식당'}
-              storeTime={'영업종료'}
-              storeRate={4.4}
-              storeAddress={'서울시 성북구 안암동5가 102-60'}
-            />
-            <View style={{backgroundColor: '#F6F6FA', height: 8}} />
-          </View>
 
-          <View style={[styles.reviewToggleWrap]}>
-            <MapReviewToggleButton
-              toggleReview={() => setIsReview(true)}
-              togglePhoto={() => setIsReview(false)}
-              isReview={isReview}
-            />
-          </View>
-          {isReview ? <MapStoreReviewList /> : <MapStoreReviewPhoto />}
-        </Animated.ScrollView>
+        {isReview ? (
+          <MapStoreReviewList
+            storeData={storeData.data}
+            isReview={isReview}
+            setIsReview={setIsReview}
+            offset={offset1}
+            reviewCount={storeData.data?.reviewCount}
+          />
+        ) : (
+          <MapStoreReviewPhoto
+            storeData={storeData.data}
+            isReview={isReview}
+            setIsReview={setIsReview}
+            offset={offset1}
+            reviewCount={storeData.data?.reviewCount}
+          />
+        )}
         {isReview && (
           <TouchableOpacity onPress={() => openReviewModal()}>
             <View style={[styles.reviewButton]}>
@@ -151,7 +98,6 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal, ope
           visible={reviewModal}
           closeReviewModal={() => setReviewModal(false)}
           storeId={storeId}
-          openDoneModal={openDoneModal}
         />
       </SafeAreaView>
     </Modal>
