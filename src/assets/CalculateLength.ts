@@ -3,7 +3,10 @@ export const calWidth = (width: number) => {
   return calculatedWidth;
 };
 
-export const calHeight = (height: number) => {
-  const calculatedHeight = (height / 734) * 100;
-  return calculatedHeight;
+export const calHeight = (height: number, ios?: boolean) => {
+  if (ios !== undefined && ios) {
+    return (height / 812) * 100;
+  } else {
+    return (height / 734) * 100;
+  }
 };

@@ -6,7 +6,7 @@ import StoreModal from './StoreModal';
 type MapWebviewProps = {
   missionId?: number;
   userId?: number;
-  webviewRef: React.MutableRefObject<WebView<{}> | null>;
+  webviewRef?: React.MutableRefObject<WebView<{}> | null>;
 };
 
 export const MapWebview: FC<MapWebviewProps> = ({missionId, userId, webviewRef}) => {

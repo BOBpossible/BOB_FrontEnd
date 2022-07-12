@@ -23,7 +23,7 @@ const HEADER_HEIGHT = Platform.OS === 'ios' ? hp(25.8) : hp(28.6);
 type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
   paddingTop: number;
-  data?: IHomeData;
+  data: IHomeData;
 };
 
 export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop, data}) => {
@@ -162,7 +162,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
       <TouchableOpacity
         style={[{position: 'absolute', top: 50 + paddingTop, right: 20}]}
         onPress={() => {
-          navigation.navigate('HowTo1');
+          navigation.navigate('HowToLong');
         }}
       >
         <Animated.View style={[howtoAnimStyle, styles.flexRow]}>

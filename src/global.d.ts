@@ -10,7 +10,7 @@ declare namespace ReactNavigation {
     HomeMissionDetails: {missionId: number};
     Mission: {missionId: number};
     Notifications: {userId: number};
-    HowTo1: undefined;
+    HowToLong: undefined;
     AuthNavigator: undefined;
     Main: undefined;
   }
