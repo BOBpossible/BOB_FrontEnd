@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
@@ -8,10 +8,17 @@ import {useInfiniteQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
 import {getReviewsMe} from '../../api';
 import {IReviewsType} from '../../data';
+import { PhotoModal } from '../../modal';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyReview'>;
 
 export const MyReview = ({navigation}: Props) => {
+  const [photoModal, setPhotoModal] = useState(false);
+  const [reviewPhoto, setReviewPhoto] = useState<{uri: string}>({uri: 'string'});
+  const openPhotoModal = (imageSource: string) => {
+    setReviewPhoto({uri: imageSource});
+    setPhotoModal(true);
+  };
   const DataReviews = useInfiniteQuery<IReviewsType>([queryKey.REVIEWSME], getReviewsMe, {
     getNextPageParam: (lastPage, pages) => {
       return pages.length;
@@ -31,7 +38,9 @@ export const MyReview = ({navigation}: Props) => {
           scrollEventThrottle={10}
           data={DataReviews.data?.pages}
           onEndReached={() => {
-            DataReviews.fetchNextPage();
+            if (DataReviews.hasNextPage) {
+              DataReviews.fetchNextPage();
+            }
           }}
           renderItem={({item}) => (
             <>
@@ -46,14 +55,18 @@ export const MyReview = ({navigation}: Props) => {
                       content={e.content}
                       images={e.images}
                       reply={e.reply}
-                      reviewId={e.reviewId}
+                      openPhotoModal={openPhotoModal}
                     />
                   </View>
                 );
               })}
             </>
           )}
-          ItemSeparatorComponent={() => <View style={{height: 8}} />}
+        />
+        <PhotoModal
+          imageUri={reviewPhoto}
+          visible={photoModal}
+          closePhotoModal={() => setPhotoModal(false)}
         />
       </SafeAreaView>
     </>

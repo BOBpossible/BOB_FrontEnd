@@ -37,7 +37,7 @@ export const MapStoreReviewList = ({
     ({pageParam}) => getStoreReviewList({pageParam}, storeData?.storeId),
     {
       getNextPageParam: (lastPage, pages) => {
-        console.log('페이지들:', pages.length);
+        // console.log('페이지들:', pages.length);
         if (lastPage.data.result.last === false) {
           return pages.length + 1;
         } else {

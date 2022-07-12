@@ -44,7 +44,7 @@ export const MapStoreReviewPhoto = ({
     ({pageParam}) => getStoreReviewImages({pageParam}, storeData?.storeId),
     {
       getNextPageParam: (lastPage, pages) => {
-        console.log('페이지들:', pages.length);
+        // console.log('페이지들:', pages.length);
         if (lastPage.data.result.last === false) {
           return pages.length + 1;
         } else {
@@ -98,8 +98,8 @@ export const MapStoreReviewPhoto = ({
       renderItem={({item}) => {
         return (
           <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-            {item.data.result.content.map((image: any) => (
-              <TouchableOpacity onPress={() => openPhotoModal(image.imageUrl)}>
+            {item.data.result.content.map((image: any, index: number) => (
+              <TouchableOpacity key={index} onPress={() => openPhotoModal(image.imageUrl)}>
                 <View style={{borderColor: '#FFFFFF', borderWidth: 1}}>
                   <FastImage
                     source={{uri: image.imageUrl}}

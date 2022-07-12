@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Image, StyleSheet, Text, TextInput, View, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
 
@@ -19,39 +20,41 @@ export const MyWriteInquiry = () => {
           style={[{flex: 1}]}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-          <View style={[styles.titleWrap]}>
-            <TextInput
-              style={[styles.nameInput, focusedTitle ? styles.focusBorder : styles.unfocusBorder]}
-              onChangeText={(text) => {
-                setTitle(text);
-              }}
-              value={title}
-              placeholder="문의 제목 입력"
-              selectionColor={'#6C69FF'}
-              onBlur={() => setFocusedTitle(false)}
-              onFocus={() => setFocusedTitle(true)}
-            />
-            <TouchableOpacity onPress={() => setTitle('')} style={[styles.titleXView]}>
-              <Image
-                source={require('../../assets/images/closeCircle.png')}
-                style={[styles.titleX]}
+          <ScrollView scrollEnabled={false}>
+            <View style={[styles.titleWrap]}>
+              <TextInput
+                style={[styles.nameInput, focusedTitle ? styles.focusBorder : styles.unfocusBorder]}
+                onChangeText={(text) => {
+                  setTitle(text);
+                }}
+                value={title}
+                placeholder="문의 제목 입력"
+                selectionColor={'#6C69FF'}
+                onBlur={() => setFocusedTitle(false)}
+                onFocus={() => setFocusedTitle(true)}
               />
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.bodyWrap]}>
-            <TextInput
-              style={[styles.bodyInput]}
-              onChangeText={(text) => {
-                setBody(text);
-              }}
-              value={body}
-              placeholder="문의 내용 작성"
-              multiline={true}
-              selectionColor={'#6C69FF'}
-              onBlur={() => setFocusedBody(false)}
-              onFocus={() => setFocusedBody(true)}
-            />
-          </View>
+              <TouchableOpacity onPress={() => setTitle('')} style={[styles.titleXView]}>
+                <Image
+                  source={require('../../assets/images/closeCircle.png')}
+                  style={[styles.titleX]}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={[styles.bodyWrap]}>
+              <TextInput
+                style={[styles.bodyInput]}
+                onChangeText={(text) => {
+                  setBody(text);
+                }}
+                value={body}
+                placeholder="문의 내용 작성"
+                multiline={true}
+                selectionColor={'#6C69FF'}
+                onBlur={() => setFocusedBody(false)}
+                onFocus={() => setFocusedBody(true)}
+              />
+            </View>
+          </ScrollView>
         </KeyboardAvoidingView>
         <TouchableOpacity
           onPress={handleSubmit}

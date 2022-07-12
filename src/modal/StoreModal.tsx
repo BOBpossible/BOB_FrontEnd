@@ -10,18 +10,12 @@ import {
   Animated,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {
-  MapStoreInfo,
-  MapReviewToggleButton,
-  MapStoreReviewList,
-  MapStoreReviewPhoto,
-} from '../components';
+import {MapStoreReviewList, MapStoreReviewPhoto} from '../components';
 import ReviewModal from './ReviewModal';
 import {useStyle} from '../hooks';
-import {ImageSwiper} from '../components/Common/ImageSwiper';
-import {useInfiniteQuery, useQuery} from 'react-query';
+import {useQuery} from 'react-query';
 import {queryKey} from '../api/queryKey';
-import {getStoreData, getStoreReviewImages} from '../api/store';
+import {getStoreData} from '../api/store';
 import {IStoreData} from '../data';
 
 type StoreModalProps = {
@@ -69,7 +63,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
           </View>
         </View>
 
-        {isReview ? (
+        {isReview ? ( //리뷰
           <MapStoreReviewList
             storeData={storeData.data}
             isReview={isReview}
@@ -78,6 +72,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
             reviewCount={storeData.data?.reviewCount}
           />
         ) : (
+          //리뷰사진
           <MapStoreReviewPhoto
             storeData={storeData.data}
             isReview={isReview}
