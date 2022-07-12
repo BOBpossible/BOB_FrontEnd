@@ -7,17 +7,22 @@ import DoneModal from '../../modal/DoneModal';
 import {useNavigation} from '@react-navigation/native';
 import {IMissionCardProps, IMissionCardContentProps} from '../../data';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
-import {patchMissionCancel, patchMissionSuccess, patchMissionSuccessRequest} from '../../api/mission';
+import {
+  patchMissionCancel,
+  patchMissionSuccess,
+  patchMissionSuccessRequest,
+} from '../../api/mission';
 
 //prettier-ignore
 export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, storeCategory, storeName, missionStatus, onPressRequestBtn}) => {
+  const queryClient = useQueryClient();
   const navigation = useNavigation();
   const [doneModal, setDoneModal] = useState(false);
   const closeDoneModal = async () => {
     navigation.navigate('Main');
     setDoneModal(false);
   };
-  const queryClient = useQueryClient();
+  
   const missionCancelMutation = useMutation((missionId: number) => patchMissionCancel(missionId), {
     onSuccess: (data) => {
       console.log('미션 취소 성공: ', data);
@@ -39,9 +44,11 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
   });
   const missionSuccessMutation = useMutation((missionId: number) => patchMissionSuccess(missionId), {
     onSuccess: (data) => {
-      console.log('미션 성공요청 성공: ', data);
+      console.log('미션성공: ', data);
       queryClient.invalidateQueries('missionsProgress');
       queryClient.invalidateQueries('missionsComplete');
+      queryClient.invalidateQueries('userInfo');
+      queryClient.invalidateQueries('homeData');
     },
     onError: (err) => {
       console.log('미션 성공요청 실패: ', err);
@@ -54,13 +61,9 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
     missionSuccessRequestMutation.mutate(Number(missionId));
   };
   //[성공] 버튼 누를 시 포인트적립 모달 열기
-  function handleSuccessPress() {
+  async function handleSuccessPress() {
     console.log(missionId,'번 가게 성공');
     missionSuccessMutation.mutate(Number(missionId));
-    queryClient.invalidateQueries('missionsProgress');
-    queryClient.invalidateQueries('missionsComplete');
-    queryClient.invalidateQueries('userInfo');
-    queryClient.invalidateQueries('homeData');
     setDoneModal(true);
   }
 
