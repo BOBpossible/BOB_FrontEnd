@@ -56,9 +56,9 @@ const RegisterCategory = ({navigation, route}: Props) => {
     getCategories();
   }, []);
 
-  const goNext = () => {
-    postRegister();
-    postCategories();
+  const goNext = async () => {
+    await postRegister();
+    await postCategories();
     navigation.navigate('RegisterDone');
   };
   const goBack = () => {
