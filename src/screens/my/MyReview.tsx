@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
@@ -8,52 +8,78 @@ import {useInfiniteQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
 import {getReviewsMe} from '../../api';
 import {IReviewsType} from '../../data';
+import {PhotoModal} from '../../modal';
+import {ReviewNo} from '../../components/ReviewNo';
+import { DesignSystem } from '../../assets/DesignSystem';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyReview'>;
 
 export const MyReview = ({navigation}: Props) => {
-  const DataReviews = useInfiniteQuery<IReviewsType>([queryKey.REVIEWSME], getReviewsMe, {
-    getNextPageParam: (lastPage, pages) => {
-      return pages.length;
-    },
-  });
+  const [photoModal, setPhotoModal] = useState(false);
+  const [reviewPhoto, setReviewPhoto] = useState<{uri: string}>({uri: 'string'});
+  const openPhotoModal = (imageSource: string) => {
+    setReviewPhoto({uri: imageSource});
+    setPhotoModal(true);
+  };
   const goBack = () => {
     navigation.goBack();
   };
 
+  const DataReviews = useInfiniteQuery<IReviewsType[]>([queryKey.REVIEWSME], getReviewsMe, {
+    getNextPageParam: (lastPage, pages) => {
+      return pages.length;
+    },
+  });
+  // console.log(DataReviews.data?.pages.length);
+
   return (
-    <SafeAreaView style={[styles.flex]}>
-      <MyHeader goBack={goBack} title={'리뷰 관리'} />
-      <FlatList
-        showsVerticalScrollIndicator={true}
-        scrollEventThrottle={10}
-        data={DataReviews.data?.pages}
-        onEndReached={() => {
-          DataReviews.fetchNextPage();
-        }}
-        renderItem={({item}) => (
-          <>
-            {/* {console.log('iiiiiiiiiiiiii', item.content)} */}
-            {item.content.map((e: any, i: number) => {
-              return (
-                <View key={i}>
-                  <MyReviewEach
-                    name={e.name}
-                    date={e.date}
-                    rate={e.rate}
-                    content={e.content}
-                    images={e.images}
-                    reply={e.reply}
-                    reviewId={e.reviewId}
-                  />
-                </View>
-              );
-            })}
-          </>
+    <>
+      <SafeAreaView style={{flex: 0, backgroundColor: '#F8F8F8'}} />
+      <SafeAreaView style={[styles.flex]}>
+        <MyHeader goBack={goBack} title={'리뷰 관리'} />
+        {DataReviews.data?.pages.length !== 0 ? ( //리뷰없는경우
+          <View style={[DesignSystem.centerArrange, {flex: 1}]}>
+            <ReviewNo isPhoto={0} />
+          </View>
+        ) : (
+          <FlatList
+            showsVerticalScrollIndicator={true}
+            scrollEventThrottle={10}
+            data={DataReviews.data?.pages}
+            onEndReached={() => {
+              if (DataReviews.hasNextPage) {
+                DataReviews.fetchNextPage();
+              }
+            }}
+            renderItem={({item}) => (
+              <>
+                {/* {console.log('iiiiiiiiiiiiii', item.content)} */}
+                {item.content.map((e: any, i: number) => {
+                  return (
+                    <View key={i}>
+                      <MyReviewEach
+                        name={e.name}
+                        date={e.date}
+                        rate={e.rate}
+                        content={e.content}
+                        images={e.images}
+                        reply={e.reply}
+                        openPhotoModal={openPhotoModal}
+                      />
+                    </View>
+                  );
+                })}
+              </>
+            )}
+          />
         )}
-        ItemSeparatorComponent={() => <View style={{height: 8}} />}
-      />
-    </SafeAreaView>
+        <PhotoModal
+          imageUri={reviewPhoto}
+          visible={photoModal}
+          closePhotoModal={() => setPhotoModal(false)}
+        />
+      </SafeAreaView>
+    </>
   );
 };
 

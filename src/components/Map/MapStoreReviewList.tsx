@@ -9,6 +9,8 @@ import {MapReviewToggleButton} from './MapReviewToggleButton';
 import {MapStoreInfo} from '..';
 import {ImageSwiper} from '../Common/ImageSwiper';
 import {IStoreData, IStoreReview} from '../../data';
+import {DesignSystem} from '../../assets/DesignSystem';
+import {ReviewNo} from '../ReviewNo';
 
 type props = {
   storeData?: IStoreData;
@@ -37,7 +39,6 @@ export const MapStoreReviewList = ({
     ({pageParam}) => getStoreReviewList({pageParam}, storeData?.storeId),
     {
       getNextPageParam: (lastPage, pages) => {
-        console.log('페이지들:', pages.length);
         if (lastPage.data.result.last === false) {
           return pages.length + 1;
         } else {
@@ -47,81 +48,105 @@ export const MapStoreReviewList = ({
     },
   );
 
-  return (
-    <Animated.FlatList
-      onScroll={(event) => {
-        Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
-          useNativeDriver: false,
-        })(event);
-      }}
-      ListHeaderComponent={
-        <>
-          <View>
-            <ImageSwiper height={220} imageList={storeData?.images} />
-            <PhotoModal
-              imageUri={reviewPhoto}
-              visible={photoModal}
-              closePhotoModal={() => setPhotoModal(false)}
-            />
-            <MapStoreInfo
-              storeName={storeData?.name}
-              storeCategory={storeData?.category}
-              storeStatus={storeData?.storeStatus}
-              storeRate={storeData?.averageRate}
-              storeAddress={storeData?.address.street}
-            />
-            <View style={{backgroundColor: '#F6F6FA', height: 8}} />
-          </View>
-          <View style={[styles.reviewToggleWrap]}>
-            <MapReviewToggleButton
-              toggleReview={() => setIsReview(true)}
-              togglePhoto={() => setIsReview(false)}
-              isReview={isReview}
-              reviewCount={reviewCount}
-            />
-          </View>
-        </>
-      }
-      data={reviewList.data?.pages}
-      renderItem={({item, index}) => {
-        return (
-          <View key={index}>
-            {item.data.result.content.map((review: IStoreReview) => (
-              <MapStoreReview
-                name={review.name}
-                date={review.date}
-                rate={review.rate}
-                content={review.content}
-                images={review.images}
-                reply={review.reply}
-                openPhotoModal={openPhotoModal}
+  //리뷰없는경우 ----------------------------
+  if (reviewCount === 0) {
+    return (
+      <>
+        <View>
+          <ImageSwiper height={220} imageList={storeData?.images} />
+          <PhotoModal
+            imageUri={reviewPhoto}
+            visible={photoModal}
+            closePhotoModal={() => setPhotoModal(false)}
+          />
+          <MapStoreInfo
+            storeName={storeData?.name}
+            storeCategory={storeData?.category}
+            storeStatus={storeData?.storeStatus}
+            storeRate={storeData?.averageRate}
+            storeAddress={storeData?.address.street}
+          />
+          <View style={{backgroundColor: '#F6F6FA', height: 8}} />
+        </View>
+        <View style={[styles.reviewToggleWrap]}>
+          <MapReviewToggleButton
+            toggleReview={() => setIsReview(true)}
+            togglePhoto={() => setIsReview(false)}
+            isReview={isReview}
+            reviewCount={reviewCount}
+          />
+        </View>
+        <View style={[DesignSystem.centerArrange, {flex: 1}]}>
+          <ReviewNo isPhoto={0} />
+        </View>
+      </>
+    );
+  } else {
+    return (
+      <Animated.FlatList
+        onScroll={(event) => {
+          Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
+            useNativeDriver: false,
+          })(event);
+        }}
+        ListHeaderComponent={
+          <>
+            <View>
+              <ImageSwiper height={220} imageList={storeData?.images} />
+              <PhotoModal
+                imageUri={reviewPhoto}
+                visible={photoModal}
+                closePhotoModal={() => setPhotoModal(false)}
               />
-            ))}
-          </View>
-        );
-      }}
-      contentContainerStyle={styles.reviewListWrap}
-      onEndReached={() => {
-        if (reviewList.hasNextPage) {
-          reviewList.fetchNextPage();
+              <MapStoreInfo
+                storeName={storeData?.name}
+                storeCategory={storeData?.category}
+                storeStatus={storeData?.storeStatus}
+                storeRate={storeData?.averageRate}
+                storeAddress={storeData?.address.street}
+              />
+              <View style={{backgroundColor: '#F6F6FA', height: 8}} />
+            </View>
+            <View style={[styles.reviewToggleWrap]}>
+              <MapReviewToggleButton
+                toggleReview={() => setIsReview(true)}
+                togglePhoto={() => setIsReview(false)}
+                isReview={isReview}
+                reviewCount={reviewCount}
+              />
+            </View>
+          </>
         }
-      }}
-      ListFooterComponent={
-        <>{reviewList.isFetching && !reviewList.isFetchingNextPage && <ActivityIndicator />}</>
-      }
-    />
-  );
-
-  // return (
-  //   <View style={[styles.reviewListWrap]}>
-  //     {renderedReviews(dummyReviews)}
-  //     <PhotoModal
-  //       imageUri={reviewPhoto}
-  //       visible={photoModal}
-  //       closePhotoModal={() => setPhotoModal(false)}
-  //     />
-  //   </View>
-  // );
+        data={reviewList.data?.pages}
+        renderItem={({item, index}) => {
+          return (
+            <View key={index}>
+              {item.data.result.content.map((review: IStoreReview) => (
+                <MapStoreReview
+                  name={review.name}
+                  date={review.date}
+                  rate={review.rate}
+                  content={review.content}
+                  images={review.images}
+                  reply={review.reply}
+                  openPhotoModal={openPhotoModal}
+                />
+              ))}
+            </View>
+          );
+        }}
+        contentContainerStyle={styles.reviewListWrap}
+        onEndReached={() => {
+          if (reviewList.hasNextPage) {
+            reviewList.fetchNextPage();
+          }
+        }}
+        ListFooterComponent={
+          <>{reviewList.isFetching && !reviewList.isFetchingNextPage && <ActivityIndicator />}</>
+        }
+      />
+    );
+  }
 };
 
 const styles = StyleSheet.create({

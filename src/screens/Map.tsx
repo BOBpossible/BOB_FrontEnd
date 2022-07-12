@@ -82,7 +82,6 @@ const Map = () => {
         closeStoreModal={() => setStoreModal(false)}
         storeId={storeId}
       />
-
       <View style={[styles.headerWrap]}>
         <TouchableOpacity onPress={() => setAddressModal(true)} style={[styles.header]}>
           <Text style={[DesignSystem.h2SB, {color: 'black', marginRight: 11}]}>
