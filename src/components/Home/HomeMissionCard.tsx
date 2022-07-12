@@ -10,7 +10,7 @@ export type MissionCardProps = {
   category: string;
   mission: string;
   point: number;
-  status: string;
+  status: string; //도전 전 NEW  성공요청 PROGRESS 성공요청중 CHECKING 성공 DONE
   challengeStatus: boolean; //도전중이라면 true, 아니면 false
 };
 
@@ -19,7 +19,8 @@ export const HomeMissionCard: FC<MissionCardProps> = ({missionId, name, category
     const navigation = useNavigation();
     return (
     <View pointerEvents={challengeStatus ? 'none' : 'auto'}>
-      <TouchableOpacity disabled={status === 'DONE'} onPress={() => navigation.navigate('HomeMissionDetails', {missionId: missionId})} style={[styles.missionCardWrap]}>
+      {status !== 'DONE' && (
+      <TouchableOpacity onPress={() => navigation.navigate('HomeMissionDetails', {missionId: missionId})} style={[styles.missionCardWrap]}>
         <View style={[styles.missionCard]}>
           <View style={[styles.missionMain]}>
             <View style={[styles.nameBox]}>
@@ -36,6 +37,7 @@ export const HomeMissionCard: FC<MissionCardProps> = ({missionId, name, category
           </View>
         </View>
       </TouchableOpacity>
+      )}
     </View>
   );
 };

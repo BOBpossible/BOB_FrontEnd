@@ -7,7 +7,7 @@ import DoneModal from '../../modal/DoneModal';
 import {useNavigation} from '@react-navigation/native';
 import {IMissionCardProps, IMissionCardContentProps} from '../../data';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
-import {patchMissionCancel, patchMissionSuccess} from '../../api/mission';
+import {patchMissionCancel, patchMissionSuccessRequest} from '../../api/mission';
 
 //prettier-ignore
 export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, storeCategory, storeName, missionStatus, onPressRequestBtn}) => {
@@ -18,7 +18,7 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
     setDoneModal(false);
   };
   const queryClient = useQueryClient();
-  const missionMutation = useMutation((missionId: number) => patchMissionCancel(missionId), {
+  const missionCancelMutation = useMutation((missionId: number) => patchMissionCancel(missionId), {
     onSuccess: (data) => {
       console.log('미션 취소 성공: ', data);
       queryClient.invalidateQueries('missionsProgress');
@@ -27,22 +27,23 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
       console.log('미션 취소 실패: ', err);
     },
   });
-  const missionSuccessMutation = useMutation((missionId: number) => patchMissionSuccess(missionId), {
+  const missionSuccessRequestMutation = useMutation((missionId: number) => patchMissionSuccessRequest(missionId), {
     onSuccess: (data) => {
       console.log('미션 성공요청 성공: ', data);
-      queryClient.invalidateQueries(['missionsProgress','missionsComplete']);
+      queryClient.invalidateQueries('missionsProgress');
+      queryClient.invalidateQueries('missionsComplete');
     },
     onError: (err) => {
       console.log('미션 성공요청 실패: ', err);
     },
   });
-    //성공요청 버튼 누를 시 사장님께 전송
+    //[성공요청] 버튼 누를 시 사장님께 전송
     const handleRequestPress = () => {
-      console.log(missionId,'번 가게 성공요청');
+      console.log(missionId,'번 가게 성공요청됨');
       onPressRequestBtn();//화면글자 바꾸는 status 변경 NEW->PROGRESS
-      missionSuccessMutation.mutate(Number(missionId));
+      missionSuccessRequestMutation.mutate(Number(missionId));
     };
-    //성공 버튼 누를 시 포인트적립 모달 열기
+    //[성공] 버튼 누를 시 포인트적립 모달 열기
     function handleSuccessPress() {
       console.log(missionId,'번 가게 성공');
       setDoneModal(true);
@@ -55,8 +56,7 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
           <TouchableOpacity
             disabled={text === '성공' ? true : false}
             onPress={() => {
-              missionMutation.mutate(missionId as number);
-              console.log(missionId, '번 미션 취소');
+              missionCancelMutation.mutate(missionId as number);
               navigation.navigate('Main');
             }}
             style={[styles.missionButtonLeft, {backgroundColor: `${cancelBgColor}`}]}
@@ -96,17 +96,17 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
           </View>
         </View>
         {
-        missionStatus === 'NEW' ?
+        missionStatus === 'PROGRESS' ?
         <MissionCardTwoButton missionId={missionId} handleOnPress={handleRequestPress} text='성공 요청' bgColor='#6C69FF' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
         :
-        missionStatus === 'PROGRESS' ?
+        missionStatus === 'CHECKING' ?
         <MissionCardTwoButton missionId={missionId} text='성공 요청중..' bgColor='#C8C8C8' cancelBgColor='#EFEFEF' cancelTextColor='#111111'/>
         :
-        // missionStatus === 'OWNER_CHECK'
+        // missionStatus === 'CHECKED'
         <MissionCardTwoButton handleOnPress={handleSuccessPress} text='성공' bgColor='#6C69FF' cancelBgColor='#DFDFDF' cancelTextColor='#949494'/>
         }
       </View>
-      {missionStatus === 'NEW' && (
+      {missionStatus === 'PROGRESS' && (
         <View style={{width: '100%', flexDirection: 'row-reverse'}}>
           <View style={[DesignSystem.centerArrange, {top: -7, width: '50%'}]}>
             <Icon name="triangle" size={12} style={[styles.headerIconStyle]} />
@@ -124,7 +124,7 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
         visible={doneModal}
         closeDoneModal={closeDoneModal}
         category={'성공'}
-        point={500}//
+        point={point}
       />
     </View>
   );

@@ -59,12 +59,12 @@ const Main = () => {
             data={homeData.data?.missions}
             renderItem={({item}) => (
               <HomeMissionCard
-                missionId={item.missionId}
-                name={item.storeName}
-                category={item.storeCategory}
                 mission={item.mission}
-                point={item.point}
+                missionId={item.missionId}
                 status={item.missionStatus}
+                point={item.point}
+                category={item.storeCategory}
+                name={item.storeName}
                 challengeStatus={DataMissionsProgress.data?.length !== 0}
               />
             )}
