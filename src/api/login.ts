@@ -37,9 +37,10 @@ export const getRegisterStatus = async () => {
   }
 };
 
-export const postFcmToken = async (token: string) => {
+export const postFcmToken = async (token: any) => {
+  const data = {token: token};
   try {
-    const response = await customAxios().post('/api/v1/fcm/me', token);
+    const response = await customAxios().post('/api/v1/fcm/me', data);
     return response.data;
   } catch (error) {
     console.log('파이어베이스 토큰 받기 실패', error);

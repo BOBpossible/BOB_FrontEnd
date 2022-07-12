@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {getRegisterStatus, postFcmToken, postToken} from './src/api';
 import messaging from '@react-native-firebase/messaging';
+import {Alert, AppRegistry} from 'react-native';
 
 async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -35,15 +36,22 @@ export default function App() {
 
   // 실행하면 가장 먼저 로컬에 로그인 정보 있는지 확인
   useEffect(() => {
-    getToken();
+    getTokens();
 
     requestUserPermission();
 
     messaging()
       .getToken()
       .then((token) => {
+        console.log('나의 소중한 기계의 토큰 ', token);
         return postFcmToken(token);
       });
+
+    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+      console.log('Message handled in the background!', remoteMessage);
+    });
+
+    AppRegistry.registerComponent('app', () => App);
 
     const id = setTimeout(() => {
       setLoading(false);
@@ -51,7 +59,15 @@ export default function App() {
     return () => clearTimeout(id);
   }, []);
 
-  const getToken = async () => {
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const getTokens = async () => {
     try {
       const value = await AsyncStorage.getItem('accessToken');
       //여기서 아이디는 있지만 회원가입을 다 안한 상태라면 로그인 창 띄우고 했다면 메인으로 바로 가기.
