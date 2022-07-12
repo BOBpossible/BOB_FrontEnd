@@ -14,24 +14,23 @@ import {IMissionsProgress, IgetUsersMe} from '../data';
 import {getUserInfo} from '../api/user';
 import {ConnectionError} from '../components/ConnectionError';
 
-///"NEW","PROGRESS" :'진행중' processCircle  // "OWNER_CHECK" : '도전 성공' processCircle
+//processCircle
+///"PROGRESS","CHECKING" :'진행중' ---  "DONE" : '도전 성공'
+
+//도전 전 NEW  성공요청 PROGRESS  성공요청중 CHECKING    성공 DONE
 
 const Mission = () => {
-  const [status, setStatus] = useState<string>('NEW'); //버튼문구 //"NEW","PROGRESS","OWNER_CHECK" //서버연결후삭제
-  //status 이건 여기서 서버로부터 받아와서 아래 컴포넌트에 넘겨줘야할듯. 사장님이 승인했는지 어쩐지
-  //아래 스위치. 0:진행중 / 1:진행완료
-  const [progressnow, setProgressnow] = useState(0);
+  const [progressnow, setProgressnow] = useState(0); //아래 스위치. 0:진행중 / 1:진행완료
   const DataMissionsProgress = useQuery<IMissionsProgress[]>(
     queryKey.MISSIONSPROGRESS,
     getMissionsProgress,
   );
-  console.log('도전한 미션', DataMissionsProgress); //스웨거에서 result
+  console.log('DataMissionsProgress.data 현재도전한미션', DataMissionsProgress.data); //스웨거에서 result
+
   const DataUser = useQuery<IgetUsersMe>('userInfo', getUserInfo);
-  // console.log('여기서유저', DataUser); //DataUser.data.~
+
   const onPressRequestBtn = () => {
-    //status바뀌는거 감지하면 이거 필요없을듯 . .. . ?
-    setStatus('PROGRESS');
-    console.log('성공요청전송: NEW->PROGRESS');
+    console.log('성공요청전송: PROGRESS->CHECKING');
   };
   if (DataUser.isError || DataMissionsProgress.isError) {
     return <ConnectionError refetch={DataMissionsProgress.refetch} />;
@@ -52,18 +51,12 @@ const Mission = () => {
               <MissionNo progressnow={progressnow} /> ///미션없는화면
             ) : (
               <View>
-                <MissionProcess status={status} />
+                <MissionProcess status={DataMissionsProgress.data?.[0].missionStatus} />
                 <MissionUser username={DataUser.data?.name} userid={DataUser.data?.userId} />
                 <MissionCard
-                  // mission={'10000원 이상'}
-                  // missionId={1}
-                  // missionStatus={status}
-                  // point={500}
-                  // storeCategory={'중국집'}
-                  // storeName={'짱맛집'}
                   mission={DataMissionsProgress.data?.[0].mission}
                   missionId={DataMissionsProgress.data?.[0].missionId}
-                  missionStatus={status}
+                  missionStatus={DataMissionsProgress.data?.[0].missionStatus}
                   point={DataMissionsProgress.data?.[0].point}
                   storeCategory={DataMissionsProgress.data?.[0].storeCategory}
                   storeName={DataMissionsProgress.data?.[0].storeName}
