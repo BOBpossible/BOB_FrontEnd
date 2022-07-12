@@ -23,7 +23,7 @@ const HEADER_HEIGHT = Platform.OS === 'ios' ? hp(25.8) : hp(28.6);
 type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
   paddingTop: number;
-  data: IHomeData;
+  data?: IHomeData;
 };
 
 export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop, data}) => {
