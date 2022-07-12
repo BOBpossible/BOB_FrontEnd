@@ -18,3 +18,8 @@ export const patchMissionSuccessRequest = async (missionId: number) => {
   const response = await customAxios().patch(`/api/v1/missions/users/success-request/${missionId}`);
   return response.data.message;
 };
+//미션 성공
+export const patchMissionSuccess = async (missionId: number) => {
+  const response = await customAxios().patch(`/api/v1/missions/success/${missionId}`);
+  return response.data.message;
+};

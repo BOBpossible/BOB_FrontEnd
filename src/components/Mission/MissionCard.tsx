@@ -7,7 +7,7 @@ import DoneModal from '../../modal/DoneModal';
 import {useNavigation} from '@react-navigation/native';
 import {IMissionCardProps, IMissionCardContentProps} from '../../data';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
-import {patchMissionCancel, patchMissionSuccessRequest} from '../../api/mission';
+import {patchMissionCancel, patchMissionSuccess, patchMissionSuccessRequest} from '../../api/mission';
 
 //prettier-ignore
 export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, storeCategory, storeName, missionStatus, onPressRequestBtn}) => {
@@ -37,17 +37,32 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
       console.log('미션 성공요청 실패: ', err);
     },
   });
-    //[성공요청] 버튼 누를 시 사장님께 전송
-    const handleRequestPress = () => {
-      console.log(missionId,'번 가게 성공요청됨');
-      onPressRequestBtn();//화면글자 바꾸는 status 변경 NEW->PROGRESS
-      missionSuccessRequestMutation.mutate(Number(missionId));
-    };
-    //[성공] 버튼 누를 시 포인트적립 모달 열기
-    function handleSuccessPress() {
-      console.log(missionId,'번 가게 성공');
-      setDoneModal(true);
-    }
+  const missionSuccessMutation = useMutation((missionId: number) => patchMissionSuccess(missionId), {
+    onSuccess: (data) => {
+      console.log('미션 성공요청 성공: ', data);
+      queryClient.invalidateQueries('missionsProgress');
+      queryClient.invalidateQueries('missionsComplete');
+    },
+    onError: (err) => {
+      console.log('미션 성공요청 실패: ', err);
+    },
+  });
+  //[성공요청] 버튼 누를 시 사장님께 전송
+  const handleRequestPress = () => {
+    console.log(missionId,'번 가게 성공요청됨');
+    onPressRequestBtn();//화면글자 바꾸는 status 변경 NEW->PROGRESS
+    missionSuccessRequestMutation.mutate(Number(missionId));
+  };
+  //[성공] 버튼 누를 시 포인트적립 모달 열기
+  function handleSuccessPress() {
+    console.log(missionId,'번 가게 성공');
+    missionSuccessMutation.mutate(Number(missionId));
+    queryClient.invalidateQueries('missionsProgress');
+    queryClient.invalidateQueries('missionsComplete');
+    queryClient.invalidateQueries('userInfo');
+    queryClient.invalidateQueries('homeData');
+    setDoneModal(true);
+  }
 
   const MissionCardTwoButton: FC<IMissionCardContentProps> = ({missionId, handleOnPress, text, cancelBgColor, cancelTextColor, bgColor }) =>{
     return (
