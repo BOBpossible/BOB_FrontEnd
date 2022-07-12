@@ -43,7 +43,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
       extrapolate: 'clamp',
     }),
   });
-
+  // console.log('------------------', storeData.data); //undefined 인ㅇ지로 반편
   return (
     <Modal visible={visible} animationType="slide">
       <SafeAreaView style={[styles.safeView]}>
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     borderRadius: 41,
     backgroundColor: '#2A2A2A',
     position: 'absolute',
-    bottom: 4,
+    bottom: 16,
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',

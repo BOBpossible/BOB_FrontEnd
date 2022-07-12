@@ -25,31 +25,6 @@ export type PointsListType = {
   // nextPage: number;
   pageNumber: number;
 };
-const dummyMission = [
-  {
-    date: '2022-12-03T16:01:34.864Z',
-    title: '마라마라마라탕',
-    subTitle: '20000원 이상 식사',
-    point: -500,
-  },
-  {
-    date: '2022-12-03T16:01:34.864Z',
-    title: '어쩌고 맛집',
-    subTitle: '15000원 이상',
-    point: 3000,
-  },
-  {
-    date: '2022-11-13T16:01:34.864Z',
-    title: '포인트 전환',
-    point: -400,
-  },
-  {
-    date: '2022-06-02T16:01:34.864Z',
-    title: '와라라라 맛집',
-    subTitle: '18000원 이상',
-    point: 500,
-  },
-];
 export const MyPoint = ({navigation, route}: Props) => {
   const [point, setPoint] = useState<number>(route.params.point);
 
