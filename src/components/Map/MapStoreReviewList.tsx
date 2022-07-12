@@ -120,19 +120,22 @@ export const MapStoreReviewList = ({
         data={reviewList.data?.pages}
         renderItem={({item, index}) => {
           return (
-            <View key={index}>
-              {item.data.result.content.map((review: IStoreReview) => (
-                <MapStoreReview
-                  name={review.name}
-                  date={review.date}
-                  rate={review.rate}
-                  content={review.content}
-                  images={review.images}
-                  reply={review.reply}
-                  openPhotoModal={openPhotoModal}
-                />
+            <>
+              {item.data.result.content.map((review: IStoreReview, i: number) => (
+                <View key={i}>
+                  <MapStoreReview
+                    name={review.name}
+                    date={review.date}
+                    rate={review.rate}
+                    content={review.content}
+                    images={review.images}
+                    reply={review.reply}
+                    reviewId={review.reviewId}
+                    openPhotoModal={openPhotoModal}
+                  />
+                </View>
               ))}
-            </View>
+            </>
           );
         }}
         contentContainerStyle={styles.reviewListWrap}

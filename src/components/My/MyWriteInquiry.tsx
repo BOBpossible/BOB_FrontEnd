@@ -1,6 +1,16 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TextInput, View, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
+// eslint-disable-next-line prettier/prettier
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
 

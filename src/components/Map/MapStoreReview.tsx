@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type {FC} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../../assets/DesignSystem';
+import { ReviewReportModal } from '../../modal/ReviewReportModal';
 
 type MapStoreReviewProps = {
   images: {imageUrl: string}[];
@@ -11,6 +12,7 @@ type MapStoreReviewProps = {
   date: string;
   rate: number;
   content: string;
+  reviewId: number;
   reply: {date: string; reply: string; reviewReplyId: number}[];
   openPhotoModal: (imageSource: string) => void;
 };
@@ -22,6 +24,7 @@ export const MapStoreReview: FC<MapStoreReviewProps> = ({
   rate,
   content,
   reply,
+  reviewId,
   openPhotoModal,
 }) => {
   const renderedImage = (imagedata: {imageUrl: string}[]) => {
@@ -39,31 +42,63 @@ export const MapStoreReview: FC<MapStoreReviewProps> = ({
       </View>
     );
   };
+  const [reportModal, setReportModal] = useState(false);
+  const handleRepotModal = () => {
+    setReportModal(true);
+  };
   return (
-    <View style={[styles.reviewWrap]}>
-      <View style={[styles.reviewRow1]}>
-        <Text>{name}</Text>
-        <Text>{date}</Text>
-      </View>
-      <View style={[styles.reviewRow2]}>
-        <Icon name="star" size={18} color={'#FFDE69'} />
-        <Text style={[styles.reviewRate]}>{rate}</Text>
-      </View>
-      <View style={[styles.reviewRow3]}>
-        <Text style={[styles.reviewText]}>{content}</Text>
-      </View>
-      {renderedImage(images)}
-      {reply.length !== 0 && (
-        <View style={{width: '100%', marginTop: 12}}>
-          <View style={{flexDirection: 'row', marginBottom: 8}}>
-            <Text style={[styles.replyHeader]}>사장님 답글</Text>
-            <Text style={[styles.replyDate]}>{reply[0].date}</Text>
+    <View style={{backgroundColor: 'white', marginBottom: 8}}>
+      <View style={[styles.totalWrap]}>
+        <View style={[styles.customerWrap]}>
+          <View style={[styles.title]}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={[DesignSystem.title3SB, DesignSystem.grey17, {marginRight: 12}]}>
+                {name}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Pretendard-Light',
+                  fontSize: 14,
+                  lineHeight: 14,
+                  color: '#C4C4C4',
+                }}
+              >
+                {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)}
+              </Text>
+            </View>
+            <TouchableOpacity onPress={handleRepotModal}>
+              <Text style={[DesignSystem.body1Lt, DesignSystem.grey8]}>신고하기</Text>
+            </TouchableOpacity>
           </View>
-          <View style={[styles.replyComment]}>
-            <Text style={[DesignSystem.body2Lt, DesignSystem.grey17]}>{reply[0].reply}</Text>
+          <View style={[styles.stars]}>
+            {[...Array(rate)].map((e, i) => (
+              <View key={i}>
+                <Icon name="star" size={18} color={'#FFDE69'} />
+              </View>
+            ))}
           </View>
+          <View style={[styles.reviewContents]}>
+            <Text style={[DesignSystem.body1Lt, {color: 'black'}]}>{content}</Text>
+          </View>
+          {renderedImage(images)}
         </View>
-      )}
+        {reply.length !== 0 && (
+          <View style={{width: '100%', marginTop: 12}}>
+            <View style={{flexDirection: 'row', marginBottom: 8}}>
+              <Text style={[styles.replyHeader]}>사장님 답글</Text>
+              <Text style={[styles.replyDate]}>{reply[0].date}</Text>
+            </View>
+            <View style={[styles.replyComment]}>
+              <Text style={[DesignSystem.body2Lt, DesignSystem.grey17]}>{reply[0].reply}</Text>
+            </View>
+          </View>
+        )}
+      </View>
+      <ReviewReportModal
+        visible={reportModal}
+        closeReportModal={() => setReportModal(false)}
+        reviewId={reviewId}
+      />
     </View>
   );
 };
@@ -119,5 +154,44 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 12,
     paddingHorizontal: 16,
+  },
+  totalWrap: {
+    marginTop: 12,
+    marginBottom: 12,
+    marginLeft: 16,
+    marginRight: 16,
+  },
+  customerWrap: {
+    flexDirection: 'column',
+  },
+  title: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  stars: {
+    flexDirection: 'row',
+  },
+  reviewContents: {
+    marginTop: 10,
+  },
+  ownerWrap: {
+    flexDirection: 'column',
+  },
+  ownerTitle: {
+    flexDirection: 'row',
+    marginBottom: 8,
+  },
+  ownerContents: {
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#DFDFDF',
+  },
+  ownerContentsText: {
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 12,
+    marginBottom: 12,
   },
 });

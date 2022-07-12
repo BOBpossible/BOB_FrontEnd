@@ -1820,7 +1820,7 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/masked-view/-/masked-view-0.1.11.tgz"
   "version" "0.1.11"
 
-"@react-native-firebase/app@^14.11.1", "@react-native-firebase/app@14.11.1", "@react-native-firebase/app@15.1.1":
+"@react-native-firebase/app@^14.11.1", "@react-native-firebase/app@14.11.1":
   "integrity" "sha512-fkvOK8c7e8MxIbfb2076kO3GtGUc3ZXNEkPyfamRKBnPgANpmnjQaTVIraXpeuIIOfjj5uDK4uw32znWiDusGA=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-14.11.1.tgz"
   "version" "14.11.1"
