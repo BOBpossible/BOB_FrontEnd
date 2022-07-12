@@ -7,7 +7,11 @@ import DoneModal from '../../modal/DoneModal';
 import {useNavigation} from '@react-navigation/native';
 import {IMissionCardProps, IMissionCardContentProps} from '../../data';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
-import {patchMissionCancel, patchMissionSuccess, patchMissionSuccessRequest} from '../../api/mission';
+import {
+  patchMissionCancel,
+  patchMissionSuccess,
+  patchMissionSuccessRequest,
+} from '../../api/mission';
 
 //prettier-ignore
 export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, storeCategory, storeName, missionStatus, onPressRequestBtn}) => {
