@@ -39,6 +39,7 @@ const Map = () => {
         console.log('가게 리스트 받기 성공: ', data);
       },
       onError(err) {
+        setNoMission(true);
         console.log('가게 리스트 받기 실패: ', err);
       },
     },
@@ -69,7 +70,6 @@ const Map = () => {
         closeStoreModal={() => setStoreModal(false)}
         storeId={storeId}
       />
-
       <View style={[styles.headerWrap]}>
         <TouchableOpacity onPress={() => setAddressModal(true)} style={[styles.header]}>
           <Text style={[DesignSystem.h2SB, {color: 'black', marginRight: 11}]}>
@@ -89,7 +89,7 @@ const Map = () => {
           <Text style={[DesignSystem.title3SB, {color: '#111111'}]}>내 주변 가게</Text>
         </BottomSheetView>
 
-        {noMission ? (
+        {DataUser.isError ? (
           <View style={[DesignSystem.centerArrange, {flex: 1, marginBottom: 50}]}>
             <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2}]}>
               주변에 미션이 없어요🥺

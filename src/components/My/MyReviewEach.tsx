@@ -4,11 +4,39 @@ import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {IMyReviewEachProps} from '../../data';
+import FastImage from 'react-native-fast-image';
+
+type MyReviewEachType = {
+  images: {imageUrl: string}[];
+  name: string;
+  date: string;
+  rate: number;
+  content: string;
+  reply: {date: string; reply: string; reviewReplyId: number}[];
+  openPhotoModal: (imageSource: string) => void;
+};
 
 //prettier-ignore
-export const MyReviewEach: FC<IMyReviewEachProps> = ({name, date, rate, content, images, reply, reviewId}) => {
+export const MyReviewEach: FC<MyReviewEachType> = ({
+  name, date, rate, content, images, reply, openPhotoModal
+}) => {
+  const renderedImage = (imagedata: {imageUrl: string}[]) => {
+    return (
+      <View style={[styles.reviewRow3]}>
+        {imagedata.map((item, index) => {
+          return (
+            <TouchableOpacity key={index} onPress={() => openPhotoModal(item.imageUrl)}>
+              <View style={[styles.reviewImageWrap]}>
+                <FastImage source={{uri: item.imageUrl}} style={[styles.imageSize]} />
+              </View>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    );
+  };
   return (
-    <View style={{backgroundColor: 'white'}}>
+    <View style={{backgroundColor: 'white', marginBottom: 8}}>
       <View style={[styles.totalWrap]}>
         <View style={[styles.customerWrap]}>
             <View style={[styles.title]}>
@@ -30,10 +58,7 @@ export const MyReviewEach: FC<IMyReviewEachProps> = ({name, date, rate, content,
             <View style={[styles.reviewContents]}>
                 <Text style={[DesignSystem.body1Lt, {color: 'black'}]}>{content}</Text>
             </View>
-            <View style={[styles.reviewImg]}>
-              <Text>🚨🚨🚨🚨🚨🚨🚨🚨🚨리뷰사진🚨🚨🚨🚨🚨</Text>
-              {/* images.imageUrl */}
-            </View>
+            {renderedImage(images)}
         </View>
         {reply.length !== 0 && (
           <View style={[styles.ownerWrap]}>
@@ -60,7 +85,6 @@ const styles = StyleSheet.create({
   },
   customerWrap: {
     flexDirection: 'column',
-    marginBottom: 16,
   },
   title: {
     flexDirection: 'row',
@@ -70,13 +94,9 @@ const styles = StyleSheet.create({
   },
   stars: {
     flexDirection: 'row',
-    marginBottom: 10,
   },
   reviewContents: {
-    marginBottom: 10,
-  },
-  reviewImg: {
-    flexDirection: 'column',
+    marginTop: 10,
   },
   ownerWrap: {
     flexDirection: 'column',
@@ -95,5 +115,11 @@ const styles = StyleSheet.create({
     marginRight: 16,
     marginTop: 12,
     marginBottom: 12,
+  },
+  reviewRow3: {flexDirection: 'row', alignItems: 'center', marginTop: 8},
+  reviewImageWrap: {marginRight: 8},
+  imageSize: {
+    height: 80,
+    width: 80,
   },
 });

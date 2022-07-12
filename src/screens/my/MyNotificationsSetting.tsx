@@ -12,9 +12,9 @@ export const MyNotificationsSetting = ({navigation}: Props) => {
   const goBack = () => {
     navigation.goBack();
   };
-  const [onNewevent, setOnNewevent] = useState(false);
-  const [onReview, setOnReview] = useState(false);
-  const [onInquiry, setOnInquiry] = useState(false);
+  const [onNewevent, setOnNewevent] = useState(true);
+  const [onReview, setOnReview] = useState(true);
+  const [onInquiry, setOnInquiry] = useState(true);
   console.log(onNewevent, onReview, onInquiry);
 
   return (

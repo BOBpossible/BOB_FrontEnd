@@ -1,14 +1,6 @@
 import React, {useState} from 'react';
 import type {FC} from 'react';
-import {
-  Modal,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Platform,
-} from 'react-native';
+import {Modal, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ReviewRate} from '../components/ReviewRate';
 import {ReviewWrite} from '../components/ReviewWrite';
@@ -23,7 +15,6 @@ type ReviewModalProps = {
   storeId: number;
   visible: boolean;
   closeReviewModal: () => void;
-  openDoneModal?: () => void;
 };
 type imageData = {
   uri: string;
