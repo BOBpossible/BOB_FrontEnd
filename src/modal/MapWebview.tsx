@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useRef, useState} from 'react';
 import {StyleSheet, View, ActivityIndicator} from 'react-native';
 import WebView, {WebViewMessageEvent} from 'react-native-webview';
 import StoreModal from './StoreModal';
@@ -6,9 +6,10 @@ import StoreModal from './StoreModal';
 type MapWebviewProps = {
   missionId?: number;
   userId?: number;
+  webviewRef: React.MutableRefObject<WebView<{}> | null>;
 };
 
-export const MapWebview: FC<MapWebviewProps> = ({missionId, userId}) => {
+export const MapWebview: FC<MapWebviewProps> = ({missionId, userId, webviewRef}) => {
   const [isLoadingMap, setIsLoadingMap] = useState(true);
   const [storeId, setStoreId] = useState(0);
   const [storeModal, setStoreModal] = useState(false);
@@ -27,6 +28,7 @@ export const MapWebview: FC<MapWebviewProps> = ({missionId, userId}) => {
         closeStoreModal={() => setStoreModal(false)}
       />
       <WebView
+        ref={webviewRef}
         source={
           missionId === undefined
             ? {uri: `https://bobplace.netlify.app/${userId}`}

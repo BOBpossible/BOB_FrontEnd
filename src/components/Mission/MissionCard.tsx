@@ -3,7 +3,6 @@ import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {customAxios} from '../../api/customAxios';
 import DoneModal from '../../modal/DoneModal';
 import {useNavigation} from '@react-navigation/native';
 import {IMissionCardProps, IMissionCardContentProps} from '../../data';
@@ -56,7 +55,7 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
           <TouchableOpacity
             disabled={text === '성공' ? true : false}
             onPress={() => {
-              missionMutation.mutate(missionId);
+              missionMutation.mutate(missionId as number);
               console.log(missionId, '번 미션 취소');
               navigation.navigate('Main');
             }}

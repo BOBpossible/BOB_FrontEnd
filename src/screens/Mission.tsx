@@ -12,6 +12,7 @@ import {queryKey} from '../api/queryKey';
 import {getMissionsProgress} from '../api/mission';
 import {IMissionsProgress, IgetUsersMe} from '../data';
 import {getUserInfo} from '../api/user';
+import {ConnectionError} from '../components/ConnectionError';
 
 ///"NEW","PROGRESS" :'진행중' processCircle  // "OWNER_CHECK" : '도전 성공' processCircle
 
@@ -27,10 +28,14 @@ const Mission = () => {
   console.log('도전한 미션', DataMissionsProgress); //스웨거에서 result
   const DataUser = useQuery<IgetUsersMe>('userInfo', getUserInfo);
   // console.log('여기서유저', DataUser); //DataUser.data.~
-  const onPressRequestBtn = () => {//status바뀌는거 감지하면 이거 필요없을듯 . .. . ?
+  const onPressRequestBtn = () => {
+    //status바뀌는거 감지하면 이거 필요없을듯 . .. . ?
     setStatus('PROGRESS');
     console.log('성공요청전송: NEW->PROGRESS');
   };
+  if (DataUser.isError || DataMissionsProgress.isError) {
+    return <ConnectionError refetch={DataMissionsProgress.refetch} />;
+  }
 
   return (
     <>
@@ -56,12 +61,12 @@ const Mission = () => {
                   // point={500}
                   // storeCategory={'중국집'}
                   // storeName={'짱맛집'}
-                  mission={DataMissionsProgress?.data[0].mission}
-                  missionId={DataMissionsProgress?.data[0].missionId}
+                  mission={DataMissionsProgress.data?.[0].mission}
+                  missionId={DataMissionsProgress.data?.[0].missionId}
                   missionStatus={status}
-                  point={DataMissionsProgress?.data[0].point}
-                  storeCategory={DataMissionsProgress?.data[0].storeCategory}
-                  storeName={DataMissionsProgress?.data[0].storeName}
+                  point={DataMissionsProgress.data?.[0].point}
+                  storeCategory={DataMissionsProgress.data?.[0].storeCategory}
+                  storeName={DataMissionsProgress.data?.[0].storeName}
                   onPressRequestBtn={onPressRequestBtn}
                 />
               </View>

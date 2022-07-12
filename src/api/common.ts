@@ -3,7 +3,7 @@ import {customAxios} from './customAxios';
 
 export const getAddress = async () => {
   const response = await customAxios().get('/api/v1/users/me/address');
-  return response.data;
+  return response.data.result;
 };
 
 export const patchAddress = async (address: IAddress) => {

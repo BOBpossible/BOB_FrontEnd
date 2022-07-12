@@ -7,8 +7,8 @@ export const getMissionsProgress = async () => {
   return data.result;
 };
 export const getMissionsComplete = async () => {
-  const {response} = await customAxios().get('/api/v1/missions/me/complete');
-  return response.result;
+  const response = await customAxios().get('/api/v1/missions/me/complete');
+  return response.data.result;
 };
 export const patchMissionCancel = async (missionId: number) => {
   const response = await customAxios().patch(`/api/v1/missions/users/cancel/${missionId}`);
