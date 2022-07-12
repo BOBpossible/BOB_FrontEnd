@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, SafeAreaView} from 'react-native';
 import {DesignSystem} from '../assets/DesignSystem';
 import {MissionCard} from '../components';
@@ -13,6 +13,7 @@ import {getMissionsProgress} from '../api/mission';
 import {IMissionsProgress, IgetUsersMe} from '../data';
 import {getUserInfo} from '../api/user';
 import {ConnectionError} from '../components/ConnectionError';
+import messaging from '@react-native-firebase/messaging';
 
 //processCircle
 ///"PROGRESS","CHECKING" :'진행중' ---  "DONE" : '도전 성공'
@@ -21,11 +22,23 @@ import {ConnectionError} from '../components/ConnectionError';
 
 const Mission = () => {
   const [progressnow, setProgressnow] = useState(0); //아래 스위치. 0:진행중 / 1:진행완료
+
   const DataMissionsProgress = useQuery<IMissionsProgress[]>(
     queryKey.MISSIONSPROGRESS,
     getMissionsProgress,
   );
   console.log('DataMissionsProgress.data 현재도전한미션', DataMissionsProgress.data); //스웨거에서 result
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async (remoteMessage: any) => {
+      if (remoteMessage.notification.title === 'success') {
+        DataMissionsProgress.refetch();
+        console.log('미션 업데이트!');
+      }
+    });
+
+    return unsubscribe;
+  }, []);
 
   const DataUser = useQuery<IgetUsersMe>('userInfo', getUserInfo);
 

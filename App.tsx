@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {getRegisterStatus, postFcmToken, postToken} from './src/api';
 import messaging from '@react-native-firebase/messaging';
-import {Alert, AppRegistry} from 'react-native';
+import {AppRegistry} from 'react-native';
 
 async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -57,14 +57,6 @@ export default function App() {
       setLoading(false);
     }, 2000);
     return () => clearTimeout(id);
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-    });
-
-    return unsubscribe;
   }, []);
 
   const getTokens = async () => {
