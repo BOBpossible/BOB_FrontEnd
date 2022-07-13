@@ -19,6 +19,8 @@ import {queryKey} from '../api/queryKey';
 import {IAddress} from '../data/Common';
 import {ConnectionError} from '../components/ConnectionError';
 import WebView from 'react-native-webview';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight} from '../assets/CalculateLength';
 
 const Map = () => {
   const height = Dimensions.get('screen').height;

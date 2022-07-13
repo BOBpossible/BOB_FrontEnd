@@ -5,18 +5,26 @@ import {DesignSystem} from '../../assets/DesignSystem';
 
 type HomeMissionListHeaderProps = {
   dday?: number;
+  allDone: boolean;
 };
 
-export const HomeMissionListHeader = ({dday}: HomeMissionListHeaderProps) => {
+export const HomeMissionListHeader = ({dday, allDone}: HomeMissionListHeaderProps) => {
   return (
     <View style={[styles.missionListHeaderWrap]}>
       <Text style={[DesignSystem.title3SB, DesignSystem.grey17]}>이번주 미션</Text>
       <View style={[styles.missionListBalloon]}>
         <Icon name="menu-left" size={32} style={[styles.headerIconStyle]} />
-        <View style={[styles.flexRow]}>
-          <Text style={[styles.ballonTextOne]}>{dday}일후에</Text>
-          <Text style={[styles.ballonTextTwo]}> 사라져요!</Text>
-        </View>
+        {allDone ? (
+          <View style={[styles.flexRow]}>
+            <Text style={[styles.ballonTextOne]}>{dday}일후</Text>
+            <Text style={[styles.ballonTextTwo]}> 미션 업데이트</Text>
+          </View>
+        ) : (
+          <View style={[styles.flexRow]}>
+            <Text style={[styles.ballonTextOne]}>{dday}일후에</Text>
+            <Text style={[styles.ballonTextTwo]}> 사라져요!</Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -53,7 +61,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard-SemiBold',
     fontSize: 12,
     lineHeight: 20,
-    color: '#FFFFFF',
+    color: '#AAAAF9',
   },
   ballonTextTwo: {
     fontFamily: 'Pretendard-Regular',
