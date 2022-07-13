@@ -5,7 +5,10 @@ import {MyStackParamList} from '../../nav/MyNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
 import {MyPointList} from '../../components/My/MyPointList';
 import {DesignSystem} from '../../assets/DesignSystem';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
 import {useInfiniteQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
@@ -52,7 +55,10 @@ export const MyPoint = ({navigation, route}: Props) => {
             <View>
               <Text style={[DesignSystem.body2Lt, {color: '#616161'}]}>내 포인트</Text>
               <Text style={[DesignSystem.h1SB, {color: '#111111'}]}>
-                {DataPointsList.data?.pages[0].data.result.totalPoints.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
+                {DataPointsList.data?.pages[0].data.result.totalPoints
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                P
               </Text>
             </View>
             <TouchableOpacity
@@ -67,12 +73,14 @@ export const MyPoint = ({navigation, route}: Props) => {
         </View>
         <View style={[styles.pointListWrap]}>
           <View style={[styles.marginLR]}>
-            <Text style={[DesignSystem.subtitle2, {marginTop: 16, color: '#111111'}]}>포인트 내역</Text>
+            <Text style={[DesignSystem.subtitle2, {marginTop: 16, color: '#111111'}]}>
+              포인트 내역
+            </Text>
             <FlatList
               style={{marginTop: 18}}
               showsVerticalScrollIndicator={true}
               data={DataPointsList.data?.pages}
-              onEndReached={() => {;
+              onEndReached={() => {
                 DataPointsList.fetchNextPage();
               }}
               renderItem={({item}) => (

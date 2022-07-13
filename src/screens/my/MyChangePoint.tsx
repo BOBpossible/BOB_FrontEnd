@@ -176,7 +176,8 @@ export const MyChangePoint = ({navigation, route}: Props) => {
                 <Text style={[styles.inactiveButtonText]}>입금신청</Text>
               </View>
             </>
-          )}
+          )
+          }
         </TouchableOpacity>
       </View>
       <MyBankModal

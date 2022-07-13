@@ -10,7 +10,10 @@ import {
   Dimensions,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../assets/CalculateLength';
 import {useMutation, useQueryClient} from 'react-query';
 import {postPointsConvert} from '../api/my';

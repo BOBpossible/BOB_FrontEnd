@@ -6,7 +6,7 @@ import {DesignSystem} from '../assets/DesignSystem';
 
 type DoneModalProps = {
   visible: boolean;
-  closeDoneModal: () => Promise<void>;
+  closeDoneModal: () => void;
   category: string;
   point?: number;
 };

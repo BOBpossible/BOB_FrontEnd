@@ -36,15 +36,6 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) =
             </View>
             <Text style={[DesignSystem.caption1Lt, styles.userEmail]}>{email}</Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo', {username: name, email: email, auth: statusMessage})}>
-            <View style={[styles.editUserInfo]}>
-              <Text style={[DesignSystem.caption1Lt, {color: '#6C69FF'}]}>회원정보 수정</Text>
-              <Image
-                style={{width: 24}}
-                source={require('../../assets/images/arrowGrey8.png')} ///////////////////////////////////////////////////
-              />
-            </View>
-          </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('MyPoint', {point: point})} style={[styles.userPointWrap]}>
           <View style={[DesignSystem.centerArrange, {flexDirection: 'row' }]}>
