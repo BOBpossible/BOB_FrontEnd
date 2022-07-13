@@ -10,15 +10,13 @@ import {
   ScrollView,
   Modal,
 } from 'react-native';
-import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {MyStackParamList} from '../nav/MyNavigator';
 import {MyHeader} from '../components/My/MyHeader';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {DesignSystem} from '../assets/DesignSystem';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../assets/CalculateLength';
-import {useNavigation} from '@react-navigation/native';
 import {postReviewReport} from '../api';
+import DoneModal from './DoneModal';
 
 export type ReviewReportModalProps = {
   reviewId: number;
@@ -32,16 +30,19 @@ export const ReviewReportModal: FC<ReviewReportModalProps> = ({
 }) => {
   const [body, setBody] = useState('');
   const [focusedBody, setFocusedBody] = useState(false);
-
+  const [doneModal, setDoneModal] = useState(false);
   const goBack = () => {
     closeReportModal();
   };
   const handleSubmit = async () => {
     setBody('');
     await postReviewReport({reviewId: reviewId, content: body}); //리뷰 post보내기
+    setDoneModal(true);
+  };
+  const closeDoneModal = () => {
+    setDoneModal(false);
     closeReportModal();
   };
-
   return (
     <Modal visible={visible}>
       <SafeAreaView style={[styles.flex, {backgroundColor: '#FFFFFF'}]}>
@@ -86,6 +87,7 @@ export const ReviewReportModal: FC<ReviewReportModalProps> = ({
             </TouchableOpacity>
           </View>
         </View>
+        <DoneModal visible={doneModal} closeDoneModal={closeDoneModal} category={'신고'} />
       </SafeAreaView>
     </Modal>
   );

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import type {FC} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../../assets/DesignSystem';
-import { ReviewReportModal } from '../../modal/ReviewReportModal';
+import {ReviewReportModal} from '../../modal/ReviewReportModal';
 
 type MapStoreReviewProps = {
   images: {imageUrl: string}[];

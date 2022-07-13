@@ -144,7 +144,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
         <View style={[styles.flexRow]}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('MyPoint', {point: data?.point})}>
             <View style={[styles.pointWrap]}>
               <Text style={[styles.pointP]}>P </Text>
               <Text style={[styles.pointText]}>{data?.point}</Text>

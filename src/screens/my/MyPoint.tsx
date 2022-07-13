@@ -33,17 +33,10 @@ export const MyPoint = ({navigation, route}: Props) => {
     ({pageParam}) => getPointsList({pageParam}),
     {
       getNextPageParam: (lastPage, pages) => {
-        // console.log('last ?', lastPage.data.result.point.last);
         return pages.length;
-        // if (lastPage.data.result.point.last === false) {
-        //   return pages.length + 1;
-        // } else {
-        //   return undefined;
-        // }
       },
     },
   );
-  // console.log('has?', DataPointsList.hasNextPage);
   // console.log('DataPointsList', DataPointsList.data?.pages[0].data.result.point.content);
 
   const goBack = () => {
@@ -79,18 +72,12 @@ export const MyPoint = ({navigation, route}: Props) => {
             <FlatList
               style={{marginTop: 18}}
               showsVerticalScrollIndicator={true}
-              // scrollEventThrottle={10}
-              // data={dummyMission}
               data={DataPointsList.data?.pages}
-              onEndReached={() => {
-                // console.log('lllllllllllllllllllllokadmore');
-                // console.log(DataPointsList.hasNextPage);
+              onEndReached={() => {;
                 DataPointsList.fetchNextPage();
               }}
-              // onEndReachedThreshold={0.3}
               renderItem={({item}) => (
                 <>
-                  {/* {console.log('iiiiiiiiiiiiii', item.data.result.point.content)} */}
                   {item.data.result.point.content.map((e: any, i: number) => {
                     return (
                       <View key={i}>
@@ -105,14 +92,6 @@ export const MyPoint = ({navigation, route}: Props) => {
                   })}
                 </>
               )}
-              // ItemSeparatorComponent={() => <View style={{marginTop: 32}} />}
-              // ListFooterComponent={
-              //   <>
-              //     {DataPointsList.isFetching && !DataPointsList.isFetchingNextPage && (
-              //       <ActivityIndicator />
-              //     )}
-              //   </>
-              // }
             />
           </View>
         </View>

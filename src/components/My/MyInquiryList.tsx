@@ -20,7 +20,6 @@ export const MyInquiryList: FC<goWriteProps> = ({setNowWrite}) => {
   return (
     <View style={[styles.totalWrap]}>
       <FlatList
-        inverted
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingTop: 60}}
         scrollEventThrottle={10}

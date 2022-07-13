@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import type {FC} from 'react';
 import {Animated, Image, Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -73,6 +73,13 @@ const DoneModal: FC<DoneModalProps> = ({visible, closeDoneModal, category, point
               <Text style={[styles.blackTitleText]}>문의 접수 완료!</Text>
               <Text style={[DesignSystem.body2Lt, {color: '#616161', marginTop: 9}]}>
                 문의가 접수되었습니다.
+              </Text>
+            </>
+          ) : category === '신고' ? (
+            <>
+              <Text style={[styles.blackTitleText]}>신고 접수 완료!</Text>
+              <Text style={[DesignSystem.body2Lt, {color: '#616161', marginTop: 9}]}>
+                신고가 접수되었습니다.
               </Text>
             </>
           ) : (

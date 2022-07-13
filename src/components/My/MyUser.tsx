@@ -4,7 +4,6 @@ import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import {Colors} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {DesignSystem} from '../../assets/DesignSystem';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type MyUserProps = {
   authentication: boolean;
