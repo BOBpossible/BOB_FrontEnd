@@ -9,6 +9,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
+import {IMissionSuccess} from '../../data';
 
 interface dayofweekType {
   [index: string]: string;
@@ -22,7 +23,10 @@ interface dayofweekType {
 }
 
 export const MissionSuccessList = () => {
-  const DataMissionsComplete = useQuery(queryKey.MISSIONSCOMPLETE, getMissionsComplete);
+  const DataMissionsComplete = useQuery<IMissionSuccess[]>(
+    queryKey.MISSIONSCOMPLETE,
+    getMissionsComplete,
+  );
   // console.log('DataMissionsComplete: ', DataMissionsComplete.data);//DataMissionsComplete.data.~
 
   //prettier-ignore
@@ -32,10 +36,13 @@ export const MissionSuccessList = () => {
 
   return (
     <FlatList
-      inverted
       style={{marginTop: hp(calHeight(16))}}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{paddingTop: hp(calHeight(16)), backgroundColor: '#F6F6FA'}}
+      contentContainerStyle={{
+        paddingTop: hp(calHeight(16)),
+        backgroundColor: '#F6F6FA',
+        paddingBottom: hp(calHeight(50)),
+      }}
       scrollEventThrottle={10}
       data={DataMissionsComplete.data}
       renderItem={({item}) => (
@@ -50,6 +57,7 @@ export const MissionSuccessList = () => {
             storeId={item.storeId}
             storeName={item.storeName}
             successDate={item.successDate}
+            reviewStatus={item.reviewStatus}
           />
         </>
       )}

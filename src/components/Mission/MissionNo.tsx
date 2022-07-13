@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
-import {Image, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {DesignSystem} from '../../assets/DesignSystem';
 
 export type MissionNoProps = {
@@ -16,9 +17,15 @@ export const MissionNo: FC<MissionNoProps> = ({progressnow}) => {
         {'홈화면에서 미션을 도전 해보세요 :)'}
       </Text>
       {progressnow === 0 ? (
-        <Image source={require('../../assets/images/noMission/cryingBob.png')} />
+        <FastImage
+          source={require('../../assets/images/noMission/cryingBob.png')}
+          style={{width: 159, height: 105}}
+        />
       ) : (
-        <Image source={require('../../assets/images/noMission/steamingBob.png')} />
+        <FastImage
+          source={require('../../assets/images/noMission/steamingBob.png')}
+          style={{width: 159, height: 164}}
+        />
       )}
     </View>
   );

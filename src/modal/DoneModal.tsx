@@ -6,7 +6,7 @@ import {DesignSystem} from '../assets/DesignSystem';
 
 type DoneModalProps = {
   visible: boolean;
-  closeDoneModal: () => void;
+  closeDoneModal: () => Promise<void>;
   category: string;
   point?: number;
 };
@@ -54,7 +54,10 @@ const DoneModal: FC<DoneModalProps> = ({visible, closeDoneModal, category, point
                   position: 'relative',
                   left: 35,
                   top: -65,
-                }}>{point}P</Text>
+                }}
+              >
+                {point}P
+              </Text>
             </Animated.View>
           ) : (
             <Icon name="check" size={71} color="#6C69FF" />

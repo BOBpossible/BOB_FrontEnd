@@ -35,3 +35,16 @@ export type IDataCompletedMissionsType = {
   storeName: string;
   successDate: string;
 };
+
+export type IMissionSuccess = {
+  dayOfWeek: string;
+  mission: string;
+  missionId: number;
+  missionStatus: string;
+  point: number;
+  reviewStatus: string;
+  storeCategory: string;
+  storeId: number;
+  storeName: string;
+  successDate: string;
+};

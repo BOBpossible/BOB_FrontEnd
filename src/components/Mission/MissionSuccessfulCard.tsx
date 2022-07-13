@@ -18,6 +18,7 @@ export type MissionSuccessfulCardProps = {
   storeName: string;
   successDate: string; //성공날짜 서버에 따라 수정필
   dayOfWeek: string;
+  reviewStatus: string;
 };
 
 export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
@@ -29,6 +30,7 @@ export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
   storeId,
   storeName,
   successDate,
+  reviewStatus,
 }) => {
   const [reviewModal, setReviewModal] = useState(false);
   function handleReviewPress() {
@@ -56,9 +58,13 @@ export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
             </Text>
           </View>
         </View>
-        <TouchableOpacity onPress={handleReviewPress} style={[styles.makeReviewButton]}>
-          <Text style={[DesignSystem.h3SB, DesignSystem.purple5]}>리뷰 작성</Text>
-        </TouchableOpacity>
+        {reviewStatus !== 'NEW' ? (
+          <TouchableOpacity onPress={handleReviewPress} style={[styles.makeReviewButton]}>
+            <Text style={[DesignSystem.h3SB, DesignSystem.purple5]}>리뷰 작성</Text>
+          </TouchableOpacity>
+        ) : (
+          <></>
+        )}
       </View>
       <ReviewModal
         visible={reviewModal}
@@ -71,25 +77,27 @@ export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
 };
 
 const styles = StyleSheet.create({
-  missionCardWrap: {marginLeft: 16, marginRight: 16},
+  missionCardWrap: {marginLeft: 16, marginRight: 16, flex: 1},
   missionCard: {
-    height: hp(calHeight(198)),
     backgroundColor: 'white',
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'space-evenly',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   missionMain: {
-    width: wp(calWidth(303)),
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: hp(calHeight(10)),
   },
   nameBox: {
     alignItems: 'center',
   },
   seperateLine: {
     height: 1,
-    width: wp(calWidth(303)),
+    width: '100%',
     backgroundColor: '#DFDFDF',
     marginTop: hp(calHeight(10)),
     marginBottom: hp(calHeight(10)),
@@ -100,6 +108,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#6C69FF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  doneReviewButton: {
+    width: wp(calWidth(303)),
+    height: hp(calHeight(42)),
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#C8C8C8',
     justifyContent: 'center',
     alignItems: 'center',
   },
