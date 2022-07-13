@@ -7,21 +7,21 @@ type switchProps = {
 };
 function moveLeft(progressValue: Animated.Value) {
   Animated.timing(progressValue, {
-    toValue: -15, //
+    toValue: 2, //
     duration: 200, //
     useNativeDriver: false,
   }).start();
 }
 function moveRight(progressValue: Animated.Value) {
   Animated.timing(progressValue, {
-    toValue: 41, //
+    toValue: 68, //
     duration: 200, //
     useNativeDriver: false,
   }).start();
 }
 
 export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgressnow}) => {
-  const progressValue = useState(new Animated.Value(-15))[0]; //
+  const progressValue = useState(new Animated.Value(2))[0]; //
 
   return (
     <View style={[styles.progressRow]}>
@@ -35,7 +35,7 @@ export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgress
                 ]
               : [
                   styles.progressSwitch,
-                  {width: 77, borderRadius: 21, transform: [{translateX: progressValue}]},
+                  {width: 66, borderRadius: 21, transform: [{translateX: progressValue}]},
                 ]
           }
         />
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     width: 138,
     height: 34,
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+
     backgroundColor: '#FCFCFC',
   },
   progressSwitch: {
@@ -115,6 +115,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   progressTextWrap: {
+    width: 68,
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  progressTextWrap2: {
+    width: 68,
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',

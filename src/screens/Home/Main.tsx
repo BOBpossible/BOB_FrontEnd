@@ -75,7 +75,6 @@ const Main = () => {
                 useNativeDriver: false,
               })(event);
             }}
-            ItemSeparatorComponent={() => <View style={[styles.missionSeperate]} />}
             ListFooterComponent={() => <View />}
             ListFooterComponentStyle={{marginTop: 100}}
           />
@@ -92,9 +91,6 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? hp((230 / 812) * 100) : hp(calHeight(230)),
     paddingBottom: 10,
     backgroundColor: '#F6F6FA',
-  },
-  missionSeperate: {
-    marginTop: 12,
   },
   flex: {
     flex: 1,
