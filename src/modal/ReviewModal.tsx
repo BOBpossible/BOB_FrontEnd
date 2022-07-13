@@ -10,11 +10,14 @@ import {getStores, postReview, postReviewImages} from '../api';
 import {queryKey} from '../api/queryKey';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {IStoreInfo} from '../data/IStore';
+import {useRecoilState} from 'recoil';
+import {openModal} from '../state';
 
 type ReviewModalProps = {
   storeId: number;
   visible: boolean;
   closeReviewModal: () => void;
+  missionId?: number;
 };
 type imageData = {
   uri: string;
@@ -22,12 +25,12 @@ type imageData = {
   name: string;
 };
 
-const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId}) => {
+const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, missionId}) => {
+  const [openDoneModal, setOpenDoneModal] = useRecoilState(openModal);
   const [rating, setRating] = useState(0);
   const [showRating, setShowRating] = useState(true);
   const [reviewContent, setReviewContent] = useState('');
   const [imageUri, setImageUri] = useState<imageData[]>([]);
-  const [doneModal, setDoneModal] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -45,12 +48,12 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
   );
 
   const reviewMutation = useMutation(
-    (data: {storeId: number; content: string; rate: number}) => postReview(data),
+    (data: {storeId: number; content: string; rate: number; missionId: number}) => postReview(data),
     {
-      onSuccess(data) {
-        console.log(data);
+      onSuccess(Reviewdata) {
+        console.log(Reviewdata);
         if (imageUri.length !== 0) {
-          reviewImageMutation.mutate(data.result);
+          reviewImageMutation.mutate(Reviewdata.result);
         } else {
           queryClient.invalidateQueries(queryKey.STOREINFO);
         }
@@ -58,17 +61,25 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
     },
   );
 
-  const DataStores = useQuery<IStoreInfo>(queryKey.STOREINFO, () => getStores(storeId));
+  const DataStores = useQuery<IStoreInfo>([queryKey.STOREINFO, storeId], () => getStores(storeId));
+  console.log(DataStores.data);
 
   const submitReview = async () => {
-    await reviewMutation.mutate({storeId: storeId, content: reviewContent, rate: rating});
-    setDoneModal(true); //던모달 열기
+    await reviewMutation.mutate({
+      storeId: storeId,
+      content: reviewContent,
+      rate: rating,
+      missionId: missionId as number,
+    });
+    await setOpenDoneModal(true);
+    // setDoneModal(true); //던모달 열기
   };
   const handleCloseAllModal = () => {
     setShowRating(true);
     setRating(0);
     setReviewContent('');
-    setDoneModal(false);
+    setOpenDoneModal(false);
+    // setDoneModal(false);
     closeReviewModal();
   };
   return (
@@ -92,7 +103,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
             <>
               <View>
                 <Text style={[DesignSystem.title4Md, {color: '#000000'}]}>
-                  {DataStores.data !== undefined && DataStores.data?.name}
+                  {DataStores.data !== undefined && DataStores.data.name}
                 </Text>
               </View>
               <View style={[styles.backButton, {opacity: 0}]}>
@@ -124,7 +135,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId})
           ))}
         {DataStores.data !== undefined && (
           <DoneModal
-            visible={doneModal}
+            visible={openDoneModal}
             closeDoneModal={handleCloseAllModal}
             category={'리뷰'}
             point={DataStores.data?.point}

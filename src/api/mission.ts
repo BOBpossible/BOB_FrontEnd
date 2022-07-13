@@ -7,7 +7,7 @@ export const getMissionsProgress = async () => {
 };
 export const getMissionsComplete = async () => {
   const response = await customAxios().get('/api/v1/missions/me/complete');
-  console.log('ssssdsdd', response.data);
+  console.log('미션 컴플리트 데이터 성공: ', response.data);
   return response.data.result;
 };
 export const patchMissionCancel = async (missionId: number) => {

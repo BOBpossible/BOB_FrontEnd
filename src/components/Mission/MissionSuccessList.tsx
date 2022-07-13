@@ -4,10 +4,14 @@ import {MissionSuccessfulCard} from './MissionSuccessfulCard';
 import {useQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
 import {getMissionsComplete} from '../../api/mission';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
 
 interface dayofweekType {
+  [index: string]: string;
   MONDAY: string;
   TUESDAY: string;
   WEDNESDAY: string;

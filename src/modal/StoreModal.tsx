@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {MapStoreReviewList, MapStoreReviewPhoto} from '../components';
-import ReviewModal from './ReviewModal';
 import {useStyle} from '../hooks';
 import {useQuery} from 'react-query';
 import {queryKey} from '../api/queryKey';
@@ -26,10 +25,6 @@ type StoreModalProps = {
 
 const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) => {
   const [isReview, setIsReview] = useState(false);
-  const [reviewModal, setReviewModal] = useState(false);
-  const openReviewModal = async () => {
-    setReviewModal(true);
-  };
 
   const storeData = useQuery<IStoreData>([queryKey.STOREDATA, storeId], () =>
     getStoreData(storeId),
@@ -71,7 +66,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
             offset={offset1}
             reviewCount={storeData.data?.reviewCount}
           />
-        ) : (
+        ) : storeData !== undefined ? (
           //리뷰사진
           <MapStoreReviewPhoto
             storeData={storeData.data}
@@ -80,20 +75,9 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
             offset={offset1}
             reviewCount={storeData.data?.reviewCount}
           />
+        ) : (
+          <></>
         )}
-        {isReview && (
-          <TouchableOpacity onPress={() => openReviewModal()}>
-            <View style={[styles.reviewButton]}>
-              <Text style={[styles.reviewButtonText]}>리뷰 남기기</Text>
-              <Icon name="pencil" size={18} color="#FFFFFF" />
-            </View>
-          </TouchableOpacity>
-        )}
-        <ReviewModal
-          visible={reviewModal}
-          closeReviewModal={() => setReviewModal(false)}
-          storeId={storeId}
-        />
       </SafeAreaView>
     </Modal>
   );

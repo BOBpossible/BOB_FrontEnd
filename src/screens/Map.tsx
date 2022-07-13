@@ -28,6 +28,7 @@ const Map = () => {
   const [storeModal, setStoreModal] = useState(false);
   const [storeId, setStoreId] = useState(0);
   //미션개수 연동 후 삭제
+
   const webviewRef = useRef<WebView | null>(null);
 
   const DataUser = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
@@ -93,7 +94,7 @@ const Map = () => {
       <MapWebview userId={DataUser.data?.userId} webviewRef={webviewRef} />
 
       <BottomSheet
-        snapPoints={[55, listSnapPoint]}
+        snapPoints={[60, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
         backdropComponent={renderBackdrop}
         style={{zIndex: 10}}
