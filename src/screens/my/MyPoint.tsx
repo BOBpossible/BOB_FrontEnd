@@ -48,7 +48,7 @@ export const MyPoint = ({navigation, route}: Props) => {
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
-      <SafeAreaView style={[styles.flex, {backgroundColor: '#F8F8F8'}]}>
+      <SafeAreaView style={[styles.flex, {backgroundColor: '#FFFFFF'}]}>
         <MyHeader goBack={goBack} title={'내 포인트'} />
         <View style={{backgroundColor: '#FFFFFF'}}>
           <View style={[styles.myPointWrap, styles.marginLR]}>
