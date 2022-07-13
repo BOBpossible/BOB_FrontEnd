@@ -1,36 +1,70 @@
-import React from 'react';
+import React, {useState} from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {calWidth} from '../../assets/CalculateLength';
+import {useQuery} from 'react-query';
+import {queryKey} from '../../api/queryKey';
+import {getQuestionDetail} from '../../api/my';
 
 export type MyInquiryDetailsProps = {
   title: string;
-  body: string;
   date: string;
   status: string;
-  inquiryId: number;
+  questionId: number;
 };
 
-//prettier-ignore
-export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, body, date, status, inquiryId}) => {
+export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, date, status, questionId}) => {
+  const [openQuestion, setOpenQuestion] = useState(false);
   function handleReviewPress() {
-    console.log(`${inquiryId}번 문의`);
+    console.log(`${questionId}번 문의`);
+    setOpenQuestion(!openQuestion);
   }
+  const {data} = useQuery([queryKey.QUESTIONDETAIL, questionId], () =>
+    getQuestionDetail(questionId),
+  );
+
   return (
     <View style={{flex: 1}}>
       <TouchableOpacity onPress={handleReviewPress} style={[styles.listDetailsWrap]}>
         <View style={[styles.listLeftWrap]}>
-          <Text style={[styles.titleText, DesignSystem.title4Md]}>{title.length < 24 ? title : title.slice(0,24)}{title.length < 24 ? null : '...'}</Text>
-          <Text style={[DesignSystem.body2Lt, {color: '#949494'}]}>{date.slice(0,4)}.{date.slice(5,7)}.{date.slice(8,10)}</Text>
+          <Text style={[styles.titleText, DesignSystem.title4Md]}>
+            {title.length < 24 ? title : title.slice(0, 24)}
+            {title.length < 24 ? null : '...'}
+          </Text>
+          <Text style={[DesignSystem.body2Lt, {color: '#949494'}]}>
+            {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)}
+          </Text>
         </View>
         <View>
-          <Text style={[DesignSystem.body1Lt, {color: status === 'WAITING' ?'#777777' : '#6C69FF'}]}>
+          <Text
+            style={[DesignSystem.body1Lt, {color: status === 'WAITING' ? '#777777' : '#6C69FF'}]}
+          >
             {status === 'WAITING' ? '답변 대기중' : '답변 완료'}
           </Text>
         </View>
       </TouchableOpacity>
+      {openQuestion && (
+        <View>
+          <View
+            style={{
+              padding: 16,
+              borderColor: '#E8E8E8',
+              borderWidth: 1,
+              borderRadius: 10,
+              marginBottom: 8,
+            }}
+          >
+            <Text style={[DesignSystem.body1Long, {color: 'black'}]}>{data?.content}</Text>
+          </View>
+          <View
+            style={{padding: 16, backgroundColor: '#F8F8F8', marginBottom: 14, borderRadius: 10}}
+          >
+            <Text style={[DesignSystem.body1Long, {color: 'black'}]}>{data?.answer}</Text>
+          </View>
+        </View>
+      )}
     </View>
   );
 };

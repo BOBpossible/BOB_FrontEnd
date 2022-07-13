@@ -94,6 +94,7 @@ export const MapStoreReviewPhoto = ({
   } else {
     return (
       <Animated.FlatList
+        showsVerticalScrollIndicator={false}
         onScroll={(event) => {
           Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
             useNativeDriver: false,

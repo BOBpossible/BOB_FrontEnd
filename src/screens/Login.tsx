@@ -74,6 +74,7 @@ const Login = () => {
 
       // use credentialState response to ensure the user is authenticated
       if (credentialState === appleAuth.State.AUTHORIZED) {
+        console.log('애플로그인 성공!:', appleAuthRequestResponse);
         const {email, fullName} = appleAuthRequestResponse;
         const data = {name: fullName, email: email};
         postLogin(data);

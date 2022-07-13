@@ -15,7 +15,7 @@ export const MyInquiryList: FC<goWriteProps> = ({setNowWrite}) => {
     setNowWrite(true);
   };
   const DataQuestions = useQuery(queryKey.QUESTIONS, getQuestions);
-  // console.log(DataQuestions.data);
+  console.log(DataQuestions.data);
 
   return (
     <View style={[styles.totalWrap]}>
@@ -28,10 +28,9 @@ export const MyInquiryList: FC<goWriteProps> = ({setNowWrite}) => {
           <>
             <MyInquiryDetails
               title={item.title}
-              body={item.body}
               date={item.date}
               status={item.questionStatus}
-              inquiryId={item.inquiryId}
+              questionId={item.questionId}
             />
           </>
         )}

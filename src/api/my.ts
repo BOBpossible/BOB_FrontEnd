@@ -33,6 +33,11 @@ export const getQuestions = async () => {
   return response.data.result;
 };
 
+export const getQuestionDetail = async (questionId: number) => {
+  const response = await customAxios().get(`/api/v1/questions/${questionId}`);
+  return response.data.result;
+};
+
 //포인트 전환
 export const postPointsConvert = async (data: {
   accountNumber: number;

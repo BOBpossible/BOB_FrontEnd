@@ -9,8 +9,8 @@ import {MissionUser} from '../components/Mission/MissionUser';
 import {MissionNo} from '../components/Mission/MissionNo';
 import {useQuery} from 'react-query';
 import {queryKey} from '../api/queryKey';
-import {getMissionsProgress} from '../api/mission';
-import {IMissionsProgress, IgetUsersMe} from '../data';
+import {getMissionsComplete, getMissionsProgress} from '../api/mission';
+import {IMissionsProgress, IgetUsersMe, IMissionSuccess} from '../data';
 import {getUserInfo} from '../api/user';
 import {ConnectionError} from '../components/ConnectionError';
 import messaging from '@react-native-firebase/messaging';
@@ -27,6 +27,12 @@ const Mission = () => {
     queryKey.MISSIONSPROGRESS,
     getMissionsProgress,
   );
+
+  const DataMissionsComplete = useQuery<IMissionSuccess[]>(
+    queryKey.MISSIONSCOMPLETE,
+    getMissionsComplete,
+  );
+
   console.log('DataMissionsProgress.data 현재도전한미션', DataMissionsProgress.data); //스웨거에서 result
 
   useEffect(() => {
@@ -77,7 +83,7 @@ const Mission = () => {
                 />
               </View>
             )
-          ) : DataMissionsProgress.data?.length === 0 ? (
+          ) : DataMissionsComplete.data?.length === 0 ? (
             <MissionNo progressnow={progressnow} /> ///미션없는화면
           ) : (
             <MissionSuccessList />
