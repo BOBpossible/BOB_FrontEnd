@@ -15,3 +15,14 @@ export const patchNotifications = async (data: {
   const response = await customAxios().patch('/api/v1/users/me/notification', data);
   return response.data;
 };
+
+//문의하기
+export const postQuestions = async (data: {content: string; title: string}) => {
+  const response = await customAxios().post('/api/v1/questions', data);
+  return response.data;
+};
+//문의 내역 조회
+export const getQuestions = async () => {
+  const response = await customAxios().get('/api/v1/questions/me');
+  return response.data.result;
+};

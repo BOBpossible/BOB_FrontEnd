@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -12,17 +12,45 @@ import {
 } from 'react-native';
 // eslint-disable-next-line prettier/prettier
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {useMutation, useQueryClient} from 'react-query';
+import {postQuestions} from '../../api/my';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
+import DoneModal from '../../modal/DoneModal';
+export type goWriteProps = {
+  setNowWrite: any;
+};
 
-export const MyWriteInquiry = () => {
+export const MyWriteInquiry: FC<goWriteProps> = ({setNowWrite}) => {
   const [focusedTitle, setFocusedTitle] = useState(false);
   const [focusedBody, setFocusedBody] = useState(false);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const queryClient = useQueryClient();
+  const [doneModal, setDoneModal] = useState(false);
 
-  const handleSubmit = () => {
+  const questionMutation = useMutation(
+    (data: {content: string; title: string}) => postQuestions(data),
+    {
+      onSuccess: (data) => {
+        console.log('문의하기 성공: ', data);
+        queryClient.invalidateQueries('questions');
+        setDoneModal(true);
+      },
+      onError: (err) => {
+        console.log('문의하기 실패: ', err);
+      },
+    },
+  );
+
+  const handleSubmit = async () => {
+    await questionMutation.mutate({content: body, title: title});
     console.log('문의 제출');
   };
+  const closeDoneModal = () => {
+    setDoneModal(false);
+    setNowWrite(false);
+  };
+
   return (
     <View style={[styles.totalWrap]}>
       <View style={{flex: 1}}>
@@ -82,6 +110,7 @@ export const MyWriteInquiry = () => {
           )}
         </TouchableOpacity>
       </View>
+      <DoneModal visible={doneModal} closeDoneModal={closeDoneModal} category={'문의'} />
     </View>
   );
 };

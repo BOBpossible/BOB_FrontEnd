@@ -84,6 +84,7 @@ export const MapStoreReviewList = ({
   } else {
     return (
       <Animated.FlatList
+        inverted
         onScroll={(event) => {
           Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
             useNativeDriver: false,

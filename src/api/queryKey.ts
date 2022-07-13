@@ -13,4 +13,5 @@ export const queryKey = {
   STOREREVIEWIMAGES: 'storeReviewImages',
   STOREREVIEWLIST: 'storeReviewList',
   NOTIFICATIONS: 'notifications',
+  QUESTIONS: 'questions',
 };

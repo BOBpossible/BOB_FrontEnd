@@ -32,23 +32,15 @@ export const MissionSuccessList = () => {
 
   return (
     <FlatList
+      inverted
       style={{marginTop: hp(calHeight(16))}}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{paddingBottom: hp(calHeight(16)), backgroundColor: '#F6F6FA'}}
+      contentContainerStyle={{paddingTop: hp(calHeight(16)), backgroundColor: '#F6F6FA'}}
       scrollEventThrottle={10}
-      // data={dummyMission}
       data={DataMissionsComplete.data}
       renderItem={({item}) => (
         <>
           <MissionSuccessfulCard
-            // mission={'10000원 이상'}
-            // missionId={1}
-            // // missionStatus={status}
-            // point={500}
-            // storeCategory={'중국집'}
-            // storeId={31}
-            // storeName={'반이학생마라123탕'}
-            // successDate={'2022-07-07T07:43:57.267Z'}
             dayOfWeek={DAYOFWEEK[item.dayOfWeek]}
             // dayOfWeek={item.dayOfWeek}
             mission={item.mission}

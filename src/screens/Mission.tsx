@@ -77,7 +77,7 @@ const Mission = () => {
                 />
               </View>
             )
-          ) : DataMissionsProgress.data === undefined ? (
+          ) : DataMissionsProgress.data?.length === 0 ? (
             <MissionNo progressnow={progressnow} /> ///미션없는화면
           ) : (
             <MissionSuccessList />
