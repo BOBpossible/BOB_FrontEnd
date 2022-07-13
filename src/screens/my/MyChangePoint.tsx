@@ -8,8 +8,15 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MyBankModal from '../../modal/MyBankModal';
 import MyBankFeeModal from '../../modal/MyBankFeeModal';
 import {DesignSystem} from '../../assets/DesignSystem';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
+import {useQuery} from 'react-query';
+import {IgetUsersMe} from '../../data';
+import {queryKey} from '../../api/queryKey';
+import {getUserInfo} from '../../api';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyChangePoint'>;
 
@@ -24,14 +31,16 @@ export const MyChangePoint = ({navigation, route}: Props) => {
   const [selectedBank, setSelectedBank] = useState('');
   const [openBankModal, setOpenBankModal] = useState(false);
   const [fillDone, setFillDone] = useState(false);
+  const [pointOver, setPointOver] = useState(false);
 
   const goBack = () => {
     navigation.goBack();
   };
   const handleSubmit = () => {
-    console.log('입금신청', inputName, inputPoint, inputAccounts);
+    // console.log('입금신청', inputName, inputPoint, inputAccounts);
     setFillDone(true);
   };
+  const {data, isSuccess, isError, error} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
 
   return (
     <SafeAreaView style={[styles.flex, {backgroundColor: 'white'}]}>
@@ -54,12 +63,18 @@ export const MyChangePoint = ({navigation, route}: Props) => {
                   style={[
                     styles.inputText,
                     focusedPoint ? styles.focusBorder : styles.unfocusBorder,
+                    pointOver ? styles.redBorder : null,
                     {paddingRight: 32},
                   ]}
                   onChangeText={(text) => {
                     setInputPoint(text);
+                    if (Number(text) > point || Number(text) % 5000 !== 0) { /////////////////////////// 확인하고싶으면 500으로두고.
+                      setPointOver(true);
+                    } else {
+                      setPointOver(false);
+                    }
                   }}
-                  value={inputPoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  value={inputPoint}
                   textAlign="right"
                   onBlur={() => setFocusedPoint(false)}
                   onFocus={() => setFocusedPoint(true)}
@@ -68,10 +83,12 @@ export const MyChangePoint = ({navigation, route}: Props) => {
                   P
                 </Text>
               </View>
-              <Text style={[styles.caption1Light, {color: '#949494'}]}>
+              <Text style={[styles.caption1Light, {color: pointOver ? 'red' : '#949494'}]}>
                 포인트는 5,000P 단위로 전환 가능합니다.
               </Text>
-              <Text style={[styles.caption1Light]}>또한, 송금 수수료 500P가 차감됩니다.</Text>
+              <Text style={[styles.caption1Light, {color: pointOver ? 'red' : '#949494'}]}>
+                또한, 송금 수수료 500P가 차감됩니다.
+              </Text>
             </View>
             <View style={[styles.titleNinput]}>
               <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 8}]}>예금주</Text>
@@ -103,9 +120,14 @@ export const MyChangePoint = ({navigation, route}: Props) => {
               </TouchableOpacity>
             </View>
             <View style={[styles.titleNinput]}>
-              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 8}]}>계좌 번호</Text>
+              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 8}]}>
+                계좌 번호
+              </Text>
               <TextInput
-                style={[styles.inputText, focusedAccounts ? styles.focusBorder : styles.unfocusBorder]}
+                style={[
+                  styles.inputText,
+                  focusedAccounts ? styles.focusBorder : styles.unfocusBorder,
+                ]}
                 onChangeText={(text) => {
                   setInputAccounts(text);
                 }}
@@ -116,32 +138,46 @@ export const MyChangePoint = ({navigation, route}: Props) => {
               />
             </View>
           </ScrollView>
+          {(inputPoint === '' ||
+            inputName === '' ||
+            selectedBank === '' ||
+            inputAccounts === '' ||
+            pointOver !== false) && (
+            <View style={[styles.fillAlarm]}>
+              <View style={[styles.progressToggle]}>
+                <Text style={[DesignSystem.caption1Lt, {color: 'white'}]}>
+                  정보작성을 완료해주세요.
+                </Text>
+              </View>
+            </View>
+          )}
         </KeyboardAvoidingView>
+
         <TouchableOpacity
           onPress={handleSubmit}
           style={[styles.buttonWrap]}
           disabled={
-            inputPoint !== '' && inputName !== '' && selectedBank !== '' && inputAccounts !== ''
+            //prettier-ignore
+            inputPoint !== '' && inputName !== '' && selectedBank !== '' && inputAccounts !== '' && pointOver === false
               ? false
               : true
           }
         >
-          {inputPoint !== '' && inputName !== '' && selectedBank !== '' && inputAccounts !== '' ? (
+          {
+            //prettier-ignore
+            inputPoint !== '' && inputName !== '' && selectedBank !== '' && inputAccounts !== '' && pointOver === false
+           ? (
             <View style={[styles.buttonStyle, styles.activeButton]}>
               <Text style={[styles.activeButtonText]}>입금신청</Text>
             </View>
           ) : (
             <>
-              <View style={[styles.fillAlarm]}>
-                <TouchableOpacity style={[styles.progressToggle]}>
-                  <Text style={[DesignSystem.caption1Lt, {color: 'white'}]}>정보작성을 완료해주세요.</Text>
-                </TouchableOpacity>
-              </View>
               <View style={[styles.buttonStyle, styles.inactiveButton]}>
                 <Text style={[styles.inactiveButtonText]}>입금신청</Text>
               </View>
             </>
-          )}
+          )
+          }
         </TouchableOpacity>
       </View>
       <MyBankModal
@@ -153,9 +189,14 @@ export const MyChangePoint = ({navigation, route}: Props) => {
       {fillDone && (
         <MyBankFeeModal
           visible={
-            inputPoint !== '' && inputName !== '' && selectedBank !== '' && inputAccounts !== ''
+            //prettier-ignore
+            inputPoint !== '' && inputName !== '' && selectedBank !== '' && inputAccounts !== '' && pointOver === false
           }
           closeBankFeeModal={() => setFillDone(false)}
+          accountNumber={Number(inputAccounts)}
+          bank={selectedBank}
+          name={data.name}
+          point={Number(inputPoint)}
         />
       )}
     </SafeAreaView>
@@ -195,6 +236,7 @@ const styles = StyleSheet.create({
   },
   focusBorder: {borderColor: '#6C69FF', borderWidth: 1},
   unfocusBorder: {borderColor: '#DFDFDF', borderWidth: 1},
+  redBorder: {borderColor: 'red', borderWidth: 2},
   buttonWrap: {justifyContent: 'center', alignItems: 'center', marginBottom: 16},
   buttonStyle: {
     width: '100%',

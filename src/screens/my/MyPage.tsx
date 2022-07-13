@@ -9,25 +9,15 @@ import {
 } from 'react-native-responsive-screen';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {calHeight} from '../../assets/CalculateLength';
-import {customAxios} from '../../api/customAxios';
 import {useQuery} from 'react-query';
 import {IgetUsersMe} from '../../data';
+import {queryKey} from '../../api/queryKey';
+import {getUserInfo} from '../../api';
 
 const MyPage = () => {
   const navigation = useNavigation();
-  const getUserInfo = async () => {
-    const {data} = await customAxios().get('/api/v1/users/me');
-    return data.result;
-  };
-  const {data, isSuccess, isError, error} = useQuery<IgetUsersMe>('userInfo', getUserInfo);
+  const {data, isSuccess, isError, error} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
   // data.point 로 접근
-  const storeData = async (value: string) => {
-    try {
-      await AsyncStorage.setItem('userToken', value);
-    } catch (e) {
-      console.log(e);
-    }
-  };
   const logout = async () => {
     await AsyncStorage.multiSet([
       ['accessToken', ''],
@@ -78,6 +68,9 @@ const MyPage = () => {
             <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>로그아웃</Text>
           </View>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => console.log('탈퇴')} style={{alignItems: 'flex-end'}}>
+          <Text style={[styles.quitText]}>계정탈퇴</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </>
   );
@@ -106,6 +99,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     marginBottom: 1,
     justifyContent: 'center',
+  },
+  quitText: {
+    color: '#777777',
+    fontSize: 14,
+    marginRight: 16,
+    marginTop: 8,
   },
 });
 

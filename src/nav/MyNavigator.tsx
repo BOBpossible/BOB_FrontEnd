@@ -4,7 +4,6 @@ import MyPage from '../screens/my/MyPage';
 import {MyReview} from '../screens/my/MyReview';
 import {MyNotificationsSetting} from '../screens/my/MyNotificationsSetting';
 import {MyInquiry} from '../screens/my/MyInquiry';
-import {MyEditUserInfo} from '../screens/my/MyEditUserInfo';
 import {MyPoint} from '../screens/my/MyPoint';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {MyChangePoint} from '../screens/my/MyChangePoint';
@@ -13,12 +12,11 @@ import {AuthNavigator} from './AuthNavigator';
 
 export type MyStackParamList = {
   MyPage: undefined;
-  MyEditUserInfo: {username: string; auth: string};
   MyPoint: {point: number};
   MyReview: undefined;
   MyNotificationsSetting: undefined;
   MyInquiry: undefined;
-  MyChangePoint: undefined;
+  MyChangePoint: {point: number};
   MyChangePointDone: undefined;
   AuthNavigator: undefined;
 };
@@ -29,7 +27,6 @@ export const MyNavigator = ({navigation, route}) => {
   React.useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
     if (
-      routeName === 'MyEditUserInfo' ||
       routeName === 'MyPoint' ||
       routeName === 'MyReview' ||
       routeName === 'MyNotificationsSetting' ||
@@ -49,7 +46,6 @@ export const MyNavigator = ({navigation, route}) => {
       screenOptions={{headerShown: false, gestureEnabled: true}}
     >
       <Stack.Screen name="MyPage" component={MyPage} />
-      <Stack.Screen name="MyEditUserInfo" component={MyEditUserInfo} />
       <Stack.Screen name="MyPoint" component={MyPoint} />
       <Stack.Screen name="MyReview" component={MyReview} />
       <Stack.Screen name="MyNotificationsSetting" component={MyNotificationsSetting} />
