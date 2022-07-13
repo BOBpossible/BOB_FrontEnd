@@ -47,7 +47,12 @@ export const getStoreReviewList = async ({pageParam = 0}, storeId?: number) => {
   return response;
 };
 
-export const postReview = async (data: {storeId: number; rate: number; content: string}) => {
+export const postReview = async (data: {
+  storeId: number;
+  rate: number;
+  content: string;
+  missionId: number;
+}) => {
   const response = await customAxios().post('/api/v1/reviews/me', data);
   return response.data;
 };

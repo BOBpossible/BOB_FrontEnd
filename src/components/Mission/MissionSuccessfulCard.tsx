@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
 import {DesignSystem} from '../../assets/DesignSystem';
 import ReviewModal from '../../modal/ReviewModal';
@@ -17,14 +20,20 @@ export type MissionSuccessfulCardProps = {
   dayOfWeek: string;
 };
 
-//prettier-ignore
 export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
-  dayOfWeek, mission, missionId, point, storeCategory, storeId, storeName, successDate,
+  dayOfWeek,
+  mission,
+  missionId,
+  point,
+  storeCategory,
+  storeId,
+  storeName,
+  successDate,
 }) => {
   const [reviewModal, setReviewModal] = useState(false);
   function handleReviewPress() {
     setReviewModal(true);
-    console.log(storeId,'번 리뷰 작성');
+    console.log(storeId, '번 리뷰 작성');
   }
 
   return (
@@ -32,9 +41,11 @@ export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
       <View style={[styles.missionCard]}>
         <View style={[styles.missionMain]}>
           <View style={[styles.nameBox]}>
-            <Text style={[DesignSystem.caption1Lt, DesignSystem.grey8]}>{successDate.slice(5,7)}/{successDate.slice(8,10)} ({dayOfWeek})</Text>
-              <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{storeName}</Text>
-              <Text style={[DesignSystem.body2Lt, DesignSystem.grey10]}>{storeCategory}</Text>
+            <Text style={[DesignSystem.caption1Lt, DesignSystem.grey8]}>
+              {successDate.slice(5, 7)}/{successDate.slice(8, 10)} ({dayOfWeek})
+            </Text>
+            <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{storeName}</Text>
+            <Text style={[DesignSystem.body2Lt, DesignSystem.grey10]}>{storeCategory}</Text>
           </View>
           <View style={[styles.seperateLine]} />
           <View>
@@ -46,13 +57,14 @@ export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
           </View>
         </View>
         <TouchableOpacity onPress={handleReviewPress} style={[styles.makeReviewButton]}>
-            <Text style={[DesignSystem.h3SB, DesignSystem.purple5]}>리뷰 작성</Text>
+          <Text style={[DesignSystem.h3SB, DesignSystem.purple5]}>리뷰 작성</Text>
         </TouchableOpacity>
       </View>
       <ReviewModal
         visible={reviewModal}
         closeReviewModal={() => setReviewModal(false)}
         storeId={storeId}
+        missionId={missionId}
       />
     </View>
   );

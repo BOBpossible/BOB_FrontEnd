@@ -6,7 +6,7 @@ type MapReviewToggleButtonProps = {
   toggleReview: () => void;
   togglePhoto: () => void;
   isReview: boolean;
-  reviewCount: number;
+  reviewCount?: number;
 };
 
 export const MapReviewToggleButton: FC<MapReviewToggleButtonProps> = ({
