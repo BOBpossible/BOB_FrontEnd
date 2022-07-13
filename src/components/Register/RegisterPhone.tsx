@@ -2,39 +2,46 @@ import React, {useEffect, useState} from 'react';
 import type {FC} from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {RegisterInterface} from '../../data';
-import {customAxios} from '../../api';
+import {DesignSystem} from '../../assets/DesignSystem';
+import axios from 'axios';
 
 type RegisterPhoneProps = {
   setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
   registerData: RegisterInterface;
+  onChange: (...event: any[]) => void;
+  value: string;
+  setAuthError: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const RegisterPhone: FC<RegisterPhoneProps> = ({setRegisterData, registerData}) => {
+export const RegisterPhone: FC<RegisterPhoneProps> = ({
+  setRegisterData,
+  registerData,
+  setAuthError,
+  onChange,
+  value,
+}) => {
   const [focusedName, setFocusedName] = useState(false);
   const [focusedAuth, setFocusedAuth] = useState(false);
-  const [convertNumber, setConvertNumber] = useState('');
-  const [authKey, setAuthKey] = useState('');
+  const [authKey, setAuthKey] = useState('-1');
   const [authInput, setAuthInput] = useState('');
-
+  console.log(authKey);
   const postPhone = async () => {
     try {
-      const response = await customAxios().post('/api/v1/');
-      setAuthKey(response.data);
+      const response = await axios.post('https://bobpossible.shop/auth/phone-validation', null, {
+        params: {phone: registerData.phone},
+      });
+      setAuthError(true);
+      setAuthKey(response.data.result.certNum);
     } catch (error) {}
   };
 
-  console.log(registerData);
   useEffect(() => {
-    if (convertNumber.length === 10) {
-      setConvertNumber(convertNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
+    if (authInput === authKey) {
+      setAuthError(false);
+    } else {
+      setAuthError(true);
     }
-    if (convertNumber.length === 13) {
-      setConvertNumber(
-        convertNumber.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'),
-      );
-    }
-    setRegisterData({...registerData, phone: convertNumber.replace(/-/g, '')});
-  }, [convertNumber]);
+  }, [authInput]);
 
   return (
     <View style={[styles.nameWrap]}>
@@ -51,27 +58,30 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({setRegisterData, register
         <TextInput
           style={[styles.nameInput, focusedName ? styles.focusBorder : styles.unfocusBorder]}
           onChangeText={(text) => {
-            setConvertNumber(text);
+            onChange(text);
+            setRegisterData({...registerData, phone: text});
           }}
-          value={convertNumber}
+          value={registerData.phone}
           placeholder="000  -  0000  -  0000"
           selectionColor={'#6C69FF'}
           onBlur={() => setFocusedName(false)}
           onFocus={() => setFocusedName(true)}
           keyboardType="number-pad"
-          maxLength={13}
+          maxLength={11}
         />
-        {convertNumber.length === 13 ? (
-          <TouchableOpacity onPress={() => {}} style={styles.enableButton}>
-            <Text>{authKey !== '' ? '다시 받기' : '인증번호 받기'}</Text>
+        {registerData.phone.length === 11 ? (
+          <TouchableOpacity onPress={() => postPhone()} style={styles.enableButton}>
+            <Text style={[DesignSystem.body1Lt, {color: '#6C69FF'}]}>
+              {authKey !== '-1' ? '다시 받기' : '인증번호 받기'}
+            </Text>
           </TouchableOpacity>
         ) : (
           <View style={styles.disableButton}>
-            <Text>인증번호 받기</Text>
+            <Text style={[DesignSystem.body1Lt, {color: '#3F3F3F'}]}>인증번호 받기</Text>
           </View>
         )}
       </View>
-      {authKey !== '' ? (
+      {authKey !== '-1' ? (
         <TextInput
           style={[styles.authInput, focusedAuth ? styles.focusBorder : styles.unfocusBorder]}
           onChangeText={(text) => {
