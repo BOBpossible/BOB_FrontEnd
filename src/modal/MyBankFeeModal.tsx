@@ -12,16 +12,47 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../assets/CalculateLength';
+import {useMutation, useQueryClient} from 'react-query';
+import {postPointsConvert} from '../api/my';
 
 type MyBankFeeModalProps = {
   visible: boolean;
   closeBankFeeModal: () => void;
+  accountNumber: number;
+  bank: string;
+  name: string;
+  point: number;
 };
 
-const MyBankModal: FC<MyBankFeeModalProps> = ({visible, closeBankFeeModal}) => {
+//prettier-ignore
+const MyBankModal: FC<MyBankFeeModalProps> = ({visible, closeBankFeeModal, accountNumber, bank, name, point}) => {
   const MARGINBOTTOM = Dimensions.get('screen').height / 2 - 80;
   const navigation = useNavigation();
+  const queryClient = useQueryClient();
 
+  const questionMutation = useMutation(
+    (data: {accountNumber: number; bank: string; name: string; point: number}) =>
+      postPointsConvert(data),
+    {
+      onSuccess: (data) => {
+        console.log('입금신청 성공: ', data);
+        queryClient.invalidateQueries('userInfo');
+      },
+      onError: (err) => {
+        console.log('입금신청 실패: ', err);
+      },
+    },
+  );
+
+  const handleSubmit = async () => {
+    await questionMutation.mutate({
+      accountNumber: accountNumber,
+      bank: bank,
+      name: name,
+      point: point,
+    });
+    navigation.navigate('MyChangePointDone');
+  };
   return (
     <Modal visible={visible} transparent statusBarTranslucent animationType="fade">
       <View style={[styles.overlay]}>
@@ -43,7 +74,7 @@ const MyBankModal: FC<MyBankFeeModalProps> = ({visible, closeBankFeeModal}) => {
               <TouchableOpacity style={[styles.buttonStyle, styles.cancelButton]} onPress={closeBankFeeModal}>
                 <Text style={{color: '#616161', fontFamily: 'Pretendard-Regular', fontSize: 16}}>취소</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.buttonStyle, styles.okButton]} onPress={() => navigation.navigate('MyChangePointDone')}>
+              <TouchableOpacity style={[styles.buttonStyle, styles.okButton]} onPress={handleSubmit}>
                 <Text style={[styles.body1Lt, {color: 'white', fontFamily: 'Pretendard-Medium', fontSize: 16}]}>확인</Text>
               </TouchableOpacity>
             </View>

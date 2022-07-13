@@ -18,12 +18,12 @@ export const MissionNo: FC<MissionNoProps> = ({progressnow}) => {
       </Text>
       {progressnow === 0 ? (
         <FastImage
-          source={require('../../assets/images/noMission/cryingBob.png')}
+          source={require('../../assets/images/bobpool/cryingBob.png')}
           style={{width: 159, height: 105}}
         />
       ) : (
         <FastImage
-          source={require('../../assets/images/noMission/steamingBob.png')}
+          source={require('../../assets/images/bobpool/steamingBob.png')}
           style={{width: 159, height: 164}}
         />
       )}

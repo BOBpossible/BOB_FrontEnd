@@ -18,7 +18,7 @@ export type MyStackParamList = {
   MyReview: undefined;
   MyNotificationsSetting: undefined;
   MyInquiry: undefined;
-  MyChangePoint: undefined;
+  MyChangePoint: {point: number};
   MyChangePointDone: undefined;
   AuthNavigator: undefined;
 };

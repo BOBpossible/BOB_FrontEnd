@@ -9,17 +9,14 @@ import {
 } from 'react-native-responsive-screen';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {calHeight} from '../../assets/CalculateLength';
-import {customAxios} from '../../api/customAxios';
 import {useQuery} from 'react-query';
 import {IgetUsersMe} from '../../data';
+import {queryKey} from '../../api/queryKey';
+import {getUserInfo} from '../../api';
 
 const MyPage = () => {
   const navigation = useNavigation();
-  const getUserInfo = async () => {
-    const {data} = await customAxios().get('/api/v1/users/me');
-    return data.result;
-  };
-  const {data, isSuccess, isError, error} = useQuery<IgetUsersMe>('userInfo', getUserInfo);
+  const {data, isSuccess, isError, error} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
   // data.point 로 접근
   const storeData = async (value: string) => {
     try {

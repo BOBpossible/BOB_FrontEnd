@@ -41,7 +41,7 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) =
               <Text style={[DesignSystem.caption1Lt, {color: '#6C69FF'}]}>회원정보 수정</Text>
               <Image
                 style={{width: 24}}
-                source={require('../../assets/images/arrowGrey8.png')} //
+                source={require('../../assets/images/arrowGrey8.png')} ///////////////////////////////////////////////////
               />
             </View>
           </TouchableOpacity>

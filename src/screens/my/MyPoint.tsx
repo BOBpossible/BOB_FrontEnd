@@ -52,15 +52,14 @@ export const MyPoint = ({navigation, route}: Props) => {
             <View>
               <Text style={[DesignSystem.body2Lt, {color: '#616161'}]}>내 포인트</Text>
               <Text style={[DesignSystem.h1SB, {color: '#111111'}]}>
-                {/* {data?.pages[0].data.result.totalPoints.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} P */}
                 {DataPointsList.data?.pages[0].data.result.totalPoints.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
               </Text>
             </View>
-            <TouchableOpacity style={[styles.changePointView]}>
-              <Text
-                style={{color: '#FFFFFF', fontFamily: 'Pretendard-Medium', fontSize: 12}}
-                onPress={() => navigation.navigate('MyChangePoint', {point: point})}
-              >
+            <TouchableOpacity
+              style={[styles.changePointView]}
+              onPress={() => navigation.navigate('MyChangePoint', {point: point})}
+            >
+              <Text style={{color: '#FFFFFF', fontFamily: 'Pretendard-Medium', fontSize: 12}}>
                 포인트 전환 신청
               </Text>
             </TouchableOpacity>
