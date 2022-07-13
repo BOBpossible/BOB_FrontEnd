@@ -24,10 +24,10 @@ const Main = () => {
       console.log(err);
     },
     onSuccess: (data) => {
-      console.log(data);
+      console.log('homeData', data);
       data.missions.map((e: any) => {
         if (e.missionStatus === 'NEW') {
-          setAllDone(false);
+          setAllDone(false); //이번주 세개의 미션 모두 DONE이면 true유지
         }
       });
     },
@@ -37,14 +37,11 @@ const Main = () => {
     queryKey.MISSIONSPROGRESS,
     getMissionsProgress,
   );
-  console.log(allDone);
 
   if (homeData.isError) {
     console.log('Home Error', homeData.error);
     return <ConnectionError refetch={homeData.refetch} />;
   }
-
-  // console.log('----', homeData.data?.missions);
 
   return (
     <SafeAreaView edges={['top']} style={styles.flex}>
@@ -57,41 +54,41 @@ const Main = () => {
           <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
           <HomeBobpool category={'NO'} />
         </>
-      ) : allDone ? (
-        <>
-          <HomeBobpool category={'DONE'} />
-        </>
       ) : (
         <>
           <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
-          <Animated.FlatList
-            style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[styles.missionListContainer]}
-            scrollEventThrottle={10}
-            data={homeData.data?.missions}
-            renderItem={({item}) => (
-              <HomeMissionCard
-                mission={item.mission}
-                missionId={item.missionId}
-                status={item.missionStatus}
-                point={item.point}
-                category={item.storeCategory}
-                name={item.storeName}
-                challengeStatus={DataMissionsProgress.data?.length !== 0}
-              />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            ListHeaderComponent={<HomeMissionListHeader dday={homeData.data?.dday} />}
-            onScroll={(event) => {
-              Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
-                useNativeDriver: false,
-              })(event);
-            }}
-            ItemSeparatorComponent={() => <View style={[styles.missionSeperate]} />}
-            ListFooterComponent={() => <View />}
-            ListFooterComponentStyle={{marginTop: 100}}
-          />
+          {allDone ? ( //미션 모두 완료한 경우
+            <HomeBobpool category={'DONE'} />
+          ) : (
+            <Animated.FlatList
+              style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={[styles.missionListContainer]}
+              scrollEventThrottle={10}
+              data={homeData.data?.missions}
+              renderItem={({item}) => (
+                <HomeMissionCard
+                  mission={item.mission}
+                  missionId={item.missionId}
+                  status={item.missionStatus}
+                  point={item.point}
+                  category={item.storeCategory}
+                  name={item.storeName}
+                  challengeStatus={DataMissionsProgress.data?.length !== 0}
+                />
+              )}
+              keyExtractor={(item, index) => index.toString()}
+              ListHeaderComponent={<HomeMissionListHeader dday={homeData.data?.dday} />}
+              onScroll={(event) => {
+                Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
+                  useNativeDriver: false,
+                })(event);
+              }}
+              ItemSeparatorComponent={() => <View style={[styles.missionSeperate]} />}
+              ListFooterComponent={() => <View />}
+              ListFooterComponentStyle={{marginTop: 100}}
+            />
+          )}
         </>
       )}
     </SafeAreaView>

@@ -12,7 +12,7 @@ export const ReviewNo: FC<ReviewNoProps> = ({isPhoto}) => {
       <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 12}]}>
         {isPhoto === 1 ? '아직 리뷰 사진이 없어요!' : '아직 리뷰가 없어요!'}
       </Text>
-      <Image source={require('../assets/images/noMission/cryingBob.png')} />
+      <Image source={require('../assets/images/bobpool/cryingBob.png')} />
     </View>
   );
 };

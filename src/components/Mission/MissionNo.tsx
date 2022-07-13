@@ -16,9 +16,9 @@ export const MissionNo: FC<MissionNoProps> = ({progressnow}) => {
         {'홈화면에서 미션을 도전 해보세요 :)'}
       </Text>
       {progressnow === 0 ? (
-        <Image source={require('../../assets/images/noMission/cryingBob.png')} />
+        <Image source={require('../../assets/images/bobpool/cryingBob.png')} />
       ) : (
-        <Image source={require('../../assets/images/noMission/steamingBob.png')} />
+        <Image source={require('../../assets/images/bobpool/steamingBob.png')} />
       )}
     </View>
   );

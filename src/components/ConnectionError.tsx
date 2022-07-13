@@ -11,7 +11,7 @@ export type ConnectionErrorProps = {
 export const ConnectionError: FC<ConnectionErrorProps> = ({refetch}) => {
   return (
     <View style={[DesignSystem.centerArrange, {flex: 1, backgroundColor: '#F8F8F8'}]}>
-      <Image source={require('../assets/images/noMission/cryingBob.png')} />
+      <Image source={require('../assets/images/bobpool/cryingBob.png')} />
       <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2, marginTop: 16}]}>
         연결에 실패했어요
       </Text>
