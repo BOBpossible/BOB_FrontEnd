@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, Animated, Platform, ActivityIndicator} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -10,13 +10,14 @@ import {useQuery} from 'react-query';
 import {ConnectionError} from '../../components/ConnectionError';
 import {IHomeData, IMissionsProgress} from '../../data';
 import {queryKey} from '../../api/queryKey';
-import {HomeNoMission} from '../../components/Home/HomeNoMission';
+import {HomeBobpool} from '../../components/Home/HomeBobpool';
 import {getHomeInfo} from '../../api';
 import {getMissionsProgress} from '../../api/mission';
 
 const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
+  const [allDone, setAllDone] = useState(true);
 
   const homeData = useQuery<IHomeData>(queryKey.HOMEDATA, getHomeInfo, {
     onError: (err) => {
@@ -24,6 +25,11 @@ const Main = () => {
     },
     onSuccess: (data) => {
       console.log(data);
+      data.missions.map((e: any) => {
+        if (e.missionStatus === 'NEW') {
+          setAllDone(false);
+        }
+      });
     },
   });
 
@@ -31,11 +37,14 @@ const Main = () => {
     queryKey.MISSIONSPROGRESS,
     getMissionsProgress,
   );
+  console.log(allDone);
 
   if (homeData.isError) {
     console.log('Home Error', homeData.error);
     return <ConnectionError refetch={homeData.refetch} />;
   }
+
+  // console.log('----', homeData.data?.missions);
 
   return (
     <SafeAreaView edges={['top']} style={styles.flex}>
@@ -46,7 +55,11 @@ const Main = () => {
       ) : homeData.data?.missions === null ? (
         <>
           <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
-          <HomeNoMission />
+          <HomeBobpool category={'NO'} />
+        </>
+      ) : allDone ? (
+        <>
+          <HomeBobpool category={'DONE'} />
         </>
       ) : (
         <>
