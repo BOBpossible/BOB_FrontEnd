@@ -14,11 +14,13 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../nav';
 import {useForm, Controller} from 'react-hook-form';
 import {RegisterPhone} from '../components/Register/RegisterPhone';
+import moment from 'moment';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
 const RegisterForm = ({navigation, route}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
+  const [authError, setAuthError] = useState(true);
   //react-hook-form 사용
   const {
     control,
@@ -31,6 +33,7 @@ const RegisterForm = ({navigation, route}: Props) => {
       gender: '',
       birthDate: '',
       address: '',
+      phone: '',
     },
   });
 
@@ -45,7 +48,7 @@ const RegisterForm = ({navigation, route}: Props) => {
   const goBack = () => {
     navigation.navigate('Register');
   };
-
+  console.log(authError);
   return (
     <SafeAreaView style={[styles.flex]}>
       <RegisterHeader goBack={goBack} pageNum={1} />
@@ -101,6 +104,17 @@ const RegisterForm = ({navigation, route}: Props) => {
             control={control}
             rules={{
               required: true,
+              validate: {
+                age14: (value) => {
+                  const valueDate = moment(value, 'YYYY-MM-DD');
+                  const dateDifference = moment().diff(valueDate, 'years');
+                  if (dateDifference > 14) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                },
+              },
             }}
             render={({field: {onChange, value}}) => {
               return (
@@ -118,8 +132,39 @@ const RegisterForm = ({navigation, route}: Props) => {
           {errors.birthDate?.type === 'required' && (
             <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
           )}
+          {errors.birthDate?.type === 'age14' && (
+            <Text style={[styles.errorMessage]}>14세 이하 입니다.</Text>
+          )}
 
-          <RegisterPhone setRegisterData={setRegisterData} registerData={registerData} />
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+              validate: {
+                authValid: () => {
+                  return !authError;
+                },
+              },
+            }}
+            render={({field: {onChange, value}}) => {
+              return (
+                <RegisterPhone
+                  setRegisterData={setRegisterData}
+                  registerData={registerData}
+                  onChange={onChange}
+                  value={value}
+                  setAuthError={setAuthError}
+                />
+              );
+            }}
+            name="phone"
+          />
+          {errors.phone?.type === 'required' && (
+            <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
+          )}
+          {errors.phone?.type === 'authValid' && (
+            <Text style={[styles.errorMessage]}>인증이 안되었습니다.</Text>
+          )}
 
           <Controller
             control={control}
