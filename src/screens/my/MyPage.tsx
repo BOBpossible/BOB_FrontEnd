@@ -13,10 +13,11 @@ import {useQuery} from 'react-query';
 import {IgetUsersMe} from '../../data';
 import {queryKey} from '../../api/queryKey';
 import {getUserInfo} from '../../api';
+import {ConnectionError} from '../../components/ConnectionError';
 
 const MyPage = () => {
   const navigation = useNavigation();
-  const {data, isSuccess, isError, error} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
+  const {data, isError, refetch} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
   // data.point 로 접근
   const logout = async () => {
     await AsyncStorage.multiSet([
@@ -27,6 +28,9 @@ const MyPage = () => {
   };
   console.log('async userToken', AsyncStorage.getItem('userToken'));
 
+  if (isError) {
+    return <ConnectionError refetch={refetch} />;
+  }
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />

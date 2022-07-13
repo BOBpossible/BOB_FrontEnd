@@ -14,5 +14,8 @@ declare namespace ReactNavigation {
     AuthNavigator: undefined;
     Main: undefined;
     MyPoint: {point: number | undefined};
+    MyReview: undefined;
+    MyNotificationsSetting: undefined;
+    MyInquiry: undefined;
   }
 }

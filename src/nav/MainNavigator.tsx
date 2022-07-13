@@ -11,6 +11,11 @@ import {HomeNavigator} from './HomeNavigator';
 
 import type {RouteProp, ParamListBase} from '@react-navigation/native';
 import {MapNavigator} from './MapNavigator';
+import {View} from 'react-native';
+import {useQuery} from 'react-query';
+import {IMissionsProgress} from '../data';
+import {queryKey} from '../api/queryKey';
+import {getMissionsProgress} from '../api/mission';
 type TabBarIconProps = {focused: boolean; color: string; size: number};
 
 const icons: Record<string, string[]> = {
@@ -20,26 +25,45 @@ const icons: Record<string, string[]> = {
   MyNavigator: ['account-settings', 'account-settings-outline'],
 };
 
-const screenOptions = ({route}: {route: RouteProp<ParamListBase, string>}) => {
-  return {
-    headerShown: false,
-    tabBarShowLabel: true,
-    tabBarIcon: ({focused, color, size}: TabBarIconProps) => {
-      const {name} = route;
-      const focusedSize = focused ? size + 6 : size;
-      const focusedColor = focused ? Colors.black : color;
-      const [icon, iconOutline] = icons[name];
-      const iconName = focused ? icon : iconOutline;
-      return <Icon name={iconName} size={focusedSize} color={focusedColor} />;
-    },
-    tabBarActiveTintColor: 'black',
-    tabBarInactiveTintColor: 'gray',
-  };
-};
-
 const Tab = createBottomTabNavigator();
 
 export const MainNavigator = () => {
+  const {data} = useQuery<IMissionsProgress[]>(queryKey.MISSIONSPROGRESS, getMissionsProgress);
+
+  const screenOptions = ({route}: {route: RouteProp<ParamListBase, string>}) => {
+    return {
+      headerShown: false,
+      tabBarShowLabel: true,
+      tabBarIcon: ({focused, color, size}: TabBarIconProps) => {
+        const {name} = route;
+        const focusedSize = focused ? size + 6 : size;
+        const focusedColor = focused ? Colors.black : color;
+        const [icon, iconOutline] = icons[name];
+        const iconName = focused ? icon : iconOutline;
+        return (
+          <View>
+            {name === 'Mission' && data?.length !== 0 && (
+              <View
+                style={{
+                  backgroundColor: '#615DFF',
+                  height: 5,
+                  width: 5,
+                  borderRadius: 5,
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                }}
+              />
+            )}
+
+            <Icon name={iconName} size={focusedSize} color={focusedColor} />
+          </View>
+        );
+      },
+      tabBarActiveTintColor: 'black',
+      tabBarInactiveTintColor: 'gray',
+    };
+  };
   return (
     <Tab.Navigator screenOptions={screenOptions} initialRouteName="Main">
       <Tab.Screen name="HomeNavigator" component={HomeNavigator} options={{tabBarLabel: '홈'}} />

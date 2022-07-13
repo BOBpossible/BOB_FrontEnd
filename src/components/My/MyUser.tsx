@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import type {FC} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Colors} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {DesignSystem} from '../../assets/DesignSystem';
+import FastImage from 'react-native-fast-image';
 
 export type MyUserProps = {
   authentication: boolean;
@@ -25,7 +26,7 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) =
     <View style={[styles.userInfo]}>
       <View style={{marginLeft: 16, marginRight:16}}>
         <View style={[styles.userCard]}>
-          <Image
+          <FastImage
             style={[styles.profileImg]}
             source={require('../../assets/images/bobProfile.png')} //
           />
@@ -42,10 +43,11 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) =
             <Text style={[DesignSystem.body2Lt, {marginLeft: 20, marginRight: 16}]}>내 포인트</Text>
             <Text style={[DesignSystem.title4Md, {color: '#111111'}]}>{point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
           </View>
-          <Image
+          
+          {/* 여기 아이콘으로 바꿔야함 <Image
               style={[styles.MyNextImg]}
               source={require('../../assets/images/arrowGrey10.png')} //
-            />
+            /> */}
         </TouchableOpacity>
         </View>
     </View>
