@@ -10,6 +10,8 @@ import {
   Dimensions,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../assets/CalculateLength';
 
 type MyBankFeeModalProps = {
   visible: boolean;
@@ -28,16 +30,21 @@ const MyBankModal: FC<MyBankFeeModalProps> = ({visible, closeBankFeeModal}) => {
         </TouchableWithoutFeedback>
         <View style={[styles.modalContainer, {marginBottom: MARGINBOTTOM}]}>
           <View style={[styles.contentWrap]}>
-            <View>
-              <Text style={[styles.title1SB]}>입금신청 안내</Text>
-              <Text style={[styles.body1Lt, {marginTop: 10, marginBottom: 10}]}>입금 수수료 500포인트가 차감됩니다.</Text>
+            <View style={{marginBottom: 20}}>
+              <Text style={[styles.title1SB, {marginBottom: 12}]}>포인트 전환 안내</Text>
+              <Text style={[styles.body1Lt, {marginLeft: 3}]}>
+                • 입금 수수료 500포인트가 차감됩니다.
+              </Text>
+              <Text style={[styles.body1Lt, {marginLeft: 3}]}>
+                • 입금은 심사 후 매주 수요일에 일괄 송금됩니다.
+              </Text>
             </View>
             <View style={[styles.buttonWrap]}>
               <TouchableOpacity style={[styles.buttonStyle, styles.cancelButton]} onPress={closeBankFeeModal}>
                 <Text style={{color: '#616161', fontFamily: 'Pretendard-Regular', fontSize: 16}}>취소</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.buttonStyle, styles.okButton]} onPress={() => navigation.navigate('MyChangePointDone')}>
-                <Text style={[styles.body1Lt, {color: '#FFFFFF', fontFamily: 'Pretendard-Medium', fontSize: 16}]}>확인</Text>
+                <Text style={[styles.body1Lt, {color: 'white', fontFamily: 'Pretendard-Medium', fontSize: 16}]}>확인</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -62,31 +69,34 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
   background: {
     flex: 1,
   },
   modalContainer: {
-    width: 334,
-    height: 160,
-    marginLeft: 20,
-    marginRight: 20,
-    justifyContent: 'center',
+    width: wp(calWidth(342)),
+    height: hp(calHeight(226)),
+    marginLeft: 16,
+    marginRight: 17,
+    justifyContent: 'space-around',
     backgroundColor: 'white',
     borderRadius: 15,
   },
   contentWrap: {
-    margin: 20,
+    marginLeft: 18,
+    marginRight: 18,
     flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
   buttonWrap: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   buttonStyle: {
-    width: '47%',
+    width: wp(calWidth(145)),
     height: 48,
     justifyContent: 'center',
     alignItems: 'center',
@@ -97,6 +107,6 @@ const styles = StyleSheet.create({
     borderColor: '#949494',
   },
   okButton: {
-    backgroundColor: '#2A2A2A',
+    backgroundColor: '#6C69FF',
   },
 });
