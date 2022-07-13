@@ -21,18 +21,12 @@ const HowTo5 = ({navigation, route}: Props) => {
   }, []);
   return (
     <SafeAreaView style={[styles.flex]}>
-      <OnBoardingHeader goBack={() => navigation.navigate('HowTo5')} />
+      <OnBoardingHeader goBack={() => navigation.navigate('HowTo5')} pageNum={4} />
       <View style={[styles.flex, DesignSystem.centerArrange]}>
         <Text style={[DesignSystem.subtitle2, styles.obText]}>사장님이 미션성공 확인 시</Text>
         <Text style={[DesignSystem.subtitle2, styles.obText, {marginBottom: 41}]}>미션 성공!</Text>
         <View style={{height: HEIGHT * 0.597}}>
           <Image source={require('../../assets/images/onBoarding/ob6.png')} />
-        </View>
-        <View style={[styles.obDotView, DesignSystem.centerArrange]}>
-          <View style={[styles.obDotEach, {backgroundColor: '#D9D9D9'}]} />
-          <View style={[styles.obDotEach, {backgroundColor: '#D9D9D9'}]} />
-          <View style={[styles.obDotEach, {backgroundColor: '#D9D9D9'}]} />
-          <View style={[styles.obDotEach, {backgroundColor: '#6C69FF'}]} />
         </View>
       </View>
       {loading ? (

@@ -21,7 +21,7 @@ const HowTo5 = ({navigation, route}: Props) => {
   }, []);
   return (
     <SafeAreaView style={[styles.flex]}>
-      <OnBoardingHeader goBack={() => navigation.navigate('HowTo4')} />
+      <OnBoardingHeader goBack={() => navigation.navigate('HowTo4')} pageNum={3} />
       <View style={[styles.flex, DesignSystem.centerArrange]}>
         <Text style={[DesignSystem.subtitle2, styles.obText]}>미션을 수행한 다음,</Text>
         <Text style={[DesignSystem.subtitle2, styles.obText, {marginBottom: 41}]}>
@@ -29,12 +29,6 @@ const HowTo5 = ({navigation, route}: Props) => {
         </Text>
         <View style={{height: HEIGHT * 0.597}}>
           <Image source={require('../../assets/images/onBoarding/ob5.png')} />
-        </View>
-        <View style={[styles.obDotView, DesignSystem.centerArrange]}>
-          <View style={[styles.obDotEach, {backgroundColor: '#D9D9D9'}]} />
-          <View style={[styles.obDotEach, {backgroundColor: '#D9D9D9'}]} />
-          <View style={[styles.obDotEach, {backgroundColor: '#6C69FF'}]} />
-          <View style={[styles.obDotEach, {backgroundColor: '#D9D9D9'}]} />
         </View>
       </View>
       {loading ? (
