@@ -17,6 +17,8 @@ import {useQuery} from 'react-query';
 import {IgetUsersMe} from '../../data';
 import {queryKey} from '../../api/queryKey';
 import {getUserInfo} from '../../api';
+import { CheckBoxRectangle } from '../../components/Common/CheckBoxRectangle';
+import PersonalnfoModal from '../../modal/PersonalnfoModal';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyChangePoint'>;
 
@@ -30,6 +32,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
   const [inputAccounts, setInputAccounts] = useState('');
   const [selectedBank, setSelectedBank] = useState('');
   const [openBankModal, setOpenBankModal] = useState(false);
+  const [consentModal, setConsentModal] = useState(false);
   const [fillDone, setFillDone] = useState(false);
   const [pointOver, setPointOver] = useState(false);
 
@@ -41,6 +44,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
     setFillDone(true);
   };
   const {data, isSuccess, isError, error} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
+  const [notiChecked, setNotichecked] = useState(false);
 
   return (
     <SafeAreaView style={[styles.flex, {backgroundColor: 'white'}]}>
@@ -68,7 +72,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
                   ]}
                   onChangeText={(text) => {
                     setInputPoint(text);
-                    if (Number(text) > point || Number(text) % 5000 !== 0) { /////////////////////////// 확인하고싶으면 500으로두고.
+                    if (Number(text) > point || Number(text) % 500 !== 0) { /////////////////////////// 확인하고싶으면 500으로두고.
                       setPointOver(true);
                     } else {
                       setPointOver(false);
@@ -138,17 +142,34 @@ export const MyChangePoint = ({navigation, route}: Props) => {
               />
             </View>
           </ScrollView>
-          {(inputPoint === '' ||
-            inputName === '' ||
-            selectedBank === '' ||
-            inputAccounts === '' ||
-            pointOver !== false) && (
+          {inputPoint === '' ||
+          inputName === '' ||
+          selectedBank === '' ||
+          inputAccounts === '' ||
+          pointOver !== false ? (
             <View style={[styles.fillAlarm]}>
               <View style={[styles.progressToggle]}>
                 <Text style={[DesignSystem.caption1Lt, {color: 'white'}]}>
                   정보작성을 완료해주세요.
                 </Text>
               </View>
+            </View>
+          ) : (
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+              <CheckBoxRectangle
+                title={''}
+                onPress={() => setNotichecked(!notiChecked)}
+                isChecked={notiChecked}
+              />
+              <TouchableOpacity
+                style={[DesignSystem.centerArrange, {marginLeft: 10, flexDirection: 'row'}]}
+                onPress={() => setConsentModal(true)}
+              >
+                <Text style={[DesignSystem.body2Lt, styles.title]}>
+                  계좌정보 수집 및 이용 동의'
+                </Text>
+                <Icon name="menu-down" size={24} color="black" />
+              </TouchableOpacity>
             </View>
           )}
         </KeyboardAvoidingView>
@@ -185,6 +206,10 @@ export const MyChangePoint = ({navigation, route}: Props) => {
         closeBankModal={() => setOpenBankModal(false)}
         selectedBank={selectedBank}
         setSelectedBank={(bankName: string) => setSelectedBank(bankName)}
+      />
+      <PersonalnfoModal
+        visible={consentModal}
+        closePersonalInfoModal={() => setConsentModal(false)}
       />
       {fillDone && (
         <MyBankFeeModal
@@ -273,5 +298,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#2A2A2A',
     flexDirection: 'row',
+  },
+  title: {
+    color: '#111111',
+    marginLeft: 7,
   },
 });
