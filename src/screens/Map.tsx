@@ -111,9 +111,9 @@ const Map = () => {
               빠른 시일내에 미션을 업데이트 할게요!
             </Text>
             {getRandom() ? (
-              <Image source={require('../assets/images/noMission/cryingBob.png')} />
+              <Image source={require('../assets/images/bobpool/cryingBob.png')} />
             ) : (
-              <Image source={require('../assets/images/noMission/cryingBobBowl.png')} />
+              <Image source={require('../assets/images/bobpool/cryingBobBowl.png')} />
             )}
           </View>
         ) : (

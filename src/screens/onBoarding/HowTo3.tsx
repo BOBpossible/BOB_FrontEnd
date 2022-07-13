@@ -21,19 +21,13 @@ const HowTo3 = ({navigation, route}: Props) => {
   }, []);
   return (
     <SafeAreaView style={[styles.flex]}>
-      <OnBoardingHeader goBack={() => navigation.navigate('HowTo2')} />
+      <OnBoardingHeader goBack={() => navigation.navigate('HowTo2')} pageNum={1} />
       <View style={[styles.flex, DesignSystem.centerArrange]}>
         <Text style={[DesignSystem.subtitle2, styles.obText, {marginBottom: 41}]}>
           매주 3개의 미션을 확인하세요!
         </Text>
         <View style={{height: HEIGHT * 0.597}}>
           <Image source={require('../../assets/images/onBoarding/ob3.png')} />
-        </View>
-        <View style={[styles.obDotView, DesignSystem.centerArrange]}>
-          <View style={[styles.obDotEach, {backgroundColor: '#6C69FF'}]} />
-          <View style={[styles.obDotEach, {backgroundColor: '#D9D9D9'}]} />
-          <View style={[styles.obDotEach, {backgroundColor: '#D9D9D9'}]} />
-          <View style={[styles.obDotEach, {backgroundColor: '#D9D9D9'}]} />
         </View>
       </View>
       {loading ? (

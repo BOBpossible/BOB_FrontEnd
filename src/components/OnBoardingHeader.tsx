@@ -6,22 +6,20 @@ import {DesignSystem} from '../assets/DesignSystem';
 import {useNavigation} from '@react-navigation/native';
 
 export type OnBoardingHeaderProps = {
-  goBack?: () => void;
+  goBack: () => void;
+  pageNum?: number;
 };
 
-export const OnBoardingHeader: FC<OnBoardingHeaderProps> = ({goBack}) => {
+export const OnBoardingHeader: FC<OnBoardingHeaderProps> = ({goBack, pageNum}) => {
   const navigation = useNavigation();
   return (
     <View style={[styles.headerWrap]}>
-      {goBack !== undefined ? (
-        <TouchableOpacity onPress={goBack}>
-          <View style={[styles.backButton]}>
-            <Icon name="arrow-left" size={24} color="black" />
-          </View>
-        </TouchableOpacity>
-      ) : (
-        <View />
-      )}
+      <TouchableOpacity onPress={goBack}>
+        <View style={[styles.backButton]}>
+          <Icon name="arrow-left" size={24} color="black" />
+        </View>
+      </TouchableOpacity>
+      {pageNum !== undefined && <Text>{pageNum}/4</Text>}
       <TouchableOpacity onPress={() => navigation.reset({routes: [{name: 'MainNavigator'}]})}>
         <Text style={[DesignSystem.body2Lt, {color: '#949494'}]}>건너뛰기</Text>
       </TouchableOpacity>
