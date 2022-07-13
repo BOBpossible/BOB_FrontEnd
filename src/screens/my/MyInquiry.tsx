@@ -50,7 +50,11 @@ export const MyInquiry = ({navigation}: Props) => {
           </Text>
         </TouchableOpacity>
       </View>
-      {nowWrite ? <MyWriteInquiry /> : <MyInquiryList setNowWrite={setNowWrite} />}
+      {nowWrite ? (
+        <MyWriteInquiry setNowWrite={setNowWrite} />
+      ) : (
+        <MyInquiryList setNowWrite={setNowWrite} />
+      )}
     </SafeAreaView>
   );
 };

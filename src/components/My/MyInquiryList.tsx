@@ -1,31 +1,11 @@
 import React, {FC, useState} from 'react';
-import {FlatList, Image, StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
+import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {useQuery} from 'react-query';
+import {getQuestions} from '../../api/my';
+import {queryKey} from '../../api/queryKey';
 import {MyInquiryDetails} from './MyInquiryListDetails';
 import {MyInquiryMakeButton} from './MyInquiryMakeButton';
 
-const dummyMission = [
-  {
-    title: '제목은 미션이 더 많았으면 좋겠어요',
-    body: '본문 미션 더 주세영',
-    date: '2022-12-03T16:01:34.864Z',
-    status: '답변 대기중',
-    inquiryId: 1,
-  },
-  {
-    title: '제목22222222222222222222222222222222',
-    body: '본문 미션 더 주세영',
-    date: '2022-12-03T16:01:34.864Z',
-    status: '답변 대기중',
-    inquiryId: 2,
-  },
-  {
-    title: '제목33',
-    body: '본문 미션 더 주세영',
-    date: '2022-12-03T16:01:34.864Z',
-    status: '답변 대기중',
-    inquiryId: 3,
-  },
-];
 export type goWriteProps = {
   setNowWrite: any;
 };
@@ -34,20 +14,24 @@ export const MyInquiryList: FC<goWriteProps> = ({setNowWrite}) => {
   const goWrite = () => {
     setNowWrite(true);
   };
+  const DataQuestions = useQuery(queryKey.QUESTIONS, getQuestions);
+  // console.log(DataQuestions.data);
+
   return (
     <View style={[styles.totalWrap]}>
       <FlatList
+        inverted
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 60}}
+        contentContainerStyle={{paddingTop: 60}}
         scrollEventThrottle={10}
-        data={dummyMission}
+        data={DataQuestions.data}
         renderItem={({item}) => (
           <>
             <MyInquiryDetails
               title={item.title}
               body={item.body}
               date={item.date}
-              status={item.status}
+              status={item.questionStatus}
               inquiryId={item.inquiryId}
             />
           </>

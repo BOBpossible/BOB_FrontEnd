@@ -33,6 +33,13 @@ const DoneModal: FC<DoneModalProps> = ({visible, closeDoneModal, category, point
                 {point}P가 적립되었습니다!
               </Text>
             </>
+          ) : category === '문의' ? (
+            <>
+              <Text style={[styles.blackTitleText]}>문의 성공!</Text>
+              <Text style={[DesignSystem.body2Lt, {color: '#616161', marginTop: 9}]}>
+                문의 접수 완
+              </Text>
+            </>
           ) : (
             <Text style={[styles.purpleTitleText]}>가입완료</Text>
           )}
@@ -72,7 +79,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    backgroundColor: '#6C69FF',
+    backgroundColor: '#2A2A2A',
   },
   buttonText: {
     fontSize: 18,
