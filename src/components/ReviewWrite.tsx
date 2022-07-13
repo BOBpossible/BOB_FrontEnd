@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import type {FC} from 'react';
 import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform} from 'react-native';
 import {Rating} from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {ImageLibraryOptions, launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import { DesignSystem } from '../assets/DesignSystem';
+import {ImageLibraryOptions, launchImageLibrary} from 'react-native-image-picker';
+import {DesignSystem} from '../assets/DesignSystem';
 
 type imageData = {
   uri: string;

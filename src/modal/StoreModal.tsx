@@ -38,7 +38,6 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
       extrapolate: 'clamp',
     }),
   });
-  // console.log('------------------', storeData.data); //undefined 인ㅇ지로 반편
   return (
     <Modal visible={visible} animationType="slide">
       <SafeAreaView style={[styles.safeView]}>
@@ -66,7 +65,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
             offset={offset1}
             reviewCount={storeData.data?.reviewCount}
           />
-        ) : storeData !== undefined ? (
+        ) : (
           //리뷰사진
           <MapStoreReviewPhoto
             storeData={storeData.data}
@@ -75,8 +74,6 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
             offset={offset1}
             reviewCount={storeData.data?.reviewCount}
           />
-        ) : (
-          <></>
         )}
       </SafeAreaView>
     </Modal>

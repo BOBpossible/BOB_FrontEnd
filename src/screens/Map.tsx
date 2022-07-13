@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import {View, StyleSheet, Text, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomSheet, {
@@ -27,7 +27,6 @@ const Map = () => {
   const [addressModal, setAddressModal] = useState(false);
   const [storeModal, setStoreModal] = useState(false);
   const [storeId, setStoreId] = useState(0);
-  //미션개수 연동 후 삭제
 
   const webviewRef = useRef<WebView | null>(null);
 
