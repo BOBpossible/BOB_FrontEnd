@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, StyleSheet, Animated, Platform, ActivityIndicator} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -84,7 +84,6 @@ const Main = () => {
                   useNativeDriver: false,
                 })(event);
               }}
-              ItemSeparatorComponent={() => <View style={[styles.missionSeperate]} />}
               ListFooterComponent={() => <View />}
               ListFooterComponentStyle={{marginTop: 100}}
             />
@@ -102,9 +101,6 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? hp((230 / 812) * 100) : hp(calHeight(230)),
     paddingBottom: 10,
     backgroundColor: '#F6F6FA',
-  },
-  missionSeperate: {
-    marginTop: 12,
   },
   flex: {
     flex: 1,
