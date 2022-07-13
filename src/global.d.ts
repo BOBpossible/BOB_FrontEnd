@@ -8,10 +8,11 @@ declare namespace ReactNavigation {
     KakaoLogin: undefined;
     NaverLogin: undefined;
     HomeMissionDetails: {missionId: number};
-    Mission: {missionId: number};
+    Mission: undefined;
     Notifications: {userId: number};
     HowToLong: undefined;
     AuthNavigator: undefined;
     Main: undefined;
+    MyPoint: {point: number | undefined};
   }
 }

@@ -2,7 +2,11 @@ import React, {FC} from 'react';
 import {Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {DesignSystem} from '../../assets/DesignSystem';
-
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
 export type MissionNoProps = {
   progressnow: number;
 };
@@ -19,12 +23,12 @@ export const MissionNo: FC<MissionNoProps> = ({progressnow}) => {
       {progressnow === 0 ? (
         <FastImage
           source={require('../../assets/images/bobpool/cryingBob.png')}
-          style={{width: 159, height: 105}}
+          style={{width: wp(calWidth(159)), height: hp(calHeight(105))}}
         />
       ) : (
         <FastImage
           source={require('../../assets/images/bobpool/steamingBob.png')}
-          style={{width: 159, height: 164}}
+          style={{width: wp(calWidth(159)), height: hp(calHeight(164))}}
         />
       )}
     </View>

@@ -19,6 +19,8 @@ import {queryKey} from '../api/queryKey';
 import {IAddress} from '../data/Common';
 import {ConnectionError} from '../components/ConnectionError';
 import WebView from 'react-native-webview';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight} from '../assets/CalculateLength';
 
 const Map = () => {
   const height = Dimensions.get('screen').height;
@@ -66,7 +68,9 @@ const Map = () => {
     setStoreModal(true);
   };
   const renderBackdrop = useCallback(
-    (props: any) => <BottomSheetBackdrop {...props} disappearsOnIndex={0} appearsOnIndex={1} />,
+    (props: any) => (
+      <BottomSheetBackdrop {...props} pressBehavior={0} disappearsOnIndex={0} appearsOnIndex={1} />
+    ),
     [],
   );
 
@@ -96,7 +100,6 @@ const Map = () => {
         snapPoints={[60, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
         backdropComponent={renderBackdrop}
-        style={{zIndex: 10}}
       >
         <BottomSheetView style={[styles.missionListTextWrap]}>
           <Text style={[DesignSystem.title3SB, {color: '#111111'}]}>내 주변 가게</Text>

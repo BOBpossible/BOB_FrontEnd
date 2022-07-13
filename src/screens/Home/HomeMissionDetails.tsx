@@ -83,7 +83,7 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
             onPress={() => {
               missionMutation.mutate(route.params.missionId);
               navigation.pop();
-              navigation.navigate('Mission'); //미션Id연결
+              navigation.navigate('Mission'); //미션 시작후 미션 화면으로 바꾸기
             }}
             style={[styles.missionButton]}
           >

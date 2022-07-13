@@ -16,7 +16,11 @@ import {useNavigation} from '@react-navigation/native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
-import {IHomeData} from '../../data';
+import {IAddress, IHomeData} from '../../data';
+import {getAddress} from '../../api';
+import {queryKey} from '../../api/queryKey';
+import {useQuery} from 'react-query';
+import {color} from 'react-native-reanimated';
 
 const WIDTH = Dimensions.get('window').width;
 const HEADER_HEIGHT = Platform.OS === 'ios' ? hp(25.8) : hp(28.6);
@@ -30,6 +34,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
   const [addressModal, setAddressModal] = useState(false);
   const barProgressValue = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
+  const Address = useQuery<IAddress>(queryKey.ADDRESS, getAddress);
 
   //헤더 길이 바꿔주는 애니메이션 Main.tsx의 스크롤 위치에 따라 변한다
   const heightAnimStyle = useStyle({
@@ -140,7 +145,9 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           closeAddressModal={() => setAddressModal(false)}
         />
         <TouchableOpacity style={[styles.flexRow]} onPress={() => setAddressModal(true)}>
-          <Text style={[DesignSystem.subtitle2, DesignSystem.grey17]}>삼성동</Text>
+          <Text style={[DesignSystem.subtitle2, DesignSystem.grey17]}>
+            {Address.data?.addressDong}
+          </Text>
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
         <View style={[styles.flexRow]}>
@@ -166,7 +173,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
         }}
       >
         <Animated.View style={[howtoAnimStyle, styles.flexRow]}>
-          <Text style={[DesignSystem.body1Lt, DesignSystem.grey8]}>사용방법</Text>
+          <Text style={[DesignSystem.body1Lt, DesignSystem.purple5]}>사용방법</Text>
           <View style={[styles.questionWrap]}>
             <Text>?</Text>
           </View>

@@ -25,11 +25,15 @@ const Main = () => {
     },
     onSuccess: (data) => {
       console.log('homeData', data);
-      data.missions.map((e: any) => {
-        if (e.missionStatus === 'NEW') {
-          setAllDone(false); //이번주 세개의 미션 모두 DONE이면 true유지
-        }
-      });
+      if (data.missions !== null) {
+        data.missions.map((e: any) => {
+          if (e.missionStatus === 'NEW') {
+            setAllDone(false); //이번주 세개의 미션 모두 DONE이면 true유지
+          }
+        });
+      } else {
+        setAllDone(false);
+      }
     },
   });
 
@@ -78,7 +82,9 @@ const Main = () => {
                 />
               )}
               keyExtractor={(item, index) => index.toString()}
-              ListHeaderComponent={<HomeMissionListHeader dday={homeData.data?.dday} />}
+              ListHeaderComponent={
+                <HomeMissionListHeader dday={homeData.data?.dday} allDone={allDone} />
+              }
               onScroll={(event) => {
                 Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
                   useNativeDriver: false,
