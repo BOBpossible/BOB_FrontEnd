@@ -74,11 +74,11 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
     await setOpenDoneModal(true);
     // setDoneModal(true); //던모달 열기
   };
-  const handleCloseAllModal = () => {
+  const handleCloseAllModal = async () => {
     setShowRating(true);
     setRating(0);
     setReviewContent('');
-    setOpenDoneModal(false);
+    await setOpenDoneModal(false);
     // setDoneModal(false);
     closeReviewModal();
   };

@@ -27,7 +27,7 @@ const options: ImageLibraryOptions = {
   mediaType: 'photo',
   maxWidth: 200,
   maxHeight: 200,
-  quality: 0.5,
+  quality: 1,
 };
 const REVIEW_RATE_TEXT = [
   '별로였어요',
@@ -66,6 +66,13 @@ export const ReviewWrite: FC<ReviewWriteProps> = ({
     }
     console.log(result);
   };
+  const removeImage = (imageName: string) => {
+    setImageUri((current) =>
+      current.filter((image) => {
+        return image.name !== imageName;
+      }),
+    );
+  };
   return (
     <View style={[styles.mainContainer]}>
       <View style={[styles.reviewContainer]}>
@@ -79,7 +86,9 @@ export const ReviewWrite: FC<ReviewWriteProps> = ({
           ratingImage={RATE_STAR}
           style={[styles.childView]}
         />
-        <Text style={[DesignSystem.body2Lt, styles.rateReviewText]}>{REVIEW_RATE_TEXT[rating - 1]}</Text>
+        <Text style={[DesignSystem.body2Lt, styles.rateReviewText]}>
+          {REVIEW_RATE_TEXT[rating - 1]}
+        </Text>
         <TextInput
           style={[styles.reviewContent]}
           multiline={true}
@@ -93,16 +102,43 @@ export const ReviewWrite: FC<ReviewWriteProps> = ({
         <View style={[styles.ImageSelectContainer]}>
           <View style={[styles.flexRow]}>
             <Text>사진 첨부</Text>
-            <Text>1/3</Text>
+            <Text style={{marginLeft: 10, color: '#7D7D7D'}}>{imageUri.length} / 3</Text>
           </View>
 
           <View style={[styles.flexRow]}>
-            <TouchableOpacity style={[styles.imageAddButton]} onPress={showImageLibrary}>
+            <TouchableOpacity
+              style={
+                imageUri.length >= 3
+                  ? [styles.imageAddButton, {opacity: 0.2}]
+                  : [styles.imageAddButton]
+              }
+              onPress={showImageLibrary}
+              disabled={imageUri.length >= 3}
+            >
               <Icon name="plus" size={24} />
             </TouchableOpacity>
-            {imageUri.map((data) => {
+            {imageUri.map((data, index) => {
               return (
-                <View style={{marginRight: 8}}>
+                <View style={{marginRight: 8}} key={index}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      removeImage(data.name);
+                    }}
+                    style={{position: 'absolute', top: 5, right: 5, zIndex: 1}}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: '#2A2A2A',
+                        width: 18,
+                        height: 18,
+                        borderRadius: 12,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Icon name="close" size={14} color="#DFDFDF" />
+                    </View>
+                  </TouchableOpacity>
                   <Image source={{uri: data.uri}} style={{width: 80, height: 80}} />
                 </View>
               );
@@ -146,7 +182,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#6C69FF',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: Platform.OS === 'android' && 16,
+    marginBottom: 16,
   },
   reviewConfirmButtonText: {
     color: '#FFFFFF',

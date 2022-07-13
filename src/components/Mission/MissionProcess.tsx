@@ -1,7 +1,10 @@
 import React from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
 import {DesignSystem} from '../../assets/DesignSystem';
 
@@ -13,7 +16,7 @@ export const MissionProcess: FC<MissionProcessProps> = ({status}) => {
   const nowOnProgress = () => {
     return (
       <>
-        <View style={{width:14, height:14}}>
+        <View style={{width: 14, height: 14}}>
           <View style={[styles.activeCircleBack, {position: 'relative', right: 4, bottom: 4}]} />
           <View style={[styles.activeCircle, {position: 'relative', bottom: 22, zIndex: 1}]} />
         </View>
@@ -27,7 +30,7 @@ export const MissionProcess: FC<MissionProcessProps> = ({status}) => {
       <>
         <View style={[styles.inactiveCircle]} />
         <View style={[styles.processLine]} />
-        <View style={{width:14, height:14}}>
+        <View style={{width: 14, height: 14}}>
           <View style={[styles.activeCircleBack, {position: 'relative', right: 4, bottom: 4}]} />
           <View style={[styles.activeCircle, {position: 'relative', bottom: 22, zIndex: 1}]} />
         </View>

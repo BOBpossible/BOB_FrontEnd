@@ -34,6 +34,7 @@ const AddressSearchModal: FC<AddressSearchModalProps> = ({
     onSuccess: (data) => {
       console.log('주소 변경 성공: ', data);
       queryClient.invalidateQueries(queryKey.ADDRESS);
+      queryClient.invalidateQueries(queryKey.STORELIST);
     },
     onError: (err) => {
       console.log('주소 변경 실패: ', err);
