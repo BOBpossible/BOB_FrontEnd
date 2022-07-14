@@ -43,11 +43,9 @@ const Login = () => {
     }
   };
 
-  const postAppleLogin = async (data: any) => {
+  const postAppleLogin = async (token: string) => {
     try {
-      const response = await customAxios().post('/auth/authorization/apple-login', null, {
-        params: data,
-      });
+      const response = await customAxios().post('/auth/authorization/apple-login', {token: token});
       try {
         await AsyncStorage.multiSet([
           ['accessToken', response.data.result.accessToken],
@@ -105,8 +103,7 @@ const Login = () => {
       if (credentialState === appleAuth.State.AUTHORIZED) {
         console.log('애플로그인 성공!:', appleAuthRequestResponse);
         const {identityToken} = appleAuthRequestResponse;
-        const data = {token: identityToken};
-        postAppleLogin(data);
+        postAppleLogin(identityToken as string);
       }
     } catch (error) {
       console.log(error);

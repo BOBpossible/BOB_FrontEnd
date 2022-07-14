@@ -140,11 +140,11 @@ const RegisterForm = ({navigation, route}: Props) => {
             control={control}
             rules={{
               required: true,
-              // validate: {
-              //   authValid: () => {
-              //     return !authError;
-              //   },
-              // },
+              validate: {
+                authValid: () => {
+                  return !authError;
+                },
+              },
               // 휴대폰 인증을 빼기 위해 잠시 주석처리
             }}
             render={({field: {onChange, value}}) => {
@@ -155,6 +155,7 @@ const RegisterForm = ({navigation, route}: Props) => {
                   onChange={onChange}
                   value={value}
                   setAuthError={setAuthError}
+                  isError={errors.phone !== undefined}
                 />
               );
             }}
