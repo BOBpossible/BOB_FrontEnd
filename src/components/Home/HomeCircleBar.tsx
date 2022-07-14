@@ -33,7 +33,7 @@ export const CircleBar: FC<CircleBarProps> = ({progress}) => {
     <View style={[styles.flex]}>
       <AnimatedCircularProgress
         style={{transform: [{scaleX: -1}]}}
-        size={Platform.OS === 'ios' ? hp((108 / 812) * 100) : hp(calHeight(108))}
+        size={Platform.OS === 'ios' ? hp(calHeight(108, true)) : hp(calHeight(108))}
         width={5}
         fill={progress !== undefined ? progress * 10 : 0}
         tintColor="#615EFF"

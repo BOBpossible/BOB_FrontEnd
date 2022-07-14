@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
   circleWrap: {
     alignItems: 'center',
     position: 'absolute',
-    bottom: 10,
+    bottom: 0,
   },
   barWrap: {
     marginTop: 14, ///
