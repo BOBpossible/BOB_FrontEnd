@@ -24,6 +24,12 @@ const Splash = () => {
       </View> */}
 
       <View style={[styles.imageWrap]}>
+        <View style={{marginBottom: 28}}>
+          <Image
+            source={require('../../assets/images/bob_place.png')}
+            style={{width: 219, height: 30}}
+          />
+        </View>
         <Image source={require('../../assets/images/bobpool.png')} style={[styles.logoImage]} />
         <Animated.View style={[styles.postionAbs, {bottom: progressValue}]}>
           <Image
@@ -37,7 +43,7 @@ const Splash = () => {
 };
 
 const styles = StyleSheet.create({
-  flex: {flex: 1, backgroundColor: '#615DFF', alignItems: 'center'},
+  flex: {flex: 1, backgroundColor: '#6C69FF', alignItems: 'center'},
   splashTitle: {
     fontFamily: 'Poppins-Bold',
     fontSize: 34,

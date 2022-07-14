@@ -18,6 +18,7 @@ import {ConnectionError} from '../../components/ConnectionError';
 const MyPage = () => {
   const navigation = useNavigation();
   const {data, isError, refetch} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
+  console.log(data);
   // data.point 로 접근
   const logout = async () => {
     await AsyncStorage.multiSet([
