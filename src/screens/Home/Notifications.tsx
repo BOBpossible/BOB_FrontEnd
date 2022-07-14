@@ -57,14 +57,12 @@ export const Notifications = ({navigation}: Props) => {
               <NotificationCard
                 pushType={item.pushType}
                 storeName={item.storeName}
-                storeId={12312}
-                missionId={123}
-                // storeId={item.storeId}
-                // missionId={item.missionId}
+                storeId={item.storeId}
+                missionId={item.missionId}
                 mission={item.subTitle}
                 date={item.date}
                 checked={item.checked}
-                checkedNoti={() => checkedNoti(item.id)}
+                id={item.id}
               />
             )}
             ItemSeparatorComponent={() => <View style={{marginTop: 8}} />}
