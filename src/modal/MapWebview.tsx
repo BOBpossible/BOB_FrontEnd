@@ -40,6 +40,7 @@ export const MapWebview: FC<MapWebviewProps> = ({missionId, userId, webviewRef})
         onLoad={() => {
           setIsLoadingMap(false);
         }}
+        geolocationEnabled={true}
       />
       {isLoadingMap && (
         <ActivityIndicator style={{position: 'absolute', alignSelf: 'center'}} size="large" />

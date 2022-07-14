@@ -7,10 +7,9 @@ import {MyReviewEach} from '../../components/My/MyReviewEach';
 import {useInfiniteQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
 import {getReviewsMe} from '../../api';
-import {IReviewsType} from '../../data';
 import {PhotoModal} from '../../modal';
 import {ReviewNo} from '../../components/ReviewNo';
-import { DesignSystem } from '../../assets/DesignSystem';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyReview'>;
 
@@ -25,7 +24,7 @@ export const MyReview = ({navigation}: Props) => {
     navigation.goBack();
   };
 
-  const DataReviews = useInfiniteQuery<IReviewsType[]>([queryKey.REVIEWSME], getReviewsMe, {
+  const DataReviews = useInfiniteQuery([queryKey.REVIEWSME], getReviewsMe, {
     getNextPageParam: (lastPage, pages) => {
       return pages.length;
     },
@@ -34,7 +33,7 @@ export const MyReview = ({navigation}: Props) => {
 
   return (
     <>
-      <SafeAreaView style={{flex: 0, backgroundColor: '#F8F8F8'}} />
+      <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
       <SafeAreaView style={[styles.flex]}>
         <MyHeader goBack={goBack} title={'리뷰 관리'} />
         {DataReviews.data?.pages.length !== 0 ? ( //리뷰없는경우
@@ -53,7 +52,6 @@ export const MyReview = ({navigation}: Props) => {
             }}
             renderItem={({item}) => (
               <>
-                {/* {console.log('iiiiiiiiiiiiii', item.content)} */}
                 {item.content.map((e: any, i: number) => {
                   return (
                     <View key={i}>

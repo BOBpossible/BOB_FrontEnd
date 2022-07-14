@@ -50,57 +50,66 @@ export const MyPoint = ({navigation, route}: Props) => {
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
       <SafeAreaView style={[styles.flex, {backgroundColor: '#FFFFFF'}]}>
         <MyHeader goBack={goBack} title={'내 포인트'} />
-        <View style={{backgroundColor: '#FFFFFF'}}>
-          <View style={[styles.myPointWrap, styles.marginLR]}>
-            <View>
-              <Text style={[DesignSystem.body2Lt, {color: '#616161'}]}>내 포인트</Text>
-              <Text style={[DesignSystem.h1SB, {color: '#111111'}]}>
-                {DataPointsList.data?.pages[0].data.result.totalPoints
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                P
-              </Text>
-            </View>
-            <TouchableOpacity
-              style={[styles.changePointView]}
-              onPress={() => navigation.navigate('MyChangePoint', {point: point})}
-            >
-              <Text style={{color: '#FFFFFF', fontFamily: 'Pretendard-Medium', fontSize: 12}}>
-                포인트 전환 신청
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
         <View style={[styles.pointListWrap]}>
-          <View style={[styles.marginLR]}>
-            <Text style={[DesignSystem.subtitle2, {marginTop: 16, color: '#111111'}]}>
-              포인트 내역
-            </Text>
-            <FlatList
-              style={{marginTop: 18}}
-              showsVerticalScrollIndicator={true}
-              data={DataPointsList.data?.pages}
-              onEndReached={() => {
-                DataPointsList.fetchNextPage();
-              }}
-              renderItem={({item}) => (
-                <>
-                  {item.data.result.point.content.map((e: any, i: number) => {
-                    return (
-                      <View key={i}>
-                        <MyPointList
-                          date={e.date}
-                          title={e.title}
-                          subTitle={e.subTitle}
-                          point={e.point}
-                        />
-                      </View>
-                    );
-                  })}
-                </>
-              )}
-            />
-          </View>
+          <FlatList
+            ListHeaderComponent={
+              <>
+                <View style={{backgroundColor: '#FFFFFF'}}>
+                  <View style={[styles.myPointWrap, styles.marginLR]}>
+                    <View>
+                      <Text style={[DesignSystem.body2Lt, DesignSystem.grey10]}>내 포인트</Text>
+                      <Text style={[DesignSystem.h1SB, DesignSystem.grey17]}>
+                        {DataPointsList.data?.pages[0].data.result.totalPoints
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                        P
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      style={[styles.changePointView]}
+                      onPress={() => navigation.navigate('MyChangePoint', {point: point})}
+                    >
+                      <Text
+                        style={{color: '#FFFFFF', fontFamily: 'Pretendard-Medium', fontSize: 12}}
+                      >
+                        포인트 전환 신청
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View style={{backgroundColor: '#F8F8F8', width: '100%', height: 8}} />
+                <Text
+                  style={[
+                    DesignSystem.subtitle2,
+                    {marginTop: 16, marginBottom: 20, color: '#111111', marginLeft: 16},
+                  ]}
+                >
+                  포인트 내역
+                </Text>
+              </>
+            }
+            showsVerticalScrollIndicator={false}
+            data={DataPointsList.data?.pages}
+            onEndReached={() => {
+              DataPointsList.fetchNextPage();
+            }}
+            renderItem={({item}) => (
+              <>
+                {item.data.result.point.content.map((e: any, i: number) => {
+                  return (
+                    <View key={i} style={{marginLeft: 16, marginRight: 16}}>
+                      <MyPointList
+                        date={e.date}
+                        title={e.title}
+                        subTitle={e.subTitle}
+                        point={e.point}
+                      />
+                    </View>
+                  );
+                })}
+              </>
+            )}
+          />
         </View>
       </SafeAreaView>
     </>
@@ -123,10 +132,11 @@ const styles = StyleSheet.create({
   changePointView: {
     backgroundColor: '#2A2A2A',
     borderRadius: 7,
-    width: hp(calHeight(90)),
-    height: wp(calWidth(32)),
+    width: wp(calWidth(90)),
+    height: hp(calHeight(32)),
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 8,
   },
   pointListWrap: {
     backgroundColor: 'white',
