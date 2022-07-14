@@ -2,6 +2,7 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import type {FC} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {DesignSystem} from '../assets/DesignSystem';
 
 type CheckBoxProps = {
   onPress: () => void;
@@ -23,7 +24,9 @@ export const CheckBox: FC<CheckBoxProps> = ({onPress, title, isChecked, isCheckA
           />
         </View>
       </Pressable>
-      <Text style={[styles.title, {fontWeight: isCheckAll ? '600' : '400'}]}>{title}</Text>
+      <Text style={[styles.title, isCheckAll ? DesignSystem.title3SB : DesignSystem.body1Long]}>
+        {title}
+      </Text>
     </View>
   );
 };
@@ -33,7 +36,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
-    width: '100%',
     marginTop: 24,
   },
   title: {

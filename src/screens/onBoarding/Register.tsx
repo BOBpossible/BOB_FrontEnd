@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {RegisterNextButton} from '../components';
-import {createRegister} from '../data/createRegister';
-import {RegisterInterface} from '../data/Register';
+import {RegisterNextButton} from '../../components';
+import {createRegister} from '../../data/createRegister';
+import {RegisterInterface} from '../../data/Register';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {AuthStackParamList} from '../nav';
-import {RegisterHeader, CheckBox} from '../components';
+import {AuthStackParamList} from '../../nav';
+import {RegisterHeader, CheckBox} from '../../components';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Register'>;
 
@@ -72,7 +73,7 @@ const Register = ({navigation}: Props) => {
           />
         </View>
         <View style={styles.seperateLine} />
-        <View>
+        <View style={styles.CheckBoxRow}>
           <CheckBox
             onPress={() => {
               setCheck14(!check14);
@@ -82,7 +83,7 @@ const Register = ({navigation}: Props) => {
             isChecked={check14}
           />
         </View>
-        <View>
+        <View style={styles.CheckBoxRow}>
           <CheckBox
             onPress={() => {
               setCheckService(!checkService);
@@ -91,8 +92,15 @@ const Register = ({navigation}: Props) => {
             title="(필수)서비스 이용약관"
             isChecked={checkService}
           />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('RegisterContract', {type: 0});
+            }}
+          >
+            <Icon name="chevron-right" size={18} color="#111111" />
+          </TouchableOpacity>
         </View>
-        <View>
+        <View style={styles.CheckBoxRow}>
           <CheckBox
             onPress={() => {
               setCheckPrivacy(!checkPrivacy);
@@ -101,8 +109,15 @@ const Register = ({navigation}: Props) => {
             title="(필수)개인 정보 처리 방침"
             isChecked={checkPrivacy}
           />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('RegisterContract', {type: 1});
+            }}
+          >
+            <Icon name="chevron-right" size={18} color="#111111" />
+          </TouchableOpacity>
         </View>
-        <View>
+        <View style={styles.CheckBoxRow}>
           <CheckBox
             onPress={() => {
               setCheckLocation(!checkLocation);
@@ -111,8 +126,15 @@ const Register = ({navigation}: Props) => {
             title="(선택) 위치정보 제공"
             isChecked={checkLocation}
           />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('RegisterContract', {type: 2});
+            }}
+          >
+            <Icon name="chevron-right" size={18} color="#111111" />
+          </TouchableOpacity>
         </View>
-        <View>
+        <View style={styles.CheckBoxRow}>
           <CheckBox
             onPress={() => {
               setCheckMarketing(!checkMarketing);
@@ -121,6 +143,13 @@ const Register = ({navigation}: Props) => {
             title="(선택) 마케팅 수신 동의"
             isChecked={checkMarketing}
           />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('RegisterContract', {type: 3});
+            }}
+          >
+            <Icon name="chevron-right" size={18} color="#111111" />
+          </TouchableOpacity>
         </View>
       </View>
       <RegisterNextButton
@@ -138,6 +167,12 @@ const styles = StyleSheet.create({
   seperateLine: {borderColor: '#E8E8E8', borderWidth: 1, marginTop: 16},
   RegisterHeadText: {fontSize: 24, fontWeight: '800'},
   RegisterHeadWrap: {paddingBottom: 8},
+  CheckBoxRow: {
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
+  },
 });
 
 export default Register;

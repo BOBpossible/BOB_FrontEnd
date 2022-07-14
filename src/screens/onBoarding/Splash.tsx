@@ -24,9 +24,12 @@ const Splash = () => {
       </View> */}
 
       <View style={[styles.imageWrap]}>
-        <Image source={require('../assets/images/bobpool.png')} style={[styles.logoImage]} />
+        <Image source={require('../../assets/images/bobpool.png')} style={[styles.logoImage]} />
         <Animated.View style={[styles.postionAbs, {bottom: progressValue}]}>
-          <Image source={require('../assets/images/bobpoolFace.png')} style={[styles.logoFace]} />
+          <Image
+            source={require('../../assets/images/bobpoolFace.png')}
+            style={[styles.logoFace]}
+          />
         </Animated.View>
       </View>
     </SafeAreaView>

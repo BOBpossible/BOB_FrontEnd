@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {RecoilRoot} from 'recoil';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
-import Splash from './src/screens/Splash';
+import Splash from './src/screens/onBoarding/Splash';
 import {NavigationContainer} from '@react-navigation/native';
 import {MainNavigator} from './src/nav';
 import {AuthNavigator} from './src/nav';
