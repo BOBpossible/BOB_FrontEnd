@@ -4,45 +4,40 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HomeStackParamList} from '../../nav/HomeNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
 import {NotificationCard} from '../../components/NotificationCard';
-
-const dummyMission = [
-  {
-    isNewMission: true,
-    storeName: '새미션활성화가게',
-    storeId: 1,
-    mission: '20000원 이상',
-    date: '2022.05.22 16:43',
-    status: 1,
-  },
-  {
-    isNewMission: false,
-    storeName: '리뷰활성화가게',
-    storeId: 13,
-    mission: '15000원 이상',
-    date: '2022.05.22 16:43',
-    status: 1,
-  },
-  {
-    isNewMission: true,
-    storeName: '새미션비활성화가게',
-    storeId: 144,
-    mission: '17000원 이상',
-    date: '2022.05.22 16:43',
-    status: 0,
-  },
-  {
-    isNewMission: false,
-    storeName: '리뷰비활성화가게',
-    storeId: 1433,
-    mission: '18000원 이상',
-    date: '2022.05.22 16:43',
-    status: 0,
-  },
-];
+import {getNotifications, patchNotificationsStatus} from '../../api';
+import {useMutation, useQuery, useQueryClient} from 'react-query';
+import {INotiType} from '../../data';
+import {queryKey} from '../../api/queryKey';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Notifications'>;
 
 export const Notifications = ({navigation}: Props) => {
+  const queryClient = useQueryClient();
+
+  const DataNoti = useQuery<INotiType[]>(queryKey.NOTIFICATIONS, getNotifications, {
+    onError: (err) => {
+      console.log('ERR', err);
+    },
+    onSuccess: (data) => {
+      console.log('DataNoti', data);
+    },
+  });
+  const missionSuccessRequestMutation = useMutation(
+    (notiId: number) => patchNotificationsStatus(notiId),
+    {
+      onSuccess: (data) => {
+        console.log('알림확인 전환 성공: ', data);
+        queryClient.invalidateQueries('notifications');
+      },
+      onError: (err) => {
+        console.log('알림확인 전환 실패: ', err);
+      },
+    },
+  );
+  const checkedNoti = (notiId: number) => {
+    missionSuccessRequestMutation.mutate(notiId);
+  };
+  console.log('DATANOTI', DataNoti.data); //스웨거에서result인 배열
   const goBack = () => {
     navigation.goBack();
   };
@@ -51,24 +46,32 @@ export const Notifications = ({navigation}: Props) => {
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
       <SafeAreaView style={[styles.flex]}>
         <MyHeader goBack={goBack} title={'알림'} />
-        <FlatList
-          style={{marginLeft: 16, marginRight: 16}}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: 60, marginTop: 12}}
-          scrollEventThrottle={10}
-          data={dummyMission}
-          renderItem={({item}) => (
-            <NotificationCard
-              isNewMission={item.isNewMission}
-              storeName={item.storeName}
-              storeId={item.storeId}
-              mission={item.mission}
-              date={item.date}
-              status={item.status}
-            />
-          )}
-          ItemSeparatorComponent={() => <View style={{marginTop: 8}} />}
-        />
+        {DataNoti.data?.length !== 0 ? (
+          <FlatList
+            style={{marginLeft: 16, marginRight: 16}}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{paddingBottom: 60, marginTop: 12}}
+            scrollEventThrottle={10}
+            data={DataNoti.data}
+            renderItem={({item}) => (
+              <NotificationCard
+                pushType={item.pushType}
+                storeName={item.storeName}
+                storeId={12312}
+                missionId={123}
+                // storeId={item.storeId}
+                // missionId={item.missionId}
+                mission={item.subTitle}
+                date={item.date}
+                checked={item.checked}
+                checkedNoti={() => checkedNoti(item.id)}
+              />
+            )}
+            ItemSeparatorComponent={() => <View style={{marginTop: 8}} />}
+          />
+        ) : (
+          <View />
+        )}
       </SafeAreaView>
     </>
   );

@@ -2,45 +2,74 @@ import React, {useState} from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {DesignSystem} from '../assets/DesignSystem';
+import ReviewModal from '../modal/ReviewModal';
+import {useNavigation} from '@react-navigation/native';
 
 export type NotificationCardProps = {
-  isNewMission: boolean; //미션알림1인지 리뷰남기란 알림0인지
-  storeName?: string;
-  storeId?: number;
+  pushType: string; //미션알림1인지 리뷰남기란 알림0인지
+  storeName: string;
+  storeId: number;
+  missionId: number;
   mission: string; //미션
-  date?: string; //날짜. 이거 어느형식으로 받으려나
-  status?: number; //활성화1, 비활성화0
+  date: string;
+  checked: boolean;
+  checkedNoti: () => void;
 };
 
 //prettier-ignore
-export const NotificationCard: FC<NotificationCardProps> = ({isNewMission, storeName, storeId, mission, date, status }) => {
+export const NotificationCard: FC<NotificationCardProps> = ({pushType, storeName, storeId, missionId, mission, date, checked, checkedNoti}) => {
+  const navigation = useNavigation();
+  const [reviewModal, setReviewModal] = useState(false);
+
   return (
     <>
-    {isNewMission === true ?
-      <TouchableOpacity style={[styles.notiCard, status === 0 && {opacity: 0.5 }]}>
+    {pushType === 'MISSION' ?
+      <TouchableOpacity
+        style={[styles.notiCard, checked && {opacity: 0.5}]}
+        onPress={() => {
+          navigation.navigate('HomeMissionDetails', {missionId: missionId});
+          checkedNoti;
+        }
+      }
+      >
         <View style={[styles.notiWrap]}>
-          <View style={status === 1 ? [styles.dot] : [styles.noDot]}>
-          </View>
+          <View style={!checked? [styles.dot] : [styles.noDot]} />
           <View style={[styles.notiView]}>
-            <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>새로운 미션이 도착했습니다.</Text>
-            <Text style={[DesignSystem.body1Lt, DesignSystem.grey10]}><Text style={{color: '#6C69FF'}}>{storeName}</Text>에서 {mission}의 식사를 하세요!</Text>
-            <Text style={[styles.date]}>{date}</Text>
+            <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 4}]}>새로운 미션이 도착했습니다!</Text>
+            <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}><Text style={[DesignSystem.purple5]}>{storeName}</Text>에서 {mission}의 식사를 하세요!</Text>
+            <Text style={[DesignSystem.caption1Lt, {color: '#7D7D7D'}]}>
+              {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)} {date.slice(11,15)}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
       :
-      <TouchableOpacity style={[styles.notiCard, status === 0 && {opacity: 0.5 }]} onPress={() => {}}>
+      <TouchableOpacity
+        style={[styles.notiCard, checked && {opacity: 0.5}]}
+        onPress={() => {
+          setReviewModal(true);
+          checkedNoti;
+        }
+      }
+      >
         <View style={[styles.notiWrap]}>
-          <View style={status ===1 ? [styles.dot] : [styles.noDot]}>
-          </View>
+          <View style={!checked ? [styles.dot] : [styles.noDot]} />
           <View style={[styles.notiView]}>
-            <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>리뷰를 남겨주세요.</Text>
-            <Text style={[DesignSystem.body1Lt, DesignSystem.grey10]}><Text style={{color: '#6C69FF'}}>{storeName}</Text>의 음식이 맛있었다면 리뷰를 남겨주세요.</Text>
-            <Text style={[styles.date]}>{date}</Text>
+            <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 4}]}>리뷰를 남겨주세요.</Text>
+            <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}><Text style={[DesignSystem.purple5]}>{storeName}</Text>의 음식이 맛있었다면 리뷰를 남겨주세요.</Text>
+            <Text style={[DesignSystem.caption1Lt, {color: '#7D7D7D'}]}>
+              {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)} {date.slice(11,16)}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
     }
+    <ReviewModal
+      visible={reviewModal}
+      closeReviewModal={()=>setReviewModal(false)}
+      storeId={storeId}
+      missionId={missionId}
+    />
     </>
   );
 };

@@ -20,7 +20,7 @@ import {IAddress, IHomeData} from '../../data';
 import {getAddress} from '../../api';
 import {queryKey} from '../../api/queryKey';
 import {useQuery} from 'react-query';
-import {color} from 'react-native-reanimated';
+// import {color} from 'react-native-reanimated';
 
 const WIDTH = Dimensions.get('window').width;
 const HEADER_HEIGHT = Platform.OS === 'ios' ? hp(25.8) : hp(28.6);
