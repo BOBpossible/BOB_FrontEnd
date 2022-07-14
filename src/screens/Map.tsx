@@ -89,7 +89,12 @@ const Map = () => {
           <Icon name="menu-down" size={18} color="black" />
         </TouchableOpacity>
       </View>
-      <MapWebview userId={DataUser.data?.userId} webviewRef={webviewRef} />
+      <MapWebview
+        userId={DataUser.data?.userId}
+        webviewRef={webviewRef}
+        x={Address.data?.x}
+        y={Address.data?.y}
+      />
 
       <BottomSheet
         snapPoints={[60, listSnapPoint]}
