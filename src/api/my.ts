@@ -52,5 +52,6 @@ export const postPointsConvert = async (data: {
 //회원탈퇴
 export const patchQuit = async () => {
   const response = await customAxios().patch('/api/v1/users/me/quit');
+  console.log('탈퇴토티퉤퇴텥티퉤퉤토티퉤', response);
   return response.data;
 };
