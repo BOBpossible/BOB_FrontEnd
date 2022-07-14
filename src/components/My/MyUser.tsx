@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React  from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Platform} from 'react-native';
 import {Colors} from 'react-native-paper';
@@ -17,14 +17,6 @@ export type MyUserProps = {
 };
 
 export const MyUser: FC<MyUserProps> = ({authentication, email, name, point}) => {
-  // const [statusMessage, setMessage] = useState('');
-  // useEffect(() => {
-  //   if (!authentication) {
-  //     setMessage('미인증');
-  //   } else {
-  //     setMessage('');
-  //   }
-  // }, [authentication]);
   const navigation = useNavigation();
 
   return (
@@ -38,7 +30,6 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point}) =>
           <View style={[styles.userWrap]}>
             <View style={[styles.username]}>
               <Text style={[DesignSystem.title3SB, DesignSystem.grey17]}>{name}님</Text>
-              {/* <Text style={[DesignSystem.caption1Lt, {color: '#E03D32'}]}>{statusMessage}</Text> */}
             </View>
             <Text style={[DesignSystem.caption1Lt, styles.userEmail]}>{email}</Text>
           </View>

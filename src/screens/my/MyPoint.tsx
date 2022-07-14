@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
   changePointView: {
     backgroundColor: '#2A2A2A',
     borderRadius: 7,
-    width: wp(calWidth(90)),
     height: hp(calHeight(32)),
     justifyContent: 'center',
     alignItems: 'center',
