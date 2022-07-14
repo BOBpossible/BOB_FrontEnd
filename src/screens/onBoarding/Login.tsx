@@ -126,17 +126,13 @@ const Login = () => {
       console.log('onGoogleButtonPress ERROR', err);
     }
   }
-  // function onGoogleLogout() {
-  //   console.log('구글 로그아웃 합니다');
-  //   auth().signOut();
-  // }
 
   const goMain = useCallback(() => navigation.navigate('MainNavigator'), []);
   const goRegister = useCallback(() => navigation.navigate('Register'), []);
   return (
     <SafeAreaView style={styles.flex}>
       {/* 개발 단계시 홈과 가입으로 가는 버튼 */}
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      {/* <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <TouchableOpacity onPress={goMain}>
           <View style={{height: 30, width: 30, borderWidth: 1}}>
             <Text>홈</Text>
@@ -147,7 +143,7 @@ const Login = () => {
             <Text>가입</Text>
           </View>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       <View style={[styles.loginTitle]}>
         <Image
@@ -200,7 +196,7 @@ const styles = StyleSheet.create({
   loginTitle: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 53,
+    marginTop: 80,
   },
   loginHeadText: {
     fontFamily: 'Poppins-Bold',
@@ -216,6 +212,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 30,
   },
   titleImage: {
     width: wp(calWidth(344)),
@@ -223,7 +220,7 @@ const styles = StyleSheet.create({
   },
   logoImage: {
     width: wp(calWidth(221)),
-    height: Platform.OS === 'ios' ? hp(calHeight(146, true)) : hp(calHeight(146)),
+    height: Platform.OS === 'ios' ? hp(calHeight(150, true)) : hp(calHeight(150)),
   },
   loginButtonWrap: {
     marginBottom: 30,
