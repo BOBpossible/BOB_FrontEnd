@@ -124,11 +124,16 @@ const Login = () => {
       </View>
 
       <View style={[styles.loginTitle]}>
-        <Text style={[styles.loginHeadText]}>BOB PLACE</Text>
-        <Text style={[styles.loginSubHeadText]}> 맛있는 한끼하고 포인트를 모으자!</Text>
+        <Image
+          source={require('../../assets/images/bob_place_login.png')}
+          style={{width: 344, height: 187}}
+        />
       </View>
       <View style={[styles.logoWrap]}>
-        <Image source={require('../../assets/images/LoginLogo.png')} style={[styles.logoImage]} />
+        <Image
+          source={require('../../assets/images/bobpool_login.png')}
+          style={{width: 221, height: 146}}
+        />
       </View>
       <SocialWebviewModal
         visible={loginModal}
@@ -168,11 +173,11 @@ const Login = () => {
 };
 
 const styles = StyleSheet.create({
-  flex: {flex: 1, backgroundColor: '#FFFFFF'},
+  flex: {flex: 1, backgroundColor: '#F8F8F8'},
   loginTitle: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 23, //디버깅용 메뉴 사라지면 53
+    marginTop: 53,
   },
   loginHeadText: {
     fontFamily: 'Poppins-Bold',
