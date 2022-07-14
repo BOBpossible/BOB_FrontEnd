@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Text, View} from 'react-native';
+import {Image, Platform, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {
@@ -21,15 +21,21 @@ export const MissionNo: FC<MissionNoProps> = ({progressnow}) => {
         {'홈화면에서 미션을 도전 해보세요 :)'}
       </Text>
       {progressnow === 0 ? (
+        Platform.OS === 'ios' ? (
+          <FastImage
+            source={require('../../assets/images/bobpool/cryingBob.png')}
+            style={{width: wp(calWidth(159)), height: hp(calHeight(105))}}
+          />
+        ) : (
+          <Image source={require('../../assets/images/bobpool/cryingBob.png')} />
+        )
+      ) : Platform.OS === 'ios' ? (
         <FastImage
-          source={require('../../assets/images/bobpool/cryingBob.png')}
+          source={require('../../assets/images/bobpool/steamingBob.png')}
           style={{width: wp(calWidth(159)), height: hp(calHeight(105))}}
         />
       ) : (
-        <FastImage
-          source={require('../../assets/images/bobpool/steamingBob.png')}
-          style={{width: wp(calWidth(159)), height: hp(calHeight(164))}}
-        />
+        <Image source={require('../../assets/images/bobpool/steamingBob.png')} />
       )}
     </View>
   );
