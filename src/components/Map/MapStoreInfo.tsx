@@ -30,14 +30,14 @@ export const MapStoreInfo: FC<MapStoreInfoProps> = ({
 }) => {
   return (
     <View style={[styles.storeInfoWrap]}>
-      <View style={[styles.flexRow, styles.rowSeperate]}>
+      <View style={[styles.flexRow, {marginBottom: 11}]}>
         <Text style={[styles.storeName]}>{storeName}</Text>
         <Text style={[styles.storeCategory]}>{storeCategory}</Text>
       </View>
-      <View style={[styles.flexRow, styles.rowSeperate]}>
+      <View style={[styles.flexRow, {marginBottom: 9}]}>
         <Text style={[styles.storeTime]}>{convertStatus(storeStatus)}</Text>
-        <View style={[styles.flexRow, styles.rateMargin]}>
-          <Icon name="star" size={14} color={'#FFDE69'} />
+        <View style={[styles.flexRow, {marginLeft: 8}]}>
+          <Icon name="star" size={15} color={'#FFDE69'} />
           <Text style={[styles.storeRate]}>{storeRate?.toFixed(1)}</Text>
         </View>
       </View>
@@ -50,36 +50,32 @@ export const MapStoreInfo: FC<MapStoreInfoProps> = ({
 
 const styles = StyleSheet.create({
   storeInfoWrap: {
-    marginBottom: 8,
+    marginBottom: 18,
     backgroundColor: '#FFFFFF',
     paddingLeft: 21,
     paddingTop: 18,
-    paddingBottom: 18,
   },
   flexRow: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  rowSeperate: {
-    marginBottom: 11,
-  },
   storeName: {
     fontFamily: 'Pretendard-SemiBold',
     fontSize: 16,
-    fontWeight: '600',
+    lineHeight: 16,
     color: '#000000',
   },
   storeCategory: {
     marginLeft: 8,
     fontFamily: 'Pretendard-Light',
     fontSize: 14,
-    fontWeight: '300',
+    lineHeight: 14,
     color: '#7D7D7D',
   },
   storeTime: {
     fontFamily: 'Pretendard-Light',
     fontSize: 14,
-    fontWeight: '300',
+    lineHeight: 14,
     color: '#F33F3F',
   },
   storeRate: {
@@ -89,6 +85,10 @@ const styles = StyleSheet.create({
     color: '#000000',
     marginLeft: 4,
   },
-  storeAddress: {fontFamily: 'Pretendard-Light', fontSize: 14, fontWeight: '300', color: '#7D7D7D'},
-  rateMargin: {marginLeft: 8},
+  storeAddress: {
+    fontFamily: 'Pretendard-Light',
+    fontSize: 14,
+    lineHegight: 14,
+    color: '#7D7D7D',
+  },
 });

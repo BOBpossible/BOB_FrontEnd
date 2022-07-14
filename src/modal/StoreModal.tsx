@@ -25,11 +25,6 @@ type StoreModalProps = {
 
 const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) => {
   const [isReview, setIsReview] = useState(false);
-
-  const storeData = useQuery<IStoreData>([queryKey.STOREDATA, storeId], () =>
-    getStoreData(storeId),
-  );
-
   const offset1 = useRef(new Animated.Value(0)).current;
   const headerTextStyle = useStyle({
     opacity: offset1.interpolate({
@@ -38,20 +33,22 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
       extrapolate: 'clamp',
     }),
   });
+  const storeData = useQuery<IStoreData>([queryKey.STOREDATA, storeId], () =>
+    getStoreData(storeId),
+  );
+
   return (
     <Modal visible={visible} animationType="slide">
       <SafeAreaView style={[styles.safeView]}>
         <View style={[styles.modalHeader]}>
           <TouchableOpacity onPress={closeStoreModal}>
             <View style={[styles.backButton]}>
-              <Icon name="arrow-left" size={24} color="black" />
+              <Icon name="arrow-left" size={24} color="#2A2A2A" />
             </View>
           </TouchableOpacity>
-
           <Animated.View style={[headerTextStyle]}>
             <Text style={[styles.storeHeaderText]}>{storeData.data?.name}</Text>
           </Animated.View>
-
           <View style={[styles.backButton, {opacity: 0}]}>
             <Icon name="arrow-left" size={24} color="black" />
           </View>
@@ -85,7 +82,7 @@ export default StoreModal;
 const styles = StyleSheet.create({
   safeView: {flex: 1, backgroundColor: '#FFFFFF'},
   modalHeader: {
-    height: 40,
+    height: 50,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -100,7 +97,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   storeHeaderText: {
-    fontFamily: 'Pretendard-Medium',
+    fontFamily: 'Pretendard-SeniBold',
     fontSize: 16,
     lineHeight: 24,
     color: '#000000',

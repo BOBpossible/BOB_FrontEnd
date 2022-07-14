@@ -3,6 +3,9 @@ import type {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
+import { DesignSystem } from '../../assets/DesignSystem';
 
 export type MapStoreBottomSheetProps = {
   storeName: string;
@@ -35,30 +38,14 @@ export const MapStoreBottomSheet: FC<MapStoreBottomSheetProps> = ({
       <View style={[styles.storeInfoWrap]}>
         <View style={[styles.flexRow, {justifyContent: 'space-between', marginBottom: 8}]}>
           {mission && (
-            <View
-              style={{
-                backgroundColor: '#6C69FF',
-                paddingHorizontal: 6,
-                paddingVertical: 4,
-                borderRadius: 10,
-              }}
-            >
+            <View style={[styles.pointWrap]}>
               <Text style={[styles.storePoint]}>{point} P</Text>
             </View>
           )}
 
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              position: 'absolute',
-              top: 3,
-              right: 3,
-            }}
-          >
-            <Text style={[styles.storeInfo]}>가게정보</Text>
-            <Icon name="chevron-right" size={22} />
+          <View style={[styles.infoWrap]}>
+            <Text style={[DesignSystem.body2Lt, {color: '#616161'}]}>가게정보</Text>
+            <Icon name="chevron-right" size={22} color={'#949494'} />
           </View>
         </View>
         <View style={[styles.flexRow, {marginBottom: 4}]}>
@@ -86,53 +73,47 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  rowSeperate: {
-    marginBottom: 11,
+  pointWrap: {
+    backgroundColor: '#6C69FF',
+    paddingHorizontal: 6,
+    paddingVertical: 4,
+    borderRadius: 5,
+    width: wp(calWidth(45)),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   storeName: {
-    fontFamily: 'Pretendard-SemiBold',
+    fontFamily: 'Pretendard-Medium',
     fontSize: 16,
     lineHeight: 16,
-    fontWeight: '600',
-    color: '#000000',
+    color: '#111111',
   },
   storeCategory: {
     fontFamily: 'Pretendard-Light',
     fontSize: 14,
+    lineHeight: 14,
     fontWeight: '300',
     color: '#7D7D7D',
   },
   storePoint: {
-    fontFamily: 'Pretendard-SemiBold',
+    fontFamily: 'Pretendard-Medium',
     fontSize: 12,
+    lineHeight: 12,
     color: '#FFFFFF',
   },
-  storeInfo: {
-    fontFamily: 'Pretendard-Light',
-    fontSize: 14,
-    lineHeight: 22,
-    color: '#616161',
+  infoWrap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 3,
+    right: 3,
   },
   storeDistance: {
     marginLeft: 8,
     fontFamily: 'Pretendard-Light',
     fontSize: 16,
-    fontWeight: '300',
+    lineHeight: 16,
     color: '#7D7D7D',
   },
-  storeTime: {
-    fontFamily: 'Pretendard-Light',
-    fontSize: 14,
-    fontWeight: '300',
-    color: '#F33F3F',
-  },
-  storeRate: {
-    fontFamily: 'Pretendard-Light',
-    fontSize: 14,
-    fontWeight: '300',
-    color: '#000000',
-    marginLeft: 4,
-  },
-  storeAddress: {fontFamily: 'Pretendard-Light', fontSize: 14, fontWeight: '300', color: '#7D7D7D'},
-  rateMargin: {marginLeft: 8},
 });

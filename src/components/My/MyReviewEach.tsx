@@ -62,14 +62,20 @@ export const MyReviewEach: FC<MyReviewEachType> = ({
         </View>
         {reply.length !== 0 && (
           <View style={[styles.ownerWrap]}>
-              <View style={[styles.ownerTitle, {alignItems: 'center'}]}>
-                  <Text style={{fontFamily: 'Pretendard-Light', fontSize: 14, lineHeight: 14, color: '#7D7D7D', marginRight: 6}}>사장님 답글</Text>
-                  <Text style={[DesignSystem.grey7, {fontFamily: 'Pretendard-Light', fontSize: 14, lineHeight: 14}]}>{reply[0].date.slice(0,4)}.{reply[0].date.slice(5,7)}.{reply[0].date.slice(8,10)}</Text>
-              </View>
-              <View style={[styles.ownerContents]}>
-                <Text style={[DesignSystem.body2Long, {color: 'black'}, styles.ownerContentsText]}>{reply[0].reply}</Text>
-              </View>
+          <View style={[styles.ownerTitle, {alignItems: 'center'}]}>
+            <Text style={[DesignSystem.body2Lt, {color: '#616161', marginRight: 6}]}>
+              사장님 답글
+            </Text>
+            <Text style={[DesignSystem.body2Lt, {color: '#B7B7B7'}]}>
+              {reply[0].date.slice(0, 4)}.{reply[0].date.slice(5, 7)}.{reply[0].date.slice(8, 10)}
+            </Text>
           </View>
+          <View style={[styles.ownerContents]}>
+            <Text style={[DesignSystem.body2Long, {color: 'black'}, styles.ownerContentsText]}>
+              {reply[0].reply}
+            </Text>
+          </View>
+        </View>
         )}
       </View>
     </View>
@@ -103,7 +109,7 @@ const styles = StyleSheet.create({
   },
   ownerTitle: {
     flexDirection: 'row',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   ownerContents: {
     borderRadius: 10,
