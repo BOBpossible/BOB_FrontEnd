@@ -81,11 +81,6 @@ const Map = () => {
   return (
     <SafeAreaView style={[styles.flex]}>
       <AddressSearchModal visible={addressModal} closeAddressModal={() => setAddressModal(false)} />
-      <StoreModal
-        visible={storeModal}
-        closeStoreModal={() => setStoreModal(false)}
-        storeId={storeId}
-      />
       <View style={[styles.headerWrap]}>
         <TouchableOpacity onPress={() => setAddressModal(true)} style={[styles.header]}>
           <Text style={[DesignSystem.h2SB, {color: 'black', marginRight: 11}]}>
@@ -108,7 +103,7 @@ const Map = () => {
         {StoreList.data?.length === 0 ? (
           <View style={[DesignSystem.centerArrange, {flex: 1, marginBottom: 50}]}>
             <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2}]}>
-              주변에 미션이 없어요🥺
+              주변에 미션이 없어요
             </Text>
             <Text style={[DesignSystem.body1Lt, {color: '#949494', marginBottom: 38}]}>
               빠른 시일내에 미션을 업데이트 할게요!
@@ -139,6 +134,11 @@ const Map = () => {
           />
         )}
       </BottomSheet>
+      <StoreModal
+        visible={storeModal}
+        closeStoreModal={() => setStoreModal(false)}
+        storeId={storeId}
+      />
     </SafeAreaView>
   );
 };

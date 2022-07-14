@@ -29,8 +29,11 @@ export const MapReviewToggleButton: FC<MapReviewToggleButtonProps> = ({
             {marginLeft: 34},
           ]}
         >
-          <Text style={[isReview ? styles.toggleTextOn : styles.toggleTextOff]}>
-            리뷰 {reviewCount}
+          <Text>
+            <Text style={[isReview ? styles.toggleTextOn : styles.toggleTextOff]}>리뷰 </Text>
+            <Text style={[isReview ? styles.togglePointTextOn : styles.togglePointTextOff]}>
+              {reviewCount}
+            </Text>
           </Text>
         </View>
       </TouchableOpacity>
@@ -62,10 +65,26 @@ const styles = StyleSheet.create({
   },
   toggleTextOff: {
     fontFamily: 'Pretendard-Light',
-    fontSize: 16,
+    fontSize: 14,
+    lineHeight: 14,
+    color: '#949494',
   },
   toggleTextOn: {
     fontFamily: 'Pretendard-SemiBold',
     fontSize: 16,
+    lineHeight: 16,
+    color: '#000000',
+  },
+  togglePointTextOff: {
+    fontFamily: 'Pretendard-Light',
+    fontSize: 14,
+    lineHeight: 14,
+    color: '#949494',
+  },
+  togglePointTextOn: {
+    fontFamily: 'Pretendard-SemiBold',
+    fontSize: 14,
+    lineHeight: 14,
+    color: '#7D7D7D',
   },
 });

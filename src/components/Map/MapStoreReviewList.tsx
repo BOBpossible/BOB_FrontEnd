@@ -106,7 +106,7 @@ export const MapStoreReviewList = ({
                 storeRate={storeData?.averageRate}
                 storeAddress={storeData?.address.street}
               />
-              <View style={{backgroundColor: '#F6F6FA', height: 8}} />
+              <View style={{backgroundColor: '#F7F7F7', height: 8}} />
             </View>
             <View style={[styles.reviewToggleWrap]}>
               <MapReviewToggleButton
@@ -139,7 +139,6 @@ export const MapStoreReviewList = ({
             </>
           );
         }}
-        contentContainerStyle={styles.reviewListWrap}
         onEndReached={() => {
           if (reviewList.hasNextPage) {
             reviewList.fetchNextPage();
@@ -154,9 +153,6 @@ export const MapStoreReviewList = ({
 };
 
 const styles = StyleSheet.create({
-  reviewListWrap: {
-    backgroundColor: '#FFFFFF',
-  },
   reviewToggleWrap: {
     backgroundColor: '#FFFFFF',
     height: 50,

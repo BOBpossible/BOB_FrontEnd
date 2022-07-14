@@ -47,27 +47,20 @@ export const MapStoreReview: FC<MapStoreReviewProps> = ({
     setReportModal(true);
   };
   return (
-    <View style={{backgroundColor: 'white', marginBottom: 8}}>
+    <View style={{backgroundColor: 'white', paddingHorizontal: 16}}>
       <View style={[styles.totalWrap]}>
         <View style={[styles.customerWrap]}>
           <View style={[styles.title]}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={[DesignSystem.title3SB, DesignSystem.grey17, {marginRight: 12}]}>
+              <Text style={[DesignSystem.title4Md, {color: '#000000', marginRight: 12}]}>
                 {name}
               </Text>
-              <Text
-                style={{
-                  fontFamily: 'Pretendard-Light',
-                  fontSize: 14,
-                  lineHeight: 14,
-                  color: '#C4C4C4',
-                }}
-              >
+              <Text style={[DesignSystem.body1Lt, {color: '#C8C8C8'}]}>
                 {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)}
               </Text>
             </View>
             <TouchableOpacity onPress={handleRepotModal}>
-              <Text style={[DesignSystem.body1Lt, DesignSystem.grey8]}>신고하기</Text>
+              <Text style={[DesignSystem.body1Lt, {color: '#C4C4C4'}]}>신고하기</Text>
             </TouchableOpacity>
           </View>
           <View style={[styles.stars]}>
@@ -78,18 +71,24 @@ export const MapStoreReview: FC<MapStoreReviewProps> = ({
             ))}
           </View>
           <View style={[styles.reviewContents]}>
-            <Text style={[DesignSystem.body1Lt, {color: 'black'}]}>{content}</Text>
+            <Text style={[DesignSystem.body1Long, {color: 'black'}]}>{content}</Text>
           </View>
           {renderedImage(images)}
         </View>
         {reply.length !== 0 && (
-          <View style={{width: '100%', marginTop: 12}}>
-            <View style={{flexDirection: 'row', marginBottom: 8}}>
-              <Text style={[styles.replyHeader]}>사장님 답글</Text>
-              <Text style={[styles.replyDate]}>{reply[0].date}</Text>
+          <View style={[styles.ownerWrap]}>
+            <View style={[styles.ownerTitle, {alignItems: 'center'}]}>
+              <Text style={[DesignSystem.body2Lt, {color: '#616161', marginRight: 6}]}>
+                사장님 답글
+              </Text>
+              <Text style={[DesignSystem.body2Lt, {color: '#B7B7B7'}]}>
+                {reply[0].date.slice(0, 4)}.{reply[0].date.slice(5, 7)}.{reply[0].date.slice(8, 10)}
+              </Text>
             </View>
-            <View style={[styles.replyComment]}>
-              <Text style={[DesignSystem.body2Lt, DesignSystem.grey17]}>{reply[0].reply}</Text>
+            <View style={[styles.ownerContents]}>
+              <Text style={[DesignSystem.body2Long, {color: 'black'}, styles.ownerContentsText]}>
+                {reply[0].reply}
+              </Text>
             </View>
           </View>
         )}
@@ -104,25 +103,6 @@ export const MapStoreReview: FC<MapStoreReviewProps> = ({
 };
 
 const styles = StyleSheet.create({
-  reviewListWrap: {
-    backgroundColor: '#FFFFFF',
-    height: '100%',
-  },
-  reviewWrap: {
-    borderBottomColor: '#EDEDED',
-    borderBottomWidth: 1,
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingBottom: 24,
-    paddingTop: 24,
-  },
-  reviewRow1: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  reviewRow2: {flexDirection: 'row', alignItems: 'center', marginTop: 10},
   reviewRow3: {flexDirection: 'row', alignItems: 'center', marginTop: 8},
   reviewImageWrap: {marginRight: 8},
   reviewText: {
@@ -158,8 +138,9 @@ const styles = StyleSheet.create({
   totalWrap: {
     marginTop: 12,
     marginBottom: 12,
-    marginLeft: 16,
-    marginRight: 16,
+    paddingBottom: 16,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#EDEDED',
   },
   customerWrap: {
     flexDirection: 'column',
@@ -168,7 +149,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 4,
+    marginBottom: 8,
   },
   stars: {
     flexDirection: 'row',
@@ -181,7 +162,7 @@ const styles = StyleSheet.create({
   },
   ownerTitle: {
     flexDirection: 'row',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   ownerContents: {
     borderRadius: 10,
