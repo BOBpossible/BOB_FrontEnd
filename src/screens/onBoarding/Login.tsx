@@ -8,6 +8,11 @@ import auth from '@react-native-firebase/auth';
 import {customAxios} from '../../api/customAxios';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -126,14 +131,11 @@ const Login = () => {
       <View style={[styles.loginTitle]}>
         <Image
           source={require('../../assets/images/bob_place_login.png')}
-          style={{width: 344, height: 187}}
+          style={styles.titleImage}
         />
       </View>
       <View style={[styles.logoWrap]}>
-        <Image
-          source={require('../../assets/images/bobpool_login.png')}
-          style={{width: 221, height: 146}}
-        />
+        <Image source={require('../../assets/images/bobpool_login.png')} style={styles.logoImage} />
       </View>
       <SocialWebviewModal
         visible={loginModal}
@@ -154,17 +156,17 @@ const Login = () => {
           />
         </TouchableOpacity>
         {Platform.OS === 'ios' && (
-          <AppleButton
-            buttonStyle={AppleButton.Style.BLACK}
-            buttonType={AppleButton.Type.SIGN_IN}
-            style={[styles.iconButton]}
-            onPress={onAppleButtonPress}
-          />
+          <TouchableOpacity onPress={onAppleButtonPress}>
+            <Image
+              style={[styles.iconButton]}
+              source={require('../../assets/images/appleLogin.png')}
+            />
+          </TouchableOpacity>
         )}
         <TouchableOpacity onPress={() => onGoogleButtonPress()}>
           <Image
             style={[styles.iconButton]}
-            source={require('../../assets/images/GoogleButton.png')}
+            source={require('../../assets/images/GoogleLogin.png')}
           />
         </TouchableOpacity>
       </View>
@@ -194,17 +196,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  titleImage: {
+    width: wp(calWidth(344)),
+    height: Platform.OS === 'ios' ? hp(calHeight(187, true)) : hp(calHeight(187)),
+  },
   logoImage: {
-    width: 230,
-    height: 150,
+    width: wp(calWidth(221)),
+    height: Platform.OS === 'ios' ? hp(calHeight(146, true)) : hp(calHeight(146)),
   },
   loginButtonWrap: {
     marginBottom: 30,
     alignItems: 'center',
   },
   iconButton: {
-    width: 340,
-    height: 44,
+    width: wp(calWidth(343)),
+    height: Platform.OS === 'ios' ? hp(calHeight(44, true)) : hp(calHeight(44)),
     borderRadius: 10,
     marginBottom: 8,
   },

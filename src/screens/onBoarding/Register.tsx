@@ -89,7 +89,7 @@ const Register = ({navigation}: Props) => {
               setCheckService(!checkService);
               setRegisterData({...registerData, termsOfService: !checkService});
             }}
-            title="(필수)서비스 이용약관"
+            title="(필수) 서비스 이용약관"
             isChecked={checkService}
           />
           <TouchableOpacity
@@ -106,7 +106,7 @@ const Register = ({navigation}: Props) => {
               setCheckPrivacy(!checkPrivacy);
               setRegisterData({...registerData, privacyPolicy: !checkPrivacy});
             }}
-            title="(필수)개인 정보 처리 방침"
+            title="(필수) 개인정보 수집/이용 동의"
             isChecked={checkPrivacy}
           />
           <TouchableOpacity

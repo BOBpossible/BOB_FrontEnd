@@ -7,6 +7,8 @@ type MapWebviewProps = {
   missionId?: number;
   userId?: number;
   webviewRef?: React.MutableRefObject<WebView<{}> | null>;
+  x?: string;
+  y?: string;
 };
 
 export const MapWebview: FC<MapWebviewProps> = ({missionId, userId, webviewRef}) => {
@@ -31,7 +33,7 @@ export const MapWebview: FC<MapWebviewProps> = ({missionId, userId, webviewRef})
         ref={webviewRef}
         source={
           missionId === undefined
-            ? {uri: `https://bobplace.netlify.app/${userId}`}
+            ? {uri: `https://bobplace.netlify.app/${userId}/${x}/${y}`}
             : {uri: `https://bobplace.netlify.app/store/${missionId}`}
         }
         onMessage={(event) => {

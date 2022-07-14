@@ -66,7 +66,12 @@ const AddressSearchModal: FC<AddressSearchModalProps> = ({
                   y: coordiate.y,
                 });
               } else {
-                addressMutation.mutate({addressStreet: data.address, addressDong: data.bname});
+                addressMutation.mutate({
+                  addressStreet: data.address,
+                  addressDong: data.bname,
+                  x: coordiate.x,
+                  y: coordiate.y,
+                });
               }
             } else {
               //오류, 좌표 설정 실패
@@ -79,7 +84,12 @@ const AddressSearchModal: FC<AddressSearchModalProps> = ({
                   y: '0',
                 });
               } else {
-                addressMutation.mutate({addressStreet: data.address, addressDong: data.bname});
+                addressMutation.mutate({
+                  addressStreet: data.address,
+                  addressDong: data.bname,
+                  x: '0',
+                  y: '0',
+                });
               }
             }
 
