@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, Platform} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MyUser} from '../../components/My/MyUser';
 import {useNavigation} from '@react-navigation/native';
@@ -17,8 +17,9 @@ import {ConnectionError} from '../../components/ConnectionError';
 
 const MyPage = () => {
   const navigation = useNavigation();
-  const {data, isError, refetch} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
+  const {data, isError, refetch, isLoading} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
   console.log(data);
+
   // data.point 로 접근
   const logout = async () => {
     await AsyncStorage.multiSet([
@@ -51,26 +52,22 @@ const MyPage = () => {
         )}
         <TouchableOpacity onPress={() => navigation.navigate('MyReview')}>
           <View style={[styles.myMenuWrap]}>
-            <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>
-              리뷰 관리
-            </Text>
+            <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>리뷰 관리</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('MyNotificationsSetting')}>
           <View style={[styles.myMenuWrap]}>
-            <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>
-              알림 설정
-            </Text>
+            <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>알림 설정</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('MyInquiry')}>
           <View style={[styles.myMenuWrap]}>
-            <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>1:1 문의</Text>
+            <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>1:1 문의</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={logout}>
           <View style={[styles.myMenuWrap]}>
-            <Text style={[DesignSystem.body1Lt, {color: '#111111', marginLeft: 22}]}>로그아웃</Text>
+            <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>로그아웃</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => console.log('탈퇴')} style={{alignItems: 'flex-end'}}>
@@ -89,7 +86,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   header: {
-    height: 41,
+    height: 50,
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
   },
@@ -99,8 +96,9 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   myMenuWrap: {
+    paddingLeft: 22,
     width: '100%',
-    height: hp(calHeight(68)),
+    height: Platform.OS === 'ios' ? hp(calHeight(68, true)) : hp(calHeight(68)),
     backgroundColor: '#FFFFFF',
     marginBottom: 1,
     justifyContent: 'center',

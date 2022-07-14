@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import type {FC} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Platform} from 'react-native';
 import {Colors} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {DesignSystem} from '../../assets/DesignSystem';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight} from '../../assets/CalculateLength';
 import FastImage from 'react-native-fast-image';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type MyUserProps = {
   authentication: boolean;
@@ -13,18 +16,20 @@ export type MyUserProps = {
   point: number;
 };
 
-//prettier-ignore
-export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) => {
-  const [statusMessage, setMessage] = useState('');
-  useEffect(()=>{
-    if (!authentication) {setMessage('미인증')}
-    else {setMessage('')}
-  }, [authentication]);
+export const MyUser: FC<MyUserProps> = ({authentication, email, name, point}) => {
+  // const [statusMessage, setMessage] = useState('');
+  // useEffect(() => {
+  //   if (!authentication) {
+  //     setMessage('미인증');
+  //   } else {
+  //     setMessage('');
+  //   }
+  // }, [authentication]);
   const navigation = useNavigation();
 
   return (
     <View style={[styles.userInfo]}>
-      <View style={{marginLeft: 16, marginRight:16}}>
+      <View style={{marginLeft: 16, marginRight: 16}}>
         <View style={[styles.userCard]}>
           <FastImage
             style={[styles.profileImg]}
@@ -32,31 +37,33 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point }) =
           />
           <View style={[styles.userWrap]}>
             <View style={[styles.username]}>
-              <Text style={[DesignSystem.title3SB, styles.usernameText]}>{name}님</Text>
-              <Text style={[DesignSystem.caption1Lt, {color: '#E03D32'}]}>{statusMessage}</Text>
+              <Text style={[DesignSystem.title3SB, DesignSystem.grey17]}>{name}님</Text>
+              {/* <Text style={[DesignSystem.caption1Lt, {color: '#E03D32'}]}>{statusMessage}</Text> */}
             </View>
             <Text style={[DesignSystem.caption1Lt, styles.userEmail]}>{email}</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('MyPoint', {point: point})} style={[styles.userPointWrap]}>
-          <View style={[DesignSystem.centerArrange, {flexDirection: 'row' }]}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('MyPoint', {point: point})}
+          style={[styles.userPointWrap]}
+        >
+          <View style={[DesignSystem.centerArrange, {flexDirection: 'row'}]}>
             <Text style={[DesignSystem.body2Lt, {marginLeft: 20, marginRight: 16}]}>내 포인트</Text>
-            <Text style={[DesignSystem.title4Md, {color: '#111111'}]}>{point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
+            <Text style={[DesignSystem.title4Md, {color: '#111111'}]}>
+              {point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            </Text>
           </View>
-          
-          {/* 여기 아이콘으로 바꿔야함 <Image
-              style={[styles.MyNextImg]}
-              source={require('../../assets/images/arrowGrey10.png')} //
-            /> */}
+
+          <Icon name="chevron-right" size={18} color="#111111" style={{marginRight: 20}} />
         </TouchableOpacity>
-        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   userInfo: {
-    height: 148,
+    height: Platform.OS === 'ios' ? hp(calHeight(148, true)) : hp(calHeight(148)),
     backgroundColor: Colors.white,
     marginBottom: 8,
   },
