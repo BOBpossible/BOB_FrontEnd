@@ -34,7 +34,7 @@ const QuitModal: FC<QuitModalProps> = ({visible, closeQuitModal}) => {
     navigation.navigate('AuthNavigator');
   };
   const handleSubmit = async () => {
-    patchQuit();
+    await patchQuit();
     logout();
   };
   const [notiChecked, setNotichecked] = useState(false);

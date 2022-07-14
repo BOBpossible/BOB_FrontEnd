@@ -84,7 +84,7 @@ const MyPage = () => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setQuitModal(true)} style={{alignItems: 'flex-end'}}>
-          <Text style={[styles.quitText]}>계정탈퇴</Text>
+          <Text style={[styles.quitText]}>회원탈퇴</Text>
         </TouchableOpacity>
         <QuitModal visible={quitModal} closeQuitModal={() => setQuitModal(false)} />
       </SafeAreaView>
