@@ -10,11 +10,17 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
+
 // eslint-disable-next-line prettier/prettier
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useMutation, useQueryClient} from 'react-query';
 import {postQuestions} from '../../api/my';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
+import {DesignSystem} from '../../assets/DesignSystem';
 import DoneModal from '../../modal/DoneModal';
 export type goWriteProps = {
   setNowWrite: any;
@@ -72,10 +78,14 @@ export const MyWriteInquiry: FC<goWriteProps> = ({setNowWrite}) => {
                 onFocus={() => setFocusedTitle(true)}
               />
               <TouchableOpacity onPress={() => setTitle('')} style={[styles.titleXView]}>
-                <Image
-                  source={require('../../assets/images/closeCircle.png')}
-                  style={[styles.titleX]}
-                />
+                <View
+                  style={[
+                    DesignSystem.centerArrange,
+                    {backgroundColor: '#B7B7B7', width: 18, height: 18, borderRadius: 9},
+                  ]}
+                >
+                  <Icon name="close" size={14} color="#FFFFFF" style={{position: 'absolute'}} />
+                </View>
               </TouchableOpacity>
             </View>
             <View style={[styles.bodyWrap]}>

@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   userPointWrap: {
     backgroundColor: '#F6F6FE',
     borderRadius: 10,
-    height: 48,
+    height: Platform.OS === 'ios' ? hp(calHeight(48, true)) : hp(calHeight(48)),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
