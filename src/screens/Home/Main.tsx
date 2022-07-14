@@ -94,21 +94,30 @@ const Main = () => {
                   })(event);
                 }}
                 ListFooterComponent={() => <View />}
-                ListFooterComponentStyle={{marginTop: 90}}
+                ListFooterComponentStyle={{paddingBottom: 100}}
               />
-              {DataMissionsProgress.data?.length !== 0 && (
-                <View style={{width: '100%'}}>
-                  <View style={[DesignSystem.centerArrange, {width: '50%', left: '12.5%', top: 21}]}>
-                    <View style={[styles.NEWBallon, DesignSystem.centerArrange]}>
-                      <Text style={[styles.ballonText]}>진행중인 미션이 있어요! </Text>
-                    </View>
-                    <Icon name="menu-down" size={24} style={[styles.headerIconStyle]} />
-                  </View>
-                </View>
-              )}
             </>
           )}
         </>
+      )}
+      {DataMissionsProgress.data?.length !== 0 && (
+        <View
+          style={[
+            DesignSystem.centerArrange,
+            {
+              width: '50%',
+              left: '12.5%',
+              position: 'absolute',
+              bottom: -20,
+              zIndex: 10,
+            },
+          ]}
+        >
+          <View style={[styles.NEWBallon, DesignSystem.centerArrange]}>
+            <Text style={[styles.ballonText]}>진행중인 미션이 있어요! </Text>
+          </View>
+          <Icon name="menu-down" size={24} style={[styles.headerIconStyle]} />
+        </View>
       )}
     </SafeAreaView>
   );
@@ -118,7 +127,7 @@ export default Main;
 
 const styles = StyleSheet.create({
   missionListContainer: {
-    paddingTop: Platform.OS === 'ios' ? hp((230 / 812) * 100) : hp(calHeight(230)),
+    paddingTop: Platform.OS === 'ios' ? hp(calHeight(230, true)) : hp(calHeight(230)),
     paddingBottom: 10,
     backgroundColor: '#F6F6FA',
   },
@@ -129,7 +138,6 @@ const styles = StyleSheet.create({
   NEWBallon: {
     //말풍선
     backgroundColor: '#6C69FF',
-    top: -3,
     borderRadius: 6,
     paddingRight: 13,
     paddingLeft: 13,
@@ -137,7 +145,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   headerIconStyle: {
-    top: -14,
+    top: -11,
     color: '#6C69FF',
     elevation: 10,
   },
