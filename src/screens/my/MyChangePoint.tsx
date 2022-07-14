@@ -73,7 +73,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
                 ]}
                 onChangeText={(text) => {
                   setInputPoint(text);
-                  if (Number(text) > point || Number(text) % 500 !== 0) {
+                  if (Number(text) > point || Number(text) % 5000 !== 0) {
                     /////////////////////////// 확인하고싶으면 500으로두고.
                     setPointOver(true);
                   } else {
