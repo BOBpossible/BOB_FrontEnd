@@ -21,7 +21,7 @@ const HowToLong = ({navigation}: any) => {
           <ScrollView contentContainerStyle={[DesignSystem.centerArrange, {paddingTop: 10}]}>
             <Image
               source={require('../../assets/images/howto.png')}
-              style={{width: wp(calWidth(343)), height: hp(calHeight(2000, true))}}
+              style={{width: wp(calWidth(330)), height: hp(calHeight(1800, true))}}
             />
           </ScrollView>
         </View>
