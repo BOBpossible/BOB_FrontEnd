@@ -11,6 +11,7 @@ type RegisterPhoneProps = {
   onChange: (...event: any[]) => void;
   value: string;
   setAuthError: React.Dispatch<React.SetStateAction<boolean>>;
+  isError: boolean;
 };
 
 export const RegisterPhone: FC<RegisterPhoneProps> = ({
@@ -19,12 +20,13 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({
   setAuthError,
   onChange,
   value,
+  isError,
 }) => {
   const [focusedName, setFocusedName] = useState(false);
   const [focusedAuth, setFocusedAuth] = useState(false);
   const [authKey, setAuthKey] = useState('-1');
   const [authInput, setAuthInput] = useState('');
-  console.log(authKey);
+
   const postPhone = async () => {
     try {
       const response = await axios.post('https://bobpossible.shop/auth/phone-validation', null, {
@@ -32,7 +34,9 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({
       });
       setAuthError(true);
       setAuthKey(response.data.result.certNum);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -56,7 +60,16 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({
         }}
       >
         <TextInput
-          style={[styles.nameInput, focusedName ? styles.focusBorder : styles.unfocusBorder]}
+          style={[
+            styles.nameInput,
+            isError && focusedName
+              ? styles.errorBorderFocus
+              : isError && !focusedName
+              ? styles.errorBorderNoFocus
+              : focusedName
+              ? styles.focusBorder
+              : styles.unfocusBorder,
+          ]}
           onChangeText={(text) => {
             onChange(text);
             setRegisterData({...registerData, phone: text});
@@ -93,7 +106,7 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({
           onBlur={() => setFocusedAuth(false)}
           onFocus={() => setFocusedAuth(true)}
           keyboardType="number-pad"
-          maxLength={13}
+          maxLength={6}
         />
       ) : (
         <></>
