@@ -32,7 +32,7 @@ export const MapWebview: FC<MapWebviewProps> = ({missionId, userId, webviewRef, 
         ref={webviewRef}
         source={
           missionId === undefined
-            ? {uri: `https://bobplace.netlify.app/${userId}/${x}/${y}`}
+            ? {uri: `https://bobplace.netlify.app/${userId}/${y}/${x}`}
             : {uri: `https://bobplace.netlify.app/store/${missionId}`}
         }
         onMessage={(event) => {

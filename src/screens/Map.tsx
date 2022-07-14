@@ -55,6 +55,8 @@ const Map = () => {
     }
   }
 
+  console.log(Address.data);
+
   const sortList = (data?: IStoreMap[]) => {
     data?.sort(function (a, b) {
       return Number(b.mission) - Number(a.mission);
