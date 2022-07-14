@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Image, ScrollView, SafeAreaView} from 'react-native';
+import {StyleSheet, Image, ScrollView, SafeAreaView, View} from 'react-native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {MyHeader} from '../../components/My/MyHeader';
 import {
@@ -17,15 +17,14 @@ const HowToLong = ({navigation}: any) => {
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
       <SafeAreaView style={[styles.flex]}>
         <MyHeader goBack={goBack} title={'사용방법'} />
-
-        <ScrollView
-          contentContainerStyle={[DesignSystem.centerArrange, {marginTop: 32, paddingBottom: 32}]}
-        >
-          <Image
-            source={require('../../assets/images/howto.png')}
-            style={{width: wp(calWidth(343)), height: hp(calHeight(1860, true))}}
-          />
-        </ScrollView>
+        <View style={[styles.flex]}>
+          <ScrollView contentContainerStyle={[DesignSystem.centerArrange, {paddingTop: 10}]}>
+            <Image
+              source={require('../../assets/images/howto.png')}
+              style={{width: wp(calWidth(343)), height: hp(calHeight(2000, true))}}
+            />
+          </ScrollView>
+        </View>
       </SafeAreaView>
     </>
   );
