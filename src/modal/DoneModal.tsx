@@ -27,14 +27,19 @@ const DoneModal: FC<DoneModalProps> = ({visible, closeDoneModal, category, point
       <View style={[styles.flex]}>
         <View style={[styles.flex, DesignSystem.centerArrange]}>
           {category === '성공' ? (
-            <Animated.View style={{marginTop: 20, transform: [{scale: scaleAnim}]}}>
+            <Animated.View
+              style={{
+                marginTop: 20,
+                bottom: -39,
+                alignItems: 'center',
+                transform: [{scale: scaleAnim}],
+              }}
+            >
               <Image
                 style={{
                   width: 90,
                   height: 69,
                   position: 'relative',
-                  // left: -40,
-                  // top: -20,
                 }}
                 source={require('../assets/images/pollen.png')}
               />
@@ -42,18 +47,16 @@ const DoneModal: FC<DoneModalProps> = ({visible, closeDoneModal, category, point
                 style={{
                   width: 30,
                   height: 30,
-                  position: 'relative',
-                  left: 30,
                   top: -40,
                 }}
                 source={require('../assets/images/coin.png')}
               />
               <Text
                 style={{
-                  fontSize: 9,
-                  position: 'relative',
-                  left: 35,
-                  top: -65,
+                  fontSize: 8,
+                  fontFamily: 'Pretendard-Semibold',
+                  color: 'white',
+                  top: -63,
                 }}
               >
                 {point}P
@@ -66,27 +69,34 @@ const DoneModal: FC<DoneModalProps> = ({visible, closeDoneModal, category, point
             <Text style={[styles.purpleTitleText]}>리뷰 등록 완료!</Text>
           ) : category === '입금' ? (
             <>
-              <Text style={[styles.blackTitleText]}>입금 신청이 완료되었습니다.</Text>
+              <Text style={[styles.purpleTitleText]}>입금 신청이 완료되었습니다.</Text>
               <Text style={[DesignSystem.body2Long, {color: '#616161', marginTop: 6}]}>
                 입금은 심사 후 매주 수요일에 일괄 송금됩니다.
               </Text>
             </>
           ) : category === '문의' ? (
             <>
-              <Text style={[styles.blackTitleText]}>문의 접수 완료!</Text>
+              <Text style={[styles.purpleTitleText]}>문의 접수 완료!</Text>
               <Text style={[DesignSystem.body2Lt, {color: '#616161', marginTop: 9}]}>
                 문의가 접수되었습니다.
               </Text>
             </>
           ) : category === '신고' ? (
             <>
-              <Text style={[styles.blackTitleText]}>신고 접수 완료!</Text>
+              <Text style={[styles.purpleTitleText]}>신고 접수 완료!</Text>
               <Text style={[DesignSystem.body2Lt, {color: '#616161', marginTop: 9}]}>
                 신고가 접수되었습니다.
               </Text>
             </>
+          ) : category === '성공' ? (
+            <>
+              <Text style={[styles.purpleTitleText]}>미션 성공!</Text>
+              <Text style={[DesignSystem.body2Lt, {color: '#616161', marginTop: 9}]}>
+                {point}P가 적립되었습니다.
+              </Text>
+            </>
           ) : (
-            <Text style={[styles.purpleTitleText]}>가입완료</Text>
+            <Text style={[styles.purpleTitleText]}>완료</Text>
           )}
         </View>
         <TouchableOpacity onPress={closeDoneModal} style={[styles.buttonWrap]}>
