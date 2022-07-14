@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
 import {Image, Text, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
 import {DesignSystem} from '../../assets/DesignSystem';
 
 export type MyPageNoProps = {
