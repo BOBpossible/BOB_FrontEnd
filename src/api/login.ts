@@ -41,8 +41,9 @@ export const postFcmToken = async (token: any) => {
   const data = {token: token};
   try {
     const response = await customAxios().post('/api/v1/fcm/me', data);
+    console.log('파이어베이스 토큰 갱신 성공!', response.data);
     return response.data;
   } catch (error) {
-    console.log('파이어베이스 토큰 받기 실패', error);
+    console.log('파이어베이스 토큰 갱신 실패...', error);
   }
 };
