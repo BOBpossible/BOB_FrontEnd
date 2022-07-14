@@ -24,7 +24,6 @@ export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, date, status
   const {data} = useQuery([queryKey.QUESTIONDETAIL, questionId], () =>
     getQuestionDetail(questionId),
   );
-
   return (
     <View style={{flex: 1}}>
       <TouchableOpacity onPress={handleReviewPress} style={[styles.listDetailsWrap]}>
@@ -45,7 +44,7 @@ export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, date, status
           </Text>
         </View>
       </TouchableOpacity>
-      {openQuestion && (
+      {status !== 'WAITING' && openQuestion && (
         <View>
           <View
             style={{

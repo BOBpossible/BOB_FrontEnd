@@ -23,7 +23,7 @@ export const MyInquiryList: FC<goWriteProps> = ({setNowWrite}) => {
       {DataQuestions.data?.length !== 0 ? (
         <FlatList
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingTop: 60}}
+          // contentContainerStyle={{paddingTop: 60}}
           scrollEventThrottle={10}
           data={DataQuestions.data}
           renderItem={({item}) => (
