@@ -11,7 +11,8 @@ import {
   patchMissionCancel,
   patchMissionSuccess,
   patchMissionSuccessRequest,
-} from '../../api/mission';
+} from '../../api/mission';import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
 
 //prettier-ignore
 export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, storeCategory, storeName, missionStatus, onPressRequestBtn}) => {
@@ -22,7 +23,7 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
     navigation.navigate('Main');
     setDoneModal(false);
   };
-  
+
   const missionCancelMutation = useMutation((missionId: number) => patchMissionCancel(missionId), {
     onSuccess: (data) => {
       console.log('미션 취소 성공: ', data);
@@ -104,18 +105,15 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
             <Text style={[DesignSystem.title4Md, styles.nameText]}>{storeName}</Text>
             <Text style={[DesignSystem.body2Lt, styles.categoryText]}>{storeCategory}</Text>
           </View>
-          <View style={[styles.seperateLine]} />
-          <View>
-            <Text>
-              <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{mission}</Text>
-              <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}> 결제시 </Text>
-              <Text style={[DesignSystem.title4Md, DesignSystem.purple5]}>{point}P 적립</Text>
-            </Text>
+          <View style={{marginBottom: 20, flexDirection: 'row'}}>
+            <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{mission}</Text>
+            <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}> 결제시 </Text>
+            <Text style={[DesignSystem.title4Md, DesignSystem.purple5]}>{point}P 적립</Text>
           </View>
         </View>
         {
         missionStatus === 'PROGRESS' ?
-        <MissionCardTwoButton missionId={missionId} handleOnPress={handleRequestPress} text='성공 요청' bgColor='#6C69FF' cancelBgColor='#E8E8E8' cancelTextColor='#111111'/>
+        <MissionCardTwoButton missionId={missionId} handleOnPress={handleRequestPress} text='성공 요청' bgColor='#2A2A2A' cancelBgColor='#EFEFEF' cancelTextColor='#111111'/>
         :
         missionStatus === 'CHECKING' ?
         <MissionCardTwoButton missionId={missionId} text='성공 요청중..' bgColor='#C8C8C8' cancelBgColor='#EFEFEF' cancelTextColor='#111111'/>
@@ -129,11 +127,7 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
           <View style={[DesignSystem.centerArrange, {top: -7, width: '50%'}]}>
             <Icon name="triangle" size={12} style={[styles.headerIconStyle]} />
             <View style={[styles.NEWBallon, DesignSystem.centerArrange]}>
-              <View style={[styles.flexRow]}>
-                <Text style={[styles.ballonTextTwo]}>포장/식사 </Text>
-                <Text style={[styles.ballonTextOne]}>미션 완료 후</Text>
-                <Text style={[styles.ballonTextTwo]}> 클릭!</Text>
-              </View>
+              <Text style={[styles.ballonTextOne]}>미션 완료 후 클릭!</Text>
             </View>
           </View>
         </View>
@@ -149,24 +143,35 @@ export const MissionCard: FC<IMissionCardProps> = ({mission, missionId, point, s
 };
 
 const styles = StyleSheet.create({
-  missionCardWrap: {marginLeft: 16, marginRight: 16},
+  missionCardWrap: {
+    marginLeft: 16,
+    marginRight: 16,
+    borderColor: '#EFEFEF',
+    borderWidth: 1,
+  },
   missionCard: {
-    height: 198,
+    height: hp(calHeight(198)),
     backgroundColor: 'white',
     borderRadius: 12,
-    alignItems: 'center', //
+    alignItems: 'center',
   },
-  nameBox: {flexDirection: 'column', justifyContent: 'center', alignItems: 'center'},
   missionMain: {
     flex: 1,
-    width: 303,
+    marginTop: 24,
+    marginBottom: 20,
+    paddingHorizontal: 16,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  seperateLine: {
-    height: 1,
-    width: 303,
-    backgroundColor: '#DFDFDF',
+  nameBox: {
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomColor: '#DFDFDF',
+    borderBottomWidth: 1,
+    marginTop: 24,
     marginBottom: 16,
   },
   nameText: {
@@ -223,18 +228,14 @@ const styles = StyleSheet.create({
   },
   NEWBallon: {
     //말풍선
-    flexDirection: 'column',
-    backgroundColor: '#383838',
+    backgroundColor: '#6C69FF',
     top: -3,
-    height: 38,
     borderRadius: 6,
-    paddingRight: 13,
-    paddingLeft: 13,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingHorizontal: 13,
+    paddingVertical: 10,
   },
   headerIconStyle: {
-    color: '#2A2A2A',
+    color: '#6C69FF',
   },
   flexRow: {
     flexDirection: 'row',
@@ -242,14 +243,8 @@ const styles = StyleSheet.create({
   },
   ballonTextOne: {
     fontFamily: 'Pretendard-SemiBold',
-    fontSize: 12,
-    fontWeight: '800',
-    color: '#AAAAF9',
-  },
-  ballonTextTwo: {
-    fontFamily: 'Pretendard-Regular',
-    fontSize: 12,
+    fontSize: 14,
+    lineHeight: 22,
     color: '#FFFFFF',
-    fontWeight: '800',
   },
 });

@@ -4,13 +4,12 @@ import {View, StyleSheet, Text, Image} from 'react-native';
 import {DesignSystem} from '../../assets/DesignSystem';
 
 export type MissionUserProps = {
-  userprofile?: any; //?????????프사
   username?: string;
   userid?: number;
 };
 
 //prettier-ignore
-export const MissionUser: FC<MissionUserProps> = ({userprofile, username, userid }) => {
+export const MissionUser: FC<MissionUserProps> = ({username, userid }) => {
 
   return (
     <View style={[styles.userCard]}>
@@ -30,17 +29,15 @@ export const MissionUser: FC<MissionUserProps> = ({userprofile, username, userid
 
 const styles = StyleSheet.create({
   userCard: {
-    height: 86,
     backgroundColor: 'white',
     borderRadius: 12,
-    marginBottom: 12,
     flexDirection: 'row',
-    marginLeft: 16,
-    marginRight: 16,
+    marginHorizontal: 16,
+    marginBottom: 12,
+    paddingTop: 16,
+    paddingBottom: 14,
   },
   profileWrap: {
-    marginTop: 16,
-    marginBottom: 14,
     marginLeft: 19,
     marginRight: 11,
   },
@@ -48,14 +45,12 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    marginBottom: 8,
     borderWidth: 1,
     borderColor: '#DFDFDF',
   },
   userWrap: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'baseline',
   },
   usernameText: {
     color: '#111111',
