@@ -24,8 +24,8 @@ export const HomeMissionCard: FC<MissionCardProps> = ({missionId, name, category
         <View style={[styles.missionCard]}>
           <View style={[styles.missionMain]}>
             <View style={[styles.nameBox]}>
-              <Text style={[DesignSystem.title4Md, DesignSystem.grey17, {marginBottom: 4}]}>{name}</Text>
-              <Text style={[DesignSystem.body2Lt, DesignSystem.grey10, {marginBottom: 16}]}>{category}</Text>
+              <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{name}</Text>
+              <Text style={[DesignSystem.body2Lt, DesignSystem.grey10, {marginBottom: 12}]}>{category}</Text>
             </View>
             <View style={[DesignSystem.centerArrange, styles.missionContentBox]}>
               <Text>
@@ -59,6 +59,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
   },
+  missionMain: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   nameBox: {
     width: '100%',
     flexDirection: 'column',
@@ -66,15 +72,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomColor: '#DFDFDF',
     borderBottomWidth: 1,
-    marginBottom: 20,
-  },
-  missionMain: {
-    flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginBottom: 18,
   },
   missionContentBox: {
-    marginBottom: 20,
+    marginBottom: 19,
   },
 });

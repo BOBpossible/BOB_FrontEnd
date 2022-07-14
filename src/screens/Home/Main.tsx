@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {View, StyleSheet, Animated, Platform, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, Animated, Platform, ActivityIndicator, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {HomeMissionCard} from '../../components/Home/HomeMissionCard';
@@ -13,6 +13,8 @@ import {queryKey} from '../../api/queryKey';
 import {HomeBobpool} from '../../components/Home/HomeBobpool';
 import {getHomeInfo} from '../../api';
 import {getMissionsProgress} from '../../api/mission';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
@@ -64,35 +66,47 @@ const Main = () => {
           {allDone ? ( //미션 모두 완료한 경우
             <HomeBobpool category={'DONE'} />
           ) : (
-            <Animated.FlatList
-              style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={[styles.missionListContainer]}
-              scrollEventThrottle={10}
-              data={homeData.data?.missions}
-              renderItem={({item}) => (
-                <HomeMissionCard
-                  mission={item.mission}
-                  missionId={item.missionId}
-                  status={item.missionStatus}
-                  point={item.point}
-                  category={item.storeCategory}
-                  name={item.storeName}
-                  challengeStatus={DataMissionsProgress.data?.length !== 0}
-                />
+            <>
+              <Animated.FlatList
+                style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={[styles.missionListContainer]}
+                scrollEventThrottle={10}
+                data={homeData.data?.missions}
+                renderItem={({item}) => (
+                  <HomeMissionCard
+                    mission={item.mission}
+                    missionId={item.missionId}
+                    status={item.missionStatus}
+                    point={item.point}
+                    category={item.storeCategory}
+                    name={item.storeName}
+                    challengeStatus={DataMissionsProgress.data?.length !== 0}
+                  />
+                )}
+                keyExtractor={(item, index) => index.toString()}
+                ListHeaderComponent={
+                  <HomeMissionListHeader dday={homeData.data?.dday} allDone={allDone} />
+                }
+                onScroll={(event) => {
+                  Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
+                    useNativeDriver: false,
+                  })(event);
+                }}
+                ListFooterComponent={() => <View />}
+                ListFooterComponentStyle={{marginTop: 90}}
+              />
+              {DataMissionsProgress.data?.length !== 0 && (
+                <View style={{width: '100%'}}>
+                  <View style={[DesignSystem.centerArrange, {width: '50%', left: '12.5%', top: 21}]}>
+                    <View style={[styles.NEWBallon, DesignSystem.centerArrange]}>
+                      <Text style={[styles.ballonText]}>진행중인 미션이 있어요! </Text>
+                    </View>
+                    <Icon name="menu-down" size={24} style={[styles.headerIconStyle]} />
+                  </View>
+                </View>
               )}
-              keyExtractor={(item, index) => index.toString()}
-              ListHeaderComponent={
-                <HomeMissionListHeader dday={homeData.data?.dday} allDone={allDone} />
-              }
-              onScroll={(event) => {
-                Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
-                  useNativeDriver: false,
-                })(event);
-              }}
-              ListFooterComponent={() => <View />}
-              ListFooterComponentStyle={{marginTop: 100}}
-            />
+            </>
           )}
         </>
       )}
@@ -111,5 +125,26 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
     backgroundColor: '#F6F6FA',
+  },
+  NEWBallon: {
+    //말풍선
+    backgroundColor: '#6C69FF',
+    top: -3,
+    borderRadius: 6,
+    paddingRight: 13,
+    paddingLeft: 13,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  headerIconStyle: {
+    top: -14,
+    color: '#6C69FF',
+    elevation: 10,
+  },
+  ballonText: {
+    fontFamily: 'Pretendard-SemiBold',
+    fontSize: 14,
+    lineHeight: 22,
+    color: '#FFFFFF',
   },
 });
