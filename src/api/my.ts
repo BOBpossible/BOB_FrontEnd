@@ -48,3 +48,9 @@ export const postPointsConvert = async (data: {
   const response = await customAxios().post('/api/v1/points-conversion/me', data);
   return response.data;
 };
+
+//회원탈퇴
+export const patchQuit = async () => {
+  const response = await customAxios().patch('/api/v1/users/me/quit');
+  return response.data;
+};

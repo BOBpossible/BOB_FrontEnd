@@ -9,57 +9,39 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
-import {calHeight, calWidth} from '../assets/CalculateLength';
-import {useMutation, useQueryClient} from 'react-query';
-import {postPointsConvert} from '../api/my';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {calWidth} from '../assets/CalculateLength';
+import {patchQuit} from '../api/my';
 import {CheckBoxRectangle} from '../components/Common/CheckBoxRectangle';
 
-type WithDrawalModalProps = {
+type QuitModalProps = {
   visible: boolean;
-  closeWithDrawalModal: () => void;
-  name: string;
-  email: string;
+  closeQuitModal: () => void;
 };
 
 //prettier-ignore
-const WithDrawalModal: FC<WithDrawalModalProps> = ({visible, closeWithDrawalModal, name, email}) => {
-  const MARGINBOTTOM = Dimensions.get('screen').height / 2 - 80;
+const QuitModal: FC<QuitModalProps> = ({visible, closeQuitModal}) => {
+  const MARGINBOTTOM = Dimensions.get('screen').height / 2 - 160;
   const navigation = useNavigation();
-  const queryClient = useQueryClient();
-  
-  // const questionMutation = useMutation(
-  //   (data: {accountNumber: number; bank: string; name: string; point: number}) =>
-  //     postPointsConvert(data),
-  //   {
-  //     onSuccess: (data) => {
-  //       console.log('회원탈퇴 성공: ', data);
-  //       // queryClient.invalidateQueries('userInfo');
-  //     },
-  //     onError: (err) => {
-  //       console.log('회원탈퇴 실패: ', err);
-  //     },
-  //   },
-  // );
 
+  const logout = async () => {
+    await AsyncStorage.multiSet([
+      ['accessToken', ''],
+      ['refreshToken', ''],
+    ]);
+    navigation.navigate('AuthNavigator');
+  };
   const handleSubmit = async () => {
-    // await questionMutation.mutate({
-    //   accountNumber: accountNumber,
-    //   bank: bank,
-    //   name: name,
-    //   point: point,
-    // });
-    // navigation.navigate('MyChangePointDone'); //맨처음 온보딩으로?
+    patchQuit();
+    logout();
   };
   const [notiChecked, setNotichecked] = useState(false);
   return (
     <Modal visible={visible} transparent statusBarTranslucent animationType="fade">
       <View style={[styles.overlay]}>
-        <TouchableWithoutFeedback onPress={closeWithDrawalModal}>
+        <TouchableWithoutFeedback onPress={closeQuitModal}>
           <View style={styles.background} />
         </TouchableWithoutFeedback>
         <View style={[styles.modalContainer, {marginBottom: MARGINBOTTOM}]}>
@@ -74,15 +56,15 @@ const WithDrawalModal: FC<WithDrawalModalProps> = ({visible, closeWithDrawalModa
               </Text>
             </View>
             <CheckBoxRectangle
-              title={'이 점을 인지하였으며, 탈퇴를 진행합니다.'}
+              title={' 이 점을 인지하였으며, 탈퇴를 진행합니다.'}
               onPress={() => setNotichecked(!notiChecked)}
               isChecked={notiChecked}
             />
             <View style={[styles.buttonWrap]}>
-              <TouchableOpacity style={[styles.buttonStyle, styles.cancelButton]} onPress={closeWithDrawalModal}>
+              <TouchableOpacity style={[styles.buttonStyle, styles.cancelButton]} onPress={closeQuitModal}>
                 <Text style={{color: '#616161', fontFamily: 'Pretendard-Regular', fontSize: 16}}>취소</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.buttonStyle, styles.okButton]} onPress={handleSubmit}>
+              <TouchableOpacity disabled={notiChecked ? false : true} style={[styles.buttonStyle, styles.okButton]} onPress={handleSubmit}>
                 <Text style={[styles.body1Lt, {color: 'white', fontFamily: 'Pretendard-Medium', fontSize: 16}]}>확인</Text>
               </TouchableOpacity>
             </View>
@@ -93,7 +75,7 @@ const WithDrawalModal: FC<WithDrawalModalProps> = ({visible, closeWithDrawalModa
   );
 };
 
-export default WithDrawalModal;
+export default QuitModal;
 
 const styles = StyleSheet.create({
   body1Lt: {
@@ -117,7 +99,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: wp(calWidth(342)),
-    height: hp(calHeight(226)),
+    // height: hp(calHeight(226)),
     marginLeft: 16,
     marginRight: 17,
     justifyContent: 'space-around',
@@ -129,8 +111,10 @@ const styles = StyleSheet.create({
     marginRight: 18,
     flexDirection: 'column',
     justifyContent: 'flex-end',
+    marginVertical: 20,
   },
   buttonWrap: {
+    marginTop: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

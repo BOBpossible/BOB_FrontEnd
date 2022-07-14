@@ -5,6 +5,7 @@ import {HomeMissionDetails} from '../screens/Home/HomeMissionDetails';
 import {Notifications} from '../screens/Home/Notifications';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import HowToLong from '../screens/onBoarding/HowToLong';
+import {MyPoint} from '../screens/my/MyPoint';
 
 export type HomeStackParamList = {
   Main: undefined;
@@ -12,6 +13,7 @@ export type HomeStackParamList = {
   Notifications: undefined;
   Mission: {missionId: number};
   HowToLong: undefined;
+  MyPoint: {point: number};
 };
 
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -38,6 +40,7 @@ export const HomeNavigator = ({navigation, route}) => {
       <Stack.Screen name="HomeMissionDetails" component={HomeMissionDetails} />
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="HowToLong" component={HowToLong} />
+      <Stack.Screen name="MyPoint" component={MyPoint} />
     </Stack.Navigator>
   );
 };
