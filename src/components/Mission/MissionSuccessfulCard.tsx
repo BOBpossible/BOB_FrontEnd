@@ -58,7 +58,7 @@ export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
             </Text>
           </View>
         </View>
-        {reviewStatus !== 'NEW' ? (
+        {reviewStatus === 'NEW' ? (
           <TouchableOpacity onPress={handleReviewPress} style={[styles.makeReviewButton]}>
             <Text style={[DesignSystem.h3SB, DesignSystem.purple5]}>리뷰 작성</Text>
           </TouchableOpacity>

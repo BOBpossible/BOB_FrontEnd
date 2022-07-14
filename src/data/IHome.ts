@@ -30,3 +30,16 @@ export type IHomeMissionDetail = {
   point: number;
   storeId: number;
 };
+
+//알림
+export type INotiType = {
+  checked: boolean;
+  date: string;
+  id: number;
+  missionId: number;
+  pushType: string;
+  storeId: number;
+  storeName: string;
+  subTitle: string;
+  title: string;
+};
