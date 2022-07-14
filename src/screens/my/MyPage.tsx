@@ -1,5 +1,13 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, Platform} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  SafeAreaView,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MyUser} from '../../components/My/MyUser';
 import {useNavigation} from '@react-navigation/native';
@@ -40,13 +48,17 @@ const MyPage = () => {
             <Text style={[styles.headerText, DesignSystem.h2SB]}>마이페이지</Text>
           </View>
         </View>
-        {data !== undefined && (
-          <MyUser
-            authentication={data.authentication}
-            email={data.email}
-            name={data.name}
-            point={data.point}
-          />
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          data !== undefined && (
+            <MyUser
+              authentication={data.authentication}
+              email={data.email}
+              name={data.name}
+              point={data.point}
+            />
+          )
         )}
         <TouchableOpacity onPress={() => navigation.navigate('MyReview')}>
           <View style={[styles.myMenuWrap]}>

@@ -1,5 +1,5 @@
 import React, {useCallback, useRef, useState} from 'react';
-import {View, StyleSheet, Text, Dimensions, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, Text, Dimensions, TouchableOpacity, Image, Platform} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomSheet, {
   BottomSheetBackdrop,
@@ -24,8 +24,8 @@ import {calHeight} from '../assets/CalculateLength';
 
 const Map = () => {
   const height = Dimensions.get('screen').height;
-  const insets = useSafeAreaInsets();
-  const listSnapPoint = height - insets.top - 150;
+  const listSnapPoint =
+    Platform.OS === 'ios' ? hp(calHeight(height - 220, true)) : hp(calHeight(height - 220));
   const [addressModal, setAddressModal] = useState(false);
   const [storeModal, setStoreModal] = useState(false);
   const [storeId, setStoreId] = useState(0);

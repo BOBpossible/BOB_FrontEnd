@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {View, StyleSheet, Animated, Platform, ActivityIndicator, Text} from 'react-native';
+import {View, StyleSheet, Animated, Platform, Text, ActivityIndicator} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {HomeMissionCard} from '../../components/Home/HomeMissionCard';
