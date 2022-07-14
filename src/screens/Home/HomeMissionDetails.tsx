@@ -5,7 +5,7 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {HomeStackParamList} from '../../nav/HomeNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
-import {MapWebview} from '../../modal';
+import {MapWebview, PhotoModal} from '../../modal';
 import {IHomeMissionDetail} from '../../data';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
@@ -20,6 +20,13 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
   const queryClient = useQueryClient();
   const insets = useSafeAreaInsets();
   const [storeModal, setStoreModal] = useState(false);
+  const [photoModal, setPhotoModal] = useState(false);
+  const [reviewPhoto, setReviewPhoto] = useState<{uri: string}>({uri: 'string'});
+
+  const openPhotoModal = (imageSource: string) => {
+    setReviewPhoto({uri: imageSource});
+    setPhotoModal(true);
+  };
 
   const goBack = () => {
     navigation.goBack();
@@ -54,11 +61,17 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
       <View style={[styles.missionCard, {bottom: Platform.OS === 'ios' ? insets.bottom : 0}]}>
         <View style={[styles.missionMain]}>
           <TouchableOpacity style={[styles.nameBox]} onPress={() => setStoreModal(true)}>
-            <View style={{flexDirection: 'row', marginBottom: 4}}>
+            <View style={{flexDirection: 'row', marginBottom: 4, alignItems: 'center'}}>
+              <Icon
+                name="chevron-right"
+                size={18}
+                color="#111111"
+                style={{marginLeft: 4, opacity: 0}}
+              />
               <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>
                 {missionData.data?.name}
               </Text>
-              <Icon name="chevron-right" size={24} color="#111111" style={{marginLeft: 4}} />
+              <Icon name="chevron-right" size={18} color="#111111" style={{marginLeft: 4}} />
             </View>
             <Text style={[DesignSystem.body2Lt, DesignSystem.grey10, {marginBottom: 16}]}>
               {missionData.data?.category}
@@ -69,11 +82,13 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
               <View style={{marginBottom: 16, flexDirection: 'row'}}>
                 {missionData.data?.images.map((item, index) => {
                   return (
-                    <Image
-                      key={index}
-                      source={{uri: item.imageUrl}}
-                      style={{width: 60, height: 60, marginRight: 8}}
-                    />
+                    <TouchableOpacity onPress={() => openPhotoModal(item.imageUrl)}>
+                      <Image
+                        key={index}
+                        source={{uri: item.imageUrl}}
+                        style={{width: 60, height: 60, marginRight: 4, marginLeft: 4}}
+                      />
+                    </TouchableOpacity>
                   );
                 })}
               </View>
@@ -87,6 +102,11 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
                 {missionData.data?.point}P 적립
               </Text>
             </Text>
+            <PhotoModal
+              imageUri={reviewPhoto}
+              visible={photoModal}
+              closePhotoModal={() => setPhotoModal(false)}
+            />
           </View>
           <TouchableOpacity
             onPress={() => {

@@ -36,12 +36,11 @@ export const MissionSuccessList = () => {
 
   return (
     <FlatList
-      style={{marginTop: hp(calHeight(16))}}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
-        paddingTop: hp(calHeight(16)),
+        marginTop: hp(calHeight(16)),
         backgroundColor: '#F6F6FA',
-        paddingBottom: hp(calHeight(50)),
+        paddingBottom: hp(calHeight(60)),
       }}
       scrollEventThrottle={10}
       data={DataMissionsComplete.data}

@@ -94,11 +94,13 @@ const Main = () => {
                   })(event);
                 }}
                 ListFooterComponent={() => <View />}
-                ListFooterComponentStyle={{marginTop: 90}}
+                ListFooterComponentStyle={{marginTop: 100}}
               />
               {DataMissionsProgress.data?.length !== 0 && (
                 <View style={{width: '100%'}}>
-                  <View style={[DesignSystem.centerArrange, {width: '50%', left: '12.5%', top: 21}]}>
+                  <View
+                    style={[DesignSystem.centerArrange, {width: '50%', left: '12.5%', top: 21}]}
+                  >
                     <View style={[styles.NEWBallon, DesignSystem.centerArrange]}>
                       <Text style={[styles.ballonText]}>진행중인 미션이 있어요! </Text>
                     </View>
@@ -118,7 +120,7 @@ export default Main;
 
 const styles = StyleSheet.create({
   missionListContainer: {
-    paddingTop: Platform.OS === 'ios' ? hp((230 / 812) * 100) : hp(calHeight(230)),
+    paddingTop: Platform.OS === 'ios' ? hp(calHeight(230, true)) : hp(calHeight(230)),
     paddingBottom: 10,
     backgroundColor: '#F6F6FA',
   },
