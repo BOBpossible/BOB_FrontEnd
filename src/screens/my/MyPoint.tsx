@@ -13,6 +13,7 @@ import {calHeight, calWidth} from '../../assets/CalculateLength';
 import {useInfiniteQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
 import {getPointsList} from '../../api';
+import {MyPageNo} from '../../components/My/MyPageNo';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyPoint'>;
 export type PointsListContent = {
@@ -41,7 +42,7 @@ export const MyPoint = ({navigation, route}: Props) => {
     },
   );
   // console.log('DataPointsList', DataPointsList.data?.pages[0].data.result.point.content);
-
+  console.log();
   const goBack = () => {
     navigation.goBack();
   };
@@ -109,6 +110,15 @@ export const MyPoint = ({navigation, route}: Props) => {
                 })}
               </>
             )}
+            ListFooterComponent={
+              DataPointsList.data?.pages[0].data.result.point.content.length === 0 ? (
+                <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 150}}>
+                  <MyPageNo isPoint={true} />
+                </View>
+              ) : (
+                <></>
+              )
+            }
           />
         </View>
       </SafeAreaView>
