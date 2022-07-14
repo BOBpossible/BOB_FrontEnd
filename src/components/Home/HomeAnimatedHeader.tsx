@@ -107,7 +107,10 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
     return (
       <Animated.View style={[styles.circleWrap, circleAnimStyle]}>
         <CircleBar progress={data?.rewards} />
-        <Text style={[DesignSystem.grey17, styles.circleBar]}>미션 10개 달성시 1000P</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={[DesignSystem.grey17, styles.circleBar]}>미션 10개 달성시 </Text>
+          <Text style={[DesignSystem.purple5, styles.circleBar]}>1000P</Text>
+        </View>
       </Animated.View>
     );
   };
@@ -145,20 +148,22 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
           closeAddressModal={() => setAddressModal(false)}
         />
         <TouchableOpacity style={[styles.flexRow]} onPress={() => setAddressModal(true)}>
-          <Text style={[DesignSystem.subtitle2, DesignSystem.grey17]}>
+          <Text style={[DesignSystem.subtitle2, {color: '#000000'}]}>
             {Address.data?.addressDong}
           </Text>
-          <Icon name="menu-down" size={18} color="black" />
+          <Icon name="menu-down" size={20} color="black" />
         </TouchableOpacity>
         <View style={[styles.flexRow]}>
           <TouchableOpacity onPress={() => navigation.navigate('MyPoint', {point: data?.point})}>
             <View style={[styles.pointWrap]}>
               <Text style={[styles.pointP]}>P </Text>
-              <Text style={[styles.pointText]}>{data?.point}</Text>
+              <Text style={[styles.pointText]}>
+                {data?.point?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              </Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Notifications', {userId: 0})}>
-            <Icon name="bell-outline" size={24} />
+            <Icon name="bell-outline" size={24} color="#323232" />
           </TouchableOpacity>
         </View>
       </View>
@@ -266,6 +271,7 @@ const styles = StyleSheet.create({
   pointP: {
     color: '#6C69FF',
     fontFamily: 'Pretendard-SemiBold',
+    fontWeight: 'bold',
     fontSize: 14,
   },
   pointText: {fontSize: 14, color: '#555555', fontFamily: 'Pretendard-SemiBold'},

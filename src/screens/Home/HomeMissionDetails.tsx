@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 //prettier-ignore
 import {View, StyleSheet, Image, Text, TouchableOpacity, SafeAreaView, Platform} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -11,12 +11,16 @@ import {DesignSystem} from '../../assets/DesignSystem';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {queryKey} from '../../api/queryKey';
 import {getHomeMissionDetail, patchHomeMissionChallenge} from '../../api/home';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import StoreModal from '../../modal/StoreModal';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'HomeMissionDetails'>;
 
 export const HomeMissionDetails = ({navigation, route}: Props) => {
   const queryClient = useQueryClient();
   const insets = useSafeAreaInsets();
+  const [storeModal, setStoreModal] = useState(false);
+
   const goBack = () => {
     navigation.goBack();
   };
@@ -45,14 +49,17 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
   return (
     <SafeAreaView style={[styles.flex]}>
       <MyHeader goBack={goBack} title={'미션 정보'} />
+      {/* 맵뷰 */}
       <MapWebview missionId={missionData.data?.missionId} userId={0} />
-
       <View style={[styles.missionCard, {bottom: Platform.OS === 'ios' ? insets.bottom : 0}]}>
         <View style={[styles.missionMain]}>
-          <TouchableOpacity style={[styles.nameBox]}>
-            <Text style={[DesignSystem.title4Md, DesignSystem.grey17, {marginBottom: 4}]}>
-              {missionData.data?.name}
-            </Text>
+          <TouchableOpacity style={[styles.nameBox]} onPress={() => setStoreModal(true)}>
+            <View style={{flexDirection: 'row', marginBottom: 4}}>
+              <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>
+                {missionData.data?.name}
+              </Text>
+              <Icon name="chevron-right" size={24} color="#111111" style={{marginLeft: 4}} />
+            </View>
             <Text style={[DesignSystem.body2Lt, DesignSystem.grey10, {marginBottom: 16}]}>
               {missionData.data?.category}
             </Text>
@@ -72,8 +79,10 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
               </View>
             )}
             <Text>
-              <Text style={[DesignSystem.title4Md]}>{missionData.data?.mission}</Text>
-              <Text style={[DesignSystem.body1Lt]}>의 식사시 </Text>
+              <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>
+                {missionData.data?.mission}
+              </Text>
+              <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>의 식사시 </Text>
               <Text style={[DesignSystem.title4Md, DesignSystem.purple5]}>
                 {missionData.data?.point}P 적립
               </Text>
@@ -83,16 +92,23 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
             onPress={() => {
               missionMutation.mutate(route.params.missionId);
               navigation.pop();
-              navigation.navigate('Mission'); //미션 시작후 미션 화면으로 바꾸기
+              navigation.navigate('Mission'); //미션 시작후 미션 화면으로 보냄
             }}
             style={[styles.missionButton]}
           >
             <View style={[DesignSystem.centerArrange]}>
-              <Text style={[DesignSystem.title4Md, DesignSystem.grey1]}>도전!</Text>
+              <Text style={[DesignSystem.title2Regular, {color: 'white'}]}>도전!</Text>
             </View>
           </TouchableOpacity>
         </View>
       </View>
+      {missionData.data !== undefined && (
+        <StoreModal
+          visible={storeModal}
+          storeId={missionData.data?.storeId}
+          closeStoreModal={() => setStoreModal(false)}
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -105,9 +121,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 24,
-    paddingBottom: 16,
-    alignItems: 'center', //
+    paddingTop: 30,
+    paddingBottom: 20,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
     borderColor: '#E8E8E8',
@@ -136,7 +151,7 @@ const styles = StyleSheet.create({
   },
   missionButton: {
     width: '100%',
-    paddingVertical: 12,
+    paddingVertical: 10,
     backgroundColor: '#6C69FF',
     borderRadius: 10,
   },

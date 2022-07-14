@@ -55,7 +55,6 @@ export const MainNavigator = () => {
                 }}
               />
             )}
-
             <Icon name={iconName} size={focusedSize} color={focusedColor} />
           </View>
         );
