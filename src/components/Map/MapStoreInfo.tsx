@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   storeAddress: {
     fontFamily: 'Pretendard-Light',
     fontSize: 14,
-    lineHegight: 14,
+    lineHeight: 14,
     color: '#7D7D7D',
   },
 });
