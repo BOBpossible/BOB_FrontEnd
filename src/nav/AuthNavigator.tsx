@@ -1,11 +1,11 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import Login from '../screens/Login';
+import Login from '../screens/onBoarding/Login';
 import {MainNavigator} from './MainNavigator';
-import Register from '../screens/Register';
-import RegisterForm from '../screens/RegisterForm';
-import RegisterCategory from '../screens/RegisterCategory';
+import Register from '../screens/onBoarding/Register';
+import RegisterForm from '../screens/onBoarding/RegisterForm';
+import RegisterCategory from '../screens/onBoarding/RegisterCategory';
 import RegisterDone from '../screens/onBoarding/RegisterDone';
 import HowTo1 from '../screens/onBoarding/HowTo1';
 import HowTo2 from '../screens/onBoarding/HowTo2';
@@ -14,6 +14,7 @@ import HowTo4 from '../screens/onBoarding/HowTo4';
 import HowTo5 from '../screens/onBoarding/HowTo5';
 import HowTo6 from '../screens/onBoarding/HowTo6';
 import {RegisterInterface} from '../data';
+import RegisterContract from '../screens/onBoarding/RegisterContract';
 
 export type AuthStackParamList = {
   Login: undefined;
@@ -29,6 +30,7 @@ export type AuthStackParamList = {
   HowTo5: undefined;
   HowTo6: undefined;
   MainNavigator: undefined;
+  RegisterContract: {type: number};
 };
 
 const Stack = createStackNavigator<AuthStackParamList>();
@@ -51,6 +53,7 @@ export const AuthNavigator = () => {
       <Stack.Screen name="HowTo5" component={HowTo5} />
       <Stack.Screen name="HowTo6" component={HowTo6} />
       <Stack.Screen name="MainNavigator" component={MainNavigator} />
+      <Stack.Screen name="RegisterContract" component={RegisterContract} />
     </Stack.Navigator>
   );
 };

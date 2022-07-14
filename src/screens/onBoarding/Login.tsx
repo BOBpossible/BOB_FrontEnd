@@ -3,9 +3,9 @@ import {View, StyleSheet, Text, TouchableOpacity, Image, Platform} from 'react-n
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {AppleButton, appleAuth} from '@invertase/react-native-apple-authentication';
-import SocialWebviewModal from '../modal/SocialWebviewModal';
+import SocialWebviewModal from '../../modal/SocialWebviewModal';
 import auth from '@react-native-firebase/auth';
-import {customAxios} from '../api/customAxios';
+import {customAxios} from '../../api/customAxios';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -128,7 +128,7 @@ const Login = () => {
         <Text style={[styles.loginSubHeadText]}> 맛있는 한끼하고 포인트를 모으자!</Text>
       </View>
       <View style={[styles.logoWrap]}>
-        <Image source={require('../assets/images/LoginLogo.png')} style={[styles.logoImage]} />
+        <Image source={require('../../assets/images/LoginLogo.png')} style={[styles.logoImage]} />
       </View>
       <SocialWebviewModal
         visible={loginModal}
@@ -137,10 +137,16 @@ const Login = () => {
       />
       <View style={[styles.loginButtonWrap]}>
         <TouchableOpacity onPress={() => signUpWithSNS('kakao')}>
-          <Image style={[styles.iconButton]} source={require('../assets/images/kakaoButton.png')} />
+          <Image
+            style={[styles.iconButton]}
+            source={require('../../assets/images/kakaoButton.png')}
+          />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => signUpWithSNS('naver')}>
-          <Image style={[styles.iconButton]} source={require('../assets/images/naverButton.png')} />
+          <Image
+            style={[styles.iconButton]}
+            source={require('../../assets/images/naverButton.png')}
+          />
         </TouchableOpacity>
         {Platform.OS === 'ios' && (
           <AppleButton
@@ -153,7 +159,7 @@ const Login = () => {
         <TouchableOpacity onPress={() => onGoogleButtonPress()}>
           <Image
             style={[styles.iconButton]}
-            source={require('../assets/images/GoogleButton.png')}
+            source={require('../../assets/images/GoogleButton.png')}
           />
         </TouchableOpacity>
       </View>

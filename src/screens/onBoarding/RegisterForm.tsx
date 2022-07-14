@@ -8,12 +8,12 @@ import {
   RegisterGender,
   RegisterBirthDate,
   RegisterAddress,
-} from '../components';
-import {RegisterInterface} from '../data';
+} from '../../components';
+import {RegisterInterface} from '../../data';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {AuthStackParamList} from '../nav';
+import {AuthStackParamList} from '../../nav';
 import {useForm, Controller} from 'react-hook-form';
-import {RegisterPhone} from '../components/Register/RegisterPhone';
+import {RegisterPhone} from '../../components/Register/RegisterPhone';
 import moment from 'moment';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;

@@ -2,11 +2,11 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {RegisterHeader, RegisterNextButton} from '../components';
-import {CategoryItem} from '../components/CategoryItem';
-import {RegisterInterface} from '../data';
-import {AuthStackParamList} from '../nav';
-import {customAxios} from '../api';
+import {RegisterHeader, RegisterNextButton} from '../../components';
+import {CategoryItem} from '../../components/CategoryItem';
+import {RegisterInterface} from '../../data';
+import {AuthStackParamList} from '../../nav';
+import {customAxios} from '../../api';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
