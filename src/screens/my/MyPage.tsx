@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -11,10 +11,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MyUser} from '../../components/My/MyUser';
 import {useNavigation} from '@react-navigation/native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {calHeight} from '../../assets/CalculateLength';
 import {useQuery} from 'react-query';
@@ -22,9 +19,12 @@ import {IgetUsersMe} from '../../data';
 import {queryKey} from '../../api/queryKey';
 import {getUserInfo} from '../../api';
 import {ConnectionError} from '../../components/ConnectionError';
+import QuitModal from '../../modal/QuitModal';
 
 const MyPage = () => {
   const navigation = useNavigation();
+  const [quitModal, setQuitModal] = useState(false);
+
   const {data, isError, refetch, isLoading} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
   console.log('getUserInfo', data);
 
@@ -41,6 +41,7 @@ const MyPage = () => {
   if (isError) {
     return <ConnectionError refetch={refetch} />;
   }
+
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
@@ -82,9 +83,10 @@ const MyPage = () => {
             <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>로그아웃</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => console.log('탈퇴')} style={{alignItems: 'flex-end'}}>
+        <TouchableOpacity onPress={() => setQuitModal(true)} style={{alignItems: 'flex-end'}}>
           <Text style={[styles.quitText]}>계정탈퇴</Text>
         </TouchableOpacity>
+        <QuitModal visible={quitModal} closeQuitModal={() => setQuitModal(false)} />
       </SafeAreaView>
     </>
   );
