@@ -87,6 +87,14 @@ export const MyPoint = ({navigation, route}: Props) => {
                 >
                   포인트 내역
                 </Text>
+                {DataPointsList.isSuccess &&
+                DataPointsList.data?.pages[0].data.result.point.content.length === 0 ? (
+                  <View style={{marginTop: 100}}>
+                    <MyPageNo isPoint={true} />
+                  </View>
+                ) : (
+                  <></>
+                )}
               </>
             }
             showsVerticalScrollIndicator={false}
@@ -110,15 +118,6 @@ export const MyPoint = ({navigation, route}: Props) => {
                 })}
               </>
             )}
-            ListFooterComponent={
-              DataPointsList.data?.pages[0].data.result.point.content.length === 0 ? (
-                <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 150}}>
-                  <MyPageNo isPoint={true} />
-                </View>
-              ) : (
-                <></>
-              )
-            }
           />
         </View>
       </SafeAreaView>

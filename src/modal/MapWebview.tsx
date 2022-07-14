@@ -11,7 +11,7 @@ type MapWebviewProps = {
   y?: string;
 };
 
-export const MapWebview: FC<MapWebviewProps> = ({missionId, userId, webviewRef}) => {
+export const MapWebview: FC<MapWebviewProps> = ({missionId, userId, webviewRef, x, y}) => {
   const [isLoadingMap, setIsLoadingMap] = useState(true);
   const [storeId, setStoreId] = useState(0);
   const [storeModal, setStoreModal] = useState(false);
@@ -21,7 +21,6 @@ export const MapWebview: FC<MapWebviewProps> = ({missionId, userId, webviewRef})
     setStoreModal(true);
     //console.log(event.nativeEvent.data);
   };
-
   return (
     <View style={[styles.webviewWrap]}>
       <StoreModal

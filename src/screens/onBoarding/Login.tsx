@@ -2,7 +2,7 @@ import React, {useCallback, useState, useEffect} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image, Platform} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {AppleButton, appleAuth} from '@invertase/react-native-apple-authentication';
+import {appleAuth} from '@invertase/react-native-apple-authentication';
 import SocialWebviewModal from '../../modal/SocialWebviewModal';
 import auth from '@react-native-firebase/auth';
 import {customAxios} from '../../api/customAxios';
@@ -22,6 +22,30 @@ const Login = () => {
   const postLogin = async (data: any) => {
     try {
       const response = await customAxios().post('/auth/authorization/login', null, {
+        params: data,
+      });
+      try {
+        await AsyncStorage.multiSet([
+          ['accessToken', response.data.result.accessToken],
+          ['refreshToken', response.data.result.refreshToken],
+        ]);
+      } catch (e) {
+        console.log('로그인 로컬 저장 에러남...');
+      }
+
+      if (response.data.result.registerStatus === 'NEW') {
+        navigation.navigate('Register');
+      } else {
+        navigation.navigate('MainNavigator');
+      }
+    } catch (error) {
+      console.log('login data:', error);
+    }
+  };
+
+  const postAppleLogin = async (data: any) => {
+    try {
+      const response = await customAxios().post('/auth/authorization/apple-login', null, {
         params: data,
       });
       try {
@@ -80,9 +104,9 @@ const Login = () => {
       // use credentialState response to ensure the user is authenticated
       if (credentialState === appleAuth.State.AUTHORIZED) {
         console.log('애플로그인 성공!:', appleAuthRequestResponse);
-        const {email, fullName} = appleAuthRequestResponse;
-        const data = {name: fullName, email: email};
-        postLogin(data);
+        const {identityToken} = appleAuthRequestResponse;
+        const data = {token: identityToken};
+        postAppleLogin(data);
       }
     } catch (error) {
       console.log(error);
