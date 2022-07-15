@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
   nameInput: {
     width: '100%',
-    height: hp(calHeight(44)),
+    height: Platform.OS === 'ios' ? hp(calHeight(44, true)) : hp(calHeight(44)),
     borderRadius: 10,
     paddingLeft: 8,
     paddingRight: 8,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   },
   bodyInput: {
     width: '100%',
-    height: hp(calHeight(220)),
+    height: Platform.OS === 'ios' ? hp(calHeight(220, true)) : hp(calHeight(220)),
     backgroundColor: '#F5F5F5',
     borderRadius: 10,
     paddingLeft: 8,

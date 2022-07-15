@@ -39,6 +39,8 @@
 	<string>wa2ln3tnzy</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>bobpossible.shop</key>
