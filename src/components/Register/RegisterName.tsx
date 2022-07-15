@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import type {FC} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {RegisterInterface} from '../../data';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 type RegisterNameProps = {
   setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
@@ -21,7 +22,7 @@ export const RegisterName: FC<RegisterNameProps> = ({
   const [focusedName, setFocusedName] = useState(false);
   return (
     <View style={[styles.nameWrap]}>
-      <Text style={[styles.formHeadText]}>이름</Text>
+      <Text style={[DesignSystem.title1SB, DesignSystem.grey14]}>이름</Text>
       <TextInput
         style={[
           styles.nameInput,

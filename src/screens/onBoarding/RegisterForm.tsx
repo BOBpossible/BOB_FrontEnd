@@ -56,6 +56,9 @@ const RegisterForm = ({navigation, route}: Props) => {
       <KeyboardAwareScrollView
         style={[styles.flex, styles.formWrap]}
         showsVerticalScrollIndicator={false}
+        enableOnAndroid={true}
+        enableAutomaticScroll={Platform.OS === 'ios'}
+        keyboardShouldPersistTaps="handled"
       >
         <Controller
           control={control}
@@ -190,7 +193,7 @@ const RegisterForm = ({navigation, route}: Props) => {
           <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
         )}
       </KeyboardAwareScrollView>
-      <RegisterNextButton goNext={handleSubmit(onSubmit)} buttonState={isValid ? 1 : 0} />
+      <RegisterNextButton goNext={handleSubmit(onSubmit)} buttonState={1} />
     </SafeAreaView>
   );
 };

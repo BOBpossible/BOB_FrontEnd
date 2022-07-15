@@ -4,6 +4,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {RegisterInterface} from '../../data';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 type RegisterBirthDateProps = {
   setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
@@ -29,7 +30,7 @@ export const RegisterBirthDate: FC<RegisterBirthDateProps> = ({
 
   return (
     <View style={[styles.birthDateWrap]}>
-      <Text style={[styles.formHeadText]}>생년월일</Text>
+      <Text style={[DesignSystem.title1SB, DesignSystem.grey14]}>생년월일</Text>
       <TouchableOpacity onPress={() => setDateModal(true)}>
         <View style={[styles.nameInput, error ? styles.errorBorderNoFocus : styles.unfocusBorder]}>
           <Text style={[value === '' && styles.placeholder]}>

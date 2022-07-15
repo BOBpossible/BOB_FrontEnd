@@ -51,7 +51,7 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({
 
   return (
     <View style={[styles.nameWrap]}>
-      <Text style={[styles.formHeadText]}>전화번호</Text>
+      <Text style={[DesignSystem.title1SB, DesignSystem.grey14]}>전화번호</Text>
       <View
         style={{
           flexDirection: 'row',

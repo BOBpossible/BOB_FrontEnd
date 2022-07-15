@@ -4,6 +4,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import AddressSearchModal from '../../modal/AddressSearchModal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {RegisterInterface} from '../../data';
+import {DesignSystem} from '../../assets/DesignSystem';
 type RegisterAddressProps = {
   setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
   registerData: RegisterInterface;
@@ -31,7 +32,7 @@ export const RegisterAddress: FC<RegisterAddressProps> = ({
         onChange={onChange}
         value={value}
       />
-      <Text style={[styles.formHeadText]}>주소</Text>
+      <Text style={[DesignSystem.title1SB, DesignSystem.grey14]}>주소</Text>
       <TouchableOpacity onPress={() => setAddressModal(true)}>
         <View
           style={[
@@ -51,11 +52,10 @@ export const RegisterAddress: FC<RegisterAddressProps> = ({
 };
 
 const styles = StyleSheet.create({
-  addressWrap: {marginTop: 40},
+  addressWrap: {marginTop: 40, marginBottom: 20},
   formHeadText: {
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: 20,
   },
   nameInput: {
     width: '100%',

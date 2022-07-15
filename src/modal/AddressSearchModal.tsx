@@ -45,7 +45,7 @@ const AddressSearchModal: FC<AddressSearchModalProps> = ({
     <Modal visible={visible} animationType="slide">
       <SafeAreaView style={{flex: 1}}>
         <View style={[styles.modalHeader, {top: insets.top}]}>
-          <TouchableOpacity onPress={closeAddressModal}>
+          <TouchableOpacity onPress={closeAddressModal} style={{width: 50}}>
             <View style={[styles.backButton]}>
               <Icon name="arrow-left" size={24} color="black" />
             </View>
@@ -112,15 +112,15 @@ export default AddressSearchModal;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30,
+    paddingTop: 50,
   },
   backButton: {
     margin: 10,
   },
   modalHeader: {
     position: 'absolute',
-    top: 44,
-    height: 40,
+    top: 50,
+    height: 50,
     width: '100%',
     zIndex: 1,
     backgroundColor: '#FFFFFF',

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import type {FC} from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {RegisterInterface} from '../../data';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 type RegisterGenderProps = {
   setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
@@ -20,7 +21,7 @@ export const RegisterGender: FC<RegisterGenderProps> = ({
 }) => {
   return (
     <View style={[styles.genderWrap]}>
-      <Text style={[styles.formHeadText]}>성별</Text>
+      <Text style={[DesignSystem.title1SB, DesignSystem.grey14]}>성별</Text>
       <View style={[styles.spacebetweenWrap]}>
         <TouchableOpacity
           onPress={() => {

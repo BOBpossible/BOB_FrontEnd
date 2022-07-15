@@ -83,9 +83,11 @@ const MyPage = () => {
             <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>로그아웃</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setQuitModal(true)} style={{alignItems: 'flex-end'}}>
-          <Text style={[styles.quitText]}>회원탈퇴</Text>
-        </TouchableOpacity>
+        <View style={{alignItems: 'flex-end', marginTop: 16}}>
+          <TouchableOpacity onPress={() => setQuitModal(true)}>
+            <Text style={[styles.quitText]}>회원탈퇴</Text>
+          </TouchableOpacity>
+        </View>
         <QuitModal visible={quitModal} closeQuitModal={() => setQuitModal(false)} />
       </SafeAreaView>
     </>
