@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   formHeadText: {
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: 10,
+    marginBottom: 20,
   },
   nameInput: {
     width: '100%',

@@ -42,8 +42,6 @@ const RegisterForm = ({navigation, route}: Props) => {
     setRegisterData(route.params.registerData);
   }, []);
 
-  useEffect(() => {}, [setAuthError]);
-
   const onSubmit = (data: any) => {
     navigation.navigate('RegisterCategory', {registerData});
   };
