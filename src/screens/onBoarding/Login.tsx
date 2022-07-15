@@ -13,8 +13,6 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
-import messaging from '@react-native-firebase/messaging';
-import {postFcmToken} from '../../api';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -34,12 +32,6 @@ const Login = () => {
       } catch (e) {
         console.log('로그인 로컬 저장 에러남...');
       }
-
-      messaging()
-        .getToken()
-        .then((token) => {
-          return postFcmToken(token);
-        });
 
       if (response.data.result.registerStatus === 'NEW') {
         navigation.navigate('Register');
@@ -62,12 +54,6 @@ const Login = () => {
       } catch (e) {
         console.log('로그인 로컬 저장 에러남...');
       }
-
-      messaging()
-        .getToken()
-        .then((token) => {
-          return postFcmToken(token);
-        });
 
       if (response.data.result.registerStatus === 'NEW') {
         navigation.navigate('Register');
