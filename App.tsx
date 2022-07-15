@@ -63,7 +63,7 @@ export default function App() {
     try {
       const value = await AsyncStorage.getItem('accessToken');
       //여기서 아이디는 있지만 회원가입을 다 안한 상태라면 로그인 창 띄우고 했다면 메인으로 바로 가기.
-      if (value !== null) {
+      if (value !== null || value !== '') {
         //GET user register status 그리고 그안에서 setIslogin true 만들거나 false로 냅두기
 
         const newToken = await postToken();
