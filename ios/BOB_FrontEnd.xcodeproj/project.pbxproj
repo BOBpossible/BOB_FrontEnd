@@ -528,6 +528,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = BOB_FrontEnd/BOB_FrontEnd.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 69F5355JYF;
 				ENABLE_BITCODE = NO;
@@ -543,6 +545,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.liark.bobplace;
 				PRODUCT_NAME = BOB_FrontEnd;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -556,6 +559,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = BOB_FrontEnd/BOB_FrontEnd.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 69F5355JYF;
 				INFOPLIST_FILE = BOB_FrontEnd/Info.plist;
@@ -570,6 +575,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.liark.bobplace;
 				PRODUCT_NAME = BOB_FrontEnd;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
