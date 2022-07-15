@@ -35,6 +35,7 @@ const QuitModal: FC<QuitModalProps> = ({visible, closeQuitModal}) => {
   };
   const handleSubmit = async () => {
     await patchQuit();
+    await closeQuitModal();
     logout();
   };
   const [notiChecked, setNotichecked] = useState(false);

@@ -51,11 +51,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
     <SafeAreaView style={[styles.flex, {backgroundColor: 'white'}]}>
       <MyHeader goBack={goBack} title={'포인트 전환 신청'} />
       <View style={[styles.totalWrap]}>
-        {/* <KeyboardAvoidingView
-          style={[{flex: 1}]}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        > */}
-        <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+        <KeyboardAwareScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
           <View style={[styles.titleNinput]}>
             <Text style={[DesignSystem.title4Md, {color: 'black'}]}>전환할 포인트</Text>
             <View style={{flexDirection: 'row-reverse', marginBottom: 2}}>
@@ -152,7 +148,6 @@ export const MyChangePoint = ({navigation, route}: Props) => {
             />
           </View>
         </KeyboardAwareScrollView>
-        {/* </KeyboardAvoidingView> */}
 
         {inputPoint === '' ||
         inputName === '' ||
