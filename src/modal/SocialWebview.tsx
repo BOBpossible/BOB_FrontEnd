@@ -3,7 +3,8 @@ import React, {FC, useRef} from 'react';
 import {StyleSheet} from 'react-native';
 import {WebView} from 'react-native-webview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import messaging from '@react-native-firebase/messaging';
+import {postFcmToken} from '../api';
 //let userAgent =
 //  'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1';
 const INJECTED_JAVASCRIPT =
@@ -47,6 +48,13 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
     } catch (e) {
       console.log(e);
     }
+
+    messaging()
+      .getToken()
+      .then((token) => {
+        return postFcmToken(token);
+      });
+
     closeSocialModal();
     if (data.registerStatus === 'NEW') {
       navigation.navigate('Register');
