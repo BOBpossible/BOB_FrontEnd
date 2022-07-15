@@ -163,10 +163,15 @@ const Login = () => {
         <Image
           source={require('../../assets/images/bob_place_login.png')}
           style={styles.titleImage}
+          resizeMode="contain"
         />
       </View>
       <View style={[styles.logoWrap]}>
-        <Image source={require('../../assets/images/bobpool_login.png')} style={styles.logoImage} />
+        <Image
+          source={require('../../assets/images/bobpool_login.png')}
+          style={styles.logoImage}
+          resizeMode="contain"
+        />
       </View>
       <SocialWebviewModal
         visible={loginModal}
@@ -247,6 +252,5 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 });
-
 
 export default Login;
