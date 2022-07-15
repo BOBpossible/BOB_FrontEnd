@@ -35,7 +35,10 @@ export const MapStoreInfo: FC<MapStoreInfoProps> = ({
         <Text style={[styles.storeCategory]}>{storeCategory}</Text>
       </View>
       <View style={[styles.flexRow, {marginBottom: 9}]}>
-        <Text style={[styles.storeTime]}>{convertStatus(storeStatus)}</Text>
+        {}
+        <Text style={[storeStatus === 'OPEN' ? styles.storeTimeOpen : styles.storeTimeClose]}>
+          {convertStatus(storeStatus)}
+        </Text>
         <View style={[styles.flexRow, {marginLeft: 8}]}>
           <Icon name="star" size={15} color={'#FFDE69'} />
           <Text style={[styles.storeRate]}>{storeRate?.toFixed(1)}</Text>
@@ -72,11 +75,17 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     color: '#7D7D7D',
   },
-  storeTime: {
+  storeTimeClose: {
     fontFamily: 'Pretendard-Light',
     fontSize: 14,
     lineHeight: 14,
     color: '#F33F3F',
+  },
+  storeTimeOpen: {
+    fontFamily: 'Pretendard-Light',
+    fontSize: 14,
+    lineHeight: 14,
+    color: '#6C69FF',
   },
   storeRate: {
     fontFamily: 'Pretendard-Light',
