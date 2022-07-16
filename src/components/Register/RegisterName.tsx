@@ -22,7 +22,7 @@ export const RegisterName: FC<RegisterNameProps> = ({
   const [focusedName, setFocusedName] = useState(false);
   return (
     <View style={[styles.nameWrap]}>
-      <Text style={[DesignSystem.title1SB, DesignSystem.grey14]}>이름</Text>
+      <Text style={[DesignSystem.title1SB, DesignSystem.grey14]}>닉네임</Text>
       <TextInput
         style={[
           styles.nameInput,
@@ -39,7 +39,7 @@ export const RegisterName: FC<RegisterNameProps> = ({
           setRegisterData({...registerData, name: text});
         }}
         value={value}
-        placeholder="이름을 입력"
+        placeholder="닉네임을 입력"
         selectionColor={'#6C69FF'}
         onBlur={() => setFocusedName(false)}
         onFocus={() => setFocusedName(true)}

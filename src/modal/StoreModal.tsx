@@ -38,7 +38,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
   );
 
   return (
-    <Modal visible={visible} animationType="slide">
+    <Modal visible={visible} animationType="slide" onRequestClose={closeStoreModal}>
       <SafeAreaView style={[styles.safeView]}>
         <View style={[styles.modalHeader]}>
           <TouchableOpacity onPress={closeStoreModal}>

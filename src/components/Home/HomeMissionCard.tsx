@@ -1,8 +1,10 @@
 import React from 'react';
 import type {FC} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Platform} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {DesignSystem} from '../../assets/DesignSystem';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight} from '../../assets/CalculateLength';
 
 export type MissionCardProps = {
   missionId: number;
@@ -25,7 +27,7 @@ export const HomeMissionCard: FC<MissionCardProps> = ({missionId, name, category
           <View style={[styles.missionMain]}>
             <View style={[styles.nameBox]}>
               <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{name}</Text>
-              <Text style={[DesignSystem.body2Lt, DesignSystem.grey10, {marginBottom: 12}]}>{category}</Text>
+              <Text style={[DesignSystem.body2Lt, DesignSystem.grey10, styles.textMargin]}>{category}</Text>
             </View>
             <View style={[DesignSystem.centerArrange, styles.missionContentBox]}>
               <Text>
@@ -48,14 +50,14 @@ const styles = StyleSheet.create({
     marginRight: 16,
     paddingLeft: 16,
     paddingRight: 16,
-    marginBottom: 12,
+    marginBottom: Platform.OS === 'ios' ? hp(calHeight(12, true)) : hp(calHeight(12)),
     borderColor: '#E8E8E8',
     borderWidth: 1,
     borderRadius: 10,
     backgroundColor: '#FFFFFF',
   },
   missionCard: {
-    marginTop: 24,
+    marginTop: Platform.OS === 'ios' ? hp(calHeight(24, true)) : hp(calHeight(24)),
     borderRadius: 12,
     alignItems: 'center',
   },
@@ -72,9 +74,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomColor: '#DFDFDF',
     borderBottomWidth: 1,
-    marginBottom: 18,
+    marginBottom: Platform.OS === 'ios' ? hp(calHeight(18, true)) : hp(calHeight(18)),
   },
   missionContentBox: {
-    marginBottom: 19,
+    marginBottom: Platform.OS === 'ios' ? hp(calHeight(19, true)) : hp(calHeight(19)),
+  },
+  textMargin: {
+    marginBottom: Platform.OS === 'ios' ? hp(calHeight(12, true)) : hp(calHeight(12)),
   },
 });

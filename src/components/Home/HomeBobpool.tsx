@@ -8,7 +8,7 @@ type HomeBobpoolType = {
 
 export const HomeBobpool: FC<HomeBobpoolType> = ({category}) => {
   return (
-    <View style={[DesignSystem.centerArrange, {flex: 1, marginTop: 230, marginBottom: 50}]}>
+    <View style={[DesignSystem.centerArrange, {marginTop: 100, marginBottom: 50}]}>
       <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2}]}>
         {category === 'NO' ? '주변에 미션이 없어요' : '대단해요!'}
       </Text>

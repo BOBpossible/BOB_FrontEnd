@@ -15,6 +15,7 @@ import {getHomeInfo} from '../../api';
 import {getMissionsProgress} from '../../api/mission';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../../assets/DesignSystem';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
@@ -58,13 +59,61 @@ const Main = () => {
       ) : homeData.data?.missions === null ? (
         <>
           <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
-          <HomeBobpool category={'NO'} />
+          <Animated.FlatList
+            style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={[styles.missionListContainer]}
+            scrollEventThrottle={10}
+            data={homeData.data?.missions}
+            renderItem={({item}) => (
+              <HomeMissionCard
+                mission={item.mission}
+                missionId={item.missionId}
+                status={item.missionStatus}
+                point={item.point}
+                category={item.storeCategory}
+                name={item.storeName}
+                challengeStatus={DataMissionsProgress.data?.length !== 0}
+              />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+            ListHeaderComponent={<HomeBobpool category={'NO'} />}
+            onScroll={(event) => {
+              Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
+                useNativeDriver: false,
+              })(event);
+            }}
+          />
         </>
       ) : (
         <>
           <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
           {allDone ? ( //미션 모두 완료한 경우
-            <HomeBobpool category={'DONE'} />
+            <Animated.FlatList
+              style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={[styles.missionListContainer]}
+              scrollEventThrottle={10}
+              data={homeData.data?.missions}
+              renderItem={({item}) => (
+                <HomeMissionCard
+                  mission={item.mission}
+                  missionId={item.missionId}
+                  status={item.missionStatus}
+                  point={item.point}
+                  category={item.storeCategory}
+                  name={item.storeName}
+                  challengeStatus={DataMissionsProgress.data?.length !== 0}
+                />
+              )}
+              keyExtractor={(item, index) => index.toString()}
+              ListHeaderComponent={<HomeBobpool category={'DONE'} />}
+              onScroll={(event) => {
+                Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
+                  useNativeDriver: false,
+                })(event);
+              }}
+            />
           ) : (
             <>
               <Animated.FlatList
@@ -94,7 +143,7 @@ const Main = () => {
                   })(event);
                 }}
                 ListFooterComponent={() => <View />}
-                ListFooterComponentStyle={{paddingBottom: 100}}
+                ListFooterComponentStyle={styles.mainPaddingBottom}
               />
             </>
           )}
@@ -154,5 +203,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 22,
     color: '#FFFFFF',
+  },
+  mainPaddingBottom: {
+    paddingBottom: Platform.OS === 'ios' ? hp(calHeight(80, true)) : hp(calHeight(80)),
   },
 });

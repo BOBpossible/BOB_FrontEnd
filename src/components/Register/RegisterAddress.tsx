@@ -32,7 +32,7 @@ export const RegisterAddress: FC<RegisterAddressProps> = ({
         onChange={onChange}
         value={value}
       />
-      <Text style={[DesignSystem.title1SB, DesignSystem.grey14]}>주소</Text>
+      <Text style={[DesignSystem.title1SB, DesignSystem.grey14]}>미션 받을 주소</Text>
       <TouchableOpacity onPress={() => setAddressModal(true)}>
         <View
           style={[
@@ -52,7 +52,7 @@ export const RegisterAddress: FC<RegisterAddressProps> = ({
 };
 
 const styles = StyleSheet.create({
-  addressWrap: {marginTop: 40, marginBottom: 20},
+  addressWrap: {marginTop: 40},
   formHeadText: {
     fontSize: 18,
     fontWeight: '600',

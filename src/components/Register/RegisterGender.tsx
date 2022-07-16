@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   spacebetweenWrap: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 8,
   },
   genderChecked: {
     borderColor: '#6C69FF',

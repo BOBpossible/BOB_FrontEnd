@@ -83,7 +83,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
     closeReviewModal();
   };
   return (
-    <Modal visible={visible} animationType="fade">
+    <Modal visible={visible} animationType="fade" onRequestClose={closeReviewModal}>
       <SafeAreaView style={[styles.safeView]}>
         <View style={[styles.modalHeader]}>
           <TouchableOpacity
