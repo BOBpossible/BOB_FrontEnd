@@ -16,6 +16,7 @@ import {useQuery} from 'react-query';
 import {queryKey} from '../api/queryKey';
 import {getStoreData} from '../api/store';
 import {IStoreData} from '../data';
+import {DesignSystem} from '../assets/DesignSystem';
 
 type StoreModalProps = {
   storeId: number;
@@ -47,7 +48,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
             </View>
           </TouchableOpacity>
           <Animated.View style={[headerTextStyle]}>
-            <Text style={[styles.storeHeaderText]}>{storeData.data?.name}</Text>
+            <Text style={[DesignSystem.title3SB, DesignSystem.grey17]}>{storeData.data?.name}</Text>
           </Animated.View>
           <View style={[styles.backButton, {opacity: 0}]}>
             <Icon name="arrow-left" size={24} color="black" />
@@ -95,12 +96,6 @@ const styles = StyleSheet.create({
     height: 100,
     marginBottom: 8,
     backgroundColor: '#FFFFFF',
-  },
-  storeHeaderText: {
-    fontFamily: 'Pretendard-SeniBold',
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#000000',
   },
   reviewToggleWrap: {
     backgroundColor: '#FFFFFF',

@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, FlatList, TouchableOpacity, SafeAreaView} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  SafeAreaView,
+  Image,
+} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HomeStackParamList} from '../../nav/HomeNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
@@ -8,6 +16,7 @@ import {getNotifications, patchNotificationsStatus} from '../../api';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {INotiType} from '../../data';
 import {queryKey} from '../../api/queryKey';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Notifications'>;
 
@@ -68,7 +77,13 @@ export const Notifications = ({navigation}: Props) => {
             ItemSeparatorComponent={() => <View style={{marginTop: 8}} />}
           />
         ) : (
-          <View />
+          <View style={[DesignSystem.centerArrange, {marginTop: 100, marginBottom: 50}]}>
+            <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 38}]}>
+              아직 받은 알람이 없어요!
+            </Text>
+
+            <Image source={require('../../assets/images/bobpool/cryingBobBowl.png')} />
+          </View>
         )}
       </SafeAreaView>
     </>

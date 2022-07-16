@@ -82,9 +82,8 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
               <View style={{marginBottom: 16, flexDirection: 'row'}}>
                 {missionData.data?.images.map((item, index) => {
                   return (
-                    <TouchableOpacity onPress={() => openPhotoModal(item.imageUrl)}>
+                    <TouchableOpacity onPress={() => openPhotoModal(item.imageUrl)} key={index}>
                       <Image
-                        key={index}
                         source={{uri: item.imageUrl}}
                         style={{width: 60, height: 60, marginRight: 4, marginLeft: 4}}
                       />
@@ -112,7 +111,7 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
             onPress={() => {
               missionMutation.mutate(route.params.missionId);
               navigation.pop();
-              navigation.navigate('Mission'); //미션 시작후 미션 화면으로 보냄
+              navigation.navigate('Mission', {missionId: route.params.missionId}); //미션 시작후 미션 화면으로 보냄
             }}
             style={[styles.missionButton]}
           >
