@@ -32,7 +32,7 @@ const RegisterForm = ({navigation, route}: Props) => {
     defaultValues: {
       name: '',
       gender: '',
-      birthDate: '',
+      // birthDate: '',
       address: '',
       phone: '',
     },
@@ -103,7 +103,7 @@ const RegisterForm = ({navigation, route}: Props) => {
           <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
         )}
 
-        <Controller
+        {/* <Controller
           control={control}
           rules={{
             required: true,
@@ -137,7 +137,7 @@ const RegisterForm = ({navigation, route}: Props) => {
         )}
         {errors.birthDate?.type === 'age14' && (
           <Text style={[styles.errorMessage]}>14세 이하 입니다.</Text>
-        )}
+        )} */}
 
         <Controller
           control={control}
