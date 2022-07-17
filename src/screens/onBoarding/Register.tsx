@@ -8,6 +8,7 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../../nav';
 import {RegisterHeader, CheckBox} from '../../components';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Register'>;
 
@@ -47,7 +48,7 @@ const Register = ({navigation}: Props) => {
       <RegisterHeader goBack={goBack} pageNum={0} />
       <View style={[styles.flex, styles.CheckBoxWrap]}>
         <View style={[styles.RegisterHeadWrap]}>
-          <Text style={[styles.RegisterHeadText]}>서비스 이용 동의</Text>
+          <Text style={[DesignSystem.h1SB, DesignSystem.grey17]}>서비스 이용 동의</Text>
         </View>
         <View>
           <CheckBox
@@ -164,7 +165,7 @@ const Register = ({navigation}: Props) => {
 const styles = StyleSheet.create({
   flex: {flex: 1, backgroundColor: '#FFFFFF'},
   CheckBoxWrap: {margin: 16},
-  seperateLine: {borderColor: '#E8E8E8', borderWidth: 1, marginTop: 16},
+  seperateLine: {borderColor: '#E8E8E8', borderBottomWidth: 1, marginTop: 16},
   RegisterHeadText: {fontSize: 24, fontWeight: '800'},
   RegisterHeadWrap: {paddingBottom: 8},
   CheckBoxRow: {

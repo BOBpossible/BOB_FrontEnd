@@ -1,8 +1,13 @@
 import React, {useState} from 'react';
 import type {FC} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Platform, StyleSheet, Text, TextInput, View} from 'react-native';
 import {RegisterInterface} from '../../data';
 import {DesignSystem} from '../../assets/DesignSystem';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
 
 type RegisterNameProps = {
   setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
@@ -54,8 +59,7 @@ const styles = StyleSheet.create({
   },
   nameInput: {
     width: '100%',
-    height: 44,
-
+    height: Platform.OS === 'ios' ? hp(calHeight(44, true)) : hp(calHeight(44)),
     borderRadius: 10,
     paddingLeft: 8,
     paddingRight: 8,
@@ -68,9 +72,4 @@ const styles = StyleSheet.create({
   errorBorderNoFocus: {borderColor: '#E03D32', borderWidth: 0.5},
   focusBorder: {borderColor: '#6C69FF', borderWidth: 1},
   unfocusBorder: {borderColor: '#DFDFDF', borderWidth: 1},
-  formHeadText: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 10,
-  },
 });

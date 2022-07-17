@@ -39,8 +39,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   title: {
-    fontSize: 16,
-    color: '#000',
+    color: '#000000',
     marginLeft: 16,
   },
   markedCircle: {

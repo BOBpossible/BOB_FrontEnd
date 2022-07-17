@@ -1,8 +1,13 @@
 import React from 'react';
 import type {FC} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Colors} from 'react-native-paper';
-
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../assets/CalculateLength';
+import {DesignSystem} from '../assets/DesignSystem';
 export type RegisterNextButtonProps = {
   goNext: () => void;
   disabled?: boolean;
@@ -27,10 +32,11 @@ export const RegisterNextButton: FC<RegisterNextButtonProps> = ({
         ]}
       >
         <Text
-          style={[
-            styles.buttonText,
-            buttonState === 0 ? styles.stateDisabledText : styles.stateNextText,
-          ]}
+          style={
+            buttonState === 0
+              ? [DesignSystem.grey6, DesignSystem.title2Regular]
+              : [{color: 'white'}, DesignSystem.title2Regular]
+          }
         >
           {buttonState === 2 ? '밥파서블 시작하기' : '다음'}
         </Text>
@@ -43,7 +49,7 @@ const styles = StyleSheet.create({
   buttonWrap: {justifyContent: 'center', alignItems: 'center', margin: 20},
   buttonStyle: {
     width: '100%',
-    height: 60,
+    height: Platform.OS === 'ios' ? hp(calHeight(56, true)) : hp(calHeight(56)),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
@@ -53,14 +59,4 @@ const styles = StyleSheet.create({
   },
   stateNextButton: {backgroundColor: '#2A2A2A'},
   stateFinishButton: {backgroundColor: '#615EFF'},
-  buttonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  stateDisabledText: {
-    color: Colors.grey500,
-  },
-  stateNextText: {
-    color: '#FFFFFF',
-  },
 });

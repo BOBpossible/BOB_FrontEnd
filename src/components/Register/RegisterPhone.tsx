@@ -5,6 +5,12 @@ import {RegisterInterface} from '../../data';
 import {DesignSystem} from '../../assets/DesignSystem';
 import axios from 'axios';
 
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
+
 type RegisterPhoneProps = {
   setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
   registerData: RegisterInterface;
@@ -52,15 +58,7 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({
   return (
     <View style={[styles.nameWrap]}>
       <Text style={[DesignSystem.title1SB, DesignSystem.grey14]}>전화번호</Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: 44,
-          marginTop: 8,
-        }}
-      >
+      <View style={[styles.phoneInputWrap]}>
         <TextInput
           style={[styles.nameInput, focusedName ? styles.focusBorder : styles.unfocusBorder]}
           onChangeText={(text) => {
@@ -77,13 +75,13 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({
         />
         {registerData.phone.length === 11 ? (
           <TouchableOpacity onPress={() => postPhone()} style={styles.enableButton}>
-            <Text style={[DesignSystem.body1Lt, {color: '#6C69FF'}]}>
+            <Text style={[DesignSystem.body1Lt, DesignSystem.purple5]}>
               {authKey !== '-1' ? '다시 받기' : '인증번호 받기'}
             </Text>
           </TouchableOpacity>
         ) : (
           <View style={styles.disableButton}>
-            <Text style={[DesignSystem.body1Lt, {color: '#3F3F3F'}]}>인증번호 받기</Text>
+            <Text style={[DesignSystem.body1Lt, DesignSystem.grey12]}>인증번호 받기</Text>
           </View>
         )}
       </View>
@@ -122,7 +120,7 @@ const styles = StyleSheet.create({
     marginTop: 32,
   },
   nameInput: {
-    width: 200,
+    width: wp(calWidth(200)),
     height: 44,
     borderRadius: 10,
     paddingLeft: 8,
@@ -152,6 +150,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 10,
+  },
+  phoneInputWrap: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 44,
+    marginTop: 8,
+    width: '100%',
   },
 
   disableButton: {

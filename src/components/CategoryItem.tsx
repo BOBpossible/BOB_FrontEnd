@@ -1,7 +1,12 @@
 import React from 'react';
 import type {FC} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {Colors} from 'react-native-paper';
+import {View, StyleSheet, Text, TouchableOpacity, Platform} from 'react-native';
+import {DesignSystem} from '../assets/DesignSystem';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../assets/CalculateLength';
 
 export type CategoryItemProps = {
   onPress: () => void;
@@ -13,7 +18,15 @@ export const CategoryItem: FC<CategoryItemProps> = ({onPress, title, isSelected}
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.categoryItems, isSelected ? styles.selected : styles.notSelected]}>
-        <Text style={[isSelected && styles.selectedText, styles.categoryText]}>{title}</Text>
+        <Text
+          style={
+            isSelected
+              ? [DesignSystem.title4Md, DesignSystem.purple5]
+              : [DesignSystem.body1Lt, DesignSystem.grey10]
+          }
+        >
+          {title}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -21,8 +34,8 @@ export const CategoryItem: FC<CategoryItemProps> = ({onPress, title, isSelected}
 
 const styles = StyleSheet.create({
   categoryItems: {
-    width: 105,
-    height: 56,
+    width: wp(calWidth(105)),
+    height: Platform.OS === 'ios' ? hp(calHeight(56, true)) : hp(calHeight(56)),
     borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -30,7 +43,5 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   selected: {borderColor: '#6C69FF', backgroundColor: '#F6F6FE'},
-  selectedText: {color: '#6C69FF'},
-  categoryText: {fontSize: 16},
   notSelected: {borderColor: '#DFDFDF'},
 });

@@ -29,13 +29,9 @@ const RegisterCategory = ({navigation, route}: Props) => {
   const postCategories = async () => {
     const categoriesParams = {favorites: selectedCategories.join(',')};
     try {
-      const response = await customAxios().post(
-        'https://bobpossible.shop/api/v1/member-categories',
-        null,
-        {
-          params: categoriesParams,
-        },
-      );
+      const response = await customAxios().post('/api/v1/member-categories', null, {
+        params: categoriesParams,
+      });
       console.log('category register:', response.data);
     } catch (error) {
       console.log('category register:', error);
@@ -43,7 +39,7 @@ const RegisterCategory = ({navigation, route}: Props) => {
   };
   const getCategories = async () => {
     try {
-      const response = await customAxios().get('https://bobpossible.shop/api/v1/categories', {});
+      const response = await customAxios().get('/api/v1/categories', {});
       setCategoryList(response.data.result);
       console.log(response.data.result);
     } catch (error) {

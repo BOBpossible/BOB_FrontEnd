@@ -1,8 +1,13 @@
 import React, {useState} from 'react';
 import type {FC} from 'react';
-import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {RegisterInterface} from '../../data';
 import {DesignSystem} from '../../assets/DesignSystem';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+import {calHeight, calWidth} from '../../assets/CalculateLength';
 
 type RegisterGenderProps = {
   setRegisterData: React.Dispatch<React.SetStateAction<RegisterInterface>>;
@@ -39,7 +44,13 @@ export const RegisterGender: FC<RegisterGenderProps> = ({
                 : styles.genderUnchecked,
             ]}
           >
-            <Text style={[value === 'MALE' ? styles.genderChecked : styles.genderUnchecked]}>
+            <Text
+              style={
+                value === 'MALE'
+                  ? [DesignSystem.title4Md, DesignSystem.purple5]
+                  : [DesignSystem.body1Lt, DesignSystem.grey10]
+              }
+            >
               남자
             </Text>
           </View>
@@ -60,7 +71,13 @@ export const RegisterGender: FC<RegisterGenderProps> = ({
                 : styles.genderUnchecked,
             ]}
           >
-            <Text style={[value === 'FEMALE' ? styles.genderChecked : styles.genderUnchecked]}>
+            <Text
+              style={
+                value === 'FEMALE'
+                  ? [DesignSystem.title4Md, DesignSystem.purple5]
+                  : [DesignSystem.body1Lt, DesignSystem.grey10]
+              }
+            >
               여자
             </Text>
           </View>
@@ -81,7 +98,13 @@ export const RegisterGender: FC<RegisterGenderProps> = ({
                 : styles.genderUnchecked,
             ]}
           >
-            <Text style={[value === 'NULL' ? styles.genderChecked : styles.genderUnchecked]}>
+            <Text
+              style={
+                value === 'NULL'
+                  ? [DesignSystem.title4Md, DesignSystem.purple5]
+                  : [DesignSystem.body1Lt, DesignSystem.grey10]
+              }
+            >
               선택 안함
             </Text>
           </View>
@@ -105,10 +128,10 @@ const styles = StyleSheet.create({
   genderChecked: {
     borderColor: '#6C69FF',
     backgroundColor: '#F6F6FE',
-    color: '#6C69FF',
   },
   genderUnchecked: {
     borderColor: '#DFDFDF',
+    backgroundColor: '#FFFFFF',
   },
   errorBorderNoFocus: {
     borderColor: '#E03D32',
@@ -117,8 +140,8 @@ const styles = StyleSheet.create({
   genderBox: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 105,
-    height: 56,
+    width: wp(calWidth(105)),
+    height: Platform.OS === 'ios' ? hp(calHeight(56, true)) : hp(calHeight(56)),
     borderRadius: 10,
     borderWidth: 1,
   },
