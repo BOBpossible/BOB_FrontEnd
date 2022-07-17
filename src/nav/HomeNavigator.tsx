@@ -32,10 +32,7 @@ export const HomeNavigator = ({navigation, route}) => {
     }
   }, [navigation, route]);
   return (
-    <Stack.Navigator
-      initialRouteName="Main"
-      screenOptions={{headerShown: false, gestureEnabled: false}}
-    >
+    <Stack.Navigator initialRouteName="Main" screenOptions={{headerShown: false}}>
       <Stack.Screen name="Main" component={Main} />
       <Stack.Screen name="HomeMissionDetails" component={HomeMissionDetails} />
       <Stack.Screen name="Notifications" component={Notifications} />

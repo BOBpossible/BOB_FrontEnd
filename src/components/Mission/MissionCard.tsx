@@ -30,8 +30,8 @@ export const MissionCard: FC<IMissionCardProps> = ({
   const navigation = useNavigation();
   const [openDoneModal, setOpenDoneModal] = useRecoilState(openModal);
   const closeDoneModal = async () => {
+    await setOpenDoneModal(false);
     navigation.navigate('Main');
-    setOpenDoneModal(false);
   };
 
   const missionCancelMutation = useMutation((missionId: number) => patchMissionCancel(missionId), {

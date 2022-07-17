@@ -37,7 +37,7 @@ const Mission = () => {
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage: any) => {
-      if (remoteMessage.notification.title === 'success') {
+      if (remoteMessage.data.title === 'missionSuccess') {
         DataMissionsProgress.refetch();
         console.log('미션 업데이트!');
       }

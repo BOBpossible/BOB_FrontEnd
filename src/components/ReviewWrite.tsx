@@ -25,8 +25,6 @@ type ReviewWriteProps = {
 
 const options: ImageLibraryOptions = {
   mediaType: 'photo',
-  maxWidth: 500,
-  maxHeight: 500,
   quality: 1,
 };
 const REVIEW_RATE_TEXT = [

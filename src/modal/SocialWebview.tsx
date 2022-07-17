@@ -59,7 +59,10 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
     if (data.registerStatus === 'NEW') {
       navigation.navigate('Register');
     } else {
-      navigation.navigate('MainNavigator');
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'MainNavigator'}],
+      });
     }
   };
   return (
@@ -77,7 +80,6 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
         }
       }}
       originWhitelist={['*']}
-      incognito={true}
       scrollEnabled={false}
     />
   );
