@@ -44,7 +44,10 @@ const Login = () => {
       if (response.data.result.registerStatus === 'NEW') {
         navigation.navigate('Register');
       } else {
-        navigation.navigate('MainNavigator');
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'MainNavigator'}],
+        });
       }
     } catch (error) {
       console.log('login data:', error);
@@ -72,7 +75,10 @@ const Login = () => {
       if (response.data.result.registerStatus === 'NEW') {
         navigation.navigate('Register');
       } else {
-        navigation.navigate('MainNavigator');
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'MainNavigator'}],
+        });
       }
     } catch (error) {
       console.log('login data:', error);
