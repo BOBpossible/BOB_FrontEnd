@@ -24,7 +24,7 @@ export const MyInquiryList: FC<goWriteProps> = ({setNowWrite}) => {
           refreshControl={
             <RefreshControl
               onRefresh={() => DataQuestions.refetch()}
-              refreshing={DataQuestions.isFetching}
+              refreshing={DataQuestions.isLoading}
             />
           }
           showsVerticalScrollIndicator={false}

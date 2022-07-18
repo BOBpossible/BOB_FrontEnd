@@ -5,9 +5,9 @@ export const userToken = atom({
   default: '',
 });
 
-export const openModal = atom({
-  key: 'openModal',
-  default: false,
+export const photoIndex = atom({
+  key: 'photoIndex',
+  default: 0,
 });
 
 export const missionPage = atom({

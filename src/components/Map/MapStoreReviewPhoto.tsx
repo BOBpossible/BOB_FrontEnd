@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Animated,
   ActivityIndicator,
+  ScrollView,
+  RefreshControl,
 } from 'react-native';
 import {PhotoModal} from '../../modal/PhotoModal';
 import FastImage from 'react-native-fast-image';
@@ -61,7 +63,14 @@ export const MapStoreReviewPhoto = ({
   //리뷰없는경우 ----------------------------
   if (reviewCount === 0) {
     return (
-      <>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => reviewImages.refetch()}
+            refreshing={reviewImages.isLoading}
+          />
+        }
+      >
         <View>
           <ImageSwiper height={220} imageList={storeData?.images} />
           <PhotoModal
@@ -86,14 +95,20 @@ export const MapStoreReviewPhoto = ({
             reviewCount={reviewCount}
           />
         </View>
-        <View style={[DesignSystem.centerArrange, {flex: 1}]}>
+        <View style={[DesignSystem.centerArrange, {marginTop: 50}]}>
           <ReviewNo isPhoto={1} />
         </View>
-      </>
+      </ScrollView>
     );
   } else {
     return (
       <Animated.FlatList
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => reviewImages.refetch()}
+            refreshing={reviewImages.isLoading}
+          />
+        }
         showsVerticalScrollIndicator={false}
         onScroll={(event) => {
           Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {

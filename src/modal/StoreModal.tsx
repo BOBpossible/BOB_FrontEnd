@@ -26,6 +26,7 @@ type StoreModalProps = {
 
 const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) => {
   const [isReview, setIsReview] = useState(false);
+
   const offset1 = useRef(new Animated.Value(0)).current;
   const headerTextStyle = useStyle({
     opacity: offset1.interpolate({

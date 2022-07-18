@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
+  RefreshControl,
 } from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HomeStackParamList} from '../../nav/HomeNavigator';
@@ -43,9 +44,7 @@ export const Notifications = ({navigation}: Props) => {
       },
     },
   );
-  const checkedNoti = (notiId: number) => {
-    missionSuccessRequestMutation.mutate(notiId);
-  };
+
   console.log('DATANOTI', DataNoti.data); //스웨거에서result인 배열
   const goBack = () => {
     navigation.goBack();
@@ -57,6 +56,12 @@ export const Notifications = ({navigation}: Props) => {
         <MyHeader goBack={goBack} title={'알림'} />
         {DataNoti.data?.length !== 0 ? (
           <FlatList
+            refreshControl={
+              <RefreshControl
+                onRefresh={() => DataNoti.refetch()}
+                refreshing={DataNoti.isLoading}
+              />
+            }
             style={{marginLeft: 16, marginRight: 16}}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{paddingBottom: 60, marginTop: 12}}
@@ -64,6 +69,7 @@ export const Notifications = ({navigation}: Props) => {
             data={DataNoti.data}
             renderItem={({item}) => (
               <NotificationCard
+                navigation={navigation}
                 pushType={item.pushType}
                 storeName={item.storeName}
                 storeId={item.storeId}

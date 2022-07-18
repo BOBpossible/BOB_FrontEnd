@@ -107,7 +107,7 @@ export const MyPoint = ({navigation, route}: Props) => {
             refreshControl={
               <RefreshControl
                 onRefresh={() => DataPointsList.refetch()}
-                refreshing={DataPointsList.isFetching}
+                refreshing={DataPointsList.isLoading}
               />
             }
             showsVerticalScrollIndicator={false}

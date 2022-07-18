@@ -1,5 +1,13 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {View, StyleSheet, Animated, Platform, Text, ActivityIndicator} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Animated,
+  Platform,
+  Text,
+  ActivityIndicator,
+  RefreshControl,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {HomeMissionCard} from '../../components/Home/HomeMissionCard';
@@ -8,25 +16,26 @@ import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
 import {useQuery} from 'react-query';
 import {ConnectionError} from '../../components/ConnectionError';
-import {IHomeData, IMissionsProgress} from '../../data';
+import {IHomeData, IMissionsProgress, INotiType} from '../../data';
 import {queryKey} from '../../api/queryKey';
 import {HomeBobpool} from '../../components/Home/HomeBobpool';
-import {getHomeInfo, getNotifications, getNotificationsMain} from '../../api';
+import {getHomeInfo, getNotificationsMain} from '../../api';
 import {getMissionsProgress} from '../../api/mission';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../../assets/DesignSystem';
-import {ScrollView} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
 import {useFocusEffect} from '@react-navigation/native';
 
 const Main = () => {
-  const navigation = useNavigation();
   const offset = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
   const [allDone, setAllDone] = useState(false);
+  const [hasNewNoti, setHasNewNoti] = useState(false);
 
-  const notificationData = useQuery(queryKey.NOTIFICATIONS, getNotificationsMain, {
-    onSuccess: (data) => {},
+  const notificationData = useQuery<INotiType[]>(queryKey.NOTIFICATIONS, getNotificationsMain, {
+    onSuccess: (data) => {
+      const notificationStatus = data.every((element) => element.checked);
+      setHasNewNoti(!notificationStatus);
+    },
   });
 
   const homeData = useQuery<IHomeData>(queryKey.HOMEDATA, getHomeInfo, {
@@ -37,11 +46,6 @@ const Main = () => {
       console.log('homeData', data);
       if (data.missions !== null) {
         const allDoneStatus = data.missions.every((element) => element.missionStatus === 'DONE');
-        // data.missions.map((e: any) => {
-        //   if (e.missionStatus === 'DONE') {
-        //     setAllDone(false); //이번주 세개의 미션 모두 DONE이면 true유지
-        //   }
-        // });
         setAllDone(allDoneStatus);
       }
     },
@@ -70,8 +74,13 @@ const Main = () => {
           <ActivityIndicator />
         </View>
       ) : homeData.data?.missions === null ? (
-        <>
-          <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
+        <View>
+          <AnimatedHeader
+            animatedValue={offset}
+            paddingTop={insets.top}
+            data={homeData.data}
+            newNoti={hasNewNoti}
+          />
           <Animated.FlatList
             style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
             showsVerticalScrollIndicator={false}
@@ -97,12 +106,23 @@ const Main = () => {
               })(event);
             }}
           />
-        </>
+        </View>
       ) : (
         <>
-          <AnimatedHeader animatedValue={offset} paddingTop={insets.top} data={homeData.data} />
+          <AnimatedHeader
+            animatedValue={offset}
+            paddingTop={insets.top}
+            data={homeData.data}
+            newNoti={hasNewNoti}
+          />
           {allDone ? ( //미션 모두 완료한 경우
             <Animated.FlatList
+              refreshControl={
+                <RefreshControl
+                  onRefresh={() => homeData.refetch()}
+                  refreshing={homeData.isLoading}
+                />
+              }
               style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={[styles.missionListContainer]}
@@ -120,7 +140,10 @@ const Main = () => {
                 />
               )}
               keyExtractor={(item, index) => index.toString()}
-              ListHeaderComponent={<HomeBobpool category={'DONE'} />}
+              ListHeaderComponent={
+                <HomeMissionListHeader dday={homeData.data?.dday} allDone={allDone} />
+              }
+              ListFooterComponent={<HomeBobpool category={'DONE'} />}
               onScroll={(event) => {
                 Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
                   useNativeDriver: false,

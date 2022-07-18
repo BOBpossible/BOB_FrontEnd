@@ -28,9 +28,15 @@ type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
   paddingTop: number;
   data?: IHomeData;
+  newNoti: boolean;
 };
 
-export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingTop, data}) => {
+export const AnimatedHeader: FC<AnimatedHeaderProps> = ({
+  animatedValue,
+  paddingTop,
+  data,
+  newNoti,
+}) => {
   const [addressModal, setAddressModal] = useState(false);
   const barProgressValue = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
@@ -163,6 +169,8 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({animatedValue, paddingT
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Notifications', {userId: 0})}>
+            {newNoti && <View style={styles.notificationBadge} />}
+
             <Icon name="bell-outline" size={24} color="#323232" />
           </TouchableOpacity>
         </View>
@@ -260,7 +268,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#C8C8C8',
+    borderColor: '#615EFF',
     paddingTop: 3.5,
     paddingBottom: 3.5,
     paddingLeft: 8,
@@ -325,5 +333,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard-Medium',
     fontSize: 13,
     lineHeight: 22,
+  },
+  notificationBadge: {
+    borderRadius: 5,
+    width: 5,
+    height: 5,
+    backgroundColor: '#615DFF',
+    position: 'absolute',
+    right: 0,
+    top: 0,
   },
 });

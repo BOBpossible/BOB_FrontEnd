@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, RefreshControl} from 'react-native';
 import {MissionSuccessfulCard} from './MissionSuccessfulCard';
 import {useQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
@@ -26,6 +26,11 @@ export const MissionSuccessList = () => {
   const DataMissionsComplete = useQuery<IMissionSuccess[]>(
     queryKey.MISSIONSCOMPLETE,
     getMissionsComplete,
+    {
+      onSuccess() {
+        console.log('refetch mission complete!!');
+      },
+    },
   );
 
   const DAYOFWEEK: dayofweekType = {
@@ -40,6 +45,13 @@ export const MissionSuccessList = () => {
 
   return (
     <FlatList
+      refreshControl={
+        <RefreshControl
+          onRefresh={() => DataMissionsComplete.refetch()}
+          refreshing={DataMissionsComplete.isLoading}
+          progressViewOffset={0}
+        />
+      }
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
         marginTop: hp(calHeight(16)),

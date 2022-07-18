@@ -20,7 +20,7 @@ export const MyNotificationsSetting = ({navigation}: Props) => {
   const [onInquiry, setOnInquiry] = useState(true);
   // console.log(onNewevent, onReview, onInquiry);
 
-  const DataNotifications = useQuery(queryKey.NOTIFICATIONS, getNotifications);
+  const DataNotifications = useQuery('notificationSetting', getNotifications);
   useEffect(() => {
     if (DataNotifications.data !== undefined) {
       setOnNewevent(DataNotifications.data.event);
@@ -37,13 +37,7 @@ export const MyNotificationsSetting = ({navigation}: Props) => {
       },
     },
   );
-  const submitReview = async () => {
-    await notificationsMutation.mutate({
-      event: onNewevent,
-      review: onReview,
-      question: onInquiry,
-    });
-  };
+
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
@@ -51,7 +45,6 @@ export const MyNotificationsSetting = ({navigation}: Props) => {
         <MyHeader
           goBack={() => {
             goBack();
-            submitReview();
           }}
           title={'알림 설정'}
         />
@@ -65,7 +58,14 @@ export const MyNotificationsSetting = ({navigation}: Props) => {
                 value={onNewevent}
                 trackColor={{false: '#DFDFDF', true: '#6C69FF'}}
                 thumbColor={onNewevent ? '#FFFFFF' : '#FFFFFF'}
-                onValueChange={() => setOnNewevent(!onNewevent)}
+                onValueChange={() => {
+                  notificationsMutation.mutate({
+                    event: !onNewevent,
+                    review: onReview,
+                    question: onInquiry,
+                  });
+                  setOnNewevent(!onNewevent);
+                }}
                 style={{marginRight: 16}}
               />
             </View>
@@ -77,7 +77,14 @@ export const MyNotificationsSetting = ({navigation}: Props) => {
                 value={onReview}
                 trackColor={{false: '#DFDFDF', true: '#6C69FF'}}
                 thumbColor={onReview ? '#FFFFFF' : '#FFFFFF'}
-                onValueChange={() => setOnReview(!onReview)}
+                onValueChange={() => {
+                  notificationsMutation.mutate({
+                    event: onNewevent,
+                    review: !onReview,
+                    question: onInquiry,
+                  });
+                  setOnReview(!onReview);
+                }}
                 style={{marginRight: 16}}
               />
             </View>
@@ -89,7 +96,14 @@ export const MyNotificationsSetting = ({navigation}: Props) => {
                 value={onInquiry}
                 trackColor={{false: '#DFDFDF', true: '#6C69FF'}}
                 thumbColor={onInquiry ? '#FFFFFF' : '#FFFFFF'}
-                onValueChange={() => setOnInquiry(!onInquiry)}
+                onValueChange={() => {
+                  notificationsMutation.mutate({
+                    event: onNewevent,
+                    review: onReview,
+                    question: !onInquiry,
+                  });
+                  setOnInquiry(!onInquiry);
+                }}
                 style={{marginRight: 16}}
               />
             </View>

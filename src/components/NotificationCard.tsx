@@ -8,8 +8,11 @@ import {getNotifications, patchNotificationsStatus} from '../api';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {INotiType} from '../data';
 import {queryKey} from '../api/queryKey';
+import {useSetRecoilState} from 'recoil';
+import {missionPage} from '../state';
 
 export type NotificationCardProps = {
+  navigation: any;
   pushType: string; //미션알림1인지 리뷰남기란 알림0인지
   storeName: string;
   storeId: number;
@@ -20,11 +23,19 @@ export type NotificationCardProps = {
   id: number;
 };
 
-//prettier-ignore
-export const NotificationCard: FC<NotificationCardProps> = ({id, pushType, storeName, storeId, missionId, mission, date, checked, checkedNoti}) => {
+export const NotificationCard: FC<NotificationCardProps> = ({
+  id,
+  pushType,
+  storeName,
+  storeId,
+  missionId,
+  mission,
+  date,
+  checked,
+  navigation,
+}) => {
+  const setProgress = useSetRecoilState(missionPage);
   const queryClient = useQueryClient();
-  const navigation = useNavigation();
-  const [reviewModal, setReviewModal] = useState(false);
   const missionSuccessRequestMutation = useMutation(
     (notiId: number) => patchNotificationsStatus(notiId),
     {
@@ -39,64 +50,77 @@ export const NotificationCard: FC<NotificationCardProps> = ({id, pushType, store
   );
   return (
     <>
-    {pushType === 'MISSION' ?
-      <TouchableOpacity
-        style={[styles.notiCard, checked ? {opacity: 0.5} : {opacity: 1}]}
-        onPress={() => {
-          navigation.navigate('HomeMissionDetails', {missionId: missionId});
-          missionSuccessRequestMutation.mutate(id);
-        }
-      }
-      >
-        <View style={[styles.notiWrap]}>
-          <View style={!checked ? [styles.dot] : [styles.noDot]} />
-          <View style={[styles.notiView]}>
-            <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 4}]}>새로운 미션이 도착했습니다!</Text>
-            <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}><Text style={[DesignSystem.purple5]}>{storeName}</Text>에서 {mission}의 식사를 하세요!</Text>
-            <Text style={[DesignSystem.caption1Lt, {color: '#7D7D7D'}]}>
-              {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)} {date.slice(11,15)}
-            </Text>
+      {pushType === 'MISSION' ? (
+        <TouchableOpacity
+          style={[checked ? styles.notiCardChecked : styles.notiCardNew]}
+          onPress={() => {
+            navigation.navigate('HomeMissionDetails', {missionId: missionId});
+            missionSuccessRequestMutation.mutate(id);
+          }}
+        >
+          <View style={[styles.notiWrap]}>
+            <View style={!checked ? [styles.dot] : [styles.noDot]} />
+            <View style={[styles.notiView]}>
+              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 4}]}>
+                새로운 미션이 도착했습니다!
+              </Text>
+              <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}>
+                <Text style={[DesignSystem.purple5]}>{storeName}</Text>에서 {mission}의 식사를
+                하세요!
+              </Text>
+              <Text style={[DesignSystem.caption1Lt, {color: '#7D7D7D'}]}>
+                {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)} {date.slice(11, 15)}
+              </Text>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
-      :
-      <TouchableOpacity
-        style={[styles.notiCard, checked && {opacity: 0.5}]}
-        onPress={() => {
-          setReviewModal(true);
-          missionSuccessRequestMutation.mutate(id);
-        }
-      }
-      >
-        <View style={[styles.notiWrap]}>
-          <View style={!checked ? [styles.dot] : [styles.noDot]} />
-          <View style={[styles.notiView]}>
-            <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 4}]}>리뷰를 남겨주세요.</Text>
-            <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}><Text style={[DesignSystem.purple5]}>{storeName}</Text>의 음식이 맛있었다면 리뷰를 남겨주세요.</Text>
-            <Text style={[DesignSystem.caption1Lt, {color: '#7D7D7D'}]}>
-              {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)} {date.slice(11,16)}
-            </Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={[checked ? styles.notiCardChecked : styles.notiCardNew]}
+          onPress={() => {
+            missionSuccessRequestMutation.mutate(id);
+            setProgress(false);
+            navigation.pop();
+            navigation.navigate('MissionNavigator');
+          }}
+        >
+          <View style={[styles.notiWrap]}>
+            <View style={!checked ? [styles.dot] : [styles.noDot]} />
+            <View style={[styles.notiView]}>
+              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 4}]}>
+                리뷰를 남겨주세요.
+              </Text>
+              <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}>
+                <Text style={[DesignSystem.purple5]}>{storeName}</Text>의 음식이 맛있었다면 리뷰를
+                남겨주세요.
+              </Text>
+              <Text style={[DesignSystem.caption1Lt, {color: '#7D7D7D'}]}>
+                {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)} {date.slice(11, 16)}
+              </Text>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
-    }
-    <ReviewModal
-      visible={reviewModal}
-      closeReviewModal={()=>setReviewModal(false)}
-      storeId={storeId}
-      missionId={missionId}
-    />
+        </TouchableOpacity>
+      )}
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  notiCard: {
+  notiCardNew: {
     width: '100%',
     borderRadius: 10,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#EFEFEF',
+    opacity: 1,
+  },
+  notiCardChecked: {
+    width: '100%',
+    borderRadius: 10,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#EFEFEF',
+    opacity: 0.5,
   },
   notiWrap: {
     //구성요소들 정렬
