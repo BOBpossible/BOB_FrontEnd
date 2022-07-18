@@ -146,11 +146,6 @@ const styles = StyleSheet.create({
   errorBorderNoFocus: {borderColor: '#E03D32', borderWidth: 0.5},
   focusBorder: {borderColor: '#6C69FF', borderWidth: 1},
   unfocusBorder: {borderColor: '#DFDFDF', borderWidth: 1},
-  formHeadText: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 10,
-  },
   phoneInputWrap: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -161,7 +156,7 @@ const styles = StyleSheet.create({
   },
 
   disableButton: {
-    width: 135,
+    width: wp(calWidth(138)),
     height: 44,
     paddingLeft: 8,
     paddingRight: 8,
@@ -173,7 +168,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#C8C8C8',
   },
   enableButton: {
-    width: 135,
+    width: wp(calWidth(138)),
     height: 44,
     paddingLeft: 8,
     paddingRight: 8,

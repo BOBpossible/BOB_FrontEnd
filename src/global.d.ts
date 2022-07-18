@@ -17,5 +17,6 @@ declare namespace ReactNavigation {
     MyReview: undefined;
     MyNotificationsSetting: undefined;
     MyInquiry: undefined;
+    MyChangePointDone: undefined;
   }
 }

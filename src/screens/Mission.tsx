@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, SafeAreaView} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {View, StyleSheet, Text, SafeAreaView, Alert} from 'react-native';
 import {DesignSystem} from '../assets/DesignSystem';
 import {MissionCard} from '../components';
 import {MissionProcess} from '../components/Mission/MissionProcess';
@@ -14,6 +14,7 @@ import {IMissionsProgress, IgetUsersMe, IMissionSuccess} from '../data';
 import {getUserInfo} from '../api/user';
 import {ConnectionError} from '../components/ConnectionError';
 import messaging from '@react-native-firebase/messaging';
+import {useFocusEffect} from '@react-navigation/native';
 
 //processCircle
 ///"PROGRESS","CHECKING" :'진행중' ---  "DONE" : '도전 성공'
@@ -33,8 +34,6 @@ const Mission = () => {
     getMissionsComplete,
   );
 
-  console.log('DataMissionsProgress.data 현재도전한미션', DataMissionsProgress.data); //스웨거에서 result
-
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async (remoteMessage: any) => {
       if (remoteMessage.data.title === 'missionSuccess') {
@@ -45,6 +44,13 @@ const Mission = () => {
 
     return unsubscribe;
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      DataMissionsProgress.refetch();
+      DataMissionsComplete.refetch();
+    }, []),
+  );
 
   const DataUser = useQuery<IgetUsersMe>('userInfo', getUserInfo);
 

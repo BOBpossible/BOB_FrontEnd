@@ -80,7 +80,7 @@
 	<array>
 		<string>armv7</string>
 	</array>
-	<key>UIUserInterfaceStyle</key>
+	<key>Appearance</key>
 	<string>Light</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

@@ -9,3 +9,8 @@ export const openModal = atom({
   key: 'openModal',
   default: false,
 });
+
+export const missionPage = atom({
+  key: 'missionPage',
+  default: false,
+});

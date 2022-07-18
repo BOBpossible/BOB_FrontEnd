@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, Animated, Platform, Text, ActivityIndicator} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -16,8 +16,11 @@ import {getMissionsProgress} from '../../api/mission';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Main = () => {
+  const navigation = useNavigation();
   const offset = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
   const [allDone, setAllDone] = useState(true);
@@ -39,6 +42,12 @@ const Main = () => {
       }
     },
   });
+
+  useFocusEffect(
+    useCallback(() => {
+      homeData.refetch();
+    }, []),
+  );
 
   const DataMissionsProgress = useQuery<IMissionsProgress[]>(
     queryKey.MISSIONSPROGRESS,

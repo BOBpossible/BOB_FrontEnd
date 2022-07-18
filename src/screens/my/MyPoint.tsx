@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, FlatList} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  SafeAreaView,
+  FlatList,
+  RefreshControl,
+} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
@@ -42,7 +50,6 @@ export const MyPoint = ({navigation, route}: Props) => {
     },
   );
   // console.log('DataPointsList', DataPointsList.data?.pages[0].data.result.point.content);
-  console.log();
   const goBack = () => {
     navigation.goBack();
   };
@@ -96,6 +103,12 @@ export const MyPoint = ({navigation, route}: Props) => {
                   <></>
                 )}
               </>
+            }
+            refreshControl={
+              <RefreshControl
+                onRefresh={() => DataPointsList.refetch()}
+                refreshing={DataPointsList.isFetching}
+              />
             }
             showsVerticalScrollIndicator={false}
             data={DataPointsList.data?.pages}

@@ -25,7 +25,9 @@ type ReviewWriteProps = {
 
 const options: ImageLibraryOptions = {
   mediaType: 'photo',
-  quality: 1,
+  quality: 0.8,
+  maxWidth: 700,
+  maxHeight: 1100,
 };
 const REVIEW_RATE_TEXT = [
   '별로였어요',

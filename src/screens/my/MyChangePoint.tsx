@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 //prettier-ignore
-import {View, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView, ScrollView, Platform} from 'react-native';
+import {View, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView, ScrollView, Platform, Dimensions, Image} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
@@ -20,8 +20,38 @@ import {getUserInfo} from '../../api';
 import {CheckBoxRectangle} from '../../components/Common/CheckBoxRectangle';
 import PersonalnfoModal from '../../modal/PersonalnfoModal';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetFlatList,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyChangePoint'>;
+
+const BANKIMAGES = [
+  {name: 'KB국민', imgSrc: require('../../assets/images/banks/1.png')},
+  {name: 'IBK기업', imgSrc: require('../../assets/images/banks/2.png')},
+  {name: 'NH농협', imgSrc: require('../../assets/images/banks/3.png')},
+  {name: '신한', imgSrc: require('../../assets/images/banks/4.png')},
+  {name: '우리', imgSrc: require('../../assets/images/banks/5.png')},
+  {name: '한국시티', imgSrc: require('../../assets/images/banks/6.png')},
+  {name: '토스뱅크', imgSrc: require('../../assets/images/banks/7.png')},
+  {name: '카카오뱅크', imgSrc: require('../../assets/images/banks/8.png')},
+  {name: 'SC제일', imgSrc: require('../../assets/images/banks/9.png')},
+  {name: '하나', imgSrc: require('../../assets/images/banks/10.png')},
+  {name: '대구', imgSrc: require('../../assets/images/banks/11.png')},
+  {name: '경남', imgSrc: require('../../assets/images/banks/12.png')},
+  {name: 'KDB산업', imgSrc: require('../../assets/images/banks/13.png')},
+  {name: '우체국', imgSrc: require('../../assets/images/banks/14.png')},
+  {name: '수협', imgSrc: require('../../assets/images/banks/15.png')},
+  {name: '광주', imgSrc: require('../../assets/images/banks/16.png')},
+  {name: 'SBI저축은행', imgSrc: require('../../assets/images/banks/17.png')},
+  {name: '새마을금고', imgSrc: require('../../assets/images/banks/18.png')},
+  {name: '케이뱅크', imgSrc: require('../../assets/images/banks/19.png')},
+  {name: '부산', imgSrc: require('../../assets/images/banks/20.png')},
+  {name: '전북', imgSrc: require('../../assets/images/banks/21.png')},
+  {name: '제주', imgSrc: require('../../assets/images/banks/22.png')},
+];
 
 export const MyChangePoint = ({navigation, route}: Props) => {
   const [point, setPoint] = useState<number>(route.params.point);
@@ -36,6 +66,8 @@ export const MyChangePoint = ({navigation, route}: Props) => {
   const [consentModal, setConsentModal] = useState(false);
   const [fillDone, setFillDone] = useState(false);
   const [pointOver, setPointOver] = useState(false);
+  const [notiChecked, setNotichecked] = useState(false);
+  const bottomSheetRef = useRef<BottomSheet | null>(null);
 
   const goBack = () => {
     navigation.goBack();
@@ -44,8 +76,17 @@ export const MyChangePoint = ({navigation, route}: Props) => {
     // console.log('입금신청', inputName, inputPoint, inputAccounts);
     setFillDone(true);
   };
-  const {data, isSuccess, isError, error} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
-  const [notiChecked, setNotichecked] = useState(false);
+
+  const height = Dimensions.get('screen').height;
+  const listSnapPoint =
+    Platform.OS === 'ios' ? hp(calHeight(height - 120, true)) : hp(calHeight(height - 120));
+
+  const renderBackdrop = useCallback(
+    (props: any) => (
+      <BottomSheetBackdrop {...props} pressBehavior={0} disappearsOnIndex={0} appearsOnIndex={1} />
+    ),
+    [],
+  );
 
   return (
     <SafeAreaView style={[styles.flex, {backgroundColor: 'white'}]}>
@@ -80,6 +121,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
                 textAlign="right"
                 onBlur={() => setFocusedPoint(false)}
                 onFocus={() => setFocusedPoint(true)}
+                keyboardType="number-pad"
               />
               <Text
                 style={{
@@ -116,16 +158,23 @@ export const MyChangePoint = ({navigation, route}: Props) => {
           <View style={[styles.titleNinput]}>
             <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 8}]}>은행</Text>
             <TouchableOpacity
-              onPress={() => setOpenBankModal(true)}
+              onPress={() => {
+                if (bottomSheetRef.current !== null) {
+                  bottomSheetRef.current.expand();
+                }
+              }}
               style={[
                 styles.inputText,
                 styles.unfocusBorder,
                 {flexDirection: 'row', justifyContent: 'space-between'},
               ]}
             >
-              <Text style={{color: '#949494', fontFamily: 'Pretendard-Light', fontSize: 16}}>
-                {selectedBank === '' ? '은행 선택' : selectedBank}
-              </Text>
+              {selectedBank === '' ? (
+                <Text style={[DesignSystem.body1Lt, DesignSystem.grey8]}>은행 선택</Text>
+              ) : (
+                <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>{selectedBank}</Text>
+              )}
+
               <Icon name="menu-down" size={24} color="black" />
             </TouchableOpacity>
           </View>
@@ -145,6 +194,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
               placeholder="숫자로만 입력 (-제외)"
               onBlur={() => setFocusedAccounts(false)}
               onFocus={() => setFocusedAccounts(true)}
+              keyboardType="number-pad"
             />
           </View>
         </KeyboardAwareScrollView>
@@ -162,7 +212,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
             </View>
           </View>
         ) : (
-          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: 12}}>
             <CheckBoxRectangle
               title={''}
               onPress={() => setNotichecked(!notiChecked)}
@@ -182,16 +232,22 @@ export const MyChangePoint = ({navigation, route}: Props) => {
           onPress={handleSubmit}
           style={[styles.buttonWrap]}
           disabled={
-            //prettier-ignore
-            inputPoint !== '' && inputName !== '' && selectedBank !== '' && inputAccounts !== '' && pointOver === false
+            inputPoint !== '' &&
+            inputName !== '' &&
+            selectedBank !== '' &&
+            inputAccounts !== '' &&
+            pointOver === false &&
+            notiChecked === true
               ? false
               : true
           }
         >
-          {
-            //prettier-ignore
-            inputPoint !== '' && inputName !== '' && selectedBank !== '' && inputAccounts !== '' && pointOver === false
-           ? (
+          {inputPoint !== '' &&
+          inputName !== '' &&
+          selectedBank !== '' &&
+          inputAccounts !== '' &&
+          pointOver === false &&
+          notiChecked === true ? (
             <View style={[styles.buttonStyle, styles.activeButton]}>
               <Text style={[styles.activeButtonText]}>입금신청</Text>
             </View>
@@ -201,33 +257,64 @@ export const MyChangePoint = ({navigation, route}: Props) => {
                 <Text style={[styles.inactiveButtonText]}>입금신청</Text>
               </View>
             </>
-          )
-          }
+          )}
         </TouchableOpacity>
       </View>
-      <MyBankModal
-        visible={openBankModal}
-        closeBankModal={() => setOpenBankModal(false)}
-        selectedBank={selectedBank}
-        setSelectedBank={(bankName: string) => setSelectedBank(bankName)}
-      />
+
+      <BottomSheet
+        ref={bottomSheetRef}
+        snapPoints={[1, listSnapPoint]}
+        handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
+        backdropComponent={renderBackdrop}
+        enablePanDownToClose={true}
+      >
+        <BottomSheetView style={{marginLeft: 16, marginBottom: 8}}>
+          <Text style={[DesignSystem.title3SB, {color: '#111111'}]}>은행 선택</Text>
+        </BottomSheetView>
+
+        <BottomSheetFlatList
+          data={BANKIMAGES}
+          columnWrapperStyle={{justifyContent: 'space-between', marginLeft: 16, marginRight: 16}}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item, index}) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => {
+                setSelectedBank(item['name']);
+                if (bottomSheetRef.current !== null) {
+                  bottomSheetRef.current.close();
+                }
+              }}
+            >
+              <View
+                style={[styles.banksWrap, selectedBank === item.name && styles.selectedBanksWrap]}
+              >
+                <Image source={item['imgSrc']} style={{marginBottom: 4}} />
+                <Text style={{color: '#383838', fontFamily: 'Pretendard-Medium', fontSize: 14}}>
+                  {item.name}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
+          ItemSeparatorComponent={() => <View style={{marginTop: 16}} />}
+          numColumns={3}
+        />
+      </BottomSheet>
+
       <PersonalnfoModal
         visible={consentModal}
         closePersonalInfoModal={() => setConsentModal(false)}
       />
-      {fillDone && (
-        <MyBankFeeModal
-          visible={
-            //prettier-ignore
-            inputPoint !== '' && inputName !== '' && selectedBank !== '' && inputAccounts !== '' && pointOver === false
-          }
-          closeBankFeeModal={() => setFillDone(false)}
-          accountNumber={Number(inputAccounts)}
-          bank={selectedBank}
-          name={data.name}
-          point={Number(inputPoint)}
-        />
-      )}
+
+      <MyBankFeeModal
+        visible={fillDone}
+        closeBankFeeModal={() => setFillDone(false)}
+        accountNumber={Number(inputAccounts)}
+        bank={selectedBank}
+        name={inputName}
+        point={Number(inputPoint)}
+      />
     </SafeAreaView>
   );
 };
@@ -239,13 +326,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard-Light',
   },
   totalWrap: {
-    marginTop: 20,
     marginLeft: 16,
     marginRight: 16,
     flex: 1,
   },
   titleNinput: {
     marginBottom: 24,
+    marginTop: 20,
   },
   myPointText: {
     marginRight: 8,
@@ -307,5 +394,19 @@ const styles = StyleSheet.create({
   title: {
     color: '#111111',
     marginLeft: 7,
+  },
+  banksWrap: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 103,
+    height: 69,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#DFDFDF',
+  },
+  selectedBanksWrap: {
+    borderColor: '#6C69FF',
+    backgroundColor: '#F6F6FE',
   },
 });

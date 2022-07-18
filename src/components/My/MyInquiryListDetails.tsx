@@ -25,7 +25,7 @@ export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, date, status
     getQuestionDetail(questionId),
   );
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.inquiryCardBottomLine}>
       <TouchableOpacity onPress={handleReviewPress} style={[styles.listDetailsWrap]}>
         <View style={[styles.listLeftWrap]}>
           <Text style={[styles.titleText, DesignSystem.title4Md]}>
@@ -44,24 +44,16 @@ export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, date, status
           </Text>
         </View>
       </TouchableOpacity>
-      {status !== 'WAITING' && openQuestion && (
+      {openQuestion && (
         <View>
-          <View
-            style={{
-              padding: 16,
-              borderColor: '#E8E8E8',
-              borderWidth: 1,
-              borderRadius: 10,
-              marginBottom: 8,
-            }}
-          >
+          <View style={styles.myInquiryContent}>
             <Text style={[DesignSystem.body1Long, {color: 'black'}]}>{data?.content}</Text>
           </View>
-          <View
-            style={{padding: 16, backgroundColor: '#F8F8F8', marginBottom: 14, borderRadius: 10}}
-          >
-            <Text style={[DesignSystem.body1Long, {color: 'black'}]}>{data?.answer}</Text>
-          </View>
+          {status !== 'WAITING' && (
+            <View style={styles.inquiryAnswer}>
+              <Text style={[DesignSystem.body1Long, {color: 'black'}]}>{data?.answer}</Text>
+            </View>
+          )}
         </View>
       )}
     </View>
@@ -69,6 +61,12 @@ export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, date, status
 };
 
 const styles = StyleSheet.create({
+  inquiryCardBottomLine: {
+    flex: 1,
+    paddingBottom: 8,
+    borderBottomColor: '#EFEFEF',
+    borderBottomWidth: 1,
+  },
   listDetailsWrap: {
     flex: 1,
     flexDirection: 'row',
@@ -82,5 +80,18 @@ const styles = StyleSheet.create({
   titleText: {
     color: '#000000',
     marginBottom: 8,
+  },
+  myInquiryContent: {
+    padding: 16,
+    borderColor: '#E8E8E8',
+    borderWidth: 1,
+    borderRadius: 10,
+    marginBottom: 8,
+  },
+  inquiryAnswer: {
+    padding: 16,
+    backgroundColor: '#F8F8F8',
+    marginBottom: 14,
+    borderRadius: 10,
   },
 });

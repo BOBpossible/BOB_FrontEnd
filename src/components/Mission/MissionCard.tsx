@@ -8,6 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import {IMissionCardProps, IMissionCardContentProps} from '../../data';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {
+  getMissionsProgress,
   patchMissionCancel,
   patchMissionSuccess,
   patchMissionSuccessRequest,
@@ -62,6 +63,7 @@ export const MissionCard: FC<IMissionCardProps> = ({
       onSuccess: (data) => {
         console.log('미션성공: ', data);
         queryClient.invalidateQueries('missionsProgress');
+        queryClient.prefetchQuery('missionsProgress');
         queryClient.invalidateQueries('missionsComplete');
         queryClient.invalidateQueries('userInfo');
         queryClient.invalidateQueries('homeData');

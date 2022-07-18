@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {FlatList, StyleSheet, Text, View, TouchableOpacity, RefreshControl} from 'react-native';
 import {useQuery} from 'react-query';
 import {getQuestions} from '../../api/my';
 import {queryKey} from '../../api/queryKey';
@@ -22,6 +22,12 @@ export const MyInquiryList: FC<goWriteProps> = ({setNowWrite}) => {
     <View style={[styles.totalWrap]}>
       {DataQuestions.data?.length !== 0 ? (
         <FlatList
+          refreshControl={
+            <RefreshControl
+              onRefresh={() => DataQuestions.refetch()}
+              refreshing={DataQuestions.isFetching}
+            />
+          }
           showsVerticalScrollIndicator={false}
           // contentContainerStyle={{paddingTop: 60}}
           scrollEventThrottle={10}
@@ -36,7 +42,6 @@ export const MyInquiryList: FC<goWriteProps> = ({setNowWrite}) => {
               />
             </>
           )}
-          ItemSeparatorComponent={() => <View style={{backgroundColor: '#E8E8E8', height: 1}} />}
         />
       ) : (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>

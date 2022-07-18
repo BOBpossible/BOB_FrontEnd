@@ -17,7 +17,9 @@ export const MyChangePointDone = ({navigation, route}: Props) => {
       <View style={[styles.totalWrap]}>
         <View style={[styles.contentWrap]}>
           <Icon name="check" size={71} color="#6C69FF" />
-          <Text style={[styles.title4Md, {marginTop: 46, marginBottom: 6}]}>입금 신청이 완료되었습니다.</Text>
+          <Text style={[styles.title4Md, {marginTop: 46, marginBottom: 6}]}>
+            입금 신청이 완료되었습니다.
+          </Text>
           <Text style={[styles.body2Lt]}>입금은 심사 후 매주 수요일에 일괄 송금됩니다.</Text>
         </View>
         <TouchableOpacity onPress={goMain} style={[styles.buttonWrap]}>
