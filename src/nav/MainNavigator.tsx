@@ -16,11 +16,12 @@ import {useQuery} from 'react-query';
 import {IMissionsProgress} from '../data';
 import {queryKey} from '../api/queryKey';
 import {getMissionsProgress} from '../api/mission';
+import {MissionNavigator} from './MissionNavigator';
 type TabBarIconProps = {focused: boolean; color: string; size: number};
 
 const icons: Record<string, string[]> = {
   HomeNavigator: ['home', 'home-outline'],
-  Mission: ['food', 'food-outline'],
+  MissionNavigator: ['food', 'food-outline'],
   MapNavigator: ['map-search', 'map-search-outline'],
   MyNavigator: ['account-settings', 'account-settings-outline'],
 };
@@ -42,7 +43,7 @@ export const MainNavigator = () => {
         const iconName = focused ? icon : iconOutline;
         return (
           <View>
-            {name === 'Mission' && data?.length !== 0 && (
+            {name === 'MissionNavigator' && data?.length !== 0 && (
               <View
                 style={{
                   backgroundColor: '#615DFF',
@@ -66,7 +67,11 @@ export const MainNavigator = () => {
   return (
     <Tab.Navigator screenOptions={screenOptions} initialRouteName="Main">
       <Tab.Screen name="HomeNavigator" component={HomeNavigator} options={{tabBarLabel: '홈'}} />
-      <Tab.Screen name="Mission" component={Mission} options={{tabBarLabel: '미션'}} />
+      <Tab.Screen
+        name="MissionNavigator"
+        component={MissionNavigator}
+        options={{tabBarLabel: '미션'}}
+      />
       <Tab.Screen name="MapNavigator" component={MapNavigator} options={{tabBarLabel: '검색'}} />
       <Tab.Screen
         name="MyNavigator"

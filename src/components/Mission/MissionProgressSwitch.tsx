@@ -1,10 +1,8 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Animated} from 'react-native';
+import {missionPage} from '../../state';
+import {useRecoilState} from 'recoil';
 
-type switchProps = {
-  progressnow: number;
-  setProgressnow: any;
-};
 function moveLeft(progressValue: Animated.Value) {
   Animated.timing(progressValue, {
     toValue: 2, //
@@ -20,15 +18,23 @@ function moveRight(progressValue: Animated.Value) {
   }).start();
 }
 
-export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgressnow}) => {
+export const MissionProgressSwitch = () => {
   const progressValue = useState(new Animated.Value(2))[0]; //
+  const [progressnow, setProgressnow] = useRecoilState(missionPage);
+  useEffect(() => {
+    if (progressnow) {
+      moveLeft(progressValue);
+    } else {
+      moveRight(progressValue);
+    }
+  }, [progressnow]);
 
   return (
     <View style={[styles.progressRow]}>
       <View style={[styles.progressToggle]}>
         <Animated.View
           style={
-            progressnow === 0
+            progressnow
               ? [
                   styles.progressSwitch,
                   {width: 66, borderRadius: 21, transform: [{translateX: progressValue}]},
@@ -41,16 +47,14 @@ export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgress
         />
         <TouchableOpacity
           onPress={() => {
-            setProgressnow(0);
+            setProgressnow(true);
             moveLeft(progressValue);
           }}
         >
           <View style={[styles.progressTextWrap]}>
             <Text
               style={
-                progressnow === 0
-                  ? [{fontSize: 14, color: 'white'}]
-                  : [{fontSize: 14, color: '#616161'}]
+                progressnow ? [{fontSize: 14, color: 'white'}] : [{fontSize: 14, color: '#616161'}]
               }
             >
               진행중
@@ -59,16 +63,14 @@ export const MissionProgressSwitch: FC<switchProps> = ({progressnow, setProgress
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            setProgressnow(1);
+            setProgressnow(false);
             moveRight(progressValue);
           }}
         >
           <View style={[styles.progressTextWrap]}>
             <Text
               style={
-                progressnow === 0
-                  ? [{fontSize: 14, color: '#616161'}]
-                  : [{fontSize: 14, color: 'white'}]
+                progressnow ? [{fontSize: 14, color: '#616161'}] : [{fontSize: 14, color: 'white'}]
               }
             >
               진행완료

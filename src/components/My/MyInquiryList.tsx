@@ -16,7 +16,6 @@ export const MyInquiryList: FC<goWriteProps> = ({setNowWrite}) => {
     setNowWrite(true);
   };
   const DataQuestions = useQuery(queryKey.QUESTIONS, getQuestions);
-  console.log(DataQuestions.data);
 
   return (
     <View style={[styles.totalWrap]}>

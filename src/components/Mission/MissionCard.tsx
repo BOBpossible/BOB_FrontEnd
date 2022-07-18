@@ -29,11 +29,6 @@ export const MissionCard: FC<IMissionCardProps> = ({
 }) => {
   const queryClient = useQueryClient();
   const navigation = useNavigation();
-  const [openDoneModal, setOpenDoneModal] = useRecoilState(openModal);
-  const closeDoneModal = async () => {
-    await setOpenDoneModal(false);
-    navigation.navigate('Main');
-  };
 
   const missionCancelMutation = useMutation((missionId: number) => patchMissionCancel(missionId), {
     onSuccess: (data) => {
@@ -83,7 +78,7 @@ export const MissionCard: FC<IMissionCardProps> = ({
   async function handleSuccessPress() {
     console.log(missionId, '번 가게 성공');
     missionSuccessMutation.mutate(Number(missionId));
-    setOpenDoneModal(true);
+    navigation.navigate('MissionSuccess');
   }
 
   const MissionCardTwoButton: FC<IMissionCardContentProps> = ({
@@ -175,12 +170,6 @@ export const MissionCard: FC<IMissionCardProps> = ({
           </View>
         </View>
       )}
-      <DoneModal
-        visible={openDoneModal}
-        closeDoneModal={closeDoneModal}
-        category={'성공'}
-        point={point}
-      />
     </View>
   );
 };

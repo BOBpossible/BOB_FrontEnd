@@ -11,7 +11,7 @@ export type HomeStackParamList = {
   Main: undefined;
   HomeMissionDetails: {missionId: number};
   Notifications: undefined;
-  Mission: {missionId: number};
+  MissionNavigator: undefined;
   HowToLong: undefined;
   MyPoint: {point: number};
 };

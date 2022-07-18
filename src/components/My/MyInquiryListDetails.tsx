@@ -24,6 +24,7 @@ export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, date, status
   const {data} = useQuery([queryKey.QUESTIONDETAIL, questionId], () =>
     getQuestionDetail(questionId),
   );
+
   return (
     <View style={styles.inquiryCardBottomLine}>
       <TouchableOpacity onPress={handleReviewPress} style={[styles.listDetailsWrap]}>
@@ -51,7 +52,10 @@ export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, date, status
           </View>
           {status !== 'WAITING' && (
             <View style={styles.inquiryAnswer}>
-              <Text style={[DesignSystem.body1Long, {color: 'black'}]}>{data?.answer}</Text>
+              <Text style={[DesignSystem.title4Md, DesignSystem.purple5, {}]}>밥플레이스</Text>
+              <Text style={[DesignSystem.body1Long, {color: 'black'}]}>
+                {data?.answers[0].answer}
+              </Text>
             </View>
           )}
         </View>

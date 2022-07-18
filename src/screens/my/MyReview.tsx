@@ -29,7 +29,7 @@ export const MyReview = ({navigation}: Props) => {
       return pages.length;
     },
   });
-  // console.log(DataReviews.data?.pages.length);
+  console.log(DataReviews.data?.pages[0]);
 
   return (
     <>

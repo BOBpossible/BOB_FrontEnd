@@ -32,7 +32,7 @@ export const HomeMissionCard: FC<MissionCardProps> = ({missionId, name, category
             <View style={[DesignSystem.centerArrange, styles.missionContentBox]}>
               <Text>
                 <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{mission} </Text>
-                <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>식사시 </Text>
+                <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>결제시 </Text>
                 <Text style={[DesignSystem.title4Md, DesignSystem.purple5]}>{point}P 적립</Text>
               </Text>
             </View>

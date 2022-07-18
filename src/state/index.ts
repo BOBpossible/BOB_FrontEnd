@@ -12,5 +12,5 @@ export const openModal = atom({
 
 export const missionPage = atom({
   key: 'missionPage',
-  default: false,
+  default: true,
 });

@@ -13,10 +13,13 @@ import {queryKey} from '../../api/queryKey';
 import {getHomeMissionDetail, patchHomeMissionChallenge} from '../../api/home';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import StoreModal from '../../modal/StoreModal';
+import {missionPage} from '../../state';
+import {useSetRecoilState} from 'recoil';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'HomeMissionDetails'>;
 
 export const HomeMissionDetails = ({navigation, route}: Props) => {
+  const setProgress = useSetRecoilState(missionPage);
   const queryClient = useQueryClient();
   const insets = useSafeAreaInsets();
   const [storeModal, setStoreModal] = useState(false);
@@ -96,7 +99,7 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
               <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>
                 {missionData.data?.mission}
               </Text>
-              <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>의 식사시 </Text>
+              <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}> 결제시 </Text>
               <Text style={[DesignSystem.title4Md, DesignSystem.purple5]}>
                 {missionData.data?.point}P 적립
               </Text>
@@ -110,8 +113,9 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
           <TouchableOpacity
             onPress={() => {
               missionMutation.mutate(route.params.missionId);
+              setProgress(true);
               navigation.pop();
-              navigation.navigate('Mission', {missionId: route.params.missionId}); //미션 시작후 미션 화면으로 보냄
+              navigation.navigate('MissionNavigator'); //미션 시작후 미션 화면으로 보냄
             }}
             style={[styles.missionButton]}
           >

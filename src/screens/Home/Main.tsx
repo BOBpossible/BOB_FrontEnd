@@ -23,7 +23,7 @@ const Main = () => {
   const navigation = useNavigation();
   const offset = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
-  const [allDone, setAllDone] = useState(true);
+  const [allDone, setAllDone] = useState(false);
 
   const homeData = useQuery<IHomeData>(queryKey.HOMEDATA, getHomeInfo, {
     onError: (err) => {
@@ -32,13 +32,13 @@ const Main = () => {
     onSuccess: (data) => {
       console.log('homeData', data);
       if (data.missions !== null) {
-        data.missions.map((e: any) => {
-          if (e.missionStatus === 'NEW') {
-            setAllDone(false); //이번주 세개의 미션 모두 DONE이면 true유지
-          }
-        });
-      } else {
-        setAllDone(false);
+        const allDoneStatus = data.missions.every((element) => element.missionStatus === 'DONE');
+        // data.missions.map((e: any) => {
+        //   if (e.missionStatus === 'DONE') {
+        //     setAllDone(false); //이번주 세개의 미션 모두 DONE이면 true유지
+        //   }
+        // });
+        setAllDone(allDoneStatus);
       }
     },
   });

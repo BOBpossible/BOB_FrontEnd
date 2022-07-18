@@ -15,6 +15,8 @@ import {getUserInfo} from '../api/user';
 import {ConnectionError} from '../components/ConnectionError';
 import messaging from '@react-native-firebase/messaging';
 import {useFocusEffect} from '@react-navigation/native';
+import {missionPage} from '../state';
+import {useRecoilState} from 'recoil';
 
 //processCircle
 ///"PROGRESS","CHECKING" :'진행중' ---  "DONE" : '도전 성공'
@@ -22,7 +24,7 @@ import {useFocusEffect} from '@react-navigation/native';
 //도전 전 NEW  성공요청 PROGRESS  성공요청중 CHECKING    성공 DONE
 
 const Mission = () => {
-  const [progressnow, setProgressnow] = useState(0); //아래 스위치. 0:진행중 / 1:진행완료
+  const [progressnow, setProgressnow] = useRecoilState(missionPage);
 
   const DataMissionsProgress = useQuery<IMissionsProgress[]>(
     queryKey.MISSIONSPROGRESS,
@@ -71,9 +73,9 @@ const Mission = () => {
           </View>
         </View>
         <View style={{flex: 1}}>
-          {progressnow === 0 ? (
+          {progressnow ? (
             DataMissionsProgress.data?.length === 0 ? (
-              <MissionNo progressnow={progressnow} /> ///미션없는화면
+              <MissionNo /> ///미션없는화면
             ) : (
               <View>
                 <MissionProcess status={DataMissionsProgress.data?.[0].missionStatus} />
@@ -90,12 +92,12 @@ const Mission = () => {
               </View>
             )
           ) : DataMissionsComplete.data?.length === 0 ? (
-            <MissionNo progressnow={progressnow} /> ///미션없는화면
+            <MissionNo /> ///미션없는화면
           ) : (
             <MissionSuccessList />
           )}
         </View>
-        <MissionProgressSwitch progressnow={progressnow} setProgressnow={setProgressnow} />
+        <MissionProgressSwitch />
       </SafeAreaView>
     </>
   );

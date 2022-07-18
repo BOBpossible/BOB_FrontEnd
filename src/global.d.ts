@@ -3,6 +3,7 @@ declare namespace ReactNavigation {
     Login: undefined;
     OwnerLogin: undefined;
     MainNavigator: undefined;
+    MissionNavigator: undefined;
     Register: undefined;
     RegisterCategory: {registerData: RegisterInterface};
     KakaoLogin: undefined;
