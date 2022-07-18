@@ -16,7 +16,7 @@ export const patchHomeMissionChallenge = async (missionId: number) => {
 };
 
 //알림
-export const getNotifications = async () => {
+export const getNotificationsMain = async () => {
   const response = await customAxios().get(`/api/v1/push-notifications/me`);
   return response.data.result;
 };

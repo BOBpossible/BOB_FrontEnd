@@ -12,7 +12,7 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HomeStackParamList} from '../../nav/HomeNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
 import {NotificationCard} from '../../components/NotificationCard';
-import {getNotifications, patchNotificationsStatus} from '../../api';
+import {getNotificationsMain, patchNotificationsStatus} from '../../api';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {INotiType} from '../../data';
 import {queryKey} from '../../api/queryKey';
@@ -23,7 +23,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'Notifications'>;
 export const Notifications = ({navigation}: Props) => {
   const queryClient = useQueryClient();
 
-  const DataNoti = useQuery<INotiType[]>(queryKey.NOTIFICATIONS, getNotifications, {
+  const DataNoti = useQuery<INotiType[]>(queryKey.NOTIFICATIONS, getNotificationsMain, {
     onError: (err) => {
       console.log('ERR', err);
     },

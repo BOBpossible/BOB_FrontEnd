@@ -31,8 +31,9 @@ export const MyWriteInquiry: FC<goWriteProps> = ({setNowWrite}) => {
   const [focusedBody, setFocusedBody] = useState(false);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const queryClient = useQueryClient();
   const [doneModal, setDoneModal] = useState(false);
+
+  const queryClient = useQueryClient();
 
   const questionMutation = useMutation(
     (data: {content: string; title: string}) => postQuestions(data),

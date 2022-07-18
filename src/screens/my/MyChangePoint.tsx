@@ -110,7 +110,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
                 ]}
                 onChangeText={(text) => {
                   setInputPoint(text);
-                  if (Number(text) > point || Number(text) % 5000 !== 0) {
+                  if (Number(text) > point || Number(text) % 5000 !== 0 || Number(text) <= 0) {
                     /////////////////////////// 확인하고싶으면 500으로두고.
                     setPointOver(true);
                   } else {
@@ -222,7 +222,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
               style={[DesignSystem.centerArrange, {marginLeft: 10, flexDirection: 'row'}]}
               onPress={() => setConsentModal(true)}
             >
-              <Text style={[DesignSystem.body2Lt, styles.title]}>계좌정보 수집 및 이용 동의'</Text>
+              <Text style={[DesignSystem.body2Lt, styles.title]}>계좌정보 수집 및 이용 동의</Text>
               <Icon name="menu-down" size={24} color="black" />
             </TouchableOpacity>
           </View>

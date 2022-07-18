@@ -37,6 +37,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
       onSuccess(data) {
         console.log(data);
         queryClient.invalidateQueries(queryKey.STOREINFO);
+        queryClient.invalidateQueries(queryKey.REVIEWSME);
         return queryClient.invalidateQueries(queryKey.MISSIONSCOMPLETE);
       },
       onError(err) {

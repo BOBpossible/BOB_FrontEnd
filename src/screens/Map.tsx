@@ -1,5 +1,14 @@
-import React, {useCallback, useRef, useState} from 'react';
-import {View, StyleSheet, Text, Dimensions, TouchableOpacity, Image, Platform} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+  Image,
+  Platform,
+  Alert,
+} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomSheet, {
   BottomSheetBackdrop,
@@ -21,6 +30,7 @@ import {ConnectionError} from '../components/ConnectionError';
 import WebView from 'react-native-webview';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../assets/CalculateLength';
+import {useIsFocused} from '@react-navigation/native';
 
 const Map = () => {
   const height = Dimensions.get('screen').height;
@@ -29,9 +39,17 @@ const Map = () => {
   const [addressModal, setAddressModal] = useState(false);
   const [storeModal, setStoreModal] = useState(false);
   const [storeId, setStoreId] = useState(0);
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    if (isFocused) {
+      StoreList.refetch();
+    } else {
+      storeListRef.current?.snapToIndex(0);
+    }
+  }, [isFocused]);
 
   const webviewRef = useRef<WebView | null>(null);
-
+  const storeListRef = useRef<BottomSheet | null>(null);
   const DataUser = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
   const userId = DataUser.data?.userId;
   const StoreList = useQuery<IStoreMap[]>(
@@ -54,8 +72,6 @@ const Map = () => {
       webviewRef.current.reload();
     }
   }
-
-  console.log(Address.data);
 
   const sortList = (data?: IStoreMap[]) => {
     data?.sort(function (a, b) {
@@ -99,6 +115,7 @@ const Map = () => {
       />
 
       <BottomSheet
+        ref={storeListRef}
         snapPoints={[60, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
         backdropComponent={renderBackdrop}

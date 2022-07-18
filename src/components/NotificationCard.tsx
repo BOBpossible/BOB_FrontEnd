@@ -41,7 +41,7 @@ export const NotificationCard: FC<NotificationCardProps> = ({id, pushType, store
     <>
     {pushType === 'MISSION' ?
       <TouchableOpacity
-        style={[styles.notiCard, checked && {opacity: 0.5}]}
+        style={[styles.notiCard, checked ? {opacity: 0.5} : {opacity: 1}]}
         onPress={() => {
           navigation.navigate('HomeMissionDetails', {missionId: missionId});
           missionSuccessRequestMutation.mutate(id);

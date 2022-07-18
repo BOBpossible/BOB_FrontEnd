@@ -1,8 +1,11 @@
 import React from 'react';
 import type {FC} from 'react';
-import {StyleSheet, View, SafeAreaView, TouchableOpacity, Modal} from 'react-native';
+import {StyleSheet, View, SafeAreaView, TouchableOpacity, Modal, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {calHeight} from '../assets/CalculateLength';
+
 type PhotoModalProps = {
   imageUri: {uri: string};
   visible: boolean;
@@ -21,7 +24,7 @@ export const PhotoModal: FC<PhotoModalProps> = ({visible, closePhotoModal, image
           </TouchableOpacity>
         </View>
         <View style={[styles.slide]}>
-          <FastImage source={imageUri} style={[styles.image]} />
+          <FastImage source={imageUri} style={[styles.image]} resizeMode="center" />
         </View>
       </SafeAreaView>
     </Modal>
@@ -32,10 +35,10 @@ const styles = StyleSheet.create({
   slide: {flex: 1, justifyContent: 'center', alignItems: 'center'},
   safeView: {flex: 1, backgroundColor: '#000000'},
   modalHeader: {
-    height: 40,
+    height: 50,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
   },
   backButton: {
     marginLeft: 16,
@@ -43,6 +46,6 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 700,
+    height: Platform.OS === 'ios' ? hp(calHeight(700, true)) : hp(calHeight(700)),
   },
 });

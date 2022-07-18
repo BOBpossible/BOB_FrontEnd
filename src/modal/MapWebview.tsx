@@ -44,7 +44,7 @@ export const MapWebview: FC<MapWebviewProps> = ({missionId, userId, webviewRef, 
         geolocationEnabled={true}
       />
       {isLoadingMap && (
-        <ActivityIndicator style={{position: 'absolute', alignSelf: 'center'}} size="large" />
+        <ActivityIndicator style={{position: 'absolute', alignSelf: 'center'}} size="small" />
       )}
     </View>
   );

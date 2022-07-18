@@ -114,6 +114,10 @@ export const postReviewImages = async (imageList: imageData[], reviewId: number)
 //리뷰 신고하기
 export const postReviewReport = async (data: {reviewId: number; content: string}) => {
   const response = await customAxios().post(`/api/v1/reviews/report/${data.reviewId}`, data);
-  console.log(data.reviewId, '번 리뷰 신고 완');
+  return response.data;
+};
+
+export const patchDeleteReview = async (reviewId: string) => {
+  const response = await customAxios().patch(`/api/v1/reviews/status/${reviewId}`, null);
   return response.data;
 };

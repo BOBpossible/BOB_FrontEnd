@@ -29,14 +29,14 @@ export const MyReview = ({navigation}: Props) => {
       return pages.length;
     },
   });
-  console.log(DataReviews.data?.pages[0]);
+  console.log(DataReviews.data?.pages[0].content);
 
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
       <SafeAreaView style={[styles.flex]}>
         <MyHeader goBack={goBack} title={'리뷰 관리'} />
-        {DataReviews.data?.pages.length !== 0 ? ( //리뷰없는경우
+        {DataReviews.data?.pages[0].content.length === 0 ? ( //리뷰없는경우
           <View style={[DesignSystem.centerArrange, {flex: 1}]}>
             <ReviewNo isPhoto={0} />
           </View>
@@ -56,6 +56,7 @@ export const MyReview = ({navigation}: Props) => {
                   return (
                     <View key={i}>
                       <MyReviewEach
+                        reviewId={e.reviewId}
                         name={e.name}
                         date={e.date}
                         rate={e.rate}

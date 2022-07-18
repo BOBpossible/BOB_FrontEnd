@@ -9,9 +9,9 @@ import {
   Platform,
   ScrollView,
   Modal,
+  SafeAreaView,
 } from 'react-native';
 import {MyHeader} from '../components/My/MyHeader';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {DesignSystem} from '../assets/DesignSystem';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../assets/CalculateLength';

@@ -11,7 +11,7 @@ import {ConnectionError} from '../../components/ConnectionError';
 import {IHomeData, IMissionsProgress} from '../../data';
 import {queryKey} from '../../api/queryKey';
 import {HomeBobpool} from '../../components/Home/HomeBobpool';
-import {getHomeInfo} from '../../api';
+import {getHomeInfo, getNotifications, getNotificationsMain} from '../../api';
 import {getMissionsProgress} from '../../api/mission';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../../assets/DesignSystem';
@@ -24,6 +24,10 @@ const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
   const [allDone, setAllDone] = useState(false);
+
+  const notificationData = useQuery(queryKey.NOTIFICATIONS, getNotificationsMain, {
+    onSuccess: (data) => {},
+  });
 
   const homeData = useQuery<IHomeData>(queryKey.HOMEDATA, getHomeInfo, {
     onError: (err) => {
