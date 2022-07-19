@@ -22,7 +22,6 @@ type QuitModalProps = {
   closeQuitModal: () => void;
 };
 
-//prettier-ignore
 const QuitModal: FC<QuitModalProps> = ({visible, closeQuitModal}) => {
   const MARGINBOTTOM = Dimensions.get('screen').height / 2 - 160;
   const navigation = useNavigation();
@@ -42,37 +41,58 @@ const QuitModal: FC<QuitModalProps> = ({visible, closeQuitModal}) => {
   const [notiChecked, setNotichecked] = useState(false);
   return (
     <Modal visible={visible} transparent statusBarTranslucent animationType="fade">
-      <View style={[styles.overlay]}>
-        <TouchableWithoutFeedback onPress={closeQuitModal}>
-          <View style={styles.background} />
-        </TouchableWithoutFeedback>
-        <View style={[styles.modalContainer, {marginBottom: MARGINBOTTOM}]}>
-          <View style={[styles.contentWrap]}>
-            <View style={{marginBottom: 20}}>
-              <Text style={[DesignSystem.title1SB, DesignSystem.grey17, {marginBottom: 12}]}>회원 탈퇴 시 안내</Text>
-              <Text style={[DesignSystem.body1Long, DesignSystem.grey17]}>
-              회원 탈퇴 시 현재까지 있는 포인트는 전부 소멸되며, 복구 불가능합니다.
-              </Text>
-              <Text style={[DesignSystem.body1Long, DesignSystem.grey17]}>
-              회원 탈퇴 시 개인 정보 처리 방침에 따라 탈퇴 후에도 90일간 보관되고, 90일이 지난 후에는 완전히 삭제됩니다.
-              </Text>
-            </View>
-            <CheckBoxRectangle
-              title={' 이 점을 인지하였으며, 탈퇴를 진행합니다.'}
-              onPress={() => setNotichecked(!notiChecked)}
-              isChecked={notiChecked}
-            />
-            <View style={[styles.buttonWrap]}>
-              <TouchableOpacity style={[styles.buttonStyle, styles.cancelButton]} onPress={closeQuitModal}>
-                <Text style={[DesignSystem.title2Regular, DesignSystem.grey10]}>취소</Text>
-              </TouchableOpacity>
-              <TouchableOpacity disabled={notiChecked ? false : true} style={[styles.buttonStyle, styles.okButton]} onPress={handleSubmit}>
-                <Text style={[DesignSystem.title1SB, {color: 'white'}]}>확인</Text>
-              </TouchableOpacity>
+      <TouchableOpacity style={[styles.overlay]} onPress={closeQuitModal} activeOpacity={1}>
+        <View style={styles.background} />
+
+        <TouchableWithoutFeedback>
+          <View style={[styles.modalContainer, {marginBottom: MARGINBOTTOM}]}>
+            <View style={[styles.contentWrap]}>
+              <View style={{marginBottom: 20}}>
+                <Text style={[DesignSystem.title1SB, DesignSystem.grey17, {marginBottom: 12}]}>
+                  회원 탈퇴 시 안내
+                </Text>
+                <Text style={[DesignSystem.body1Long, DesignSystem.grey17]}>
+                  회원 탈퇴 시 현재까지 있는 포인트는 전부 소멸되며, 복구 불가능합니다.
+                </Text>
+                <Text style={[DesignSystem.body1Long, DesignSystem.grey17]}>
+                  회원 탈퇴 시 개인 정보 처리 방침에 따라 탈퇴 후에도 90일간 보관되고, 90일이 지난
+                  후에는 완전히 삭제됩니다.
+                </Text>
+              </View>
+              <CheckBoxRectangle
+                title={' 이 점을 인지하였으며, 탈퇴를 진행합니다.'}
+                onPress={() => setNotichecked(!notiChecked)}
+                isChecked={notiChecked}
+              />
+              <View style={[styles.buttonWrap]}>
+                <TouchableOpacity
+                  style={[styles.buttonStyle, styles.cancelButton]}
+                  onPress={closeQuitModal}
+                >
+                  <Text style={[DesignSystem.title2Regular, DesignSystem.grey10]}>취소</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  disabled={notiChecked ? false : true}
+                  style={[
+                    styles.buttonStyle,
+                    notiChecked ? {backgroundColor: '#6C69FF'} : {backgroundColor: '#C8C8C8'},
+                  ]}
+                  onPress={handleSubmit}
+                >
+                  <Text
+                    style={[
+                      DesignSystem.title1SB,
+                      notiChecked ? {color: 'white'} : {color: '#E8E8E8'},
+                    ]}
+                  >
+                    확인
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
-      </View>
+        </TouchableWithoutFeedback>
+      </TouchableOpacity>
     </Modal>
   );
 };

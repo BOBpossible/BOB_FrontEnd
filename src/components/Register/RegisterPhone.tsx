@@ -18,6 +18,8 @@ type RegisterPhoneProps = {
   value: string;
   setAuthError: React.Dispatch<React.SetStateAction<boolean>>;
   authError: boolean;
+  authKey: string;
+  setAuthKey: React.Dispatch<React.SetStateAction<string>>;
   isError: boolean;
 };
 
@@ -28,11 +30,13 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({
   onChange,
   value,
   isError,
+  authKey,
+  setAuthKey,
   authError,
 }) => {
   const [focusedName, setFocusedName] = useState(false);
   const [focusedAuth, setFocusedAuth] = useState(false);
-  const [authKey, setAuthKey] = useState('-1');
+
   const [authInput, setAuthInput] = useState('');
   console.log(authKey);
   const postPhone = async () => {

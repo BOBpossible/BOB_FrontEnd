@@ -20,6 +20,7 @@ type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 const RegisterForm = ({navigation, route}: Props) => {
   const [registerData, setRegisterData] = useState<RegisterInterface>(route.params.registerData);
   const [authError, setAuthError] = useState(true);
+  const [authKey, setAuthKey] = useState('-1');
   //react-hook-form 사용
   const {
     control,
@@ -157,6 +158,8 @@ const RegisterForm = ({navigation, route}: Props) => {
                 value={value}
                 authError={authError}
                 setAuthError={setAuthError}
+                authKey={authKey}
+                setAuthKey={setAuthKey}
                 isError={errors.phone !== undefined}
               />
             );
@@ -166,7 +169,12 @@ const RegisterForm = ({navigation, route}: Props) => {
         {errors.phone?.type === 'required' && (
           <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
         )}
-        {authError && <Text style={[styles.errorMessage]}>인증이 완료되지 않았습니다.</Text>}
+        {authError && authKey !== '-1' && (
+          <Text style={[styles.errorMessage]}>인증이 완료되지 않았습니다.</Text>
+        )}
+        {registerData.phone.length !== 0 && registerData.phone.length < 11 && (
+          <Text style={[styles.errorMessage]}>인증이 완료되지 않았습니다.</Text>
+        )}
         {!authError && <Text style={[styles.clearMessage]}>인증이 완료되었습니다.</Text>}
 
         <Controller

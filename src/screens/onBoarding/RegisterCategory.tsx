@@ -7,6 +7,7 @@ import {CategoryItem} from '../../components/CategoryItem';
 import {RegisterInterface} from '../../data';
 import {AuthStackParamList} from '../../nav';
 import {customAxios} from '../../api';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'RegisterForm'>;
 
@@ -101,8 +102,11 @@ const RegisterCategory = ({navigation, route}: Props) => {
       <View style={[styles.flex]}>
         <View style={[styles.categoryWrap]}>
           <View style={[styles.categoryHead]}>
-            <Text style={[styles.categoryHeadText]}>선호하는 음식 종류를 선택해주세요!</Text>
-            <Text style={[styles.categorySubHeadText]}>중복선택 가능해요!</Text>
+            <Text style={[DesignSystem.h1SB, DesignSystem.grey17]}>선호하는 음식 종류를</Text>
+            <Text style={[DesignSystem.h1SB, DesignSystem.grey17]}>선택해주세요!</Text>
+            <Text style={[DesignSystem.body2Lt, DesignSystem.grey10, {marginTop: 8}]}>
+              중복선택 가능해요!
+            </Text>
           </View>
           <View style={[styles.categoryBox]}>{renderedCategories()}</View>
         </View>
@@ -125,20 +129,9 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   categoryHead: {
-    width: 205,
+    width: 210,
     marginBottom: 56,
-  },
-  categoryHeadText: {
-    fontSize: 24,
-    fontWeight: '600',
-    lineHeight: 34,
-  },
-  categorySubHeadText: {
-    fontSize: 14,
-    fontWeight: '300',
-    lineHeight: 22,
-    marginTop: 8,
-    color: '#616161',
+    flexDirection: 'column',
   },
   categoryBox: {
     flex: 1,

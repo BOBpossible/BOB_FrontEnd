@@ -129,7 +129,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({
             <Animated.View style={[styles.innerBar, widthStyle]} />
           </View>
           <View style={[styles.shrinkHeaderTextWrap]}>
-            <Text style={[styles.shrinkHeaderTextOne]}>{data?.rewards}</Text>
+            <Text style={[styles.shrinkHeaderTextOne]}>{data?.rewards} </Text>
             <Text style={[styles.shrinkHeaderTextTwo]}>/ </Text>
             <Text style={[styles.shrinkHeaderTextThree]}>10</Text>
           </View>
@@ -237,17 +237,17 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   barWrap: {
-    marginTop: 14, ///
+    marginTop: Platform.OS === 'ios' ? hp(calHeight(14, true)) : hp(calHeight(14)), ///
     marginLeft: 16,
     marginRight: 16,
-    marginBottom: 8,
+    marginBottom: Platform.OS === 'ios' ? hp(calHeight(8, true)) : hp(calHeight(8)),
   },
   barStyle: {
     borderRadius: 5,
   },
   outerBar: {
     width: '85%',
-    height: 6,
+    height: Platform.OS === 'ios' ? hp(calHeight(6, true)) : hp(calHeight(6)),
     borderRadius: 5,
     backgroundColor: '#EDEDED',
   },
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: 0,
-    height: 6,
+    height: Platform.OS === 'ios' ? hp(calHeight(6, true)) : hp(calHeight(6)),
     borderRadius: 5,
     backgroundColor: '#615EFF',
   },
@@ -328,8 +328,8 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   circleBar: {
-    marginTop: 8,
-    marginBottom: 14,
+    marginTop: Platform.OS === 'ios' ? hp(calHeight(8, true)) : hp(calHeight(8)),
+    marginBottom: Platform.OS === 'ios' ? hp(calHeight(14, true)) : hp(calHeight(14)),
     fontFamily: 'Pretendard-Medium',
     fontSize: 13,
     lineHeight: 22,
