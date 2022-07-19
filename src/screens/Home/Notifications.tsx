@@ -88,7 +88,11 @@ export const Notifications = ({navigation}: Props) => {
               아직 받은 알람이 없어요!
             </Text>
 
-            <Image source={require('../../assets/images/bobpool/cryingBobBowl.png')} />
+            <Image
+              source={require('../../assets/images/bobpool/cryingBobBowl.png')}
+              style={{width: 164, height: 157}}
+              resizeMode="contain"
+            />
           </View>
         )}
       </SafeAreaView>

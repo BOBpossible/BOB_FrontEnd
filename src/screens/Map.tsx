@@ -31,6 +31,7 @@ import WebView from 'react-native-webview';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../assets/CalculateLength';
 import {useIsFocused} from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
 
 const Map = () => {
   const height = Dimensions.get('screen').height;
@@ -80,7 +81,6 @@ const Map = () => {
     return data;
   };
 
-  const getRandom = () => Math.floor(Math.random() * (2 - 0)); //0 or 1
   const openRestaurantModal = async (id: number) => {
     await setStoreId(id);
     setStoreModal(true);
@@ -132,11 +132,12 @@ const Map = () => {
             <Text style={[DesignSystem.body1Lt, {color: '#949494', marginBottom: 38}]}>
               빠른 시일내에 미션을 업데이트 할게요!
             </Text>
-            {getRandom() ? (
-              <Image source={require('../assets/images/bobpool/cryingBob.png')} />
-            ) : (
-              <Image source={require('../assets/images/bobpool/cryingBobBowl.png')} />
-            )}
+
+            <FastImage
+              source={require('../assets/images/bobpool/cryingBobBowl.png')}
+              style={{width: 164, height: 157}}
+              resizeMode="contain"
+            />
           </View>
         ) : (
           <BottomSheetFlatList

@@ -22,51 +22,36 @@ import {DesignSystem} from '../assets/DesignSystem';
 import {queryKey} from '../api/queryKey';
 import {patchDeleteReview} from '../api';
 
-type ReviewDeleteModalProps = {
+type LogoutModalProps = {
   visible: boolean;
-  closeReviewDeleteModal: () => void;
-  reviewId: string;
+  closeLogoutModal: () => void;
 };
 
-const ReviewDeleteModal: FC<ReviewDeleteModalProps> = ({
-  visible,
-  closeReviewDeleteModal,
-  reviewId,
-}) => {
-  const queryClient = useQueryClient();
+const LogoutModal: FC<LogoutModalProps> = ({visible, closeLogoutModal}) => {
   const MARGINBOTTOM = Dimensions.get('screen').height / 2 - 80;
 
-  const reviewDeleteMutation = useMutation(() => patchDeleteReview(reviewId), {
-    onSuccess: (data) => {
-      console.log('리뷰삭제 성공: ', data);
-      queryClient.invalidateQueries(queryKey.STOREREVIEWLIST);
-      queryClient.invalidateQueries(queryKey.REVIEWSME);
-    },
-  });
-
   const handleSubmit = async () => {
-    await reviewDeleteMutation.mutate();
-    await closeReviewDeleteModal();
+    await closeLogoutModal();
   };
   return (
     <Modal visible={visible} transparent statusBarTranslucent animationType="fade">
-      <TouchableOpacity style={[styles.overlay]} activeOpacity={1} onPress={closeReviewDeleteModal}>
+      <TouchableOpacity style={[styles.overlay]} activeOpacity={1} onPress={closeLogoutModal}>
         <View style={styles.background} />
         <TouchableWithoutFeedback>
           <View style={[styles.modalContainer, {marginBottom: MARGINBOTTOM}]}>
             <View style={{marginBottom: 20}}>
-              <Text style={[styles.title1SB, {marginBottom: 12}]}>리뷰 삭제 안내</Text>
+              <Text style={[styles.title1SB, {marginBottom: 12}]}>로그아웃 안내</Text>
               {/* <Text style={[DesignSystem.body1Long, DesignSystem.grey17, {marginLeft: 3}]}>
               한번 삭제하면 다음 미션까지 리뷰를 남길수 없습니다!
             </Text> */}
               <Text style={[DesignSystem.body1Long, DesignSystem.grey17, {marginLeft: 3}]}>
-                리뷰를 삭제 하시겠습니까?
+                로그아웃 하시겠습니까?
               </Text>
             </View>
             <View style={[styles.buttonWrap]}>
               <TouchableOpacity
                 style={[styles.buttonStyle, styles.cancelButton]}
-                onPress={closeReviewDeleteModal}
+                onPress={closeLogoutModal}
               >
                 <Text style={[DesignSystem.title2Regular, DesignSystem.grey10]}>취소</Text>
               </TouchableOpacity>
@@ -74,7 +59,7 @@ const ReviewDeleteModal: FC<ReviewDeleteModalProps> = ({
                 style={[styles.buttonStyle, styles.okButton]}
                 onPress={handleSubmit}
               >
-                <Text style={[DesignSystem.title1SB, {color: 'white'}]}>삭제</Text>
+                <Text style={[DesignSystem.title1SB, {color: 'white'}]}>확인</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -84,7 +69,7 @@ const ReviewDeleteModal: FC<ReviewDeleteModalProps> = ({
   );
 };
 
-export default ReviewDeleteModal;
+export default LogoutModal;
 
 const styles = StyleSheet.create({
   body1Lt: {

@@ -14,10 +14,11 @@ import {IMissionsProgress, IgetUsersMe, IMissionSuccess} from '../data';
 import {getUserInfo} from '../api/user';
 import {ConnectionError} from '../components/ConnectionError';
 import messaging from '@react-native-firebase/messaging';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {missionPage} from '../state';
 import {useRecoilValue} from 'recoil';
 import {ScrollView} from 'react-native-gesture-handler';
+import {TouchableOpacity} from '@gorhom/bottom-sheet';
 
 //processCircle
 ///"PROGRESS","CHECKING" :'진행중' ---  "DONE" : '도전 성공'
@@ -26,7 +27,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 
 const Mission = () => {
   const progressnow = useRecoilValue(missionPage);
-
+  const navigation = useNavigation();
   const DataMissionsProgress = useQuery<IMissionsProgress[]>(
     queryKey.MISSIONSPROGRESS,
     getMissionsProgress,
@@ -87,6 +88,9 @@ const Mission = () => {
                 }
               >
                 <MissionNo />
+                <TouchableOpacity onPress={() => navigation.navigate('MissionSuccess')}>
+                  <Text>포인트 적립 성공 창 가기</Text>
+                </TouchableOpacity>
               </ScrollView>
             ) : (
               <ScrollView

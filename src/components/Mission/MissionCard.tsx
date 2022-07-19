@@ -137,7 +137,7 @@ export const MissionCard: FC<IMissionCardProps> = ({
             missionId={missionId}
             handleOnPress={handleRequestPress}
             text="성공 요청"
-            bgColor="#2A2A2A"
+            bgColor="#555555"
             cancelBgColor="#EFEFEF"
             cancelTextColor="#111111"
           />

@@ -26,7 +26,11 @@ const HowTo5 = ({navigation, route}: Props) => {
         <Text style={[DesignSystem.subtitle2, styles.obText]}>사장님이 미션성공 확인 시</Text>
         <Text style={[DesignSystem.subtitle2, styles.obText, {marginBottom: 41}]}>미션 성공!</Text>
         <View style={{height: HEIGHT * 0.597}}>
-          <Image source={require('../../assets/images/onBoarding/ob6.png')} />
+          <Image
+            source={require('../../assets/images/onBoarding/ob6.png')}
+            style={{width: 237, height: 480}}
+            resizeMode="contain"
+          />
         </View>
       </View>
       {loading ? (

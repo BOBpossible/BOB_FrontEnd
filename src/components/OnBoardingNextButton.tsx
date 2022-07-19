@@ -1,6 +1,7 @@
 import React from 'react';
 import type {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {DesignSystem} from '../assets/DesignSystem';
 
 export type OnBoardingNextButtonProps = {
   goNext: () => void;
@@ -13,11 +14,7 @@ export const OnBoardingNextButton: FC<OnBoardingNextButtonProps> = ({goNext, tex
       <View
         style={[styles.buttonStyle, text === '다음' ? styles.blackButton : styles.purpleButton]}
       >
-        <Text
-          style={{fontFamily: 'Pretendard-Medium', color: 'white', fontSize: 18, lineHeight: 24}}
-        >
-          {text}
-        </Text>
+        <Text style={[DesignSystem.title2Regular, {color: 'white'}]}>{text}</Text>
       </View>
     </TouchableOpacity>
   );

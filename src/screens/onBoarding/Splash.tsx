@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, StyleSheet, Text, Image, SafeAreaView, Animated} from 'react-native';
+import {View, StyleSheet, Text, Image, SafeAreaView, Animated, StatusBar} from 'react-native';
 
 const moveUp = (progressValue: Animated.Value) => {
   Animated.timing(progressValue, {
@@ -18,6 +18,7 @@ const Splash = () => {
 
   return (
     <SafeAreaView style={[styles.flex]}>
+      <StatusBar barStyle={'dark-content'} />
       {/* <View style={[styles.textWrap]}>
         <Text style={[styles.splashTitle]}>BOB</Text>
         <Text style={[styles.splashTitle]}>PLACE.</Text>

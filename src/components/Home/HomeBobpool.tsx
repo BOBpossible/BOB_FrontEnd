@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {Image, Text, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {DesignSystem} from '../../assets/DesignSystem';
 
 type HomeBobpoolType = {
@@ -18,9 +19,17 @@ export const HomeBobpool: FC<HomeBobpoolType> = ({category}) => {
           : '이번 모든 미션을 완료했어요!'}
       </Text>
       {category === 'NO' ? (
-        <Image source={require('../../assets/images/bobpool/cryingBob.png')} />
+        <FastImage
+          source={require('../../assets/images/bobpool/cryingBob.png')}
+          style={{width: 159, height: 105}}
+          resizeMode="contain"
+        />
       ) : (
-        <Image source={require('../../assets/images/bobpool/bobpoolDone.png')} />
+        <FastImage
+          source={require('../../assets/images/bobpool/bobpoolDone.png')}
+          style={{width: 263, height: 169}}
+          resizeMode="contain"
+        />
       )}
     </View>
   );

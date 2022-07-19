@@ -66,7 +66,7 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({
             setRegisterData({...registerData, phone: text});
           }}
           value={registerData.phone}
-          placeholder="000  -  0000  -  0000"
+          placeholder="전화번호 입력"
           selectionColor={'#6C69FF'}
           onBlur={() => setFocusedName(false)}
           onFocus={() => setFocusedName(true)}

@@ -28,7 +28,11 @@ const HowTo5 = ({navigation, route}: Props) => {
           사장님께 성공요청을 보내요!
         </Text>
         <View style={{height: HEIGHT * 0.597}}>
-          <Image source={require('../../assets/images/onBoarding/ob5.png')} />
+          <Image
+            source={require('../../assets/images/onBoarding/ob5.png')}
+            style={{width: 237, height: 480}}
+            resizeMode="contain"
+          />
         </View>
       </View>
       {loading ? (

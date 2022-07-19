@@ -7,6 +7,7 @@ import {
   Text,
   ActivityIndicator,
   RefreshControl,
+  StatusBar,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -69,6 +70,7 @@ const Main = () => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.flex}>
+      <StatusBar barStyle={'dark-content'} />
       {homeData.isLoading ? (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <ActivityIndicator />

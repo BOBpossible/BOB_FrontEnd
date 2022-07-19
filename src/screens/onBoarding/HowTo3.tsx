@@ -27,7 +27,11 @@ const HowTo3 = ({navigation, route}: Props) => {
           매주 3개의 미션을 확인하세요!
         </Text>
         <View style={{height: HEIGHT * 0.597}}>
-          <Image source={require('../../assets/images/onBoarding/ob3.png')} />
+          <Image
+            source={require('../../assets/images/onBoarding/ob3.png')}
+            style={{width: 237, height: 480}}
+            resizeMode="contain"
+          />
         </View>
       </View>
       {loading ? (

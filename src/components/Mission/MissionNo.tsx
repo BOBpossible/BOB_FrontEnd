@@ -21,21 +21,17 @@ export const MissionNo = () => {
         {'홈화면에서 미션을 도전 해보세요 :)'}
       </Text>
       {progressnow ? (
-        Platform.OS === 'ios' ? (
-          <FastImage
-            source={require('../../assets/images/bobpool/cryingBob.png')}
-            style={{width: wp(calWidth(159)), height: hp(calHeight(105))}}
-          />
-        ) : (
-          <Image source={require('../../assets/images/bobpool/cryingBob.png')} />
-        )
-      ) : Platform.OS === 'ios' ? (
         <FastImage
-          source={require('../../assets/images/bobpool/steamingBob.png')}
+          source={require('../../assets/images/bobpool/cryingBob.png')}
           style={{width: wp(calWidth(159)), height: hp(calHeight(105))}}
+          resizeMode="contain"
         />
       ) : (
-        <Image source={require('../../assets/images/bobpool/steamingBob.png')} />
+        <FastImage
+          source={require('../../assets/images/bobpool/steamingBob.png')}
+          style={{width: wp(calWidth(159)), height: hp(calHeight(176))}}
+          resizeMode="contain"
+        />
       )}
     </View>
   );

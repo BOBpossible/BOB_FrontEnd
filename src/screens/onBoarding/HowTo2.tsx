@@ -25,11 +25,16 @@ const HowTo2 = ({navigation, route}: Props) => {
     <SafeAreaView style={[styles.flex]}>
       <OnBoardingHeader goBack={() => navigation.navigate('HowTo1')} />
       <View style={[styles.flex, DesignSystem.centerArrange]}>
-        <Image source={require('../../assets/images/onBoarding/obText2.png')} />
-        <Image source={require('../../assets/images/onBoarding/obBob1.png')} />
-        <View style={[styles.bobCheek]}>
-          <Image source={require('../../assets/images/onBoarding/obBob2cheek.png')} />
-        </View>
+        <Image
+          source={require('../../assets/images/onBoarding/obText2.png')}
+          style={{width: 309, height: 106}}
+          resizeMode="contain"
+        />
+        <Image
+          source={require('../../assets/images/onBoarding/obBob2.png')}
+          style={{width: 238, height: 235}}
+          resizeMode="contain"
+        />
       </View>
       {loading ? (
         <OnBoardingNextButton goNext={goNext} text={'사용방법 알아보기'} />
@@ -42,10 +47,6 @@ const HowTo2 = ({navigation, route}: Props) => {
 
 const styles = StyleSheet.create({
   flex: {flex: 1, backgroundColor: '#FFFFFF'},
-  bobCheek: {
-    position: 'relative',
-    bottom: 115, //
-  },
 });
 
 export default HowTo2;

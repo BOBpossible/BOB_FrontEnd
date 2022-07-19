@@ -28,7 +28,11 @@ const HowTo4 = ({navigation, route}: Props) => {
           미션 도전을 누르세요!
         </Text>
         <View style={{height: HEIGHT * 0.597}}>
-          <Image source={require('../../assets/images/onBoarding/ob4.png')} />
+          <Image
+            source={require('../../assets/images/onBoarding/ob4.png')}
+            style={{width: 250, height: 480}}
+            resizeMode="contain"
+          />
         </View>
       </View>
       {loading ? (

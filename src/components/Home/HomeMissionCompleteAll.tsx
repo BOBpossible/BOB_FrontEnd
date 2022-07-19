@@ -1,5 +1,6 @@
 import React from 'react';
 import {Image, Text, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {DesignSystem} from '../../assets/DesignSystem';
 
 export const HomeMissionCompleteAll = () => {
@@ -11,7 +12,11 @@ export const HomeMissionCompleteAll = () => {
       <Text style={[DesignSystem.body1Lt, {color: '#949494', marginBottom: 38}]}>
         빠른 시일내에 미션을 업데이트 할게요!
       </Text>
-      <Image source={require('../../assets/images/noMission/cryingBob.png')} />
+      <FastImage
+        source={require('../../assets/images/noMission/cryingBob.png')}
+        style={{width: 159, height: 105}}
+        resizeMode="contain"
+      />
     </View>
   );
 };

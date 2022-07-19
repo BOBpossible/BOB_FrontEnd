@@ -1,8 +1,12 @@
 import React, {FC} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {DesignSystem} from '../assets/DesignSystem';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../assets/CalculateLength';
+import FastImage from 'react-native-fast-image';
 
 export type ConnectionErrorProps = {
   refetch: any;
@@ -11,7 +15,11 @@ export type ConnectionErrorProps = {
 export const ConnectionError: FC<ConnectionErrorProps> = ({refetch}) => {
   return (
     <View style={[DesignSystem.centerArrange, {flex: 1, backgroundColor: '#F8F8F8'}]}>
-      <Image source={require('../assets/images/bobpool/cryingBob.png')} />
+      <FastImage
+        source={require('../assets/images/bobpool/SadBobpool.png')}
+        style={{width: 159, height: 105}}
+        resizeMode="contain"
+      />
       <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2, marginTop: 16}]}>
         연결에 실패했어요
       </Text>
@@ -26,7 +34,8 @@ export const ConnectionError: FC<ConnectionErrorProps> = ({refetch}) => {
             height: hp(calHeight(42)),
             backgroundColor: '#E8E8E8',
             borderRadius: 25,
-          }]}
+          },
+        ]}
         onPress={() => {
           refetch();
         }}

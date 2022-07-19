@@ -36,48 +36,42 @@ const MissionSuccess = () => {
     <SafeAreaView style={[styles.flex]}>
       <View style={[styles.flex, DesignSystem.centerArrange]}>
         <View>
-          <Animated.View
+          <ImageBackground
             style={{
+              width: 300,
+              height: 228,
               alignItems: 'center',
-              transform: [{scale: scaleAnim}],
+              justifyContent: 'center',
             }}
+            source={require('../assets/images/pollen.png')}
           >
-            <Image
+            <ImageBackground
               style={{
-                width: 90,
-                height: 69,
+                width: 130,
+                height: 130,
+                alignItems: 'center',
+                justifyContent: 'center',
                 position: 'absolute',
-                top: -25,
               }}
-              source={require('../assets/images/pollen.png')}
-            />
-          </Animated.View>
+              source={require('../assets/images/coin.png')}
+            >
+              <Text
+                style={{
+                  fontSize: 30,
+                  lineHeight: 40,
+                  fontFamily: 'Pretendard-Semibold',
+                  color: 'white',
+                  marginBottom: 8,
+                }}
+              >
+                500P
+              </Text>
+            </ImageBackground>
+          </ImageBackground>
         </View>
-
-        <ImageBackground
-          style={{
-            width: 110,
-            height: 110,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          source={require('../assets/images/coin.png')}
-        >
-          <Text
-            style={{
-              fontSize: 24,
-              lineHeight: 40,
-              fontFamily: 'Pretendard-Semibold',
-              color: 'white',
-              marginBottom: 8,
-            }}
-          >
-            500P
-          </Text>
-        </ImageBackground>
         <Text style={[DesignSystem.h1SB, DesignSystem.purple5, {marginTop: 40}]}>미션 성공!</Text>
-        <Text style={[DesignSystem.body2Lt, DesignSystem.grey17, {marginTop: 8}]}>
-          500P가 적립되었습니다.
+        <Text style={[DesignSystem.body1Lt, DesignSystem.grey17, {marginTop: 8}]}>
+          500 포인트가 적립되었습니다.
         </Text>
       </View>
       <TouchableOpacity onPress={goHome} style={[styles.buttonWrap]}>

@@ -1,5 +1,5 @@
 import React, {useCallback, useState, useEffect} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Image, Platform} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Image, Platform, StatusBar} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
@@ -151,6 +151,7 @@ const Login = () => {
   const goRegister = useCallback(() => navigation.navigate('Register'), []);
   return (
     <SafeAreaView style={styles.flex}>
+      <StatusBar barStyle={'dark-content'} />
       {/* 개발 단계시 홈과 가입으로 가는 버튼 */}
       {/* <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <TouchableOpacity onPress={goMain}>
@@ -189,12 +190,6 @@ const Login = () => {
           <Image
             style={[styles.iconButton]}
             source={require('../../assets/images/kakaoButton.png')}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => signUpWithSNS('naver')}>
-          <Image
-            style={[styles.iconButton]}
-            source={require('../../assets/images/naverButton.png')}
           />
         </TouchableOpacity>
         {Platform.OS === 'ios' && (

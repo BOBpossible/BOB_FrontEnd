@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Platform,
   ActivityIndicator,
+  StatusBar,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MyUser} from '../../components/My/MyUser';
@@ -20,11 +21,12 @@ import {queryKey} from '../../api/queryKey';
 import {getUserInfo} from '../../api';
 import {ConnectionError} from '../../components/ConnectionError';
 import QuitModal from '../../modal/QuitModal';
+import LogoutModal from '../../modal/LogoutModal';
 
 const MyPage = () => {
   const navigation = useNavigation();
   const [quitModal, setQuitModal] = useState(false);
-
+  const [logoutModal, setLogoutModal] = useState(false);
   const {data, isError, refetch, isLoading} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
   console.log('getUserInfo', data);
 
@@ -85,10 +87,11 @@ const MyPage = () => {
         </TouchableOpacity>
         <View style={{alignItems: 'flex-end', marginTop: 16}}>
           <TouchableOpacity onPress={() => setQuitModal(true)}>
-            <Text style={[styles.quitText]}>회원탈퇴</Text>
+            <Text style={[DesignSystem.body2Lt, DesignSystem.grey9]}>회원탈퇴</Text>
           </TouchableOpacity>
         </View>
         <QuitModal visible={quitModal} closeQuitModal={() => setQuitModal(false)} />
+        <LogoutModal visible={logoutModal} closeLogoutModal={() => setLogoutModal(false)} />
       </SafeAreaView>
     </>
   );
