@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, SafeAreaView, FlatList} from 'react-native';
+import {View, StyleSheet, SafeAreaView, FlatList, RefreshControl, ScrollView} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
@@ -37,11 +37,26 @@ export const MyReview = ({navigation}: Props) => {
       <SafeAreaView style={[styles.flex]}>
         <MyHeader goBack={goBack} title={'리뷰 관리'} />
         {DataReviews.data?.pages[0].content.length === 0 ? ( //리뷰없는경우
-          <View style={[DesignSystem.centerArrange, {flex: 1}]}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={[DesignSystem.centerArrange, {flex: 1}]}
+            refreshControl={
+              <RefreshControl
+                onRefresh={() => DataReviews.refetch()}
+                refreshing={DataReviews.isLoading}
+              />
+            }
+          >
             <ReviewNo isPhoto={0} />
-          </View>
+          </ScrollView>
         ) : (
           <FlatList
+            refreshControl={
+              <RefreshControl
+                onRefresh={() => DataReviews.refetch()}
+                refreshing={DataReviews.isLoading}
+              />
+            }
             showsVerticalScrollIndicator={true}
             scrollEventThrottle={10}
             data={DataReviews.data?.pages}

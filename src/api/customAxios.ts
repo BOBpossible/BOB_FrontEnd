@@ -63,8 +63,8 @@ export const customAxios = (): AxiosInstance => {
         );
         // 새로운 토큰 저장
         console.log('토큰이 만료 되어 토큰 갱신한 데이터: ', data);
-        const newAccessToken = data.accessToken;
-        const newRefreshToken = data.refreshToken;
+        const newAccessToken = data.result.accessToken;
+        const newRefreshToken = data.result.refreshToken;
         await AsyncStorage.multiSet([
           ['accessToken', newAccessToken],
           ['refreshToken', newRefreshToken],

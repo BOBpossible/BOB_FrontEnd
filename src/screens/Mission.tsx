@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, StyleSheet, Text, SafeAreaView, Alert} from 'react-native';
+import {View, StyleSheet, Text, SafeAreaView, Alert, RefreshControl} from 'react-native';
 import {DesignSystem} from '../assets/DesignSystem';
 import {MissionCard} from '../components';
 import {MissionProcess} from '../components/Mission/MissionProcess';
@@ -16,7 +16,8 @@ import {ConnectionError} from '../components/ConnectionError';
 import messaging from '@react-native-firebase/messaging';
 import {useFocusEffect} from '@react-navigation/native';
 import {missionPage} from '../state';
-import {useRecoilState} from 'recoil';
+import {useRecoilValue} from 'recoil';
+import {ScrollView} from 'react-native-gesture-handler';
 
 //processCircle
 ///"PROGRESS","CHECKING" :'진행중' ---  "DONE" : '도전 성공'
@@ -24,7 +25,7 @@ import {useRecoilState} from 'recoil';
 //도전 전 NEW  성공요청 PROGRESS  성공요청중 CHECKING    성공 DONE
 
 const Mission = () => {
-  const [progressnow, setProgressnow] = useRecoilState(missionPage);
+  const progressnow = useRecoilValue(missionPage);
 
   const DataMissionsProgress = useQuery<IMissionsProgress[]>(
     queryKey.MISSIONSPROGRESS,
@@ -75,9 +76,27 @@ const Mission = () => {
         <View style={{flex: 1}}>
           {progressnow ? (
             DataMissionsProgress.data?.length === 0 ? (
-              <MissionNo /> ///미션없는화면
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={[DesignSystem.centerArrange, {flex: 1}]}
+                refreshControl={
+                  <RefreshControl
+                    onRefresh={() => DataMissionsProgress.refetch()}
+                    refreshing={DataMissionsProgress.isLoading}
+                  />
+                }
+              >
+                <MissionNo />
+              </ScrollView>
             ) : (
-              <View>
+              <ScrollView
+                refreshControl={
+                  <RefreshControl
+                    onRefresh={() => DataMissionsProgress.refetch()}
+                    refreshing={DataMissionsProgress.isLoading}
+                  />
+                }
+              >
                 <MissionProcess status={DataMissionsProgress.data?.[0].missionStatus} />
                 <MissionUser username={DataUser.data?.name} userid={DataUser.data?.userId} />
                 <MissionCard
@@ -89,10 +108,21 @@ const Mission = () => {
                   storeName={DataMissionsProgress.data?.[0].storeName}
                   onPressRequestBtn={onPressRequestBtn}
                 />
-              </View>
+              </ScrollView>
             )
           ) : DataMissionsComplete.data?.length === 0 ? (
-            <MissionNo /> ///미션없는화면
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={[DesignSystem.centerArrange, {flex: 1}]}
+              refreshControl={
+                <RefreshControl
+                  onRefresh={() => DataMissionsComplete.refetch()}
+                  refreshing={DataMissionsComplete.isLoading}
+                />
+              }
+            >
+              <MissionNo />
+            </ScrollView>
           ) : (
             <MissionSuccessList />
           )}
