@@ -1,6 +1,15 @@
 import React from 'react';
 import type {FC} from 'react';
-import {Animated, Image, Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Animated,
+  Image,
+  Modal,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../assets/DesignSystem';
 
@@ -12,62 +21,13 @@ type DoneModalProps = {
 };
 
 const DoneModal: FC<DoneModalProps> = ({visible, closeDoneModal, category, point}) => {
-  // const scaleAnim = useRef(new Animated.Value(1)).current;
-  const scaleAnim = new Animated.Value(1);
-  const animateTextSize = (n: number) => {
-    Animated.timing(scaleAnim, {
-      toValue: n,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  };
-  animateTextSize(3);
   return (
     <Modal visible={visible} animationType="fade">
-      <View style={[styles.flex]}>
+      <SafeAreaView style={[styles.flex]}>
         <View style={[styles.flex, DesignSystem.centerArrange]}>
-          {category === '성공' ? (
-            <Animated.View
-              style={{
-                marginTop: 20,
-                bottom: -39,
-                alignItems: 'center',
-                transform: [{scale: scaleAnim}],
-              }}
-            >
-              <Image
-                style={{
-                  width: 90,
-                  height: 69,
-                  position: 'relative',
-                }}
-                source={require('../assets/images/pollen.png')}
-              />
-              <Image
-                style={{
-                  width: 30,
-                  height: 30,
-                  top: -40,
-                }}
-                source={require('../assets/images/coin.png')}
-              />
-              <Text
-                style={{
-                  fontSize: 8,
-                  fontFamily: 'Pretendard-Semibold',
-                  color: 'white',
-                  top: -63,
-                }}
-              >
-                {point}P
-              </Text>
-            </Animated.View>
-          ) : (
-            <Icon name="check" size={71} color="#6C69FF" />
-          )}
-          {category === '리뷰' ? (
-            <Text style={[styles.purpleTitleText]}>리뷰 등록 완료!</Text>
-          ) : category === '입금' ? (
+          <Icon name="check" size={71} color="#6C69FF" />
+
+          {category === '입금' ? (
             <>
               <Text style={[styles.purpleTitleText]}>입금 신청이 완료되었습니다.</Text>
               <Text style={[DesignSystem.body2Long, {color: '#616161', marginTop: 6}]}>
@@ -104,7 +64,7 @@ const DoneModal: FC<DoneModalProps> = ({visible, closeDoneModal, category, point
             <Text style={[styles.buttonText]}>확인</Text>
           </View>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 };
@@ -127,10 +87,10 @@ const styles = StyleSheet.create({
     color: '#7879F7',
     marginTop: 32,
   },
-  buttonWrap: {justifyContent: 'center', alignItems: 'center', margin: 20},
+  buttonWrap: {justifyContent: 'center', alignItems: 'center', margin: 16},
   buttonStyle: {
     width: '100%',
-    height: 60,
+    height: 56,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,

@@ -18,12 +18,14 @@ const HowToLong = ({navigation}: any) => {
       <SafeAreaView style={[styles.flex]}>
         <MyHeader goBack={goBack} title={'사용방법'} />
         <View style={[styles.flex]}>
-          <ScrollView contentContainerStyle={[DesignSystem.centerArrange, {margin: 16}]}>
+          <ScrollView
+            contentContainerStyle={[DesignSystem.centerArrange, {margin: 16, padding: 16}]}
+          >
             <Image
               source={require('../../assets/images/howto.png')}
               style={{
-                width: wp(calWidth(375)),
-                height: Platform.OS === 'ios' ? hp(calHeight(1912, true)) : hp(calHeight(1912)),
+                width: 376,
+                height: 1861,
               }}
               resizeMode="contain"
             />

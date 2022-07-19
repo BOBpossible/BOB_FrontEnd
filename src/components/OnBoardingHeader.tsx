@@ -14,13 +14,18 @@ export const OnBoardingHeader: FC<OnBoardingHeaderProps> = ({goBack, pageNum}) =
   const navigation = useNavigation();
   return (
     <View style={[styles.headerWrap]}>
-      <TouchableOpacity onPress={goBack}>
+      <TouchableOpacity onPress={goBack} style={{width: 50, alignItems: 'flex-start'}}>
         <View style={[styles.backButton]}>
           <Icon name="arrow-left" size={24} color="black" />
         </View>
       </TouchableOpacity>
-      {pageNum !== undefined && <Text>{pageNum}/4</Text>}
-      <TouchableOpacity onPress={() => navigation.reset({routes: [{name: 'MainNavigator'}]})}>
+      {pageNum !== undefined && (
+        <Text style={[DesignSystem.body1Long, DesignSystem.grey8]}>{pageNum}/4</Text>
+      )}
+      <TouchableOpacity
+        onPress={() => navigation.reset({routes: [{name: 'MainNavigator'}]})}
+        style={{width: 50}}
+      >
         <Text style={[DesignSystem.body2Lt, {color: '#949494'}]}>건너뛰기</Text>
       </TouchableOpacity>
     </View>

@@ -28,12 +28,12 @@ const HowTo2 = ({navigation, route}: Props) => {
         <Image
           source={require('../../assets/images/onBoarding/obText2.png')}
           style={{width: 309, height: 106}}
-          resizeMode="contain"
+          resizeMode="cover"
         />
         <Image
           source={require('../../assets/images/onBoarding/obBob2.png')}
           style={{width: 238, height: 235}}
-          resizeMode="contain"
+          resizeMode="cover"
         />
       </View>
       {loading ? (

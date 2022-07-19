@@ -15,8 +15,6 @@ import {
 } from '../../api/mission';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
-import {useRecoilState} from 'recoil';
-import {openModal} from '../../state';
 
 export const MissionCard: FC<IMissionCardProps> = ({
   mission,
@@ -136,7 +134,7 @@ export const MissionCard: FC<IMissionCardProps> = ({
           <MissionCardTwoButton
             missionId={missionId}
             handleOnPress={handleRequestPress}
-            text="성공 요청"
+            text="성공요청"
             bgColor="#555555"
             cancelBgColor="#EFEFEF"
             cancelTextColor="#111111"
@@ -178,23 +176,24 @@ const styles = StyleSheet.create({
   missionCardWrap: {
     marginLeft: 16,
     marginRight: 16,
-    borderColor: '#EFEFEF',
-    borderWidth: 1,
   },
   missionCard: {
-    height: hp(calHeight(198)),
     backgroundColor: 'white',
     borderRadius: 12,
     alignItems: 'center',
   },
   missionMain: {
     flex: 1,
-    marginTop: 24,
-    marginBottom: 20,
     paddingHorizontal: 16,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderTopWidth: 1,
+    borderColor: '#E8E8E8',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
   },
   nameBox: {
     width: '100%',
@@ -202,7 +201,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomColor: '#DFDFDF',
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     marginTop: 24,
     marginBottom: 16,
   },
@@ -227,15 +226,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     color: '#6C69FF',
-  },
-  missionOneButton: {
-    height: 48,
-    width: '100%',
-    backgroundColor: 'black',
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
-    justifyContent: 'space-around',
-    alignItems: 'center',
   },
   missionTwoButton: {
     flexDirection: 'row',

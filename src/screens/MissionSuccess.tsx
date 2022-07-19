@@ -47,29 +47,17 @@ const MissionSuccess = () => {
           >
             <ImageBackground
               style={{
-                width: 130,
-                height: 130,
+                width: 107,
+                height: 107,
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'absolute',
               }}
-              source={require('../assets/images/coin.png')}
-            >
-              <Text
-                style={{
-                  fontSize: 30,
-                  lineHeight: 40,
-                  fontFamily: 'Pretendard-Semibold',
-                  color: 'white',
-                  marginBottom: 8,
-                }}
-              >
-                500P
-              </Text>
-            </ImageBackground>
+              source={require('../assets/images/coin500.png')}
+            />
           </ImageBackground>
         </View>
-        <Text style={[DesignSystem.h1SB, DesignSystem.purple5, {marginTop: 40}]}>미션 성공!</Text>
+        <Text style={[DesignSystem.h1SB, DesignSystem.purple5, {marginTop: 16}]}>미션 성공!</Text>
         <Text style={[DesignSystem.body1Lt, DesignSystem.grey17, {marginTop: 8}]}>
           500 포인트가 적립되었습니다.
         </Text>

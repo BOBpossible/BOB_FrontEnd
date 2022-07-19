@@ -190,6 +190,7 @@ const Login = () => {
           <Image
             style={[styles.iconButton]}
             source={require('../../assets/images/kakaoButton.png')}
+            resizeMode="contain"
           />
         </TouchableOpacity>
         {Platform.OS === 'ios' && (
@@ -197,6 +198,7 @@ const Login = () => {
             <Image
               style={[styles.iconButton]}
               source={require('../../assets/images/appleLogin.png')}
+              resizeMode="contain"
             />
           </TouchableOpacity>
         )}
@@ -204,6 +206,7 @@ const Login = () => {
           <Image
             style={[styles.iconButton]}
             source={require('../../assets/images/GoogleLogin.png')}
+            resizeMode="contain"
           />
         </TouchableOpacity>
       </View>
@@ -236,11 +239,11 @@ const styles = StyleSheet.create({
   },
   titleImage: {
     width: wp(calWidth(344)),
-    height: Platform.OS === 'ios' ? hp(calHeight(187, true)) : hp(calHeight(187)),
+    height: 187,
   },
   logoImage: {
     width: wp(calWidth(221)),
-    height: Platform.OS === 'ios' ? hp(calHeight(150, true)) : hp(calHeight(150)),
+    height: 150,
   },
   loginButtonWrap: {
     marginBottom: 30,

@@ -19,16 +19,13 @@ const Splash = () => {
   return (
     <SafeAreaView style={[styles.flex]}>
       <StatusBar barStyle={'dark-content'} />
-      {/* <View style={[styles.textWrap]}>
-        <Text style={[styles.splashTitle]}>BOB</Text>
-        <Text style={[styles.splashTitle]}>PLACE.</Text>
-      </View> */}
 
       <View style={[styles.imageWrap]}>
         <View style={{marginBottom: 28}}>
           <Image
             source={require('../../assets/images/bob_place.png')}
             style={{width: 219, height: 30}}
+            resizeMode="contain"
           />
         </View>
         <Image source={require('../../assets/images/bobpool.png')} style={[styles.logoImage]} />
@@ -36,6 +33,7 @@ const Splash = () => {
           <Image
             source={require('../../assets/images/bobpoolFace.png')}
             style={[styles.logoFace]}
+            resizeMode="contain"
           />
         </Animated.View>
       </View>
@@ -44,7 +42,7 @@ const Splash = () => {
 };
 
 const styles = StyleSheet.create({
-  flex: {flex: 1, backgroundColor: '#6C69FF', alignItems: 'center'},
+  flex: {flex: 1, backgroundColor: '#6C69FF', alignItems: 'center', justifyContent: 'center'},
   splashTitle: {
     fontFamily: 'Poppins-Bold',
     fontSize: 34,
@@ -63,12 +61,9 @@ const styles = StyleSheet.create({
   postionAbs: {
     position: 'absolute',
   },
-  textWrap: {
-    marginTop: 200,
-  },
   imageWrap: {
-    marginTop: 300,
     alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

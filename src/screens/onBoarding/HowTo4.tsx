@@ -31,7 +31,7 @@ const HowTo4 = ({navigation, route}: Props) => {
           <Image
             source={require('../../assets/images/onBoarding/ob4.png')}
             style={{width: 250, height: 480}}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         </View>
       </View>

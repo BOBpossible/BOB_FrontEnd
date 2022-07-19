@@ -23,16 +23,19 @@ const HowTo3 = ({navigation, route}: Props) => {
     <SafeAreaView style={[styles.flex]}>
       <OnBoardingHeader goBack={() => navigation.navigate('HowTo2')} pageNum={1} />
       <View style={[styles.flex, DesignSystem.centerArrange]}>
-        <Text style={[DesignSystem.subtitle2, styles.obText, {marginBottom: 41}]}>
-          매주 3개의 미션을 확인하세요!
-        </Text>
-        <View style={{height: HEIGHT * 0.597}}>
-          <Image
-            source={require('../../assets/images/onBoarding/ob3.png')}
-            style={{width: 237, height: 480}}
-            resizeMode="contain"
-          />
+        <View style={{width: 148, justifyContent: 'center', alignItems: 'center'}}>
+          <Text
+            style={[DesignSystem.subtitle2, styles.obText, {marginBottom: 31, textAlign: 'center'}]}
+          >
+            매주 3개의 미션을 확인하세요!
+          </Text>
         </View>
+
+        <Image
+          source={require('../../assets/images/onBoarding/ob3.png')}
+          style={{width: 237, height: 480}}
+          resizeMode="cover"
+        />
       </View>
       {loading ? (
         <OnBoardingNextButton goNext={goNext} text={'다음'} />
@@ -47,17 +50,6 @@ const styles = StyleSheet.create({
   flex: {flex: 1, backgroundColor: '#FFFFFF'},
   obText: {
     color: '#2A2A2A',
-  },
-  obDotView: {
-    marginTop: 38,
-    flexDirection: 'row',
-  },
-  obDotEach: {
-    width: 9,
-    height: 9,
-    borderRadius: 4.5,
-    marginLeft: 4,
-    marginRight: 4,
   },
 });
 

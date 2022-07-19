@@ -2,6 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Animated} from 'react-native';
 import {missionPage} from '../../state';
 import {useRecoilState} from 'recoil';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 function moveLeft(progressValue: Animated.Value) {
   Animated.timing(progressValue, {
@@ -54,7 +55,16 @@ export const MissionProgressSwitch = () => {
           <View style={[styles.progressTextWrap]}>
             <Text
               style={
-                progressnow ? [{fontSize: 14, color: 'white'}] : [{fontSize: 14, color: '#616161'}]
+                progressnow
+                  ? [
+                      {
+                        fontFamily: 'Pretendard-Medium',
+                        fontSize: 14,
+                        lineHeight: 22,
+                        color: 'white',
+                      },
+                    ]
+                  : [DesignSystem.body2Lt, DesignSystem.grey10]
               }
             >
               진행중
@@ -90,15 +100,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
-    shadowColor: '#000',
+    shadowColor: '#000C8A',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 0,
     },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-
-    elevation: 4,
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 2,
   },
   progressToggle: {
     flexDirection: 'row',
@@ -112,7 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FCFCFC',
   },
   progressSwitch: {
-    height: 30,
+    height: 28,
     backgroundColor: 'black',
     position: 'absolute',
   },
