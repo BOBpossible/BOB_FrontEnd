@@ -83,7 +83,7 @@ export const Notifications = ({navigation}: Props) => {
             ItemSeparatorComponent={() => <View style={{marginTop: 8}} />}
           />
         ) : (
-          <View style={[DesignSystem.centerArrange, {marginTop: 100, marginBottom: 50}]}>
+          <View style={[DesignSystem.centerArrange]}>
             <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 38}]}>
               아직 받은 알람이 없어요!
             </Text>

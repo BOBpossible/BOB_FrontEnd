@@ -30,8 +30,14 @@ type MyBankFeeModalProps = {
   point: number;
 };
 
-//prettier-ignore
-const MyBankModal: FC<MyBankFeeModalProps> = ({visible, closeBankFeeModal, accountNumber, bank, name, point}) => {
+const MyBankModal: FC<MyBankFeeModalProps> = ({
+  visible,
+  closeBankFeeModal,
+  accountNumber,
+  bank,
+  name,
+  point,
+}) => {
   const MARGINBOTTOM = Dimensions.get('screen').height / 2 - 80;
   const navigation = useNavigation();
   const queryClient = useQueryClient();
@@ -63,30 +69,36 @@ const MyBankModal: FC<MyBankFeeModalProps> = ({visible, closeBankFeeModal, accou
   };
   return (
     <Modal visible={visible} transparent statusBarTranslucent animationType="fade">
-      <View style={[styles.overlay]}>
-        <TouchableWithoutFeedback onPress={closeBankFeeModal}>
-          <View style={styles.background} />
-        </TouchableWithoutFeedback>
-        <View style={[styles.modalContainer, {marginBottom: MARGINBOTTOM}]}>
+      <TouchableOpacity style={[styles.overlay]} activeOpacity={1} onPress={closeBankFeeModal}>
+        <View style={styles.background} />
+        <TouchableWithoutFeedback>
+          <View style={[styles.modalContainer, {marginBottom: MARGINBOTTOM}]}>
             <View style={{marginBottom: 20}}>
               <Text style={[styles.title1SB, {marginBottom: 12}]}>포인트 전환 안내</Text>
               <Text style={[DesignSystem.body1Long, DesignSystem.grey17, {marginLeft: 3}]}>
-                •  입금 수수료 500포인트가 차감됩니다.
+                • 입금 수수료 500포인트가 차감됩니다.
               </Text>
               <Text style={[DesignSystem.body1Long, DesignSystem.grey17, {marginLeft: 3}]}>
-                •  입금은 심사 후 매주 수요일에 일괄 송금됩니다.
+                • 입금은 심사 후 매주 수요일에 일괄 송금됩니다.
               </Text>
             </View>
             <View style={[styles.buttonWrap]}>
-              <TouchableOpacity style={[styles.buttonStyle, styles.cancelButton]} onPress={closeBankFeeModal}>
+              <TouchableOpacity
+                style={[styles.buttonStyle, styles.cancelButton]}
+                onPress={closeBankFeeModal}
+              >
                 <Text style={[DesignSystem.title2Regular, DesignSystem.grey10]}>취소</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.buttonStyle, styles.okButton]} onPress={handleSubmit}>
+              <TouchableOpacity
+                style={[styles.buttonStyle, styles.okButton]}
+                onPress={handleSubmit}
+              >
                 <Text style={[DesignSystem.title1SB, {color: 'white'}]}>확인</Text>
               </TouchableOpacity>
             </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
+      </TouchableOpacity>
     </Modal>
   );
 };

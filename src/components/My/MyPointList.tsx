@@ -37,7 +37,7 @@ export const MyPointList: FC<MyPointListProps> = ({date, title, subTitle, point}
           <Text
             style={[DesignSystem.title3SB, point > 0 ? DesignSystem.purple5 : DesignSystem.grey7]}
           >
-            {point > 0 ? '+' : '-'}
+            {point > 0 ? '+' : ''}
             {point.toString().replace(/\B(?=(\d{3})(?!\d))/g, ',')}P
           </Text>
         </View>

@@ -88,9 +88,6 @@ const Mission = () => {
                 }
               >
                 <MissionNo />
-                <TouchableOpacity onPress={() => navigation.navigate('MissionSuccess')}>
-                  <Text>포인트 적립 성공 창 가기</Text>
-                </TouchableOpacity>
               </ScrollView>
             ) : (
               <ScrollView

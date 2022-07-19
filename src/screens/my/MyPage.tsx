@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -22,6 +22,7 @@ import {getUserInfo} from '../../api';
 import {ConnectionError} from '../../components/ConnectionError';
 import QuitModal from '../../modal/QuitModal';
 import LogoutModal from '../../modal/LogoutModal';
+import {useFocusEffect} from '@react-navigation/native';
 
 const MyPage = () => {
   const navigation = useNavigation();
@@ -30,15 +31,13 @@ const MyPage = () => {
   const {data, isError, refetch, isLoading} = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
   console.log('getUserInfo', data);
 
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, []),
+  );
+
   // data.point 로 접근
-  const logout = async () => {
-    await AsyncStorage.multiSet([
-      ['accessToken', ''],
-      ['refreshToken', ''],
-    ]);
-    navigation.navigate('AuthNavigator');
-  };
-  console.log('async userToken', AsyncStorage.getItem('userToken'));
 
   if (isError) {
     return <ConnectionError refetch={refetch} />;
@@ -80,12 +79,12 @@ const MyPage = () => {
             <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>1:1 문의</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={logout}>
+        <TouchableOpacity onPress={() => setLogoutModal(true)}>
           <View style={[styles.myMenuWrap]}>
             <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>로그아웃</Text>
           </View>
         </TouchableOpacity>
-        <View style={{alignItems: 'flex-end', marginTop: 16}}>
+        <View style={{alignItems: 'flex-end', marginTop: 14, marginRight: 16}}>
           <TouchableOpacity onPress={() => setQuitModal(true)}>
             <Text style={[DesignSystem.body2Lt, DesignSystem.grey9]}>회원탈퇴</Text>
           </TouchableOpacity>

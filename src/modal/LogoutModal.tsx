@@ -16,11 +16,8 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../assets/CalculateLength';
-import {useMutation, useQueryClient} from 'react-query';
-import {postPointsConvert} from '../api/my';
 import {DesignSystem} from '../assets/DesignSystem';
-import {queryKey} from '../api/queryKey';
-import {patchDeleteReview} from '../api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type LogoutModalProps = {
   visible: boolean;
@@ -29,10 +26,20 @@ type LogoutModalProps = {
 
 const LogoutModal: FC<LogoutModalProps> = ({visible, closeLogoutModal}) => {
   const MARGINBOTTOM = Dimensions.get('screen').height / 2 - 80;
-
+  const navigation = useNavigation();
   const handleSubmit = async () => {
+    logout();
     await closeLogoutModal();
   };
+
+  const logout = async () => {
+    await AsyncStorage.multiSet([
+      ['accessToken', ''],
+      ['refreshToken', ''],
+    ]);
+    navigation.navigate('AuthNavigator');
+  };
+
   return (
     <Modal visible={visible} transparent statusBarTranslucent animationType="fade">
       <TouchableOpacity style={[styles.overlay]} activeOpacity={1} onPress={closeLogoutModal}>
@@ -44,7 +51,7 @@ const LogoutModal: FC<LogoutModalProps> = ({visible, closeLogoutModal}) => {
               {/* <Text style={[DesignSystem.body1Long, DesignSystem.grey17, {marginLeft: 3}]}>
               한번 삭제하면 다음 미션까지 리뷰를 남길수 없습니다!
             </Text> */}
-              <Text style={[DesignSystem.body1Long, DesignSystem.grey17, {marginLeft: 3}]}>
+              <Text style={[DesignSystem.body1Long, DesignSystem.grey17]}>
                 로그아웃 하시겠습니까?
               </Text>
             </View>

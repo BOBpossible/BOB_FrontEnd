@@ -36,7 +36,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
     {
       onSuccess(data) {
         console.log(data.data);
-        queryClient.invalidateQueries(queryKey.STOREINFO);
+        queryClient.invalidateQueries([queryKey.STOREREVIEWLIST, storeId]);
         queryClient.invalidateQueries(queryKey.REVIEWSME);
         return queryClient.invalidateQueries(queryKey.MISSIONSCOMPLETE);
       },
@@ -54,7 +54,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
         if (imageUri.length !== 0) {
           return reviewImageMutation.mutate(Reviewdata.result);
         } else {
-          queryClient.invalidateQueries(queryKey.STOREINFO);
+          queryClient.invalidateQueries([queryKey.STOREREVIEWLIST, storeId]);
           return queryClient.invalidateQueries(queryKey.MISSIONSCOMPLETE);
         }
       },

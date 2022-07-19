@@ -122,5 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
+    borderBottomColor: '#F8F8F8',
+    borderBottomWidth: 1,
   },
 });

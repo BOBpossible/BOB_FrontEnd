@@ -3,9 +3,12 @@ import type {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
-import { DesignSystem } from '../../assets/DesignSystem';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 export type MapStoreBottomSheetProps = {
   storeName: string;
@@ -65,7 +68,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     backgroundColor: '#FFFFFF',
     paddingLeft: 16,
-    paddingRight: 16,
     paddingTop: 12,
     paddingBottom: 12,
   },
