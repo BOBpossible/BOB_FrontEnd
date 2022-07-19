@@ -110,7 +110,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
                 ]}
                 onChangeText={(text) => {
                   setInputPoint(text);
-                  if (Number(text) > point || Number(text) % 5000 !== 0 || Number(text) <= 0) {
+                  if (Number(text) > point || Number(text) < 5000) {
                     /////////////////////////// 확인하고싶으면 500으로두고.
                     setPointOver(true);
                   } else {
@@ -136,7 +136,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
               </Text>
             </View>
             <Text style={[styles.caption1Light, {color: pointOver ? 'red' : '#949494'}]}>
-              포인트는 5,000P 단위로 전환 가능합니다.
+              포인트는 5,000P 부터 전환이 가능합니다.
             </Text>
             <Text style={[styles.caption1Light, {color: pointOver ? 'red' : '#949494'}]}>
               또한, 송금 수수료 500P가 차감됩니다.
@@ -199,34 +199,20 @@ export const MyChangePoint = ({navigation, route}: Props) => {
           </View>
         </KeyboardAwareScrollView>
 
-        {inputPoint === '' ||
-        inputName === '' ||
-        selectedBank === '' ||
-        inputAccounts === '' ||
-        pointOver !== false ? (
-          <View style={[styles.fillAlarm]}>
-            <View style={[styles.progressToggle]}>
-              <Text style={[DesignSystem.caption1Lt, {color: 'white'}]}>
-                정보작성을 완료해주세요.
-              </Text>
-            </View>
-          </View>
-        ) : (
-          <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: 12}}>
-            <CheckBoxRectangle
-              title={''}
-              onPress={() => setNotichecked(!notiChecked)}
-              isChecked={notiChecked}
-            />
-            <TouchableOpacity
-              style={[DesignSystem.centerArrange, {marginLeft: 10, flexDirection: 'row'}]}
-              onPress={() => setConsentModal(true)}
-            >
-              <Text style={[DesignSystem.body2Lt, styles.title]}>계좌정보 수집 및 이용 동의</Text>
-              <Icon name="menu-down" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
-        )}
+        <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: 12}}>
+          <CheckBoxRectangle
+            title={''}
+            onPress={() => setNotichecked(!notiChecked)}
+            isChecked={notiChecked}
+          />
+          <TouchableOpacity
+            style={[DesignSystem.centerArrange, {marginLeft: 10, flexDirection: 'row'}]}
+            onPress={() => setConsentModal(true)}
+          >
+            <Text style={[DesignSystem.body2Lt, styles.title]}>계좌정보 수집 및 이용 동의</Text>
+            <Icon name="menu-down" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
 
         <TouchableOpacity
           onPress={handleSubmit}

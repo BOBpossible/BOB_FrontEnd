@@ -102,7 +102,7 @@ const Mission = () => {
                 }
               >
                 <MissionProcess status={DataMissionsProgress.data?.[0].missionStatus} />
-                <MissionUser username={DataUser.data?.name} userid={DataUser.data?.userId} />
+                <MissionUser username={DataUser.data?.name} phone={DataUser.data?.phone} />
                 <MissionCard
                   mission={DataMissionsProgress.data?.[0].mission}
                   missionId={DataMissionsProgress.data?.[0].missionId}

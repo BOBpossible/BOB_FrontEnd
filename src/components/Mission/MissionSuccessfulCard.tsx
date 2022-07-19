@@ -8,6 +8,7 @@ import {
 import {calHeight, calWidth} from '../../assets/CalculateLength';
 import {DesignSystem} from '../../assets/DesignSystem';
 import ReviewModal from '../../modal/ReviewModal';
+import StoreModal from '../../modal/StoreModal';
 
 export type MissionSuccessfulCardProps = {
   mission: string;
@@ -38,9 +39,14 @@ export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
     console.log(storeId, '번 리뷰 작성');
   }
 
+  const [storeModal, setStoreModal] = useState(false);
   return (
     <View style={[styles.missionCardWrap]}>
-      <View style={[styles.missionCard]}>
+      <TouchableOpacity
+        style={[styles.missionCard]}
+        disabled={reviewStatus === 'NEW' ? true : false}
+        onPress={() => setStoreModal(true)}
+      >
         <View style={[styles.missionMain]}>
           <View style={[styles.nameBox]}>
             <Text style={[DesignSystem.caption1Lt, DesignSystem.grey8]}>
@@ -65,12 +71,17 @@ export const MissionSuccessfulCard: FC<MissionSuccessfulCardProps> = ({
         ) : (
           <></>
         )}
-      </View>
+      </TouchableOpacity>
       <ReviewModal
         visible={reviewModal}
         closeReviewModal={() => setReviewModal(false)}
         storeId={storeId}
         missionId={missionId}
+      />
+      <StoreModal
+        visible={storeModal}
+        closeStoreModal={() => setStoreModal(false)}
+        storeId={storeId}
       />
     </View>
   );

@@ -13,7 +13,7 @@ type CheckBoxRectangleProps = {
 export const CheckBoxRectangle: FC<CheckBoxRectangleProps> = ({onPress, title, isChecked}) => {
   return (
     <View style={styles.container}>
-      <Pressable onPress={onPress}>
+      <Pressable onPress={onPress} style={{flexDirection: 'row'}}>
         <View style={isChecked ? styles.markedCircle : styles.unmarkedCircle}>
           <Icon
             name="check"
@@ -22,8 +22,8 @@ export const CheckBoxRectangle: FC<CheckBoxRectangleProps> = ({onPress, title, i
             style={isChecked ? styles.markedCheck : styles.unmarkedCheck}
           />
         </View>
+        <Text style={[DesignSystem.body2Lt, styles.title]}>{title}</Text>
       </Pressable>
-      <Text style={[DesignSystem.body2Lt, styles.title]}>{title}</Text>
     </View>
   );
 };

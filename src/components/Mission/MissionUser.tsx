@@ -5,11 +5,11 @@ import {DesignSystem} from '../../assets/DesignSystem';
 
 export type MissionUserProps = {
   username?: string;
-  userid?: number;
+  phone?: number;
 };
 
 //prettier-ignore
-export const MissionUser: FC<MissionUserProps> = ({username, userid }) => {
+export const MissionUser: FC<MissionUserProps> = ({username, phone }) => {
 
   return (
     <View style={[styles.userCard]}>
@@ -21,7 +21,7 @@ export const MissionUser: FC<MissionUserProps> = ({username, userid }) => {
       </View>
       <View style={[styles.userWrap]}>
         <Text style={[DesignSystem.title4Md, styles.usernameText]}>{username}</Text>
-        <Text style={[DesignSystem.body2Lt, styles.useridText]}>{userid}</Text>
+        <Text style={[DesignSystem.body2Lt, DesignSystem.grey10]}><Text style={DesignSystem.grey8}>고객구분번호 </Text>{phone}</Text>
       </View>
     </View>
   );

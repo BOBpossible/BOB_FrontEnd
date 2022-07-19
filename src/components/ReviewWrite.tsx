@@ -149,7 +149,7 @@ export const ReviewWrite: FC<ReviewWriteProps> = ({
 
       <TouchableOpacity onPress={submitReview} style={[styles.reviewConfirmButton]}>
         <View>
-          <Text style={[styles.reviewConfirmButtonText]}>리뷰 등록</Text>
+          <Text style={[DesignSystem.title2Regular, {color: 'white'}]}>리뷰 등록</Text>
         </View>
       </TouchableOpacity>
     </View>

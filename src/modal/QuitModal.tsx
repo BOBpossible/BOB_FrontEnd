@@ -15,6 +15,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {calWidth} from '../assets/CalculateLength';
 import {patchQuit} from '../api/my';
 import {CheckBoxRectangle} from '../components/Common/CheckBoxRectangle';
+import {DesignSystem} from '../assets/DesignSystem';
 
 type QuitModalProps = {
   visible: boolean;
@@ -48,11 +49,11 @@ const QuitModal: FC<QuitModalProps> = ({visible, closeQuitModal}) => {
         <View style={[styles.modalContainer, {marginBottom: MARGINBOTTOM}]}>
           <View style={[styles.contentWrap]}>
             <View style={{marginBottom: 20}}>
-              <Text style={[styles.title1SB, {marginBottom: 12}]}>회원 탈퇴 시 안내</Text>
-              <Text style={[styles.body1Lt, {marginLeft: 3}]}>
+              <Text style={[DesignSystem.title1SB, DesignSystem.grey17, {marginBottom: 12}]}>회원 탈퇴 시 안내</Text>
+              <Text style={[DesignSystem.body1Long, DesignSystem.grey17]}>
               회원 탈퇴 시 현재까지 있는 포인트는 전부 소멸되며, 복구 불가능합니다.
               </Text>
-              <Text style={[styles.body1Lt, {marginLeft: 3}]}>
+              <Text style={[DesignSystem.body1Long, DesignSystem.grey17]}>
               회원 탈퇴 시 개인 정보 처리 방침에 따라 탈퇴 후에도 90일간 보관되고, 90일이 지난 후에는 완전히 삭제됩니다.
               </Text>
             </View>
@@ -63,10 +64,10 @@ const QuitModal: FC<QuitModalProps> = ({visible, closeQuitModal}) => {
             />
             <View style={[styles.buttonWrap]}>
               <TouchableOpacity style={[styles.buttonStyle, styles.cancelButton]} onPress={closeQuitModal}>
-                <Text style={{color: '#616161', fontFamily: 'Pretendard-Regular', fontSize: 16}}>취소</Text>
+                <Text style={[DesignSystem.title2Regular, DesignSystem.grey10]}>취소</Text>
               </TouchableOpacity>
               <TouchableOpacity disabled={notiChecked ? false : true} style={[styles.buttonStyle, styles.okButton]} onPress={handleSubmit}>
-                <Text style={[styles.body1Lt, {color: 'white', fontFamily: 'Pretendard-Medium', fontSize: 16}]}>확인</Text>
+                <Text style={[DesignSystem.title1SB, {color: 'white'}]}>확인</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -79,16 +80,6 @@ const QuitModal: FC<QuitModalProps> = ({visible, closeQuitModal}) => {
 export default QuitModal;
 
 const styles = StyleSheet.create({
-  body1Lt: {
-    color: '#616161',
-    fontFamily: 'Pretendard-Light',
-    fontSize: 16,
-  },
-  title1SB: {
-    color: '#111111',
-    fontFamily: 'Pretendard-SemiBold',
-    fontSize: 18,
-  },
   overlay: {
     flex: 1,
     justifyContent: 'center',

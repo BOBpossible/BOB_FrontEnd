@@ -35,7 +35,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
     (reviewId: number) => postReviewImages(imageUri, reviewId),
     {
       onSuccess(data) {
-        console.log(data);
+        console.log(data.data);
         queryClient.invalidateQueries(queryKey.STOREINFO);
         queryClient.invalidateQueries(queryKey.REVIEWSME);
         return queryClient.invalidateQueries(queryKey.MISSIONSCOMPLETE);
@@ -52,7 +52,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
       onSuccess(Reviewdata) {
         console.log(Reviewdata);
         if (imageUri.length !== 0) {
-          reviewImageMutation.mutate(Reviewdata.result);
+          return reviewImageMutation.mutate(Reviewdata.result);
         } else {
           queryClient.invalidateQueries(queryKey.STOREINFO);
           return queryClient.invalidateQueries(queryKey.MISSIONSCOMPLETE);
@@ -70,7 +70,7 @@ const ReviewModal: FC<ReviewModalProps> = ({visible, closeReviewModal, storeId, 
       rate: rating,
       missionId: missionId as number,
     });
-    setReviewDone(true);
+    await setReviewDone(true);
     // setDoneModal(true); //던모달 열기
   };
   const handleCloseAllModal = () => {
