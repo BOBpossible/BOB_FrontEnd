@@ -28,14 +28,14 @@ type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
   paddingTop: number;
   data?: IHomeData;
-  newNoti: boolean;
+  newNotiCount: number;
 };
 
 export const AnimatedHeader: FC<AnimatedHeaderProps> = ({
   animatedValue,
   paddingTop,
   data,
-  newNoti,
+  newNotiCount,
 }) => {
   const [addressModal, setAddressModal] = useState(false);
   const barProgressValue = useRef(new Animated.Value(0)).current;
@@ -159,7 +159,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({
           </Text>
           <Icon name="menu-down" size={20} color="black" />
         </TouchableOpacity>
-        <View style={[styles.flexRow]}>
+        <View style={[styles.flexRow, {paddingRight: 10}]}>
           <TouchableOpacity onPress={() => navigation.navigate('MyPoint', {point: data?.point})}>
             <View style={[styles.pointWrap]}>
               <Text style={[styles.pointP]}>P </Text>
@@ -169,7 +169,11 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Notifications', {userId: 0})}>
-            {newNoti && <View style={styles.notificationBadge} />}
+            {newNotiCount > 0 && (
+              <View style={styles.notificationBadge}>
+                <Text style={styles.notificationCount}>{newNotiCount}</Text>
+              </View>
+            )}
 
             <Icon name="bell-outline" size={24} color="#323232" />
           </TouchableOpacity>
@@ -223,6 +227,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 30, ///
+    marginRight: 0,
   },
   header: {
     flexDirection: 'row',
@@ -274,7 +279,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 8,
     justifyContent: 'space-between',
-    marginRight: 8,
+    marginRight: 3,
   },
   pointP: {
     color: '#6C69FF',
@@ -335,12 +340,23 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   notificationBadge: {
-    borderRadius: 5,
-    width: 5,
-    height: 5,
-    backgroundColor: '#615DFF',
+    borderRadius: 16,
+    minWidth: 16,
+    height: 16,
+    backgroundColor: '#E24C44',
     position: 'absolute',
-    right: 0,
+    left: 12,
     top: 0,
+    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 5,
+    paddingVertical: 2.5,
+  },
+  notificationCount: {
+    fontSize: 11,
+    lineHeight: 11,
+    fontFamily: 'Pretendard-SemiBold',
+    color: 'white',
   },
 });

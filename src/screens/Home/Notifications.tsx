@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   Image,
   RefreshControl,
+  ScrollView,
 } from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HomeStackParamList} from '../../nav/HomeNavigator';
@@ -83,7 +84,15 @@ export const Notifications = ({navigation}: Props) => {
             ItemSeparatorComponent={() => <View style={{marginTop: 8}} />}
           />
         ) : (
-          <View style={[DesignSystem.centerArrange]}>
+          <ScrollView
+            contentContainerStyle={[DesignSystem.centerArrange, {flex: 1}]}
+            refreshControl={
+              <RefreshControl
+                onRefresh={() => DataNoti.refetch()}
+                refreshing={DataNoti.isLoading}
+              />
+            }
+          >
             <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 38}]}>
               아직 받은 알람이 없어요!
             </Text>
@@ -93,7 +102,7 @@ export const Notifications = ({navigation}: Props) => {
               style={{width: 164, height: 157}}
               resizeMode="contain"
             />
-          </View>
+          </ScrollView>
         )}
       </SafeAreaView>
     </>

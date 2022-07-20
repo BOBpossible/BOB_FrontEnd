@@ -30,12 +30,12 @@ const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
   const [allDone, setAllDone] = useState(false);
-  const [hasNewNoti, setHasNewNoti] = useState(false);
+  const [newNotiCount, setNewNotiCount] = useState(0);
 
   const notificationData = useQuery<INotiType[]>(queryKey.NOTIFICATIONS, getNotificationsMain, {
     onSuccess: (data) => {
-      const notificationStatus = data.every((element) => element.checked);
-      setHasNewNoti(!notificationStatus);
+      const countNewNoti = data.filter((element) => !element.checked);
+      setNewNotiCount(countNewNoti.length);
     },
   });
 
@@ -55,6 +55,7 @@ const Main = () => {
   useFocusEffect(
     useCallback(() => {
       homeData.refetch();
+      notificationData.refetch();
     }, []),
   );
 
@@ -81,7 +82,7 @@ const Main = () => {
             animatedValue={offset}
             paddingTop={insets.top}
             data={homeData.data}
-            newNoti={hasNewNoti}
+            newNotiCount={newNotiCount}
           />
           <Animated.FlatList
             style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
@@ -115,7 +116,7 @@ const Main = () => {
             animatedValue={offset}
             paddingTop={insets.top}
             data={homeData.data}
-            newNoti={hasNewNoti}
+            newNotiCount={newNotiCount}
           />
           {allDone ? ( //미션 모두 완료한 경우
             <Animated.FlatList

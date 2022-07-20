@@ -2,7 +2,10 @@ import React, {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../../assets/DesignSystem';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import {calHeight, calWidth} from '../../assets/CalculateLength';
 
 export type goWriteProps = {
@@ -30,7 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   progressToggle: {
-    borderRadius: 20.5,
+    borderRadius: 50,
     borderColor: '#E8E8E8',
     borderWidth: 1,
     width: wp(calWidth(178)),
