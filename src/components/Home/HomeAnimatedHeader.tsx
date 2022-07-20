@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   barWrap: {
-    marginTop: Platform.OS === 'ios' ? hp(calHeight(14, true)) : hp(calHeight(14)), ///
+    marginTop: Platform.OS === 'ios' ? hp(calHeight(12, true)) : hp(calHeight(12)), ///
     marginLeft: 16,
     marginRight: 16,
     marginBottom: Platform.OS === 'ios' ? hp(calHeight(8, true)) : hp(calHeight(8)),
