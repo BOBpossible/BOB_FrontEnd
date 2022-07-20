@@ -151,6 +151,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
               }}
               value={inputName}
               placeholder="예금주명 입력"
+              placeholderTextColor="#949494"
               onBlur={() => setFocusedName(false)}
               onFocus={() => setFocusedName(true)}
             />
@@ -192,6 +193,7 @@ export const MyChangePoint = ({navigation, route}: Props) => {
               }}
               value={inputAccounts}
               placeholder="숫자로만 입력 (-제외)"
+              placeholderTextColor="#949494"
               onBlur={() => setFocusedAccounts(false)}
               onFocus={() => setFocusedAccounts(true)}
               keyboardType="number-pad"

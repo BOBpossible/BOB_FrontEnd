@@ -45,9 +45,11 @@ export const RegisterName: FC<RegisterNameProps> = ({
         }}
         value={value}
         placeholder="닉네임을 입력"
+        placeholderTextColor="#949494"
         selectionColor={'#6C69FF'}
         onBlur={() => setFocusedName(false)}
         onFocus={() => setFocusedName(true)}
+        maxLength={10}
       />
     </View>
   );

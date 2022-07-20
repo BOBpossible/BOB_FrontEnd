@@ -93,6 +93,7 @@ export const ReviewWrite: FC<ReviewWriteProps> = ({
           style={[styles.reviewContent]}
           multiline={true}
           placeholder={'리뷰내용 작성'}
+          placeholderTextColor="#949494"
           selectionColor={'#6C69FF'}
           onChangeText={(text) => {
             setReviewContent(text);

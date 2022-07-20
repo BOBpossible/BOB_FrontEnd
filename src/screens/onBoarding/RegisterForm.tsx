@@ -172,9 +172,10 @@ const RegisterForm = ({navigation, route}: Props) => {
         {authError && authKey !== '-1' && (
           <Text style={[styles.errorMessage]}>인증이 완료되지 않았습니다.</Text>
         )}
-        {registerData.phone.length !== 0 && registerData.phone.length < 11 && (
-          <Text style={[styles.errorMessage]}>인증이 완료되지 않았습니다.</Text>
-        )}
+        {registerData.phone.length !== 0 &&
+          registerData.phone.length < 12 &&
+          authKey === '-1' &&
+          authError && <Text style={[styles.errorMessage]}>인증이 완료되지 않았습니다.</Text>}
         {!authError && <Text style={[styles.clearMessage]}>인증이 완료되었습니다.</Text>}
 
         <Controller

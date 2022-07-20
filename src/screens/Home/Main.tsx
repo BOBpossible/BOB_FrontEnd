@@ -70,7 +70,7 @@ const Main = () => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.flex}>
-      <StatusBar barStyle={'dark-content'} />
+      <StatusBar barStyle={'dark-content'} backgroundColor="white" />
       {homeData.isLoading ? (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <ActivityIndicator />
@@ -230,6 +230,15 @@ const styles = StyleSheet.create({
     paddingLeft: 13,
     paddingTop: 10,
     paddingBottom: 10,
+
+    shadowColor: '#000C8A',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 4,
   },
   headerIconStyle: {
     top: -11,

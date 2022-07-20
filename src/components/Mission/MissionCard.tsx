@@ -255,6 +255,15 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     paddingHorizontal: 13,
     paddingVertical: 10,
+
+    shadowColor: '#000C8A',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 4,
   },
   headerIconStyle: {
     color: '#6C69FF',

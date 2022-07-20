@@ -71,6 +71,7 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({
           }}
           value={registerData.phone}
           placeholder="전화번호 입력"
+          placeholderTextColor="#949494"
           selectionColor={'#6C69FF'}
           onBlur={() => setFocusedName(false)}
           onFocus={() => setFocusedName(true)}
@@ -105,7 +106,8 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({
             setAuthInput(text);
           }}
           value={authInput}
-          placeholder="인증번호"
+          placeholder="인증번호 입력"
+          placeholderTextColor="#949494"
           selectionColor={'#6C69FF'}
           onBlur={() => setFocusedAuth(false)}
           onFocus={() => setFocusedAuth(true)}

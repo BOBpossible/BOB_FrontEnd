@@ -38,7 +38,7 @@ export const RegisterNextButton: FC<RegisterNextButtonProps> = ({
               : [{color: 'white'}, DesignSystem.title2Regular]
           }
         >
-          {buttonState === 2 ? '밥파서블 시작하기' : '다음'}
+          {buttonState === 2 ? '밥플레이스 시작하기' : '다음'}
         </Text>
       </View>
     </TouchableOpacity>

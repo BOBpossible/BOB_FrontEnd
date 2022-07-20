@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import type {FC} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Platform} from 'react-native';
 import {Colors} from 'react-native-paper';
@@ -39,7 +39,11 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point}) =>
           style={[styles.userPointWrap]}
         >
           <View style={[DesignSystem.centerArrange, {flexDirection: 'row'}]}>
-            <Text style={[DesignSystem.body2Lt, {marginLeft: 20, marginRight: 16}]}>내 포인트</Text>
+            <Text
+              style={[DesignSystem.body2Lt, DesignSystem.grey10, {marginLeft: 20, marginRight: 16}]}
+            >
+              내 포인트
+            </Text>
             <Text style={[DesignSystem.title4Md, {color: '#111111'}]}>
               {point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             </Text>

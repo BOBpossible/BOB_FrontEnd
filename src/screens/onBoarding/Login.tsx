@@ -15,6 +15,7 @@ import {
 import {calHeight, calWidth} from '../../assets/CalculateLength';
 import messaging from '@react-native-firebase/messaging';
 import {postFcmToken} from '../../api';
+import FastImage from 'react-native-fast-image';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -151,7 +152,7 @@ const Login = () => {
   const goRegister = useCallback(() => navigation.navigate('Register'), []);
   return (
     <SafeAreaView style={styles.flex}>
-      <StatusBar barStyle={'dark-content'} />
+      <StatusBar barStyle={'dark-content'} backgroundColor="white" />
       {/* 개발 단계시 홈과 가입으로 가는 버튼 */}
       {/* <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <TouchableOpacity onPress={goMain}>
@@ -187,7 +188,7 @@ const Login = () => {
       />
       <View style={[styles.loginButtonWrap]}>
         <TouchableOpacity onPress={() => signUpWithSNS('kakao')}>
-          <Image
+          <FastImage
             style={[styles.iconButton]}
             source={require('../../assets/images/kakaoButton.png')}
             resizeMode="contain"
@@ -195,7 +196,7 @@ const Login = () => {
         </TouchableOpacity>
         {Platform.OS === 'ios' && (
           <TouchableOpacity onPress={onAppleButtonPress}>
-            <Image
+            <FastImage
               style={[styles.iconButton]}
               source={require('../../assets/images/appleLogin.png')}
               resizeMode="contain"
@@ -203,7 +204,7 @@ const Login = () => {
           </TouchableOpacity>
         )}
         <TouchableOpacity onPress={() => onGoogleButtonPress()}>
-          <Image
+          <FastImage
             style={[styles.iconButton]}
             source={require('../../assets/images/GoogleLogin.png')}
             resizeMode="contain"

@@ -18,7 +18,7 @@ const Splash = () => {
 
   return (
     <SafeAreaView style={[styles.flex]}>
-      <StatusBar barStyle={'dark-content'} />
+      <StatusBar barStyle={'dark-content'} backgroundColor="white" />
 
       <View style={[styles.imageWrap]}>
         <View style={{marginBottom: 28}}>

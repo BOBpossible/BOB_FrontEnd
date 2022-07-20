@@ -39,6 +39,7 @@ export const RegisterEmail: FC<RegisterEmailProps> = ({
         }}
         value={value}
         placeholder="이메일을 입력"
+        placeholderTextColor="#949494"
         selectionColor={'#6C69FF'}
         onBlur={() => setFocusedName(false)}
         onFocus={() => setFocusedName(true)}

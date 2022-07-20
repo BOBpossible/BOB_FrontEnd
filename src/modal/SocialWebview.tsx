@@ -77,6 +77,7 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
         const result = queryString(e.url);
         if (e.url.includes('bobpossible.shop/auth/success')) {
           _handleMessage(result);
+          webviewRef.current?.stopLoading();
         }
       }}
       originWhitelist={['*']}

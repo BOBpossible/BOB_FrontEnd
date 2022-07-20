@@ -62,6 +62,7 @@ export const ReviewReportModal: FC<ReviewReportModalProps> = ({
                     }}
                     value={body}
                     placeholder="신고 사유를 작성해주세요."
+                    placeholderTextColor="#949494"
                     multiline={true}
                     selectionColor={'#6C69FF'}
                     onBlur={() => setFocusedBody(false)}
