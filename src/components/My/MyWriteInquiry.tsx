@@ -79,16 +79,18 @@ export const MyWriteInquiry: FC<goWriteProps> = ({setNowWrite}) => {
                 onBlur={() => setFocusedTitle(false)}
                 onFocus={() => setFocusedTitle(true)}
               />
-              <TouchableOpacity onPress={() => setTitle('')} style={[styles.titleXView]}>
-                <View
-                  style={[
-                    DesignSystem.centerArrange,
-                    {backgroundColor: '#B7B7B7', width: 18, height: 18, borderRadius: 9},
-                  ]}
-                >
-                  <Icon name="close" size={14} color="#FFFFFF" style={{position: 'absolute'}} />
-                </View>
-              </TouchableOpacity>
+              {title !== '' && (
+                <TouchableOpacity onPress={() => setTitle('')} style={[styles.titleXView]}>
+                  <View
+                    style={[
+                      DesignSystem.centerArrange,
+                      {backgroundColor: '#B7B7B7', width: 18, height: 18, borderRadius: 9},
+                    ]}
+                  >
+                    <Icon name="close" size={14} color="#FFFFFF" style={{position: 'absolute'}} />
+                  </View>
+                </TouchableOpacity>
+              )}
             </View>
             <View style={[styles.bodyWrap]}>
               <TextInput
@@ -161,10 +163,7 @@ const styles = StyleSheet.create({
     height: hp(calHeight(18)),
     right: wp(calWidth(26)),
   },
-  titleX: {
-    width: wp(calWidth(18)),
-    height: hp(calHeight(18)),
-  },
+
   bodyWrap: {
     marginTop: 16,
   },

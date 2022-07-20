@@ -137,7 +137,7 @@ export const MapStoreReviewList = ({
           return (
             <>
               {item.data.result.content.map((review: IStoreReview, i: number) => (
-                <View key={i}>
+                <View key={i + index}>
                   <MapStoreReview
                     name={review.name}
                     date={review.date}

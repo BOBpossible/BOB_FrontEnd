@@ -119,6 +119,8 @@ const styles = StyleSheet.create({
   imageSize: {
     height: 80,
     width: 80,
+    borderColor: '#EDEDED',
+    borderWidth: 1,
   },
   replyHeader: {
     color: '#7D7D7D',

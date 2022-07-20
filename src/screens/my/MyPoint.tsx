@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -22,6 +22,7 @@ import {useInfiniteQuery} from 'react-query';
 import {queryKey} from '../../api/queryKey';
 import {getPointsList} from '../../api';
 import {MyPageNo} from '../../components/My/MyPageNo';
+import {useFocusEffect} from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyPoint'>;
 export type PointsListContent = {
@@ -39,6 +40,12 @@ export type PointsListType = {
 };
 export const MyPoint = ({navigation, route}: Props) => {
   const [point, setPoint] = useState<number>(route.params.point);
+
+  useFocusEffect(
+    useCallback(() => {
+      DataPointsList.refetch();
+    }, []),
+  );
 
   const DataPointsList = useInfiniteQuery(
     queryKey.POINTSLIST,

@@ -67,7 +67,7 @@ export const MyInquiryDetails: FC<MyInquiryDetailsProps> = ({title, date, status
 const styles = StyleSheet.create({
   inquiryCardBottomLine: {
     flex: 1,
-    paddingBottom: 8,
+    paddingBottom: 4,
     borderBottomColor: '#EFEFEF',
     borderBottomWidth: 1,
   },
