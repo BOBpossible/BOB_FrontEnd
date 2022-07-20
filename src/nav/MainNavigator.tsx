@@ -18,8 +18,6 @@ import {queryKey} from '../api/queryKey';
 import {getMissionsProgress} from '../api/mission';
 import {MissionNavigator} from './MissionNavigator';
 
-import Home from '../assets/icons/home.svg';
-import HomeFocused from '../assets/icons/home-grey.svg';
 type TabBarIconProps = {focused: boolean; color: string; size: number};
 
 const icons: Record<string, string[]> = {
@@ -38,7 +36,7 @@ export const MainNavigator = () => {
     return {
       headerShown: false,
       tabBarShowLabel: true,
-      // tabBarIcon: ({focused, color, size}: TabBarIconProps) => {
+      // tabBarIcon: ({focused, size}: TabBarIconProps) => {
       //   const {name} = route;
       //   const focusedSize = focused ? size + 6 : size;
       //   const focusedColor = focused ? Colors.black : color;
@@ -102,19 +100,49 @@ export const MainNavigator = () => {
           tabBarIcon: ({focused}) => {
             if (focused) {
               return (
-                <Image
-                  source={require('../assets/icons/noodleFocus.png')}
-                  style={{width: 24, height: 24}}
-                  resizeMode="contain"
-                />
+                <View>
+                  {data?.length !== 0 && (
+                    <View
+                      style={{
+                        backgroundColor: '#615DFF',
+                        height: 5,
+                        width: 5,
+                        borderRadius: 5,
+                        position: 'absolute',
+                        top: 0,
+                        right: 0,
+                      }}
+                    />
+                  )}
+                  <Image
+                    source={require('../assets/icons/noodleFocus.png')}
+                    style={{width: 24, height: 24}}
+                    resizeMode="contain"
+                  />
+                </View>
               );
             } else {
               return (
-                <Image
-                  source={require('../assets/icons/noodle.png')}
-                  style={{width: 24, height: 24}}
-                  resizeMode="contain"
-                />
+                <View>
+                  {data?.length !== 0 && (
+                    <View
+                      style={{
+                        backgroundColor: '#615DFF',
+                        height: 5,
+                        width: 5,
+                        borderRadius: 5,
+                        position: 'absolute',
+                        top: 0,
+                        right: 0,
+                      }}
+                    />
+                  )}
+                  <Image
+                    source={require('../assets/icons/noodle.png')}
+                    style={{width: 24, height: 24}}
+                    resizeMode="contain"
+                  />
+                </View>
               );
             }
           },
