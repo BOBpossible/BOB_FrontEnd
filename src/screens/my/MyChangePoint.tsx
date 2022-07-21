@@ -338,6 +338,7 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 10,
     paddingBottom: 10,
+    color: '#111111',
   },
   focusBorder: {borderColor: '#6C69FF', borderWidth: 1},
   unfocusBorder: {borderColor: '#DFDFDF', borderWidth: 1},
