@@ -36,10 +36,9 @@ export type INotiType = {
   checked: boolean;
   date: string;
   id: number;
-  missionId: number;
+  subId: number;
   pushType: string;
-  storeId: number;
-  storeName: string;
+  name: string;
   subTitle: string;
   title: string;
 };

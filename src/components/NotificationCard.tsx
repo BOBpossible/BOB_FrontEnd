@@ -14,10 +14,10 @@ import {missionPage} from '../state';
 export type NotificationCardProps = {
   navigation: any;
   pushType: string; //미션알림1인지 리뷰남기란 알림0인지
-  storeName: string;
-  storeId: number;
-  missionId: number;
-  mission: string; //미션
+  name: string;
+  subId: number;
+  title: string;
+  subTitle: string;
   date: string;
   checked: boolean;
   id: number;
@@ -26,10 +26,10 @@ export type NotificationCardProps = {
 export const NotificationCard: FC<NotificationCardProps> = ({
   id,
   pushType,
-  storeName,
-  storeId,
-  missionId,
-  mission,
+  name,
+  title,
+  subTitle,
+  subId,
   date,
   checked,
   navigation,
@@ -54,7 +54,7 @@ export const NotificationCard: FC<NotificationCardProps> = ({
         <TouchableOpacity
           style={[checked ? styles.notiCardChecked : styles.notiCardNew]}
           onPress={() => {
-            navigation.navigate('HomeMissionDetails', {missionId: missionId});
+            navigation.navigate('HomeMissionDetails', {missionId: subId});
             missionSuccessRequestMutation.mutate(id);
           }}
         >
@@ -65,8 +65,8 @@ export const NotificationCard: FC<NotificationCardProps> = ({
                 새로운 미션이 도착했습니다!
               </Text>
               <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}>
-                <Text style={[DesignSystem.purple5]}>{storeName}</Text>에서 {mission}의 식사를
-                하세요!
+                <Text style={[DesignSystem.purple5]}>{name}</Text>
+                {subTitle}
               </Text>
               <Text style={[DesignSystem.caption1Lt, {color: '#7D7D7D'}]}>
                 {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)} {date.slice(11, 15)}
@@ -91,7 +91,7 @@ export const NotificationCard: FC<NotificationCardProps> = ({
                 리뷰를 남겨주세요.
               </Text>
               <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}>
-                <Text style={[DesignSystem.purple5]}>{storeName}</Text>의 음식이 맛있었다면 리뷰를
+                <Text style={[DesignSystem.purple5]}>{name}</Text>의 음식이 맛있었다면 리뷰를
                 남겨주세요.
               </Text>
               <Text style={[DesignSystem.caption1Lt, {color: '#7D7D7D'}]}>

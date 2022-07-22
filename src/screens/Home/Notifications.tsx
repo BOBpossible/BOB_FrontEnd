@@ -72,10 +72,10 @@ export const Notifications = ({navigation}: Props) => {
               <NotificationCard
                 navigation={navigation}
                 pushType={item.pushType}
-                storeName={item.storeName}
-                storeId={item.storeId}
-                missionId={item.missionId}
-                mission={item.subTitle}
+                name={item.name}
+                subId={item.subId}
+                subTitle={item.subTitle}
+                title={item.title}
                 date={item.date}
                 checked={item.checked}
                 id={item.id}
