@@ -84,8 +84,8 @@ export const RegisterGender: FC<RegisterGenderProps> = ({
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            onChange('NULL');
-            setRegisterData({...registerData, gender: 'NULL'});
+            onChange('NONE');
+            setRegisterData({...registerData, gender: 'NONE'});
           }}
         >
           <View
@@ -93,14 +93,14 @@ export const RegisterGender: FC<RegisterGenderProps> = ({
               styles.genderBox,
               error
                 ? styles.errorBorderNoFocus
-                : value === 'NULL'
+                : value === 'NONE'
                 ? styles.genderChecked
                 : styles.genderUnchecked,
             ]}
           >
             <Text
               style={
-                value === 'NULL'
+                value === 'NONE'
                   ? [DesignSystem.title4Md, DesignSystem.purple5]
                   : [DesignSystem.body1Lt, DesignSystem.grey10]
               }
