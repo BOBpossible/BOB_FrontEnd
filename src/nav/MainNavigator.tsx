@@ -3,9 +3,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Colors} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 Icon.loadFont();
-import Main from '../screens/Home/Main';
-import Mission from '../screens/Mission';
-import MyPage from '../screens/MyPage';
 import {MyNavigator} from './MyNavigator';
 import {HomeNavigator} from './HomeNavigator';
 
@@ -17,15 +14,6 @@ import {IMissionsProgress} from '../data';
 import {queryKey} from '../api/queryKey';
 import {getMissionsProgress} from '../api/mission';
 import {MissionNavigator} from './MissionNavigator';
-
-type TabBarIconProps = {focused: boolean; color: string; size: number};
-
-const icons: Record<string, string[]> = {
-  HomeNavigator: ['home', 'home-outline'],
-  MissionNavigator: ['food', 'food-outline'],
-  MapNavigator: ['map-search', 'map-search-outline'],
-  MyNavigator: ['account-settings', 'account-settings-outline'],
-};
 
 const Tab = createBottomTabNavigator();
 

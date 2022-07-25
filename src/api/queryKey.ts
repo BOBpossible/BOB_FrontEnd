@@ -15,4 +15,5 @@ export const queryKey = {
   NOTIFICATIONS: 'notifications',
   QUESTIONS: 'questions',
   QUESTIONDETAIL: 'questionDetail',
+  SEARCH: 'search',
 };

@@ -32,6 +32,7 @@ import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../assets/CalculateLength';
 import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
+import {useNavigation} from '@react-navigation/native';
 
 const Map = () => {
   const height = Dimensions.get('screen').height;
@@ -43,12 +44,11 @@ const Map = () => {
   const isFocused = useIsFocused();
   useEffect(() => {
     if (isFocused) {
-      StoreList.refetch();
     } else {
       storeListRef.current?.snapToIndex(0);
     }
   }, [isFocused]);
-
+  const navigation = useNavigation();
   const webviewRef = useRef<WebView | null>(null);
   const storeListRef = useRef<BottomSheet | null>(null);
   const DataUser = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
@@ -105,6 +105,18 @@ const Map = () => {
             {Address.data?.addressDong}
           </Text>
           <Icon name="menu-down" size={18} color="black" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{marginRight: 16}}
+          onPress={() => {
+            navigation.navigate('MapSearch');
+          }}
+        >
+          <Image
+            source={require('../assets/icons/searchIcon.png')}
+            style={{width: 20, height: 20}}
+          />
         </TouchableOpacity>
       </View>
       <MapWebview
@@ -175,7 +187,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     height: 50,
     width: '100%',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   header: {
     backgroundColor: '#FFFFFF',
