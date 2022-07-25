@@ -118,6 +118,6 @@ export const postReviewReport = async (data: {reviewId: number; content: string}
 };
 
 export const patchDeleteReview = async (reviewId: string) => {
-  const response = await customAxios().patch(`/api/v1/reviews/status/${reviewId}`, null);
+  const response = await customAxios().patch(`/api/v1/reviews/status/${reviewId}`);
   return response.data;
 };
