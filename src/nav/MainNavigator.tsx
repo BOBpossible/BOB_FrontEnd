@@ -145,7 +145,7 @@ export const MainNavigator = () => {
             if (focused) {
               return (
                 <Image
-                  source={require('../assets/icons/searchFocus.png')}
+                  source={require('../assets/icons/mapFocus.png')}
                   style={{width: 24, height: 24}}
                   resizeMode="contain"
                 />
@@ -153,7 +153,7 @@ export const MainNavigator = () => {
             } else {
               return (
                 <Image
-                  source={require('../assets/icons/search.png')}
+                  source={require('../assets/icons/map.png')}
                   style={{width: 24, height: 24}}
                   resizeMode="contain"
                 />
