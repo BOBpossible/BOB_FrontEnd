@@ -62,7 +62,7 @@ export const NotificationCard: FC<NotificationCardProps> = ({
             <View style={!checked ? [styles.dot] : [styles.noDot]} />
             <View style={[styles.notiView]}>
               <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 4}]}>
-                새로운 미션이 도착했습니다!
+                {title}
               </Text>
               <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}>
                 <Text style={[DesignSystem.purple5]}>{name}</Text>
@@ -88,11 +88,11 @@ export const NotificationCard: FC<NotificationCardProps> = ({
             <View style={!checked ? [styles.dot] : [styles.noDot]} />
             <View style={[styles.notiView]}>
               <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 4}]}>
-                리뷰를 남겨주세요.
+                {title}
               </Text>
               <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}>
-                <Text style={[DesignSystem.purple5]}>{name}</Text>의 음식이 맛있었다면 리뷰를
-                남겨주세요.
+                <Text style={[DesignSystem.purple5]}>{name}</Text>
+                {subTitle}
               </Text>
               <Text style={[DesignSystem.caption1Lt, {color: '#7D7D7D'}]}>
                 {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)} {date.slice(11, 16)}
