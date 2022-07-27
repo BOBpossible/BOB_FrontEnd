@@ -48,8 +48,8 @@ export const MapWebview: FC<MapWebviewProps> = ({
             : type === 1
             ? {uri: `https://bobplace.netlify.app/store/${missionId}`}
             : type === 2
-            ? {uri: `https://bobplace.netlify.app/search/${userId}/${keyword}`}
-            : {uri: `https://bobplace.netlify.app/search/tag/${userId}/${categoryId}`}
+            ? {uri: `https://bobplace.netlify.app/search/${userId}/${keyword}/${y}/${x}`}
+            : {uri: `https://bobplace.netlify.app/search/tag/${userId}/${categoryId}/${y}/${x}`}
         }
         onMessage={(event) => {
           onClickPin(event);

@@ -18,6 +18,7 @@ type MyReviewEachType = {
   rate: number;
   content: string;
   reply: {date: string; reply: string; reviewReplyId: number}[];
+  storeName: string;
   openPhotoModal: (imageSource: string) => void;
 };
 
@@ -29,6 +30,7 @@ export const MyReviewEach: FC<MyReviewEachType> = ({
   content,
   images,
   reply,
+  storeName,
   openPhotoModal,
 }) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -54,7 +56,7 @@ export const MyReviewEach: FC<MyReviewEachType> = ({
           <View style={[styles.title]}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={[DesignSystem.title3SB, DesignSystem.grey17, {marginRight: 12}]}>
-                {name}
+                {storeName}
               </Text>
               <Text
                 style={{

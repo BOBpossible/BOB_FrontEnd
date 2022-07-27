@@ -1,5 +1,8 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Image, SafeAreaView, Animated, StatusBar} from 'react-native';
+import {useRecoilState} from 'recoil';
+import {history} from '../../state';
 
 const moveUp = (progressValue: Animated.Value) => {
   Animated.timing(progressValue, {
@@ -11,10 +14,23 @@ const moveUp = (progressValue: Animated.Value) => {
 
 const Splash = () => {
   const [progressValue] = useState(new Animated.Value(30));
+  const [rcHistory, setRCHistory] = useRecoilState(history);
 
   setTimeout(() => {
     moveUp(progressValue);
   }, 300);
+
+  const getSearchHistory = async () => {
+    const getSearch = await AsyncStorage.getItem('history');
+    console.log('얻는중...', getSearch);
+    if (getSearch !== null) {
+      setRCHistory(JSON.parse(getSearch));
+    }
+  };
+
+  useEffect(() => {
+    getSearchHistory();
+  }, []);
 
   return (
     <SafeAreaView style={[styles.flex]}>

@@ -23,41 +23,33 @@ import {history} from '../state';
 export const MapSearch = () => {
   const navigation = useNavigation();
   const [searchText, setSearchText] = useState('');
-  const [RCHistory, setRCHistory] = useRecoilState(history);
+  const [rcHistory, setRCHistory] = useRecoilState(history);
   const search = useQuery([queryKey.SEARCH, searchText], () => getSuggestion(searchText));
   const [focusedSearch, setFocusedSearch] = useState(false);
 
   const categories = useQuery(queryKey.CATEGORY, () => getCategories());
-  const isFocused = useIsFocused();
-  useEffect(() => {
-    if (isFocused) {
-      getSearchHistory();
-    }
-  }, [isFocused]);
 
-  const getSearchHistory = async () => {
-    const getSearch = await AsyncStorage.getItem('history');
-    if (getSearch !== null) {
-      setRCHistory(JSON.parse(getSearch));
-    }
-  };
+  // const getSearchHistory = async () => {
+  //   const getSearch = await AsyncStorage.getItem('history');
+  //   console.log('얻는중...', getSearch);
+  //   if (getSearch !== null) {
+  //     setRCHistory(JSON.parse(getSearch));
+  //   }
+  // };
 
-  const setSearchHistory = async (data: string) => {
-    console.log(data);
-    setRCHistory([data, ...RCHistory]);
-    console.log('상태에 추가하고 난뒤:', RCHistory);
-    const stringifiedArray = JSON.stringify(RCHistory);
+  const setSearchHistory = async () => {
+    const stringifiedArray = JSON.stringify(rcHistory);
     await AsyncStorage.setItem('history', stringifiedArray);
   };
 
   const deleteHistory = async () => {
-    await setRCHistory([]);
-    const stringifiedArray = JSON.stringify(RCHistory);
+    const stringifiedArray = JSON.stringify(rcHistory);
     await AsyncStorage.setItem('history', stringifiedArray);
   };
 
-  const searchSubmit = async () => {
-    setSearchHistory(searchText);
+  const searchSubmit = () => {
+    setRCHistory(() => [...rcHistory, searchText]);
+    // setSearchHistory();
     navigation.navigate('MapSearchResult', {search: searchText});
   };
 
@@ -108,7 +100,7 @@ export const MapSearch = () => {
         </View>
       </View>
 
-      <KeyboardAwareScrollView contentContainerStyle={{marginTop: 14}}>
+      <KeyboardAwareScrollView contentContainerStyle={{marginTop: 16}}>
         {searchText !== '' ? (
           search.isFetched && (
             <>
@@ -116,7 +108,8 @@ export const MapSearch = () => {
                 <TouchableOpacity
                   style={{marginTop: 24, marginLeft: 50}}
                   onPress={() => {
-                    setSearchHistory(item.suggest);
+                    setRCHistory([...rcHistory, item.suggest]);
+                    // setSearchHistory();
                     navigation.navigate('MapSearchResult', {search: item.suggest});
                   }}
                   key={index}
@@ -128,7 +121,7 @@ export const MapSearch = () => {
           )
         ) : (
           <>
-            <View
+            {/* <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -137,20 +130,25 @@ export const MapSearch = () => {
               }}
             >
               <Text style={[DesignSystem.h3SB, DesignSystem.grey17]}>지난 검색어</Text>
-              <TouchableOpacity onPress={deleteHistory}>
+              <TouchableOpacity
+                onPress={() => {
+                  setRCHistory([]);
+                  deleteHistory();
+                }}
+              >
                 <Text style={[DesignSystem.caption1Lt, DesignSystem.grey10]}>지우기</Text>
               </TouchableOpacity>
-            </View>
-            <View>
+            </View> */}
+            {/* <View>
               <ScrollView horizontal>
-                {RCHistory.map((item, index) => (
+                {rcHistory.map((item, index) => (
                   <View key={index}>
                     <Text>{item}</Text>
                   </View>
                 ))}
               </ScrollView>
-            </View>
-            <View style={{marginHorizontal: 16, marginTop: 24}}>
+            </View> */}
+            <View style={{marginHorizontal: 16}}>
               <Text style={[DesignSystem.h3SB, DesignSystem.grey17]}>추천 태그</Text>
               <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10}}>
                 {categories.isFetched &&

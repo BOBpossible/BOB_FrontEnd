@@ -78,6 +78,7 @@ export const MyReview = ({navigation}: Props) => {
                         content={e.content}
                         images={e.images}
                         reply={e.reply}
+                        storeName={e.storeName}
                         openPhotoModal={openPhotoModal}
                       />
                     </View>

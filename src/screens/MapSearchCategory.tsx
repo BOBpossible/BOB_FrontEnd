@@ -22,7 +22,7 @@ import {MapWebview} from '../modal/MapWebview';
 import {MapStoreBottomSheet} from '../components/Map/MapStoreBottomSheet';
 import {DesignSystem} from '../assets/DesignSystem';
 import {useQuery} from 'react-query';
-import {IgetUsersMe, IStoreMap} from '../data';
+import {IAddress, IgetUsersMe, IStoreMap} from '../data';
 import {getAddress, getSearchCategory, getSearchKeyword, getStoreList, getUserInfo} from '../api';
 import {queryKey} from '../api/queryKey';
 import {ConnectionError} from '../components/ConnectionError';
@@ -64,6 +64,13 @@ const MapSearchCategory = ({route}) => {
       },
     },
   );
+
+  const Address = useQuery<IAddress>(queryKey.ADDRESS, getAddress);
+  if (Address.isSuccess) {
+    if (webviewRef.current !== null) {
+      webviewRef.current.reload();
+    }
+  }
 
   const sortList = (data?: IStoreMap[]) => {
     data?.sort(function (a, b) {
@@ -121,25 +128,29 @@ const MapSearchCategory = ({route}) => {
         webviewRef={webviewRef}
         type={3}
         categoryId={route.params.category.id}
+        x={Address.data?.x}
+        y={Address.data?.y}
       />
 
       <BottomSheet
         ref={storeListRef}
-        snapPoints={[120, listSnapPoint]}
+        snapPoints={[60, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
         backdropComponent={renderBackdrop}
       >
         <BottomSheetView style={[styles.missionListTextWrap]}>
-          <Text style={[DesignSystem.title3SB, {color: '#111111'}]}>내 주변 가게</Text>
+          <Text style={[DesignSystem.title3SB, {color: '#111111'}]}>
+            '{route.params.category.name}' 검색 결과
+          </Text>
         </BottomSheetView>
 
         {StoreList.data?.length === 0 ? (
           <View style={[DesignSystem.centerArrange, {flex: 1, marginBottom: 50}]}>
             <Text style={[DesignSystem.title1SB, {color: '#111111', marginBottom: 2}]}>
-              주변에 미션이 없어요
+              주변에 가게가 없어요
             </Text>
             <Text style={[DesignSystem.body1Lt, {color: '#949494', marginBottom: 38}]}>
-              빠른 시일내에 미션을 업데이트 할게요!
+              빠른 시일내에 가게를 업데이트 할게요!
             </Text>
 
             <FastImage

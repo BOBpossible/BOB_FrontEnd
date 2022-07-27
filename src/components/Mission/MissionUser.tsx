@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingTop: 16,
     paddingBottom: 14,
+    borderColor: '#E8E8E8',
+    borderWidth: 1,
   },
   profileWrap: {
     marginLeft: 19,

@@ -14,9 +14,7 @@ export const HomeBobpool: FC<HomeBobpoolType> = ({category}) => {
         {category === 'NO' ? '주변에 미션이 없어요' : '대단해요!'}
       </Text>
       <Text style={[DesignSystem.body1Lt, {color: '#949494', marginBottom: 38}]}>
-        {category === 'NO'
-          ? '빠른 시일내에 미션을 업데이트 할게요!'
-          : '이번 모든 미션을 완료했어요!'}
+        {category === 'NO' ? '빠른 시일내에 미션을 업데이트 할게요!' : '모든 미션을 완료했어요!'}
       </Text>
       {category === 'NO' ? (
         <FastImage
