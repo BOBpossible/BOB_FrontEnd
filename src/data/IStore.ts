@@ -14,6 +14,7 @@ export type IStoreMap = {
   distance: number;
   imageUrl: string;
   mission: boolean;
+  rate: number;
   name: string;
   point: number;
   storeId: number;

@@ -61,7 +61,7 @@ export const MapStoreReviewPhoto = ({
   };
 
   //리뷰없는경우 ----------------------------
-  if (reviewCount === 0) {
+  if (reviewImages.data?.pages[0].data.result.content.length === 0) {
     return (
       <ScrollView
         refreshControl={

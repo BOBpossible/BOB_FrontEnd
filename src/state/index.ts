@@ -14,3 +14,8 @@ export const missionPage = atom({
   key: 'missionPage',
   default: true,
 });
+
+export const history = atom<string[]>({
+  key: 'history',
+  default: [],
+});

@@ -17,6 +17,8 @@ export type MapStoreBottomSheetProps = {
   distance: number;
   image: string;
   mission: boolean;
+  rate: number;
+  address: string;
 };
 
 const convertDistance = (distance: number) => {
@@ -34,29 +36,40 @@ export const MapStoreBottomSheet: FC<MapStoreBottomSheetProps> = ({
   distance,
   image,
   mission,
+  rate,
+  address,
 }) => {
   return (
-    <View>
-      <FastImage source={{uri: image}} style={{height: 220}} />
+    <View style={{flexDirection: 'row', marginHorizontal: 16}}>
+      <FastImage source={{uri: image}} style={{height: 70, width: 70, borderRadius: 5}} />
       <View style={[styles.storeInfoWrap]}>
-        <View style={[styles.flexRow, {justifyContent: 'space-between', marginBottom: 8}]}>
+        <View style={[styles.flexRow]}>
+          <Text style={[DesignSystem.h3SB, DesignSystem.grey17, {marginRight: 8}]}>
+            {storeName}
+          </Text>
+          <Text style={[DesignSystem.body2Lt, DesignSystem.grey8]}>{storeCategory}</Text>
+        </View>
+
+        <View style={[styles.flexRow]}>
+          <Text style={[DesignSystem.body2Lt, DesignSystem.grey10]}>{address}</Text>
+        </View>
+
+        <View style={[styles.flexRow, {marginBottom: 8}]}>
           {mission && (
             <View style={[styles.pointWrap]}>
-              <Text style={[styles.storePoint]}>{point} P</Text>
+              <Text style={[styles.storePoint]}>{point}P</Text>
             </View>
           )}
-
-          <View style={[styles.infoWrap]}>
-            <Text style={[DesignSystem.body2Lt, {color: '#616161'}]}>가게정보</Text>
-            <Icon name="chevron-right" size={22} color={'#949494'} />
-          </View>
-        </View>
-        <View style={[styles.flexRow, {marginBottom: 4}]}>
-          <Text style={[styles.storeName]}>{storeName}</Text>
-          <Text style={[styles.storeDistance]}>{convertDistance(distance)}</Text>
-        </View>
-        <View style={[styles.flexRow]}>
-          <Text style={[styles.storeCategory]}>{storeCategory}</Text>
+          <Icon name="star" size={16} color={'#FFDE69'} />
+          <Text style={[DesignSystem.caption1Lt, DesignSystem.grey10, {marginLeft: 2.5}]}>
+            {rate === 0 ? '리뷰없음' : rate}
+          </Text>
+          <View
+            style={{height: 13, borderLeftColor: '#616161', borderLeftWidth: 0.5, marginLeft: 5}}
+          />
+          <Text style={[DesignSystem.caption1Lt, DesignSystem.grey10, styles.storeDistance]}>
+            {convertDistance(distance)}
+          </Text>
         </View>
       </View>
     </View>
@@ -68,7 +81,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     backgroundColor: '#FFFFFF',
     paddingLeft: 16,
-    paddingTop: 12,
     paddingBottom: 12,
   },
   flexRow: {
@@ -76,16 +88,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pointWrap: {
-    backgroundColor: '#6C69FF',
-    paddingHorizontal: 6,
-    paddingVertical: 4,
+    backgroundColor: '#F6F6FE',
+    paddingHorizontal: 3,
+    paddingVertical: 2,
     borderRadius: 5,
-    width: wp(calWidth(45)),
+    width: wp(calWidth(36)),
+    height: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 2.5,
   },
   storeName: {
-    fontFamily: 'Pretendard-Medium',
+    fontFamily: 'Pretendard-SemiBold',
     fontSize: 16,
     lineHeight: 16,
     color: '#111111',
@@ -101,7 +115,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard-Medium',
     fontSize: 12,
     lineHeight: 12,
-    color: '#FFFFFF',
+    color: '#6C69FF',
   },
   infoWrap: {
     flexDirection: 'row',
@@ -112,10 +126,6 @@ const styles = StyleSheet.create({
     right: 3,
   },
   storeDistance: {
-    marginLeft: 8,
-    fontFamily: 'Pretendard-Light',
-    fontSize: 16,
-    lineHeight: 16,
-    color: '#7D7D7D',
+    marginLeft: 5,
   },
 });

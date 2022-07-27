@@ -77,7 +77,7 @@ const Main = () => {
           <ActivityIndicator />
         </View>
       ) : homeData.data?.missions === null ? (
-        <View>
+        <>
           <AnimatedHeader
             animatedValue={offset}
             paddingTop={insets.top}
@@ -109,7 +109,7 @@ const Main = () => {
               })(event);
             }}
           />
-        </View>
+        </>
       ) : (
         <>
           <AnimatedHeader

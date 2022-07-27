@@ -34,7 +34,7 @@ import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 
-const Map = () => {
+const MapSearchResult = () => {
   const height = Dimensions.get('screen').height;
   const listSnapPoint =
     Platform.OS === 'ios' ? hp(calHeight(height - 220, true)) : hp(calHeight(height - 220));
@@ -128,7 +128,7 @@ const Map = () => {
 
       <BottomSheet
         ref={storeListRef}
-        snapPoints={[120, listSnapPoint]}
+        snapPoints={[60, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
         backdropComponent={renderBackdrop}
       >
@@ -206,4 +206,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Map;
+export default MapSearchResult;
