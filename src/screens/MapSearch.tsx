@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useQuery} from 'react-query';
 import {queryKey} from '../api/queryKey';
-import {getSuggestion} from '../api';
+import {getCategories, getSuggestion} from '../api';
 import {DesignSystem} from '../assets/DesignSystem';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -27,6 +27,7 @@ export const MapSearch = () => {
   const search = useQuery([queryKey.SEARCH, searchText], () => getSuggestion(searchText));
   const [focusedSearch, setFocusedSearch] = useState(false);
 
+  const categories = useQuery(queryKey.CATEGORY, () => getCategories());
   const isFocused = useIsFocused();
   useEffect(() => {
     if (isFocused) {
@@ -42,10 +43,10 @@ export const MapSearch = () => {
   };
 
   const setSearchHistory = async (data: string) => {
-    setRCHistory([...RCHistory, data]);
+    console.log(data);
+    setRCHistory([data, ...RCHistory]);
     console.log('상태에 추가하고 난뒤:', RCHistory);
     const stringifiedArray = JSON.stringify(RCHistory);
-    console.log('string array: ', stringifiedArray);
     await AsyncStorage.setItem('history', stringifiedArray);
   };
 
@@ -57,7 +58,7 @@ export const MapSearch = () => {
 
   const searchSubmit = async () => {
     setSearchHistory(searchText);
-    navigation.navigate('MapSearchResult');
+    navigation.navigate('MapSearchResult', {search: searchText});
   };
 
   return (
@@ -115,7 +116,8 @@ export const MapSearch = () => {
                 <TouchableOpacity
                   style={{marginTop: 24, marginLeft: 50}}
                   onPress={() => {
-                    navigation.navigate('MapSearchResult', {search: searchText});
+                    setSearchHistory(item.suggest);
+                    navigation.navigate('MapSearchResult', {search: item.suggest});
                   }}
                   key={index}
                 >
@@ -141,12 +143,41 @@ export const MapSearch = () => {
             </View>
             <View>
               <ScrollView horizontal>
-                {RCHistory.map((item) => (
-                  <View>
+                {RCHistory.map((item, index) => (
+                  <View key={index}>
                     <Text>{item}</Text>
                   </View>
                 ))}
               </ScrollView>
+            </View>
+            <View style={{marginHorizontal: 16, marginTop: 24}}>
+              <Text style={[DesignSystem.h3SB, DesignSystem.grey17]}>추천 태그</Text>
+              <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10}}>
+                {categories.isFetched &&
+                  categories.data.map((item, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        navigation.navigate('MapSearchCategory', {category: item});
+                      }}
+                    >
+                      <View
+                        style={{
+                          paddingHorizontal: 14,
+                          paddingVertical: 4,
+                          backgroundColor: '#F6F6FE',
+                          borderRadius: 20,
+                          marginRight: 5,
+                          marginBottom: 6,
+                        }}
+                      >
+                        <Text style={[DesignSystem.body2Lt, DesignSystem.purple5]}>
+                          {item.name}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+              </View>
             </View>
           </>
         )}

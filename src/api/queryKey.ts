@@ -16,4 +16,5 @@ export const queryKey = {
   QUESTIONS: 'questions',
   QUESTIONDETAIL: 'questionDetail',
   SEARCH: 'search',
+  CATEGORY: 'category',
 };

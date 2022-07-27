@@ -89,10 +89,9 @@ const styles = StyleSheet.create({
   },
   pointWrap: {
     backgroundColor: '#F6F6FE',
-    paddingHorizontal: 3,
+    paddingHorizontal: 5,
     paddingVertical: 2,
     borderRadius: 5,
-    width: wp(calWidth(36)),
     height: 20,
     justifyContent: 'center',
     alignItems: 'center',

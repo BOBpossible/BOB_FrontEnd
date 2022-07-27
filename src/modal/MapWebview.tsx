@@ -9,9 +9,21 @@ type MapWebviewProps = {
   webviewRef?: React.MutableRefObject<WebView<{}> | null>;
   x?: string;
   y?: string;
+  keyword?: string;
+  categoryId?: number;
+  type: number;
 };
 
-export const MapWebview: FC<MapWebviewProps> = ({missionId, userId, webviewRef, x, y}) => {
+export const MapWebview: FC<MapWebviewProps> = ({
+  missionId,
+  userId,
+  webviewRef,
+  x,
+  y,
+  type,
+  keyword,
+  categoryId,
+}) => {
   const [isLoadingMap, setIsLoadingMap] = useState(true);
   const [storeId, setStoreId] = useState(0);
   const [storeModal, setStoreModal] = useState(false);
@@ -31,9 +43,13 @@ export const MapWebview: FC<MapWebviewProps> = ({missionId, userId, webviewRef, 
       <WebView
         ref={webviewRef}
         source={
-          missionId === undefined
+          type === 0
             ? {uri: `https://bobplace.netlify.app/${userId}/${y}/${x}`}
-            : {uri: `https://bobplace.netlify.app/store/${missionId}`}
+            : type === 1
+            ? {uri: `https://bobplace.netlify.app/store/${missionId}`}
+            : type === 2
+            ? {uri: `https://bobplace.netlify.app/search/${userId}/${keyword}`}
+            : {uri: `https://bobplace.netlify.app/search/tag/${userId}/${categoryId}`}
         }
         onMessage={(event) => {
           onClickPin(event);

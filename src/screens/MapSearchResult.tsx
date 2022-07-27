@@ -23,7 +23,7 @@ import {MapStoreBottomSheet} from '../components/Map/MapStoreBottomSheet';
 import {DesignSystem} from '../assets/DesignSystem';
 import {useQuery} from 'react-query';
 import {IgetUsersMe, IStoreMap} from '../data';
-import {getAddress, getStoreList, getUserInfo} from '../api';
+import {getAddress, getSearchKeyword, getStoreList, getUserInfo} from '../api';
 import {queryKey} from '../api/queryKey';
 import {IAddress} from '../data/Common';
 import {ConnectionError} from '../components/ConnectionError';
@@ -34,11 +34,10 @@ import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 
-const MapSearchResult = () => {
+const MapSearchResult = ({route}) => {
   const height = Dimensions.get('screen').height;
   const listSnapPoint =
     Platform.OS === 'ios' ? hp(calHeight(height - 220, true)) : hp(calHeight(height - 220));
-  const [addressModal, setAddressModal] = useState(false);
   const [storeModal, setStoreModal] = useState(false);
   const [storeId, setStoreId] = useState(0);
   const isFocused = useIsFocused();
@@ -54,8 +53,8 @@ const MapSearchResult = () => {
   const DataUser = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
   const userId = DataUser.data?.userId;
   const StoreList = useQuery<IStoreMap[]>(
-    [queryKey.STORELIST, userId],
-    () => getStoreList(userId),
+    [queryKey.STORELIST, userId, route.params.search],
+    () => getSearchKeyword(route.params.search, userId as number),
     {
       enabled: !!userId,
       onSuccess(data) {
@@ -66,13 +65,6 @@ const MapSearchResult = () => {
       },
     },
   );
-
-  const Address = useQuery<IAddress>(queryKey.ADDRESS, getAddress);
-  if (Address.isSuccess) {
-    if (webviewRef.current !== null) {
-      webviewRef.current.reload();
-    }
-  }
 
   const sortList = (data?: IStoreMap[]) => {
     data?.sort(function (a, b) {
@@ -98,19 +90,23 @@ const MapSearchResult = () => {
 
   return (
     <SafeAreaView style={[styles.flex]}>
-      <AddressSearchModal visible={addressModal} closeAddressModal={() => setAddressModal(false)} />
       <View style={[styles.headerWrap]}>
-        <TouchableOpacity onPress={() => setAddressModal(true)} style={[styles.header]}>
-          <Text style={[DesignSystem.h2SB, {color: 'black', marginRight: 11}]}>
-            {Address.data?.addressDong}
-          </Text>
-          <Icon name="menu-down" size={18} color="black" />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'Map'}],
+            });
+          }}
+          style={[styles.header]}
+        >
+          <Icon name="arrow-left" size={20} color="black" />
         </TouchableOpacity>
-
+        <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{route.params.search}</Text>
         <TouchableOpacity
           style={{marginRight: 16}}
           onPress={() => {
-            navigation.navigate('MapSearch');
+            navigation.goBack();
           }}
         >
           <Image
@@ -122,13 +118,13 @@ const MapSearchResult = () => {
       <MapWebview
         userId={DataUser.data?.userId}
         webviewRef={webviewRef}
-        x={Address.data?.x}
-        y={Address.data?.y}
+        type={2}
+        keyword={route.params.search}
       />
 
       <BottomSheet
         ref={storeListRef}
-        snapPoints={[60, listSnapPoint]}
+        snapPoints={[120, listSnapPoint]}
         handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
         backdropComponent={renderBackdrop}
       >
@@ -198,7 +194,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 16,
     flexDirection: 'row',
-    width: 100,
+    width: 20,
   },
   missionListTextWrap: {
     marginLeft: 16,

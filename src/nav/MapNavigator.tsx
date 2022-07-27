@@ -5,11 +5,13 @@ import Map from '../screens/Map';
 import {MapSearch} from '../screens/MapSearch';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import MapSearchResult from '../screens/MapSearchResult';
+import MapSearchCategory from '../screens/MapSearchCategory';
 
 export type MapStackParamList = {
   Map: undefined;
   MapSearch: undefined;
   MapSearchResult: {search: string};
+  MapSearchCategory: {category: {id: number; name: string}};
 };
 
 const Stack = createStackNavigator<MapStackParamList>();
@@ -29,6 +31,7 @@ export const MapNavigator = ({navigation, route}) => {
       <Stack.Screen name="Map" component={Map} />
       <Stack.Screen name="MapSearch" component={MapSearch} />
       <Stack.Screen name="MapSearchResult" component={MapSearchResult} />
+      <Stack.Screen name="MapSearchCategory" component={MapSearchCategory} />
     </Stack.Navigator>
   );
 };
