@@ -2,6 +2,7 @@ import React from 'react';
 import type {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {DesignSystem} from '../../assets/DesignSystem';
 
 export type MapStoreInfoProps = {
   storeName?: string;
@@ -31,21 +32,28 @@ export const MapStoreInfo: FC<MapStoreInfoProps> = ({
   return (
     <View style={[styles.storeInfoWrap]}>
       <View style={[styles.flexRow, {marginBottom: 11}]}>
-        <Text style={[styles.storeName]}>{storeName}</Text>
-        <Text style={[styles.storeCategory]}>{storeCategory}</Text>
+        <Text style={[DesignSystem.h3SB, {color: 'black'}]}>{storeName}</Text>
+        <Text style={[DesignSystem.body2Lt, DesignSystem.grey8]}>{storeCategory}</Text>
       </View>
       <View style={[styles.flexRow, {marginBottom: 9}]}>
         {}
-        <Text style={[storeStatus === 'OPEN' ? styles.storeTimeOpen : styles.storeTimeClose]}>
+        <Text
+          style={[
+            DesignSystem.caption1Lt,
+            storeStatus === 'OPEN' ? {color: '#6C69FF'} : {color: '#F33F3F'},
+          ]}
+        >
           {convertStatus(storeStatus)}
         </Text>
         <View style={[styles.flexRow, {marginLeft: 8}]}>
           <Icon name="star" size={15} color={'#FFDE69'} />
-          <Text style={[styles.storeRate]}>{storeRate?.toFixed(1)}</Text>
+          <Text style={[DesignSystem.caption1Lt, DesignSystem.grey10]}>
+            {storeRate?.toFixed(1)}
+          </Text>
         </View>
       </View>
       <View style={[styles.flexRow]}>
-        <Text style={[styles.storeAddress]}>{storeAddress}</Text>
+        <Text style={[DesignSystem.body2Lt, DesignSystem.grey10]}>{storeAddress}</Text>
       </View>
     </View>
   );
@@ -61,43 +69,5 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  storeName: {
-    fontFamily: 'Pretendard-SemiBold',
-    fontSize: 16,
-    lineHeight: 16,
-    color: '#000000',
-  },
-  storeCategory: {
-    marginLeft: 8,
-    fontFamily: 'Pretendard-Light',
-    fontSize: 14,
-    lineHeight: 14,
-    color: '#7D7D7D',
-  },
-  storeTimeClose: {
-    fontFamily: 'Pretendard-Light',
-    fontSize: 14,
-    lineHeight: 14,
-    color: '#F33F3F',
-  },
-  storeTimeOpen: {
-    fontFamily: 'Pretendard-Light',
-    fontSize: 14,
-    lineHeight: 14,
-    color: '#6C69FF',
-  },
-  storeRate: {
-    fontFamily: 'Pretendard-Light',
-    fontSize: 14,
-    fontWeight: '300',
-    color: '#000000',
-    marginLeft: 4,
-  },
-  storeAddress: {
-    fontFamily: 'Pretendard-Light',
-    fontSize: 14,
-    lineHeight: 14,
-    color: '#7D7D7D',
   },
 });
