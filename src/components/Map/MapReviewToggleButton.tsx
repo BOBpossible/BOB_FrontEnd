@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
   },
   toggleTextOff: {
     fontFamily: 'Pretendard-Light',
-    fontSize: 14,
-    lineHeight: 14,
+    fontSize: 16,
+    lineHeight: 16,
     color: '#949494',
   },
   toggleTextOn: {
-    fontFamily: 'Pretendard-SemiBold',
+    fontFamily: 'Pretendard-Regular',
     fontSize: 16,
     lineHeight: 16,
     color: '#000000',

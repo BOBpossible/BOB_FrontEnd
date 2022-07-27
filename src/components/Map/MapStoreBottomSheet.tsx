@@ -62,7 +62,7 @@ export const MapStoreBottomSheet: FC<MapStoreBottomSheetProps> = ({
           )}
           <Icon name="star" size={16} color={'#FFDE69'} />
           <Text style={[DesignSystem.caption1Lt, DesignSystem.grey10, {marginLeft: 2.5}]}>
-            {rate === 0 ? '리뷰없음' : rate}
+            {rate === 0 ? '리뷰없음' : rate.toFixed(1)}
           </Text>
           <View
             style={{height: 13, borderLeftColor: '#616161', borderLeftWidth: 0.5, marginLeft: 5}}

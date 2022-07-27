@@ -38,6 +38,7 @@ const StoreModal: FC<StoreModalProps> = ({storeId, visible, closeStoreModal}) =>
   const storeData = useQuery<IStoreData>([queryKey.STOREDATA, storeId], () =>
     getStoreData(storeId),
   );
+  console.log(storeData.data);
 
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={closeStoreModal}>

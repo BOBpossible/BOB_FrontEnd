@@ -10,6 +10,7 @@ export type MapStoreInfoProps = {
   storeStatus?: string;
   storeRate?: number;
   storeAddress?: string;
+  storeIntro?: string;
 };
 
 const convertStatus = (status?: string) => {
@@ -28,32 +29,48 @@ export const MapStoreInfo: FC<MapStoreInfoProps> = ({
   storeStatus,
   storeRate,
   storeAddress,
+  storeIntro,
 }) => {
+  console.log(storeIntro);
   return (
     <View style={[styles.storeInfoWrap]}>
-      <View style={[styles.flexRow, {marginBottom: 11}]}>
-        <Text style={[DesignSystem.h3SB, {color: 'black'}]}>{storeName}</Text>
+      <View style={[styles.flexRow, {marginBottom: 2}]}>
+        <Text style={[DesignSystem.h3SB, {color: 'black', marginRight: 8}]}>{storeName}</Text>
         <Text style={[DesignSystem.body2Lt, DesignSystem.grey8]}>{storeCategory}</Text>
       </View>
-      <View style={[styles.flexRow, {marginBottom: 9}]}>
-        {}
-        <Text
-          style={[
-            DesignSystem.caption1Lt,
-            storeStatus === 'OPEN' ? {color: '#6C69FF'} : {color: '#F33F3F'},
-          ]}
-        >
-          {convertStatus(storeStatus)}
-        </Text>
-        <View style={[styles.flexRow, {marginLeft: 8}]}>
+      {storeIntro !== '' && (
+        <View>
+          <Text style={[DesignSystem.grey8, DesignSystem.body2Lt]}>"{storeIntro}"</Text>
+        </View>
+      )}
+      <View style={[styles.flexRow]}>
+        <Text style={[DesignSystem.body2Lt, DesignSystem.grey10]}>{storeAddress}</Text>
+      </View>
+
+      <View style={[styles.flexRow]}>
+        <View style={[styles.flexRow]}>
           <Icon name="star" size={15} color={'#FFDE69'} />
           <Text style={[DesignSystem.caption1Lt, DesignSystem.grey10]}>
             {storeRate?.toFixed(1)}
           </Text>
+          <View
+            style={{
+              height: 13,
+              borderLeftColor: '#E8E8E8',
+              borderLeftWidth: 0.5,
+              marginLeft: 5,
+              marginRight: 5,
+            }}
+          />
+          <Text
+            style={[
+              DesignSystem.caption1Lt,
+              storeStatus === 'OPEN' ? {color: '#6C69FF'} : {color: '#F33F3F'},
+            ]}
+          >
+            {convertStatus(storeStatus)}
+          </Text>
         </View>
-      </View>
-      <View style={[styles.flexRow]}>
-        <Text style={[DesignSystem.body2Lt, DesignSystem.grey10]}>{storeAddress}</Text>
       </View>
     </View>
   );

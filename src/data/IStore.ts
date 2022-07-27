@@ -37,6 +37,7 @@ export type IStoreData = {
   reviewCount: number;
   storeId: number;
   storeStatus: string;
+  intro: string;
 };
 
 export type IStoreReviewImages = {

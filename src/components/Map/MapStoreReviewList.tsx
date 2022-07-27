@@ -73,6 +73,7 @@ export const MapStoreReviewList = ({
             storeStatus={storeData?.storeStatus}
             storeRate={storeData?.averageRate}
             storeAddress={storeData?.address.street}
+            storeIntro={storeData?.intro}
           />
           <View style={{backgroundColor: '#F6F6FA', height: 8}} />
         </View>
@@ -119,6 +120,7 @@ export const MapStoreReviewList = ({
                 storeStatus={storeData?.storeStatus}
                 storeRate={storeData?.averageRate}
                 storeAddress={storeData?.address.street}
+                storeIntro={storeData?.intro}
               />
               <View style={{backgroundColor: '#F7F7F7', height: 8}} />
             </View>

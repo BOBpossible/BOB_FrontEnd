@@ -84,6 +84,7 @@ export const MapStoreReviewPhoto = ({
             storeStatus={storeData?.storeStatus}
             storeRate={storeData?.averageRate}
             storeAddress={storeData?.address.street}
+            storeIntro={storeData?.intro}
           />
           <View style={{backgroundColor: '#F6F6FA', height: 8}} />
         </View>
@@ -130,6 +131,7 @@ export const MapStoreReviewPhoto = ({
                 storeStatus={storeData?.storeStatus}
                 storeRate={storeData?.averageRate}
                 storeAddress={storeData?.address.street}
+                storeIntro={storeData?.intro}
               />
               <View style={{backgroundColor: '#F6F6FA', height: 8}} />
             </View>
