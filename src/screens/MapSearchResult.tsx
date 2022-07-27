@@ -139,7 +139,7 @@ const MapSearchResult = ({route}) => {
       >
         <BottomSheetView style={[styles.missionListTextWrap]}>
           <Text style={[DesignSystem.title3SB, {color: '#111111'}]}>
-            '{route.params.category.name}' 검색 결과
+            '{route.params.search}' 검색 결과
           </Text>
         </BottomSheetView>
 

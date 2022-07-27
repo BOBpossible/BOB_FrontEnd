@@ -102,7 +102,9 @@ export const ReviewWrite: FC<ReviewWriteProps> = ({
         />
         <View style={[styles.ImageSelectContainer]}>
           <View style={[styles.flexRow]}>
-            <Text>사진 첨부</Text>
+            <Text style={{fontSize: 16, fontFamily: 'Pretendard-Regular', color: 'black'}}>
+              사진 첨부
+            </Text>
             <Text style={{marginLeft: 10, color: '#7D7D7D'}}>{imageUri.length} / 3</Text>
           </View>
 
@@ -189,6 +191,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   reviewContent: {
+    textAlignVertical: 'top',
+    color: '#000000',
     width: '100%',
     height: 164,
     flexWrap: 'wrap',

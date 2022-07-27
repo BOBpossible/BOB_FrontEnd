@@ -41,7 +41,7 @@ export const RegisterAddress: FC<RegisterAddressProps> = ({
             error ? styles.errorBorderNoFocus : styles.unfocusBorder,
           ]}
         >
-          <Text style={[value === '' && styles.placeholder]}>
+          <Text style={[value === '' ? styles.placeholder : styles.AddressText]}>
             {value === '' ? '주소 찾기' : value}
           </Text>
           <Icon name="chevron-down" size={24} />
@@ -74,5 +74,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 24,
     color: '#949494',
+  },
+  AddressText: {
+    fontSize: 14,
+    lineHeight: 24,
+    color: '#000000',
   },
 });

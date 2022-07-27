@@ -74,7 +74,7 @@ export const NotificationCard: FC<NotificationCardProps> = ({
             </View>
           </View>
         </TouchableOpacity>
-      ) : (
+      ) : pushType === 'REVIEW' ? (
         <TouchableOpacity
           style={[checked ? styles.notiCardChecked : styles.notiCardNew]}
           onPress={() => {
@@ -91,7 +91,57 @@ export const NotificationCard: FC<NotificationCardProps> = ({
                 {title}
               </Text>
               <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}>
-                <Text style={[DesignSystem.purple5]}>{name}</Text>
+                <Text style={[DesignSystem.purple5]}>{name} </Text>
+                {subTitle}
+              </Text>
+              <Text style={[DesignSystem.caption1Lt, {color: '#7D7D7D'}]}>
+                {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)} {date.slice(11, 16)}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      ) : pushType === 'ANSWER' ? (
+        <TouchableOpacity
+          style={[checked ? styles.notiCardChecked : styles.notiCardNew]}
+          onPress={() => {
+            navigation.pop();
+            navigation.navigate('MyNavigator', {screen: 'MyInquiry'});
+          }}
+        >
+          <View style={[styles.notiWrap]}>
+            <View style={!checked ? [styles.dot] : [styles.noDot]} />
+            <View style={[styles.notiView]}>
+              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 4}]}>
+                {title}
+              </Text>
+              <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}>
+                <Text style={[DesignSystem.purple5]}>{name} </Text>
+                {subTitle}
+              </Text>
+              <Text style={[DesignSystem.caption1Lt, {color: '#7D7D7D'}]}>
+                {date.slice(0, 4)}.{date.slice(5, 7)}.{date.slice(8, 10)} {date.slice(11, 16)}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={[checked ? styles.notiCardChecked : styles.notiCardNew]}
+          onPress={() => {
+            missionSuccessRequestMutation.mutate(id);
+            setProgress(true);
+            navigation.pop();
+            navigation.navigate('MissionNavigator');
+          }}
+        >
+          <View style={[styles.notiWrap]}>
+            <View style={!checked ? [styles.dot] : [styles.noDot]} />
+            <View style={[styles.notiView]}>
+              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 4}]}>
+                {title}
+              </Text>
+              <Text style={[DesignSystem.body1Lt, DesignSystem.grey10, {marginBottom: 8}]}>
+                <Text style={[DesignSystem.purple5]}>{name} </Text>
                 {subTitle}
               </Text>
               <Text style={[DesignSystem.caption1Lt, {color: '#7D7D7D'}]}>

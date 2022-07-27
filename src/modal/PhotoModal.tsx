@@ -24,7 +24,7 @@ export const PhotoModal: FC<PhotoModalProps> = ({visible, closePhotoModal, image
           </TouchableOpacity>
         </View>
         <View style={[styles.slide]}>
-          <FastImage source={imageUri} style={[styles.image]} resizeMode="center" />
+          <FastImage source={imageUri} style={[styles.image]} resizeMode="contain" />
         </View>
       </SafeAreaView>
     </Modal>
