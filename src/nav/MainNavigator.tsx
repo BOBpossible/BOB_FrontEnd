@@ -8,7 +8,7 @@ import {HomeNavigator} from './HomeNavigator';
 
 import type {RouteProp, ParamListBase} from '@react-navigation/native';
 import {MapNavigator} from './MapNavigator';
-import {Image, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {useQuery} from 'react-query';
 import {IMissionsProgress} from '../data';
 import {queryKey} from '../api/queryKey';
@@ -20,35 +20,10 @@ const Tab = createBottomTabNavigator();
 export const MainNavigator = () => {
   const {data} = useQuery<IMissionsProgress[]>(queryKey.MISSIONSPROGRESS, getMissionsProgress);
 
-  const screenOptions = ({route}: {route: RouteProp<ParamListBase, string>}) => {
+  const screenOptions = () => {
     return {
       headerShown: false,
       tabBarShowLabel: true,
-      // tabBarIcon: ({focused, size}: TabBarIconProps) => {
-      //   const {name} = route;
-      //   const focusedSize = focused ? size + 6 : size;
-      //   const focusedColor = focused ? Colors.black : color;
-      //   const [icon, iconOutline] = icons[name];
-      //   const iconName = focused ? icon : iconOutline;
-      //   return (
-      //     <View>
-      //       {name === 'MissionNavigator' && data?.length !== 0 && (
-      //         <View
-      //           style={{
-      //             backgroundColor: '#615DFF',
-      //             height: 5,
-      //             width: 5,
-      //             borderRadius: 5,
-      //             position: 'absolute',
-      //             top: 0,
-      //             right: 0,
-      //           }}
-      //         />
-      //       )}
-      //       <Icon name={iconName} size={focusedSize} color={focusedColor} />
-      //     </View>
-      //   );
-      // },
       tabBarActiveTintColor: 'black',
       tabBarInactiveTintColor: 'gray',
     };
@@ -65,17 +40,12 @@ export const MainNavigator = () => {
               return (
                 <Image
                   source={require('../assets/icons/homeFocus.png')}
-                  style={{width: 24, height: 24}}
+                  style={styles.image}
                   resizeMode="contain"
                 />
               );
             } else {
-              return (
-                <Image
-                  source={require('../assets/icons/home.png')}
-                  style={{width: 24, height: 24}}
-                />
-              );
+              return <Image source={require('../assets/icons/home.png')} style={styles.image} />;
             }
           },
         }}
@@ -89,22 +59,10 @@ export const MainNavigator = () => {
             if (focused) {
               return (
                 <View>
-                  {data?.length !== 0 && (
-                    <View
-                      style={{
-                        backgroundColor: '#615DFF',
-                        height: 5,
-                        width: 5,
-                        borderRadius: 5,
-                        position: 'absolute',
-                        top: 0,
-                        right: 0,
-                      }}
-                    />
-                  )}
+                  {data?.length !== 0 && <View style={styles.badge} />}
                   <Image
                     source={require('../assets/icons/noodleFocus.png')}
-                    style={{width: 24, height: 24}}
+                    style={styles.image}
                     resizeMode="contain"
                   />
                 </View>
@@ -112,22 +70,10 @@ export const MainNavigator = () => {
             } else {
               return (
                 <View>
-                  {data?.length !== 0 && (
-                    <View
-                      style={{
-                        backgroundColor: '#615DFF',
-                        height: 5,
-                        width: 5,
-                        borderRadius: 5,
-                        position: 'absolute',
-                        top: 0,
-                        right: 0,
-                      }}
-                    />
-                  )}
+                  {data?.length !== 0 && <View style={styles.badge} />}
                   <Image
                     source={require('../assets/icons/noodle.png')}
-                    style={{width: 24, height: 24}}
+                    style={styles.image}
                     resizeMode="contain"
                   />
                 </View>
@@ -146,7 +92,7 @@ export const MainNavigator = () => {
               return (
                 <Image
                   source={require('../assets/icons/mapFocus.png')}
-                  style={{width: 24, height: 24}}
+                  style={styles.image}
                   resizeMode="contain"
                 />
               );
@@ -154,7 +100,7 @@ export const MainNavigator = () => {
               return (
                 <Image
                   source={require('../assets/icons/map.png')}
-                  style={{width: 24, height: 24}}
+                  style={styles.image}
                   resizeMode="contain"
                 />
               );
@@ -172,7 +118,7 @@ export const MainNavigator = () => {
               return (
                 <Image
                   source={require('../assets/icons/userFocus.png')}
-                  style={{width: 24, height: 24}}
+                  style={styles.image}
                   resizeMode="contain"
                 />
               );
@@ -180,7 +126,7 @@ export const MainNavigator = () => {
               return (
                 <Image
                   source={require('../assets/icons/user.png')}
-                  style={{width: 24, height: 24}}
+                  style={styles.image}
                   resizeMode="contain"
                 />
               );
@@ -191,3 +137,16 @@ export const MainNavigator = () => {
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  image: {width: 24, height: 24},
+  badge: {
+    backgroundColor: '#615DFF',
+    height: 5,
+    width: 5,
+    borderRadius: 5,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  },
+});
