@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -32,6 +32,8 @@ export const MyWriteInquiry: FC<goWriteProps> = ({setNowWrite}) => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [doneModal, setDoneModal] = useState(false);
+  const [validTitle, setValidTitle] = useState(false);
+  const [validBody, setValidBody] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -57,7 +59,22 @@ export const MyWriteInquiry: FC<goWriteProps> = ({setNowWrite}) => {
     setDoneModal(false);
     setNowWrite(false);
   };
-
+  useEffect(() => {
+    var spaceCheck = title.replace(/\s|　/gi, '');
+    if (spaceCheck === '') {
+      setValidTitle(false);
+    } else{
+      setValidTitle(true);
+    }
+  }, [title, body])
+  useEffect(() => {
+    var spaceCheck2 = title.replace(/\s|　/gi, '');
+    if (spaceCheck2 === '') {
+      setValidBody(false);
+    } else{
+      setValidBody(true);
+    }
+  }, [body, title])
   return (
     <View style={[styles.totalWrap]}>
       <View style={{flex: 1}}>
@@ -112,9 +129,9 @@ export const MyWriteInquiry: FC<goWriteProps> = ({setNowWrite}) => {
         <TouchableOpacity
           onPress={handleSubmit}
           style={[styles.buttonWrap]}
-          disabled={title !== '' && body !== '' ? false : true}
+          disabled={title !== '' && body !== '' && validTitle === true && validBody ===true ? false : true}
         >
-          {title !== '' && body !== '' ? (
+          {title !== '' && body !== '' && validTitle === true && validBody === true ?(
             <View style={[styles.buttonStyle, styles.activeButton]}>
               <Text style={[styles.activeButtonText]}>문의하기</Text>
             </View>
