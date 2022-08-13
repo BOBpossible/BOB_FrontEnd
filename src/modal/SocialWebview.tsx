@@ -82,6 +82,7 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
       }}
       originWhitelist={['*']}
       scrollEnabled={false}
+      incognito={true}
     />
   );
 };

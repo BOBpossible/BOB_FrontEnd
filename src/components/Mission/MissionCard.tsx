@@ -5,7 +5,7 @@ import {DesignSystem} from '../../assets/DesignSystem';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DoneModal from '../../modal/DoneModal';
 import {useNavigation} from '@react-navigation/native';
-import {IMissionCardProps, IMissionCardContentProps} from '../../data';
+import {IMissionCardProps, IMissionCardContentProps, IMissionsProgress} from '../../data';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {
   getMissionsProgress,
@@ -15,6 +15,7 @@ import {
 } from '../../api/mission';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
+import {queryKey} from '../../api/queryKey';
 
 export const MissionCard: FC<IMissionCardProps> = ({
   mission,
@@ -25,10 +26,14 @@ export const MissionCard: FC<IMissionCardProps> = ({
   missionStatus,
   onPressRequestBtn,
 }) => {
+  const DataMissionsProgress = useQuery<IMissionsProgress[]>(
+    queryKey.MISSIONSPROGRESS,
+    getMissionsProgress,
+  );
   const queryClient = useQueryClient();
   const navigation = useNavigation();
 
-  const missionCancelMutation = useMutation((missionId: number) => patchMissionCancel(missionId), {
+  const missionCancelMutation = useMutation(() => patchMissionCancel(missionId as number), {
     onSuccess: (data) => {
       console.log('미션 취소 성공: ', data);
       queryClient.invalidateQueries('missionsProgress');
@@ -38,49 +43,65 @@ export const MissionCard: FC<IMissionCardProps> = ({
     },
   });
   const missionSuccessRequestMutation = useMutation(
-    (missionId: number) => patchMissionSuccessRequest(missionId),
+    () => patchMissionSuccessRequest(missionId as number),
     {
-      onSuccess: (data) => {
-        console.log('미션 성공요청 성공: ', data);
-        queryClient.invalidateQueries('missionsProgress');
-        queryClient.invalidateQueries('missionsComplete');
+      onMutate: async (id: number) => {
+        // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
+        await queryClient.cancelQueries(queryKey.MISSIONSPROGRESS);
+
+        // Snapshot the previous value
+        const previousData = queryClient.getQueryData<IMissionsProgress[]>(
+          queryKey.MISSIONSPROGRESS,
+        );
+
+        if (previousData) {
+          // Optimistically update to the new value
+          queryClient.setQueryData(queryKey.MISSIONSPROGRESS, [
+            {...previousData[0], missionStatus: 'CHECKING'},
+          ]);
+        }
+
+        // Return a context with the previous and new todo
+        return {previousData, id};
       },
-      onError: (err) => {
-        console.log('미션 성공요청 실패: ', err);
+      // If the mutation fails, use the context we returned above
+      onError: (err, newTodo, context) => {
+        console.log(err);
+        queryClient.setQueryData(queryKey.MISSIONSPROGRESS, context?.previousData);
+      },
+      // Always refetch after error or success:
+      onSettled: () => {
+        queryClient.invalidateQueries(queryKey.MISSIONSPROGRESS);
       },
     },
   );
-  const missionSuccessMutation = useMutation(
-    (missionId: number) => patchMissionSuccess(missionId),
-    {
-      onSuccess: (data) => {
-        console.log('미션성공: ', data);
-        queryClient.invalidateQueries('missionsProgress');
-        queryClient.prefetchQuery('missionsProgress');
-        queryClient.invalidateQueries('missionsComplete');
-        queryClient.invalidateQueries('userInfo');
-        queryClient.invalidateQueries('homeData');
-      },
-      onError: (err) => {
-        console.log('미션 성공요청 실패: ', err);
-      },
+  const missionSuccessMutation = useMutation(() => patchMissionSuccess(missionId as number), {
+    onSuccess: (data) => {
+      console.log('미션성공: ', data);
+      queryClient.invalidateQueries('missionsProgress');
+      queryClient.prefetchQuery('missionsProgress');
+      queryClient.invalidateQueries('missionsComplete');
+      queryClient.invalidateQueries('userInfo');
+      queryClient.invalidateQueries('homeData');
     },
-  );
+    onError: (err) => {
+      console.log('미션 성공요청 실패: ', err);
+    },
+  });
   //[성공요청] 버튼 누를 시 사장님께 전송
   const handleRequestPress = () => {
     console.log(missionId, '번 가게 성공요청됨');
     onPressRequestBtn(); //화면글자 바꾸는 status 변경 NEW->PROGRESS
-    missionSuccessRequestMutation.mutate(Number(missionId));
+    missionSuccessRequestMutation.mutate();
   };
   //[성공] 버튼 누를 시 포인트적립 모달 열기
   async function handleSuccessPress() {
     console.log(missionId, '번 가게 성공');
-    missionSuccessMutation.mutate(Number(missionId));
+    missionSuccessMutation.mutate();
     navigation.navigate('MissionSuccess');
   }
 
   const MissionCardTwoButton: FC<IMissionCardContentProps> = ({
-    missionId,
     handleOnPress,
     text,
     cancelBgColor,
@@ -93,7 +114,7 @@ export const MissionCard: FC<IMissionCardProps> = ({
           <TouchableOpacity
             disabled={text === '성공' ? true : false}
             onPress={() => {
-              missionCancelMutation.mutate(missionId as number);
+              missionCancelMutation.mutate();
               navigation.navigate('Main');
             }}
             style={[styles.missionButtonLeft, {backgroundColor: `${cancelBgColor}`}]}
