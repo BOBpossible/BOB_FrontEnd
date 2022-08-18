@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Platform,
   ActivityIndicator,
+  Linking,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MyUser} from '../../components/My/MyUser';
@@ -76,6 +77,11 @@ const MyPage = () => {
         <TouchableOpacity onPress={() => navigation.navigate('MyInquiry')}>
           <View style={[styles.myMenuWrap]}>
             <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>1:1 문의</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Linking.openURL('https://forms.gle/R2vrJzXA8xYgnhVw8')}>
+          <View style={[styles.myMenuWrap]}>
+            <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>의견 남기기</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setLogoutModal(true)}>
