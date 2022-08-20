@@ -42,7 +42,7 @@ const AddressSearchModal: FC<AddressSearchModalProps> = ({
     },
   });
   return (
-    <Modal visible={visible} animationType="slide">
+    <Modal visible={visible} animationType="slide" onRequestClose={closeAddressModal}>
       <SafeAreaView style={{flex: 1}}>
         <View style={[styles.modalHeader, {top: insets.top}]}>
           <TouchableOpacity onPress={closeAddressModal} style={{width: 50}}>
