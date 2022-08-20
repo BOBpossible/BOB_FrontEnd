@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     zIndex: 1,
-    backgroundColor: '#FFFFFF',
     height: 70,
     width: 70,
     padding: 15,
