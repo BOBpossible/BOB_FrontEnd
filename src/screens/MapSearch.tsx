@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     fontFamily: 'Pretendard-Regular',
     fontSize: 16,
+    color: '#111111',
   },
   searchFocus: {
     borderColor: '#6C69FF',
