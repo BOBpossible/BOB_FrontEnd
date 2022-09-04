@@ -29,6 +29,8 @@ target 'BOB_FrontEnd' do
 
 
 
+  pod 'CodePush', :path => '../node_modules/react-native-code-push'
+
   target 'BOB_FrontEndTests' do
     inherit! :complete
     # Pods for testing
