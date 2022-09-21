@@ -30,6 +30,9 @@ export const MyUser: FC<MyUserProps> = ({authentication, email, name, point}) =>
           <View style={[styles.userWrap]}>
             <View style={[styles.username]}>
               <Text style={[DesignSystem.title3SB, DesignSystem.grey17]}>{name}님</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('MyEditUserInfo')}>
+                <Text style={[DesignSystem.body2Lt, DesignSystem.grey10]}>회원정보 수정</Text>
+              </TouchableOpacity>
             </View>
             <Text style={[DesignSystem.caption1Lt, styles.userEmail]}>{email}</Text>
           </View>
@@ -81,8 +84,9 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   username: {
+    width: '100%',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   usernameText: {

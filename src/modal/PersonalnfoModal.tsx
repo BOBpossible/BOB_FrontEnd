@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import type {FC} from 'react';
 import {
   Modal,
@@ -13,7 +13,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import { DesignSystem } from '../assets/DesignSystem';
+import {DesignSystem} from '../assets/DesignSystem';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -39,19 +39,19 @@ const PersonalnfoModal: FC<PersonalnfoModalProps> = ({visible, closePersonalInfo
         </TouchableWithoutFeedback>
         <View style={[styles.bottomSheetContainer, {height: listSnapPoint}]}>
           <View style={[styles.bankHeader]}>
-            <Text style={[DesignSystem.title1SB, DesignSystem.grey17]}>개인정보 수집 및 이용 동의</Text>
+            <Text style={[DesignSystem.title1SB, DesignSystem.grey17]}>
+              개인정보 수집 및 이용 동의
+            </Text>
             <TouchableOpacity onPress={closePersonalInfoModal}>
               <Text style={[styles.body1Lt, {marginRight: 16}]}>닫기</Text>
             </TouchableOpacity>
           </View>
           <ScrollView style={[styles.wrapper]}>
             <Text style={[styles.bodyText, DesignSystem.body2Lt, {marginBottom: 18}]}>
-              밥플레이스는 제공하는 포인트를 현금으로 전환하기 위해 유저의
-              은행 계좌정보를 받아야 합니다. 따라서 이에 본인의 동의가 필요합니다.
+              밥플레이스는 제공하는 포인트를 현금으로 전환하기 위해 유저의 은행 계좌정보를 받아야
+              합니다. 따라서 이에 본인의 동의가 필요합니다.
             </Text>
-            <View
-              style={{marginBottom: 11, height: 1, backgroundColor: '#E8E8E8'}}
-            />
+            <View style={{marginBottom: 11, height: 1, backgroundColor: '#E8E8E8'}} />
             <Text style={[DesignSystem.title4Md, {color: '#111111'}]}>
               계좌정보 수집, 이용에 관한 사항
             </Text>

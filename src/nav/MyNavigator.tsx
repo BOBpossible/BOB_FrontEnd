@@ -9,6 +9,7 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {MyChangePoint} from '../screens/my/MyChangePoint';
 import {MyChangePointDone} from '../screens/my/MyChangePointDone';
 import {AuthNavigator} from './AuthNavigator';
+import {MyEditUserInfo} from '../screens/my/MyEditUserInfo';
 
 export type MyStackParamList = {
   MyPage: undefined;
@@ -19,6 +20,7 @@ export type MyStackParamList = {
   MyChangePoint: {point: number};
   MyChangePointDone: undefined;
   AuthNavigator: undefined;
+  MyEditUserInfo: undefined;
 };
 
 const Stack = createStackNavigator<MyStackParamList>();
@@ -33,6 +35,7 @@ export const MyNavigator = ({navigation, route}) => {
       routeName === 'MyInquiry' ||
       routeName === 'MyChangePoint' ||
       routeName === 'MyChangePointDone' ||
+      routeName === 'MyEditUserInfo' ||
       routeName === 'AuthNavigator'
     ) {
       navigation.setOptions({tabBarStyle: {display: 'none'}});
@@ -52,6 +55,7 @@ export const MyNavigator = ({navigation, route}) => {
       <Stack.Screen name="MyInquiry" component={MyInquiry} />
       <Stack.Screen name="MyChangePoint" component={MyChangePoint} />
       <Stack.Screen name="MyChangePointDone" component={MyChangePointDone} />
+      <Stack.Screen name="MyEditUserInfo" component={MyEditUserInfo} />
       <Stack.Screen
         name="AuthNavigator"
         component={AuthNavigator}
