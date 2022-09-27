@@ -2,5 +2,5 @@
     <string name="app_name">밥플레이스</string>
     <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
     <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
-    <string moduleConfig="true" name="CodePushDeploymentKey">NUubnf9wpyiDSQ6nSs7OUX1prDzQxtUOrwAdA</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">N_B_wpA9ZqaT-p3xE1-CV1oWb1lucy1cfDJ3K</string>
 </resources>
