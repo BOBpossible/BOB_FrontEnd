@@ -62,6 +62,31 @@ export const HomeMissionDetails = ({navigation, route}: Props) => {
       {/* 맵뷰 */}
       <MapWebview missionId={missionData.data?.missionId} userId={0} type={1} />
       <View style={[styles.missionCard, {bottom: Platform.OS === 'ios' ? insets.bottom : 0}]}>
+        <View
+          style={{
+            position: 'absolute',
+            top: -45,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginLeft: 16,
+            width: '100%',
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: 'white',
+              paddingHorizontal: 21,
+              paddingVertical: 4,
+              borderRadius: 16,
+              borderWidth: 1,
+              borderColor: '#E8E8E8',
+            }}
+          >
+            <Text style={[DesignSystem.title4Md, DesignSystem.grey10]}>
+              가게에 도착해서 미션에 도전해주세요
+            </Text>
+          </View>
+        </View>
         <View style={[styles.missionMain]}>
           <TouchableOpacity style={[styles.nameBox]} onPress={() => setStoreModal(true)}>
             <View style={{flexDirection: 'row', marginBottom: 4, alignItems: 'center'}}>
