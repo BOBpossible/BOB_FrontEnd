@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -7,46 +7,128 @@ import {
   TouchableOpacity,
   TextInput,
   SafeAreaView,
+  Platform,
+  Dimensions,
 } from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MyStackParamList} from '../../nav/MyNavigator';
 import {MyHeader} from '../../components/My/MyHeader';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {IgetUsersMe} from '../../data';
-import {useQuery} from 'react-query';
+import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {queryKey} from '../../api/queryKey';
-import {getUserCategory, getUserInfo} from '../../api';
+import {getUserCategory, getUserInfo, postAddCategory, patchDeleteCategory} from '../../api';
 import {getCategoryList} from '../../api';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetFlatList,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import {calHeight} from '../../assets/CalculateLength';
+import {CategoryItem} from '../../components/CategoryItem';
+import EditNameModal from '../../modal/EditNameModal';
 
 type Props = NativeStackScreenProps<MyStackParamList, 'MyEditUserInfo'>;
 
 export const MyEditUserInfo = ({navigation}: Props) => {
+  const queryClient = useQueryClient();
+  const [editNameModal, setEditNameModal] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+  const [initialCategories, setInitialCategories] = useState<number[]>([]);
   const userInfo = useQuery<IgetUsersMe>(queryKey.USERINFO, getUserInfo);
   const categoryList = useQuery('categoryList', getCategoryList);
-  const userCateogyList = useQuery('userCategoryList', getUserCategory);
+  const userCategoryList = useQuery('userCategoryList', getUserCategory, {
+    onSuccess: (data) => {
+      console.log('서버에서 가져온 데이터', data);
+      const reformatData = data.map((item) => item.id);
+      setSelectedCategories(reformatData);
+      setInitialCategories(reformatData);
+    },
+  });
+
+  /**
+   * 카테고리 추가 api를 실행 시킨다.
+   */
+  const addCategoryMutation = useMutation((data: number[]) => postAddCategory(data), {
+    onSuccess(data) {
+      console.log('유저 카테고리 추가 성공: ', data);
+      queryClient.setQueryData('userCategoryList', data);
+      // queryClient.invalidateQueries('userCategoryList');
+    },
+  });
+
+  /**
+   * 카테고리 삭제 api를 실행 시킨다.
+   */
+  const deleteCategoryMutation = useMutation((data: number) => patchDeleteCategory(data), {
+    onSuccess(data) {
+      console.log('유저 카테고리 삭제 성공: ', data);
+      // queryClient.invalidateQueries('userCategoryList');
+    },
+  });
+
+  console.log('업데이트 카테고리: ', selectedCategories);
+  console.log('원래 카테고리: ', initialCategories);
+  const height = Dimensions.get('screen').height;
+  const bottomSheetRef = useRef<BottomSheet | null>(null);
+  const listSnapPoint =
+    Platform.OS === 'ios' ? hp(calHeight(height - 120, true)) : hp(calHeight(height - 120));
+  const renderBackdrop = useCallback(
+    (props: any) => (
+      <BottomSheetBackdrop {...props} pressBehavior={0} disappearsOnIndex={0} appearsOnIndex={1} />
+    ),
+    [],
+  );
+
   const goBack = () => {
     navigation.goBack();
   };
-  function editProfileImg() {
-    console.log('수정');
-  }
 
-  console.log(userCateogyList.data);
+  /**
+   * 카테고리 수정 창을 닫을때 바뀐 카테고리를 업데이트한다
+   * @param {number[]} initCategory 업데이트 하기전 카테고리
+   * @param {number[]} updatedCategory 업데이트 하고난 후 카테고리
+   */
+  const onSaveCategory = (initCategory: number[], updatedCategory: number[]) => {
+    //추가
+    const addedCategories = updatedCategory.filter((item) => !initCategory.includes(item));
+    console.log('카테고리 추가: ', addedCategories);
+    if (addedCategories !== []) {
+      addCategoryMutation.mutate(addedCategories);
+    }
+
+    //삭제
+    const deletedCategories = initCategory.filter((item) => !updatedCategory.includes(item));
+    console.log('카테고리 삭제: ', deletedCategories);
+    if (deletedCategories !== []) {
+      deleteCategoryMutation.mutate(deletedCategories[0]);
+    }
+
+    // setInitialCategories(selectedCategories);
+  };
+
   return (
     <>
       <SafeAreaView style={{flex: 0, backgroundColor: '#FFFFFF'}} />
       <SafeAreaView style={[styles.flex, {backgroundColor: '#F8F8F8'}]}>
         <MyHeader goBack={goBack} title={'회원정보 수정'} />
         <View style={[styles.userInfoProfile]}>
-          <TouchableOpacity onPress={editProfileImg} style={[styles.profileWrap]}>
-            <Image
-              style={[styles.profileImg]}
-              source={require('../../assets/images/bobProfile.png')} //
-            />
-          </TouchableOpacity>
+          <Image
+            style={[styles.profileImg]}
+            source={require('../../assets/images/bobProfile.png')}
+          />
           <View style={[{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}]}>
             <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>{userInfo.data?.name}</Text>
-            <TouchableOpacity style={{}}>
+            <TouchableOpacity
+              style={{}}
+              onPress={() => {
+                setEditNameModal(true);
+              }}
+            >
               <View style={[styles.editButton]}>
                 <Text style={[DesignSystem.caption1Lt, DesignSystem.grey10]}>수정</Text>
               </View>
@@ -71,35 +153,101 @@ export const MyEditUserInfo = ({navigation}: Props) => {
         </View>
         <View style={[styles.userInfoEdit, {marginTop: 8}]}>
           <View style={[styles.userInfoEditContent]}>
-            <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 8}]}>
-              선호하는 음식
-            </Text>
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
             >
-              <View style={{flexDirection: 'row'}}>
-                {userCateogyList.data &&
-                  userCateogyList.data?.map((item: any, i: number) => {
-                    return (
-                      <Text style={[DesignSystem.body1Lt, DesignSystem.grey8]}>
-                        {item.name}
-                        {userCateogyList.data.length - 1 !== i ? ', ' : ''}
-                      </Text>
-                    );
-                  })}
-              </View>
-              <TouchableOpacity style={{}}>
+              <Text style={[DesignSystem.title4Md, {color: 'black', marginBottom: 8}]}>
+                선호하는 음식
+              </Text>
+              <TouchableOpacity
+                style={{}}
+                onPress={() => {
+                  if (bottomSheetRef.current !== null) {
+                    bottomSheetRef.current.expand();
+                  }
+                }}
+              >
                 <View style={[styles.editButton]}>
                   <Text style={[DesignSystem.caption1Lt, DesignSystem.grey10]}>수정</Text>
                 </View>
               </TouchableOpacity>
             </View>
+
+            <View style={{flexDirection: 'row'}}>
+              {userCategoryList.data &&
+                userCategoryList.data?.map((item: any, i: number) => {
+                  return (
+                    <Text style={[DesignSystem.body1Lt, DesignSystem.grey8]} key={i}>
+                      {item.name}
+                      {userCategoryList.data.length - 1 !== i ? ', ' : ''}
+                    </Text>
+                  );
+                })}
+            </View>
           </View>
         </View>
-        <TouchableOpacity onPress={() => console.log('탈퇴')} style={{alignItems: 'flex-end'}}>
-          <Text style={[styles.quitText]}>계정탈퇴</Text>
-        </TouchableOpacity>
+        <EditNameModal visible={editNameModal} close={() => setEditNameModal(false)} />
       </SafeAreaView>
+
+      {/* {바텀 시트 코드} */}
+      <BottomSheet
+        ref={bottomSheetRef}
+        snapPoints={[1, listSnapPoint]}
+        handleIndicatorStyle={{width: 68, backgroundColor: '#C4C4C4'}}
+        backdropComponent={renderBackdrop}
+        enablePanDownToClose={true}
+      >
+        <BottomSheetView style={{marginLeft: 16, marginBottom: 8, marginRight: 16}}>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}
+          >
+            <Text style={[DesignSystem.subtitle2, DesignSystem.grey17]}>선호하는 음식 종류</Text>
+            <TouchableOpacity
+              onPress={() => {
+                onSaveCategory(initialCategories, selectedCategories);
+                if (bottomSheetRef.current !== null) {
+                  bottomSheetRef.current.close();
+                }
+              }}
+            >
+              <Text style={[DesignSystem.title4Md, DesignSystem.purple5]}>저장</Text>
+            </TouchableOpacity>
+          </View>
+
+          <Text style={[DesignSystem.body2Lt, DesignSystem.grey10]}>중복 선택 가능해요!</Text>
+        </BottomSheetView>
+
+        <BottomSheetFlatList
+          data={categoryList.data}
+          columnWrapperStyle={{justifyContent: 'space-between', marginLeft: 16, marginRight: 16}}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item, index}) => (
+            <CategoryItem
+              key={index}
+              onPress={() => {
+                if (selectedCategories.includes(item.id)) {
+                  setSelectedCategories((current) =>
+                    current.filter((category) => {
+                      return category !== item.id;
+                    }),
+                  );
+                } else {
+                  setSelectedCategories([...selectedCategories, item.id]);
+                }
+              }}
+              title={item.name}
+              isSelected={selectedCategories.includes(item.id)}
+            />
+          )}
+          ItemSeparatorComponent={() => <View style={{marginTop: 16}} />}
+          numColumns={3}
+        />
+      </BottomSheet>
     </>
   );
 };
@@ -155,12 +303,7 @@ const styles = StyleSheet.create({
   },
   focusBorder: {borderColor: '#6C69FF', borderWidth: 1},
   unfocusBorder: {borderColor: '#DFDFDF', borderWidth: 1},
-  quitText: {
-    color: '#777777',
-    fontSize: 14,
-    marginRight: 16,
-    marginTop: 8,
-  },
+
   editButton: {
     height: 20,
     width: 37,
