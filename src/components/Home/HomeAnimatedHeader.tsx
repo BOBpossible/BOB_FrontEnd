@@ -37,11 +37,16 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({
   data,
   newNotiCount,
 }) => {
+  useEffect(() => {
+    const scrollListenerId = animatedValue.addListener(({value}) => setScrollOffset(value));
+
+    return animatedValue.removeListener(scrollListenerId);
+  }, [animatedValue]);
+  const [scrollOffset, setScrollOffset] = useState(0);
   const [addressModal, setAddressModal] = useState(false);
   const barProgressValue = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
   const Address = useQuery<IAddress>(queryKey.ADDRESS, getAddress);
-
   //헤더 길이 바꿔주는 애니메이션 Main.tsx의 스크롤 위치에 따라 변한다
   const heightAnimStyle = useStyle({
     height: animatedValue.interpolate({
@@ -188,6 +193,7 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({
         onPress={() => {
           navigation.navigate('HowToLong');
         }}
+        disabled={scrollOffset > 40 ? true : false}
       >
         <Animated.View style={[howtoAnimStyle, styles.flexRow]}>
           <Text style={[DesignSystem.body1Lt, DesignSystem.purple5]}>사용방법</Text>
