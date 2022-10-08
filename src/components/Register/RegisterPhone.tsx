@@ -77,6 +77,7 @@ export const RegisterPhone: FC<RegisterPhoneProps> = ({
           onFocus={() => setFocusedName(true)}
           keyboardType="number-pad"
           maxLength={11}
+          editable={authError}
         />
         {registerData.phone.length === 11 ? (
           <TouchableOpacity onPress={() => postPhone()} style={styles.enableButton}>

@@ -121,7 +121,11 @@ export const MyEditUserInfo = ({navigation}: Props) => {
             style={[styles.profileImg]}
             source={require('../../assets/images/bobProfile.png')}
           />
-          <View style={[{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}]}>
+          <View
+            style={[
+              {flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 4},
+            ]}
+          >
             <Text style={[DesignSystem.body1Lt, DesignSystem.grey17]}>{userInfo.data?.name}</Text>
             <TouchableOpacity
               style={{}}
