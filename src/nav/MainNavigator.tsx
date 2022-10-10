@@ -1,11 +1,8 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Colors} from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-Icon.loadFont();
 import {MyNavigator} from './MyNavigator';
 import {HomeNavigator} from './HomeNavigator';
-
 import type {RouteProp, ParamListBase} from '@react-navigation/native';
 import {MapNavigator} from './MapNavigator';
 import {Image, StyleSheet, View} from 'react-native';
