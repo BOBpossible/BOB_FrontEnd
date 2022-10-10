@@ -78,7 +78,7 @@ const RegisterForm = ({navigation, route}: Props) => {
           name="name"
         />
         {errors.name?.type === 'required' && (
-          <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
+          <Text style={[styles.errorMessage]}>닉네임을 작성해주세요.</Text>
         )}
         <Controller
           control={control}
@@ -99,7 +99,7 @@ const RegisterForm = ({navigation, route}: Props) => {
           name="gender"
         />
         {errors.gender?.type === 'required' && (
-          <Text style={[styles.errorMessage]}>필수 입력사항입니다.</Text>
+          <Text style={[styles.errorMessage]}>성별을 선택해주세요.</Text>
         )}
 
         {/* <Controller
