@@ -44,13 +44,22 @@ export const RegisterName: FC<RegisterNameProps> = ({
           setRegisterData({...registerData, name: text});
         }}
         value={value}
-        placeholder="닉네임을 입력"
+        placeholder="닉네임 입력"
         placeholderTextColor="#949494"
         selectionColor={'#6C69FF'}
         onBlur={() => setFocusedName(false)}
         onFocus={() => setFocusedName(true)}
         maxLength={10}
       />
+      <Text
+        style={[
+          {position: 'absolute', bottom: -20, right: 3},
+          DesignSystem.caption1Lt,
+          DesignSystem.grey17,
+        ]}
+      >
+        {value.length}/10
+      </Text>
     </View>
   );
 };

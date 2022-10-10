@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type MissionCardProps = {
   missionId: number;
@@ -26,7 +27,16 @@ export const HomeMissionCard: FC<MissionCardProps> = ({missionId, name, category
         <View style={[styles.missionCard]}>
           <View style={[styles.missionMain]}>
             <View style={[styles.nameBox]}>
+            <View style={{flexDirection: 'row', marginBottom: 4, alignItems: 'center'}}>
+            <Icon
+                name="chevron-right"
+                size={18}
+                color="#616161"
+                style={{marginLeft: 4, opacity: 0}}
+              />
               <Text style={[DesignSystem.title4Md, DesignSystem.grey17]}>{name}</Text>
+              <Icon name="chevron-right" size={18} color="#616161" style={{marginLeft: 4}} />
+              </View>
               <Text style={[DesignSystem.body2Lt, DesignSystem.grey10, styles.textMargin]}>{category}</Text>
             </View>
             <View style={[DesignSystem.centerArrange, styles.missionContentBox]}>
