@@ -1,30 +1,20 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Animated,
-  Platform,
-  Text,
-  ActivityIndicator,
-  RefreshControl,
-  StatusBar,
-} from 'react-native';
+import React, {useCallback, useRef, useState} from 'react';
+import {View, StyleSheet, Animated, Platform, ActivityIndicator, StatusBar} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {HomeMissionCard} from '../../components/Home/HomeMissionCard';
-import {AnimatedHeader, HomeMissionListHeader} from '../../components';
+import {AnimatedHeader} from '../../components';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
 import {useQuery} from 'react-query';
 import {ConnectionError} from '../../components/ConnectionError';
 import {IHomeData, IMissionsProgress, INotiType} from '../../data';
 import {queryKey} from '../../api/queryKey';
-import {HomeBobpool} from '../../components/Home/HomeBobpool';
 import {getHomeInfo, getNotificationsMain} from '../../api';
 import {getMissionsProgress} from '../../api/mission';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {useFocusEffect} from '@react-navigation/native';
+import {HomeMissionList} from '../../components/Home/HomeMissionList';
+import {HomeFloatMessage} from '../../components/Home/HomeFloatMessage';
 
 const Main = () => {
   const offset = useRef(new Animated.Value(0)).current;
@@ -52,16 +42,16 @@ const Main = () => {
     },
   });
 
+  const DataMissionsProgress = useQuery<IMissionsProgress[]>(
+    queryKey.MISSIONSPROGRESS,
+    getMissionsProgress,
+  );
+
   useFocusEffect(
     useCallback(() => {
       homeData.refetch();
       notificationData.refetch();
     }, []),
-  );
-
-  const DataMissionsProgress = useQuery<IMissionsProgress[]>(
-    queryKey.MISSIONSPROGRESS,
-    getMissionsProgress,
   );
 
   if (homeData.isError) {
@@ -73,43 +63,9 @@ const Main = () => {
     <SafeAreaView edges={['top']} style={styles.flex}>
       <StatusBar barStyle={'dark-content'} backgroundColor="white" />
       {homeData.isLoading ? (
-        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <View style={DesignSystem.centerArrange}>
           <ActivityIndicator />
         </View>
-      ) : homeData.data?.missions === null ? (
-        <>
-          <AnimatedHeader
-            animatedValue={offset}
-            paddingTop={insets.top}
-            data={homeData.data}
-            newNotiCount={newNotiCount}
-          />
-          <Animated.FlatList
-            style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[styles.missionListContainer]}
-            scrollEventThrottle={10}
-            data={homeData.data?.missions}
-            renderItem={({item}) => (
-              <HomeMissionCard
-                mission={item.mission}
-                missionId={item.missionId}
-                status={item.missionStatus}
-                point={item.point}
-                category={item.storeCategory}
-                name={item.storeName}
-                challengeStatus={DataMissionsProgress.data?.length !== 0}
-              />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            ListHeaderComponent={<HomeBobpool category={'NO'} />}
-            onScroll={(event) => {
-              Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
-                useNativeDriver: false,
-              })(event);
-            }}
-          />
-        </>
       ) : (
         <>
           <AnimatedHeader
@@ -118,95 +74,10 @@ const Main = () => {
             data={homeData.data}
             newNotiCount={newNotiCount}
           />
-          {allDone ? ( //미션 모두 완료한 경우
-            <Animated.FlatList
-              refreshControl={
-                <RefreshControl
-                  onRefresh={() => homeData.refetch()}
-                  refreshing={homeData.isLoading}
-                />
-              }
-              style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={[styles.missionListContainer]}
-              scrollEventThrottle={10}
-              data={homeData.data?.missions}
-              renderItem={({item}) => (
-                <HomeMissionCard
-                  mission={item.mission}
-                  missionId={item.missionId}
-                  status={item.missionStatus}
-                  point={item.point}
-                  category={item.storeCategory}
-                  name={item.storeName}
-                  challengeStatus={DataMissionsProgress.data?.length !== 0}
-                />
-              )}
-              keyExtractor={(item, index) => index.toString()}
-              ListHeaderComponent={
-                <HomeMissionListHeader dday={homeData.data?.dday} allDone={allDone} />
-              }
-              ListFooterComponent={<HomeBobpool category={'DONE'} />}
-              onScroll={(event) => {
-                Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
-                  useNativeDriver: false,
-                })(event);
-              }}
-            />
-          ) : (
-            <>
-              <Animated.FlatList
-                style={DataMissionsProgress.data?.length !== 0 && {opacity: 0.5}}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={[styles.missionListContainer]}
-                scrollEventThrottle={10}
-                data={homeData.data?.missions}
-                renderItem={({item}) => (
-                  <HomeMissionCard
-                    mission={item.mission}
-                    missionId={item.missionId}
-                    status={item.missionStatus}
-                    point={item.point}
-                    category={item.storeCategory}
-                    name={item.storeName}
-                    challengeStatus={DataMissionsProgress.data?.length !== 0}
-                  />
-                )}
-                keyExtractor={(item, index) => index.toString()}
-                ListHeaderComponent={
-                  <HomeMissionListHeader dday={homeData.data?.dday} allDone={allDone} />
-                }
-                onScroll={(event) => {
-                  Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
-                    useNativeDriver: false,
-                  })(event);
-                }}
-                ListFooterComponent={() => <View />}
-                ListFooterComponentStyle={styles.mainPaddingBottom}
-              />
-            </>
-          )}
+          <HomeMissionList homeData={homeData.data} offset={offset} allDone={allDone} />
         </>
       )}
-      {DataMissionsProgress.data?.length !== 0 && (
-        <View
-          style={[
-            DesignSystem.centerArrange,
-            {
-              width: '50%',
-              left: '12.5%',
-              position: 'absolute',
-              bottom: -20,
-              zIndex: 10,
-            },
-          ]}
-        >
-          <View style={[styles.NEWBallon, DesignSystem.centerArrange]}>
-            <Text style={[styles.ballonText]}>진행중인 미션이 있어요! </Text>
-          </View>
-          <Icon name="menu-down" size={24} style={[styles.headerIconStyle]} />
-        </View>
-      )}
+      {DataMissionsProgress.data?.length !== 0 && <HomeFloatMessage />}
     </SafeAreaView>
   );
 };
@@ -222,37 +93,5 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
     backgroundColor: '#F6F6FA',
-  },
-  NEWBallon: {
-    //말풍선
-    backgroundColor: '#6C69FF',
-    borderRadius: 6,
-    paddingRight: 13,
-    paddingLeft: 13,
-    paddingTop: 10,
-    paddingBottom: 10,
-
-    shadowColor: '#000C8A',
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 20,
-    elevation: 4,
-  },
-  headerIconStyle: {
-    top: -11,
-    color: '#6C69FF',
-    elevation: 10,
-  },
-  ballonText: {
-    fontFamily: 'Pretendard-SemiBold',
-    fontSize: 14,
-    lineHeight: 22,
-    color: '#FFFFFF',
-  },
-  mainPaddingBottom: {
-    paddingBottom: Platform.OS === 'ios' ? hp(calHeight(80, true)) : hp(calHeight(80)),
   },
 });

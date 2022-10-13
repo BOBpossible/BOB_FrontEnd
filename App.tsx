@@ -1,22 +1,24 @@
 import React, {useEffect, useState} from 'react';
+import {AppRegistry} from 'react-native';
+import 'react-native-gesture-handler';
 import {RecoilRoot} from 'recoil';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
-import Splash from './src/screens/onBoarding/Splash';
 import {NavigationContainer} from '@react-navigation/native';
-import {MainNavigator} from './src/nav';
-import {AuthNavigator} from './src/nav';
-import 'react-native-gesture-handler';
 import {enableScreens} from 'react-native-screens';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {QueryClient, QueryClientProvider} from 'react-query';
-import {getRegisterStatus, postFcmToken, postToken} from './src/api';
 import messaging from '@react-native-firebase/messaging';
-import {AppRegistry} from 'react-native';
 import codePush from 'react-native-code-push';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import {getRegisterStatus, postFcmToken, postToken} from './src/api';
+import Splash from './src/screens/onBoarding/Splash';
+import {MainNavigator} from './src/nav';
+import {AuthNavigator} from './src/nav';
+
 Icon.loadFont();
+enableScreens();
 
 async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -29,8 +31,6 @@ async function requestUserPermission() {
   }
 }
 
-enableScreens();
-
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -41,16 +41,13 @@ const App = () => {
   // 실행하면 가장 먼저 로컬에 로그인 정보 있는지 확인
   useEffect(() => {
     getTokens();
-
     requestUserPermission();
-
     messaging()
       .getToken()
       .then((token) => {
         console.log('나의 소중한 기계의 토큰 ', token);
         return postFcmToken(token);
       });
-
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       console.log('Message handled in the background!', remoteMessage);
     });
