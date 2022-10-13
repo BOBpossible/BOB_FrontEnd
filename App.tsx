@@ -16,7 +16,7 @@ import {AppRegistry} from 'react-native';
 import codePush from 'react-native-code-push';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-async () => await Icon.loadFont();
+Icon.loadFont();
 
 async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
