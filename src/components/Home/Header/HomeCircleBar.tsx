@@ -3,7 +3,7 @@ import type {FC} from 'react';
 import {View, StyleSheet, Text, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import {calHeight} from '../../assets/CalculateLength';
+import {calHeight} from '../../../assets/CalculateLength';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export type CircleBarProps = {

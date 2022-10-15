@@ -9,17 +9,18 @@ import {
   Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useStyle} from '../../hooks';
-import AddressSearchModal from '../../modal/AddressSearchModal';
-import {CircleBar} from './HomeCircleBar';
+import {useStyle} from '../../../hooks';
+import AddressSearchModal from '../../../modal/AddressSearchModal';
 import {useNavigation} from '@react-navigation/native';
-import {DesignSystem} from '../../assets/DesignSystem';
+import {DesignSystem} from '../../../assets/DesignSystem';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {calHeight} from '../../assets/CalculateLength';
-import {IAddress, IHomeData} from '../../data';
-import {getAddress} from '../../api';
-import {queryKey} from '../../api/queryKey';
+import {calHeight} from '../../../assets/CalculateLength';
+import {IAddress, IHomeData} from '../../../data';
+import {getAddress} from '../../../api';
+import {queryKey} from '../../../api/queryKey';
 import {useQuery} from 'react-query';
+import {HeaderExpand} from './HeaderExpand';
+import {HeaderShrink} from './HeaderShrink';
 // import {color} from 'react-native-reanimated';
 
 const WIDTH = Dimensions.get('window').width;
@@ -44,7 +45,6 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({
   }, [animatedValue]);
   const [scrollOffset, setScrollOffset] = useState(0);
   const [addressModal, setAddressModal] = useState(false);
-  const barProgressValue = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
   const Address = useQuery<IAddress>(queryKey.ADDRESS, getAddress);
   //헤더 길이 바꿔주는 애니메이션 Main.tsx의 스크롤 위치에 따라 변한다
@@ -59,53 +59,6 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({
     }),
   });
 
-  const barProgressFill = useCallback(
-    (progress: number) => {
-      Animated.timing(barProgressValue, {
-        toValue: progress * 10,
-        duration: 2000,
-        useNativeDriver: false,
-      }).start();
-    },
-    [barProgressValue],
-  );
-
-  const widthStyle = useStyle({
-    width: barProgressValue.interpolate({
-      inputRange: [0, 100],
-      outputRange: ['0%', '100%'],
-      extrapolate: 'clamp',
-    }),
-  });
-  useEffect(() => {
-    barProgressFill(data.rewards);
-  }, [barProgressFill, data.rewards]);
-
-  const circleAnimStyle = useStyle({
-    opacity: animatedValue.interpolate({
-      inputRange: [30, 60],
-      outputRange: [1, 0],
-      extrapolate: 'clamp',
-    }),
-    transform: [
-      {
-        scale: animatedValue.interpolate({
-          inputRange: [30, 60],
-          outputRange: [1, 0.8],
-          extrapolate: 'clamp',
-        }),
-      },
-    ],
-  });
-
-  const barAnimStyle = useStyle({
-    opacity: animatedValue.interpolate({
-      inputRange: [60, 65],
-      outputRange: [0, 1],
-      extrapolate: 'clamp',
-    }),
-  });
-
   const howtoAnimStyle = useStyle({
     opacity: animatedValue.interpolate({
       inputRange: [30, 40],
@@ -113,43 +66,6 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({
       extrapolate: 'clamp',
     }),
   });
-
-  const expandHeader = () => {
-    return (
-      <Animated.View style={[styles.circleWrap, circleAnimStyle]}>
-        <CircleBar progress={data?.rewards} />
-        <View style={{flexDirection: 'row'}}>
-          <Text style={[DesignSystem.grey17, styles.circleBar]}>미션 10개 달성시 </Text>
-          <Text style={[DesignSystem.purple5, styles.circleBar]}>1000P</Text>
-        </View>
-      </Animated.View>
-    );
-  };
-
-  const shrinkHeader = () => {
-    return (
-      <Animated.View style={[barAnimStyle, styles.barWrap]}>
-        <View style={[styles.shrinkHeaderWrap]}>
-          <View style={[styles.outerBar]}>
-            <Animated.View style={[styles.innerBar, widthStyle]} />
-          </View>
-          <View style={[styles.shrinkHeaderTextWrap]}>
-            <Text style={[styles.shrinkHeaderTextOne]}>{data?.rewards} </Text>
-            <Text style={[styles.shrinkHeaderTextTwo]}>/ </Text>
-            <Text style={[styles.shrinkHeaderTextThree]}>10</Text>
-          </View>
-        </View>
-        <View>
-          <Text>
-            <Text style={[styles.shrinkHeaderMissionText, DesignSystem.grey10]}>
-              미션 10개 달성시
-            </Text>
-            <Text style={[styles.shrinkHeaderMissionText, DesignSystem.purple5]}> 1,000P</Text>
-          </Text>
-        </View>
-      </Animated.View>
-    );
-  };
 
   return (
     <Animated.View style={[styles.headerWrap, heightAnimStyle, {paddingTop}]}>
@@ -185,8 +101,8 @@ export const AnimatedHeader: FC<AnimatedHeaderProps> = ({
         </View>
       </View>
       <View style={[styles.progressWrap]}>
-        {shrinkHeader()}
-        {expandHeader()}
+        <HeaderShrink animatedValue={animatedValue} rewards={data?.rewards} />
+        <HeaderExpand animatedValue={animatedValue} rewards={data?.rewards} />
       </View>
       <TouchableOpacity
         style={[{position: 'absolute', top: 50 + paddingTop, right: 20}]}
@@ -215,7 +131,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
     flex: 1,
     width: '100%',
-    backgroundColor: 'white', ////
+    backgroundColor: 'white',
     shadowColor: '#000C8A',
     shadowOffset: {
       width: 0,
@@ -242,34 +158,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginRight: 16,
   },
-  circleWrap: {
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 0,
-  },
-  barWrap: {
-    marginTop: Platform.OS === 'ios' ? hp(calHeight(12, true)) : hp(calHeight(12)), ///
-    marginLeft: 16,
-    marginRight: 16,
-    marginBottom: Platform.OS === 'ios' ? hp(calHeight(8, true)) : hp(calHeight(8)),
-  },
-  barStyle: {
-    borderRadius: 5,
-  },
-  outerBar: {
-    width: '85%',
-    height: Platform.OS === 'ios' ? hp(calHeight(6, true)) : hp(calHeight(6)),
-    borderRadius: 5,
-    backgroundColor: '#EDEDED',
-  },
-  innerBar: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    height: Platform.OS === 'ios' ? hp(calHeight(6, true)) : hp(calHeight(6)),
-    borderRadius: 5,
-    backgroundColor: '#615EFF',
-  },
+
   progressWrap: {
     flex: 1,
     alignItems: 'center',
@@ -294,36 +183,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   pointText: {fontSize: 14, color: '#555555', fontFamily: 'Pretendard-SemiBold'},
-  shrinkHeaderWrap: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: WIDTH - 32, //alignItems: center 당할 뷰 라서 옆 마진 16+16 을 빼주면 알아서 마진: 16 을 한 효과가 나타날것
-  },
-  shrinkHeaderTextWrap: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-  },
-  shrinkHeaderTextOne: {
-    fontSize: 22,
-    fontFamily: 'Pretendard-Light',
-    color: '#111111',
-  },
-  shrinkHeaderTextTwo: {
-    fontSize: 15,
-    fontFamily: 'Pretendard-Light',
-    color: '#7D7D7D',
-  },
-  shrinkHeaderTextThree: {
-    fontSize: 15,
-    fontFamily: 'Pretendard-Light',
-    color: '#7D7D7D',
-  },
-  shrinkHeaderMissionText: {
-    fontSize: 12,
-    lineHeight: 20,
-    fontFamily: 'Pretendard-Medium',
-  },
   howtoText: {
     fontSize: 14,
     fontWeight: '300',
@@ -337,13 +196,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 8,
-  },
-  circleBar: {
-    marginTop: Platform.OS === 'ios' ? hp(calHeight(8, true)) : hp(calHeight(8)),
-    marginBottom: Platform.OS === 'ios' ? hp(calHeight(14, true)) : hp(calHeight(14)),
-    fontFamily: 'Pretendard-Medium',
-    fontSize: 13,
-    lineHeight: 22,
   },
   notificationBadge: {
     borderRadius: 16,
