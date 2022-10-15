@@ -11,6 +11,11 @@ type HeaderExpandProps = {
   rewards: number | undefined;
 };
 
+/**
+ * 헤더를 위로 올려서 확장 시킬때 보여주는 컴포넌트
+ * @param {Animated.Value} animatedValue 스크롤 감지 기반 에니메이션 값
+ * @param {number | undefined} rewards 유저의 현재 리워드 진행 상황
+ */
 export const HeaderExpand: FC<HeaderExpandProps> = ({animatedValue, rewards}) => {
   const circleAnimStyle = useStyle({
     opacity: animatedValue.interpolate({

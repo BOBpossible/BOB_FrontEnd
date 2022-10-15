@@ -1,30 +1,14 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Animated,
-  Platform,
-  Text,
-  ActivityIndicator,
-  RefreshControl,
-  StatusBar,
-} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import React from 'react';
+import {View, StyleSheet, Animated, Platform} from 'react-native';
 import {HomeMissionCard} from '../../components/Home/HomeMissionCard';
-import {AnimatedHeader, HomeMissionListHeader} from '../../components';
+import {HomeMissionListHeader} from '../../components';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {calHeight} from '../../assets/CalculateLength';
 import {useQuery} from 'react-query';
-import {ConnectionError} from '../../components/ConnectionError';
-import {IHomeData, IMissionsProgress, INotiType} from '../../data';
+import {IHomeData, IMissionsProgress} from '../../data';
 import {queryKey} from '../../api/queryKey';
 import {HomeBobpool} from '../../components/Home/HomeBobpool';
-import {getHomeInfo, getNotificationsMain} from '../../api';
 import {getMissionsProgress} from '../../api/mission';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {DesignSystem} from '../../assets/DesignSystem';
-import {useFocusEffect} from '@react-navigation/native';
 
 type HomeMissionListProps = {
   homeData: IHomeData | undefined;

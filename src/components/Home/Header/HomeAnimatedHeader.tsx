@@ -1,13 +1,5 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {
-  View,
-  Animated,
-  Text,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  Platform,
-} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {View, Animated, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useStyle} from '../../../hooks';
 import AddressSearchModal from '../../../modal/AddressSearchModal';
@@ -23,7 +15,6 @@ import {HeaderExpand} from './HeaderExpand';
 import {HeaderShrink} from './HeaderShrink';
 // import {color} from 'react-native-reanimated';
 
-const WIDTH = Dimensions.get('window').width;
 const HEADER_HEIGHT = Platform.OS === 'ios' ? hp(25.8) : hp(28.6);
 type AnimatedHeaderProps = {
   animatedValue: Animated.Value;
