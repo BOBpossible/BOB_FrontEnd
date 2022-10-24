@@ -155,7 +155,7 @@ export const MyEditUserInfo = ({navigation}: Props) => {
             </View>
           </View>
         </View>
-        <View style={[styles.userInfoEdit, {marginTop: 8}]}>
+        {/* <View style={[styles.userInfoEdit, {marginTop: 8}]}>
           <View style={[styles.userInfoEditContent]}>
             <View
               style={{
@@ -193,7 +193,7 @@ export const MyEditUserInfo = ({navigation}: Props) => {
                 })}
             </View>
           </View>
-        </View>
+        </View> */}
         <EditNameModal visible={editNameModal} close={() => setEditNameModal(false)} />
       </SafeAreaView>
 
