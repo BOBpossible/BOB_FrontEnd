@@ -8,6 +8,7 @@ import HowToLong from '../screens/onBoarding/HowToLong';
 import {MyPoint} from '../screens/my/MyPoint';
 import {MyChangePoint} from '../screens/my/MyChangePoint';
 import {MyChangePointDone} from '../screens/my/MyChangePointDone';
+import EventPage from '../screens/Home/EventPage';
 
 export type HomeStackParamList = {
   Main: undefined;
@@ -18,6 +19,7 @@ export type HomeStackParamList = {
   MyPoint: {point: number};
   MyChangePoint: {point: number};
   MyChangePointDone: undefined;
+  EventPage: {scroll: number};
 };
 
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -47,6 +49,7 @@ export const HomeNavigator = ({navigation, route}) => {
       <Stack.Screen name="MyPoint" component={MyPoint} />
       <Stack.Screen name="MyChangePoint" component={MyChangePoint} />
       <Stack.Screen name="MyChangePointDone" component={MyChangePointDone} />
+      <Stack.Screen name="EventPage" component={EventPage} />
     </Stack.Navigator>
   );
 };

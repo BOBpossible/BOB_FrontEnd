@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   RefreshControl,
   StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -24,13 +25,17 @@ import {getHomeInfo, getNotificationsMain} from '../../api';
 import {getMissionsProgress} from '../../api/mission';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DesignSystem} from '../../assets/DesignSystem';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import Swiper from 'react-native-swiper';
+import FastImage from 'react-native-fast-image';
 
 const Main = () => {
+  const navigation = useNavigation();
   const offset = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
   const [allDone, setAllDone] = useState(false);
   const [newNotiCount, setNewNotiCount] = useState(0);
+  const [swiperIndex, setSwiperIndex] = useState(1);
 
   const notificationData = useQuery<INotiType[]>(queryKey.NOTIFICATIONS, getNotificationsMain, {
     onSuccess: (data) => {
@@ -58,6 +63,89 @@ const Main = () => {
       notificationData.refetch();
     }, []),
   );
+
+  const EventBanner = () => {
+    return (
+      <View
+        style={{
+          height: 150,
+          marginHorizontal: 16,
+          marginBottom: 16,
+          borderRadius: 10,
+        }}
+      >
+        <Swiper
+          autoplayTimeout={5}
+          autoplay={true}
+          dot={<></>}
+          activeDot={<></>}
+          loadMinimal={true}
+          onIndexChanged={(index) => setSwiperIndex(index + 1)}
+        >
+          <View>
+            <Text style={[DesignSystem.title3SB, DesignSystem.grey17, {marginBottom: 8}]}>
+              복적동에서 미션에 도전해보세요
+            </Text>
+
+            <FastImage
+              source={require('../../assets/images/events/event_lauching.png')}
+              style={{width: '100%', height: 100, borderRadius: 10}}
+            />
+          </View>
+          <View>
+            <Text style={[DesignSystem.title3SB, DesignSystem.grey17, {marginBottom: 8}]}>
+              11월, 포인트 5배 적립!
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('EventPage', {scroll: 550});
+              }}
+            >
+              <FastImage
+                source={require('../../assets/images/events/event_point.png')}
+                style={{width: '100%', height: 100, borderRadius: 10}}
+              />
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Text style={[DesignSystem.title3SB, DesignSystem.grey17, {marginBottom: 8}]}>
+              참여만 해도 100% 당첨
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('EventPage', {scroll: 1500});
+              }}
+            >
+              <FastImage
+                source={require('../../assets/images/events/event_instagram.png')}
+                style={{width: '100%', height: 100, borderRadius: 10}}
+              />
+            </TouchableOpacity>
+          </View>
+        </Swiper>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 25,
+            right: 10,
+            backgroundColor: '#000000',
+            paddingHorizontal: 10,
+            paddingVertical: 2,
+            opacity: 0.7,
+            borderRadius: 12,
+          }}
+        >
+          <Text
+            style={[
+              {color: 'white', fontFamily: 'Pretendard-Medium', fontSize: 12, lineHeight: 16},
+            ]}
+          >
+            {swiperIndex}/3
+          </Text>
+        </View>
+      </View>
+    );
+  };
 
   const DataMissionsProgress = useQuery<IMissionsProgress[]>(
     queryKey.MISSIONSPROGRESS,
@@ -102,7 +190,8 @@ const Main = () => {
               />
             )}
             keyExtractor={(item, index) => index.toString()}
-            ListHeaderComponent={<HomeBobpool category={'NO'} />}
+            ListHeaderComponent={<View>{EventBanner()}</View>}
+            ListFooterComponent={<HomeBobpool category={'NO'} />}
             onScroll={(event) => {
               Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {
                 useNativeDriver: false,
@@ -144,7 +233,10 @@ const Main = () => {
               )}
               keyExtractor={(item, index) => index.toString()}
               ListHeaderComponent={
-                <HomeMissionListHeader dday={homeData.data?.dday} allDone={allDone} />
+                <View>
+                  {EventBanner()}
+                  <HomeMissionListHeader dday={homeData.data?.dday} allDone={allDone} />
+                </View>
               }
               ListFooterComponent={<HomeBobpool category={'DONE'} />}
               onScroll={(event) => {
@@ -174,7 +266,10 @@ const Main = () => {
                 )}
                 keyExtractor={(item, index) => index.toString()}
                 ListHeaderComponent={
-                  <HomeMissionListHeader dday={homeData.data?.dday} allDone={allDone} />
+                  <View>
+                    {EventBanner()}
+                    <HomeMissionListHeader dday={homeData.data?.dday} allDone={allDone} />
+                  </View>
                 }
                 onScroll={(event) => {
                   Animated.event([{nativeEvent: {contentOffset: {y: offset}}}], {

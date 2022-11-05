@@ -19,5 +19,6 @@ declare namespace ReactNavigation {
     MyNotificationsSetting: undefined;
     MyInquiry: undefined;
     MyChangePointDone: undefined;
+    EventPage: {scroll: number};
   }
 }
