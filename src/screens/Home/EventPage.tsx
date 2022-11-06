@@ -9,6 +9,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Text,
+  Linking,
 } from 'react-native';
 import {DesignSystem} from '../../assets/DesignSystem';
 import {MyHeader} from '../../components/My/MyHeader';
@@ -29,7 +30,7 @@ const EventPage = ({navigation, route}: any) => {
     console.log('1111');
     setTimeout(() => {
       ref.current?.scrollTo({y: route.params.scroll, animated: true});
-    }, 100);
+    }, 1000);
   }, []);
 
   return (
@@ -56,6 +57,9 @@ const EventPage = ({navigation, route}: any) => {
               resizeMode="contain"
             />
             <TouchableOpacity
+              onPress={() =>
+                Linking.openURL('https://asdfqweasd.notion.site/feb5358624bb40d3bc214b9af38dbc8e')
+              }
               style={{
                 width: '100%',
                 justifyContent: 'center',
@@ -88,6 +92,7 @@ const EventPage = ({navigation, route}: any) => {
               resizeMode="contain"
             />
             <TouchableOpacity
+              onPress={() => Linking.openURL('https://www.instagram.com/bobplace_official/')}
               style={{
                 width: '100%',
                 justifyContent: 'center',
