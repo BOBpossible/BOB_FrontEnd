@@ -84,7 +84,7 @@ const Main = () => {
         >
           <View>
             <Text style={[DesignSystem.title3SB, DesignSystem.grey17, {marginBottom: 8}]}>
-              복적동에서 미션에 도전해보세요
+              복정동에서 미션에 도전해보세요
             </Text>
 
             <FastImage
