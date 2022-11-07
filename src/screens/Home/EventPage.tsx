@@ -71,7 +71,7 @@ const EventPage = ({navigation, route}: any) => {
               <View
                 style={{
                   width: '100%',
-                  backgroundColor: '#6C69FF',
+                  backgroundColor: '#111111',
                   paddingVertical: 12,
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -99,13 +99,13 @@ const EventPage = ({navigation, route}: any) => {
                 alignItems: 'center',
                 paddingHorizontal: 16,
                 marginTop: 8,
-                marginBottom: 32,
+                marginBottom: 16,
               }}
             >
               <View
                 style={{
                   width: '100%',
-                  backgroundColor: '#6C69FF',
+                  backgroundColor: '#111111',
                   paddingVertical: 12,
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -117,6 +117,14 @@ const EventPage = ({navigation, route}: any) => {
                 </Text>
               </View>
             </TouchableOpacity>
+            <FastImage
+              source={require('../../assets/images/events/event4.png')}
+              style={{
+                height: 170,
+                width: '100%',
+              }}
+              resizeMode="contain"
+            />
           </ScrollView>
         </View>
       </SafeAreaView>
