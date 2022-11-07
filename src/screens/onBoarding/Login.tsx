@@ -1,5 +1,14 @@
 import React, {useCallback, useState, useEffect} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Image, Platform, StatusBar} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+  Platform,
+  StatusBar,
+  Alert,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
@@ -22,6 +31,14 @@ const Login = () => {
   const [loginModal, setLoginModal] = useState(false);
   const [source, setSource] = useState('');
 
+  function notifyMessage(msg: string) {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    } else {
+      AlertIOS.alert(msg);
+    }
+  }
+
   const postLogin = async (data: any) => {
     try {
       const response = await customAxios().post('/auth/authorization/login', null, {
@@ -42,13 +59,17 @@ const Login = () => {
           return postFcmToken(token);
         });
 
-      if (response.data.result.registerStatus === 'NEW') {
-        navigation.navigate('Register');
+      if (response.data.result.role === 'OWNER') {
+        Alert.alert('이미 사장님으로 가입되어있는 계정입니다');
       } else {
-        navigation.reset({
-          index: 0,
-          routes: [{name: 'MainNavigator'}],
-        });
+        if (response.data.result.registerStatus === 'NEW') {
+          navigation.navigate('Register');
+        } else {
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'MainNavigator'}],
+          });
+        }
       }
     } catch (error) {
       console.log('login data:', error);
@@ -73,13 +94,17 @@ const Login = () => {
           return postFcmToken(token);
         });
 
-      if (response.data.result.registerStatus === 'NEW') {
-        navigation.navigate('Register');
+      if (response.data.result.role === 'OWNER') {
+        Alert.alert('이미 사장님으로 가입되어있는 계정입니다');
       } else {
-        navigation.reset({
-          index: 0,
-          routes: [{name: 'MainNavigator'}],
-        });
+        if (response.data.result.registerStatus === 'NEW') {
+          navigation.navigate('Register');
+        } else {
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'MainNavigator'}],
+          });
+        }
       }
     } catch (error) {
       console.log('login data:', error);

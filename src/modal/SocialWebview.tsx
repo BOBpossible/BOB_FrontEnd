@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {FC, useRef} from 'react';
-import {StyleSheet} from 'react-native';
+import {Alert, StyleSheet} from 'react-native';
 import {WebView} from 'react-native-webview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
@@ -56,13 +56,17 @@ const SocialWebview: FC<SocialWebViewProps> = ({source, closeSocialModal}) => {
       });
 
     closeSocialModal();
-    if (data.registerStatus === 'NEW') {
-      navigation.navigate('Register');
+    if (data.role === 'OWNER') {
+      Alert.alert('이미 사장님으로 가입되어있는 계정입니다');
     } else {
-      navigation.reset({
-        index: 0,
-        routes: [{name: 'MainNavigator'}],
-      });
+      if (data.registerStatus === 'NEW') {
+        navigation.navigate('Register');
+      } else {
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'MainNavigator'}],
+        });
+      }
     }
   };
   return (
